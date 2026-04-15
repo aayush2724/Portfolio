@@ -5,6 +5,7 @@
 ## 🎯 Overview
 
 This is my personal portfolio website featuring:
+
 - **Modern Design**: Dark theme with glass-morphic UI and smooth animations
 - **Optimized Cursor**: Custom crosshair cursor with glow effects
 - **Responsive Layout**: Works perfectly on desktop, tablet, and mobile
@@ -33,6 +34,7 @@ This is my personal portfolio website featuring:
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v16+)
 - npm or yarn
 
@@ -67,18 +69,23 @@ The optimized build will be in the `dist/` folder.
 ## ✨ Features
 
 ### Custom Cursor
+
 Minimalist crosshair cursor with glow effect that expands on hover over interactive elements.
 
 ### Smooth Animations
+
 All sections feature smooth Framer Motion animations for a polished user experience.
 
 ### Responsive Design
+
 Fully responsive design that adapts to all screen sizes without breaking functionality.
 
 ### Glass-morphic UI
+
 Modern glass-effect backgrounds with blur and transparency for a premium feel.
 
 ### Command Palette
+
 Quick navigation menu accessible with `⌘K` (Mac) or `Ctrl+K` (Windows/Linux) to jump to any section.
 
 ## 📁 Project Structure
@@ -104,6 +111,7 @@ src/
 ## 🎮 Using the Command Palette
 
 Press `⌘K` (or `Ctrl+K`) to open the command palette:
+
 - Navigate to any section
 - Quick access to social links
 - Copy email to clipboard
@@ -112,6 +120,7 @@ Press `⌘K` (or `Ctrl+K`) to open the command palette:
 ## 🎸 About Me
 
 I'm a 2nd year CS student passionate about:
+
 - **Full-Stack Development**: Building complete applications from frontend to backend
 - **DSA & Algorithms**: Solving problems on LeetCode and mastering data structures
 - **Guitar**: Learning Stairway to Heaven and exploring music
@@ -122,17 +131,21 @@ I'm a 2nd year CS student passionate about:
 - **GitHub**: [@aayush2724](https://github.com/aayush2724)
 - **LeetCode**: [@aayush2717](https://leetcode.com/aayush2717)
 - **LinkedIn**: [@aayush2724](https://linkedin.com/in/aayush2724)
+- **Instagram**: [@aayussh.27](https://instagram.com/aayussh.27)
 - **Email**: aayush2615@gmail.com
 
 ## 📝 Featured Projects
 
 ### RSB Secure
+
 Cyberpunk visitor management system with JWT authentication and WhatsApp integration.
 
 ### Skillnest
+
 Peer-to-peer skill exchange platform — teach what you know, learn what you need, free forever.
 
 ### Disaster Relief Platform
+
 Full-stack application for disaster response management built with NGOs and agencies.
 
 ## 📈 Stats
@@ -145,7 +158,9 @@ Full-stack application for disaster response management built with NGOs and agen
 ## 🛠️ Customization
 
 ### Colors & Theme
+
 Edit the CSS variables in `src/index.css`:
+
 ```css
 :root {
   --amber: #f59e0b;
@@ -156,6 +171,7 @@ Edit the CSS variables in `src/index.css`:
 ```
 
 ### Content
+
 Update component content in `src/components/` files to personalize for your own portfolio.
 
 ## 📄 License
