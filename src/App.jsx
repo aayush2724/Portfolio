@@ -10,6 +10,8 @@ import Life from "./components/Life";
 import Timeline from "./components/Timeline";
 import Contact from "./components/Contact";
 import CommandPalette from "./components/CommandPalette";
+import LeetcodeStats from "./components/LeetcodeStats";
+import GitHubProjects from "./components/GithubProjects";
 
 function Loader() {
   return (
@@ -78,6 +80,8 @@ export default function App() {
             <Hero />
             <About />
             <Skills />
+            <LeetcodeStats />
+            <GitHubProjects />
             <Projects />
             <Life />
             <Timeline />

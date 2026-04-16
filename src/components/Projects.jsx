@@ -1,147 +1,195 @@
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 const projects = [
   {
-    name: 'RSB Secure',
-    repo: 'RSB-Visitor-Management-System',
-    desc: 'A cyberpunk-styled full-stack visitor management system replacing paper-based logs in corporate environments. Features hardware-locked photo capture, automated WhatsApp/Email notifications, secure admin dashboards, pre-scheduled entry logic, and encrypted JWT authentication.',
-    tags: ['JavaScript','Node.js','JWT','Full-Stack'],
-    color: '#06b6d4',
-    grad: 'from-cyan-500/15 to-blue-500/5',
-    emoji: '🛡️',
-    gh: 'https://github.com/aayush2724/RSB-Visitor-Management-System',
-    highlight: 'Cyberpunk UI · WhatsApp Integration · JWT Auth',
+    name: "Citizen Resolver System",
+    repo: "Citizen-Resolver-System",
+    desc: "A civic support portal for logging citizen issues, tracking resolution flow, and keeping helpline work organized from intake to action.",
+    tags: ["React", "Vite", "Routing", "CivicTech"],
+    color: "#06b6d4",
+    grad: "from-cyan-500/15 to-blue-500/5",
+    mark: "CR",
+    gh: "https://github.com/aayush2724/Citizen-Resolver-System",
+    highlight: "Citizen complaints | Status tracking | Resolver workflow",
     featured: true,
+    updated: "Apr 16, 2026",
   },
   {
-    name: 'Disaster Relief System',
-    repo: 'Disaster-relief-system',
-    desc: 'A full-stack coordination platform for disaster response — enabling NGOs, volunteers, and agencies to manage affected zones, dispatch resources, track supplies, and monitor relief operations in real time.',
-    tags: ['JavaScript','Full-Stack','Real-time','NGO'],
-    color: '#f59e0b',
-    grad: 'from-amber-500/15 to-orange-500/5',
-    emoji: '🆘',
-    gh: 'https://github.com/aayush2724/Disaster-relief-system',
-    highlight: 'Resource Dispatch · Zone Management · Multi-agency',
+    name: "TaskFlow",
+    repo: "TaskFlow",
+    desc: "A fresh productivity workspace for shaping tasks into a clean flow. Recently started, with the repo ready for the next implementation push.",
+    tags: ["Productivity", "Planning", "Workflow"],
+    color: "#22c55e",
+    grad: "from-green-500/15 to-emerald-500/5",
+    mark: "TF",
+    gh: "https://github.com/aayush2724/TaskFlow",
+    highlight: "Newest repo | Workflow focus | In progress",
     featured: true,
+    updated: "Apr 16, 2026",
   },
   {
-    name: 'Skillnest',
-    repo: 'Skillnest',
-    desc: 'A give-and-take learning platform where anyone can teach what they know and learn what they need — for free, across any field. Peer-to-peer skill exchange without money.',
-    tags: ['JavaScript','EdTech','Community'],
-    color: '#a855f7',
-    grad: 'from-purple-500/15 to-pink-500/5',
-    emoji: '🧠',
-    gh: 'https://github.com/aayush2724/Skillnest',
-    highlight: 'Skill Exchange · Zero Cost · Any Domain',
+    name: "Skillnest",
+    repo: "Skillnest",
+    desc: "A peer-to-peer learning platform where people can teach what they know and learn what they need without turning knowledge into a paywall.",
+    tags: ["JavaScript", "EdTech", "Community"],
+    color: "#a855f7",
+    grad: "from-purple-500/15 to-pink-500/5",
+    mark: "SN",
+    gh: "https://github.com/aayush2724/Skillnest",
+    highlight: "Skill exchange | Zero cost | Community learning",
     featured: true,
+    updated: "Apr 12, 2026",
   },
   {
-    name: 'HackFindo',
-    repo: 'HackFindo',
-    desc: 'A hackathon discovery and team-formation platform — helping developers find hackathons, build teams, and track submissions all in one place.',
-    tags: ['JavaScript','Community','Hackathons'],
-    color: '#22c55e',
-    grad: 'from-green-500/15 to-emerald-500/5',
-    emoji: '⚡',
-    gh: 'https://github.com/aayush2724/HackFindo',
-    highlight: 'Team Builder · Event Discovery',
+    name: "RSB Secure",
+    repo: "RSB-Visitor-Management-System",
+    desc: "A full-stack visitor management system for replacing paper logs with secure capture, admin dashboards, notifications, and JWT authentication.",
+    tags: ["JavaScript", "Node.js", "JWT", "Full Stack"],
+    color: "#f59e0b",
+    grad: "from-amber-500/15 to-orange-500/5",
+    mark: "RS",
+    gh: "https://github.com/aayush2724/RSB-Visitor-Management-System",
+    highlight: "Visitor logs | WhatsApp flow | Admin dashboard",
     featured: false,
+    updated: "Apr 7, 2026",
   },
   {
-    name: 'Job Portal',
-    repo: 'Job-Portal',
-    desc: 'A TypeScript-powered job listing and application platform with authentication, filtering, and recruiter dashboards.',
-    tags: ['TypeScript','React','Full-Stack'],
-    color: '#3b82f6',
-    grad: 'from-blue-500/15 to-indigo-500/5',
-    emoji: '💼',
-    gh: 'https://github.com/aayush2724/Job-Portal',
-    highlight: 'TypeScript · Auth · Recruiter Dashboard',
+    name: "Job Portal",
+    repo: "Job-Portal",
+    desc: "A TypeScript job portal with listings, application flow, authentication, filtering, and recruiter-facing dashboard patterns.",
+    tags: ["TypeScript", "React", "Full Stack"],
+    color: "#3b82f6",
+    grad: "from-blue-500/15 to-indigo-500/5",
+    mark: "JP",
+    gh: "https://github.com/aayush2724/Job-Portal",
+    highlight: "TypeScript | Auth | Recruiter dashboard",
     featured: false,
+    updated: "Mar 15, 2026",
   },
   {
-    name: 'chatRoom',
-    repo: 'chatRoom',
-    desc: 'Real-time group chat application with rooms, user presence, and live message broadcasting using WebSockets.',
-    tags: ['HTML','JavaScript','WebSockets','Real-time'],
-    color: '#ec4899',
-    grad: 'from-pink-500/15 to-rose-500/5',
-    emoji: '💬',
-    gh: 'https://github.com/aayush2724/chatRoom',
-    highlight: 'Live Chat · Rooms · User Presence',
+    name: "Disaster Relief System",
+    repo: "Disaster-relief-system",
+    desc: "A relief coordination platform for managing affected zones, dispatching resources, tracking supplies, and organizing response teams.",
+    tags: ["JavaScript", "Full Stack", "Relief Ops"],
+    color: "#ef4444",
+    grad: "from-red-500/15 to-amber-500/5",
+    mark: "DR",
+    gh: "https://github.com/aayush2724/Disaster-relief-system",
+    highlight: "Resource dispatch | Zone management | NGO workflow",
     featured: false,
+    updated: "Mar 14, 2026",
   },
   {
-    name: 'Portfolio',
-    repo: 'Portfolio',
-    desc: 'This very portfolio — a story-driven, interactive developer showcase built with React, Framer Motion, and Tailwind. Features gamified story mode, coding challenges, command palette, and animated timelines.',
-    tags: ['React','Framer Motion','Tailwind','Vite'],
-    color: '#f59e0b',
-    grad: 'from-amber-500/15 to-yellow-500/5',
-    emoji: '🌟',
-    gh: 'https://github.com/aayush2724/Portfolio',
-    highlight: 'Story Mode · Coding Challenges · Interactive',
+    name: "HackFindo",
+    repo: "HackFindo",
+    desc: "A hackathon discovery and team-formation platform for finding events, building teams, and keeping submissions organized.",
+    tags: ["JavaScript", "Community", "Hackathons"],
+    color: "#14b8a6",
+    grad: "from-teal-500/15 to-cyan-500/5",
+    mark: "HF",
+    gh: "https://github.com/aayush2724/HackFindo",
+    highlight: "Event discovery | Team builder | Submissions",
     featured: false,
+    updated: "Mar 5, 2026",
   },
   {
-    name: 'DSA Solutions',
-    repo: 'DSA',
-    desc: 'A curated collection of 400+ Data Structures & Algorithms solutions in C++ — covering arrays, trees, graphs, dynamic programming, and more. Organised by topic and difficulty.',
-    tags: ['C++','DSA','LeetCode','Algorithms'],
-    color: '#8b5cf6',
-    grad: 'from-violet-500/15 to-purple-500/5',
-    emoji: '🔢',
-    gh: 'https://github.com/aayush2724',
-    highlight: '400+ Problems · Topic-wise · C++',
+    name: "chatRoom",
+    repo: "chatRoom",
+    desc: "A lightweight real-time group chat app with rooms, live message broadcasting, and WebSocket-powered communication.",
+    tags: ["HTML", "JavaScript", "WebSockets"],
+    color: "#ec4899",
+    grad: "from-pink-500/15 to-rose-500/5",
+    mark: "CH",
+    gh: "https://github.com/aayush2724/chatRoom",
+    highlight: "Live chat | Rooms | WebSockets",
     featured: false,
+    updated: "Feb 23, 2026",
   },
 ];
 
 function Card({ p, i }) {
   const [hov, setHov] = useState(false);
   const ref = useRef(null);
-  const inView = useInView(ref,{once:true,margin:'-60px'});
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
   return (
-    <motion.div ref={ref}
-      initial={{opacity:0,y:50}} animate={inView?{opacity:1,y:0}:{}}
-      transition={{duration:.8,delay:i*.1,ease:[0.16,1,0.3,1]}}
-      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      className="gc rounded-3xl border border-white/7 overflow-hidden relative transition-all duration-500 p-6 group"
-      style={{boxShadow:hov?`0 20px 55px ${p.color}14`:'none'}}>
-      <div className={`absolute inset-0 bg-gradient-to-br ${p.grad} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}/>
-      <motion.div className="absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl pointer-events-none"
-        style={{background:p.color}} animate={{opacity:hov?.1:0}} transition={{duration:.4}}/>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      className="gc rounded-lg border border-white/7 overflow-hidden relative transition-all duration-500 p-6 group"
+      style={{ boxShadow: hov ? `0 20px 55px ${p.color}14` : "none" }}
+    >
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${p.grad} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+      />
+      <motion.div
+        className="absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl pointer-events-none"
+        style={{ background: p.color }}
+        animate={{ opacity: hov ? 0.1 : 0 }}
+        transition={{ duration: 0.4 }}
+      />
 
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl border border-white/8"
-              style={{background:`${p.color}12`}}>{p.emoji}</div>
+            <div
+              className="w-11 h-11 rounded-lg flex items-center justify-center text-sm font-display font-bold border border-white/8"
+              style={{ background: `${p.color}12`, color: p.color }}
+            >
+              {p.mark}
+            </div>
             <div>
-              <div className="font-display font-bold text-white text-sm">{p.name}</div>
-              {p.featured && <span className="font-mono text-xs px-2 py-0.5 rounded-full" style={{background:`${p.color}18`,color:p.color}}>Featured</span>}
+              <div className="font-display font-bold text-white text-sm">
+                {p.name}
+              </div>
+              <div className="font-mono text-xs text-white/25 mt-1">
+                Updated {p.updated}
+              </div>
             </div>
           </div>
-          <a href={p.gh} target="_blank" rel="noopener noreferrer"
-            className="text-white/20 hover:text-white transition-colors">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          </a>
+          {p.featured && (
+            <span
+              className="font-mono text-[10px] px-2 py-0.5 rounded-md"
+              style={{ background: `${p.color}18`, color: p.color }}
+            >
+              Recent
+            </span>
+          )}
         </div>
 
-        <p className="text-white/45 text-xs font-body leading-relaxed mb-3">{p.desc}</p>
+        <p className="text-white/45 text-xs font-body leading-relaxed mb-3">
+          {p.desc}
+        </p>
 
         <div className="font-mono text-xs mb-4 px-2 py-1 rounded-lg border border-white/5 text-white/30 bg-white/2">
-          ✦ {p.highlight}
+          {p.highlight}
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
-          {p.tags.map(t => (
-            <span key={t} className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/8 text-white/35">{t}</span>
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {p.tags.map((t) => (
+            <span
+              key={t}
+              className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/8 text-white/35"
+            >
+              {t}
+            </span>
           ))}
         </div>
+
+        <a
+          href={p.gh}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 font-mono text-xs text-amber-400/70 hover:text-amber-300 transition-colors"
+        >
+          Open repository
+          <span aria-hidden="true">-&gt;</span>
+        </a>
       </div>
     </motion.div>
   );
@@ -149,33 +197,60 @@ function Card({ p, i }) {
 
 export default function Projects() {
   const ref = useRef(null);
-  const inView = useInView(ref,{once:true});
+  const inView = useInView(ref, { once: true });
+
   return (
     <section id="projects" className="py-28 px-6 relative">
-      <div className="absolute left-0 top-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-3xl pointer-events-none"/>
+      <div className="absolute left-0 top-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className="mb-14">
-          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">Chapter 03 — Projects</motion.p>
-          <motion.h2 initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:.8,delay:.1}}
-            className="font-display font-extrabold text-5xl md:text-6xl text-white">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
+          >
+            Chapter 03 - Projects
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="font-display font-extrabold text-5xl md:text-6xl text-white"
+          >
             Things I've <span className="gt">shipped</span>
           </motion.h2>
-          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} transition={{delay:.2,duration:.8}}
-            className="text-white/35 mt-3 font-body max-w-lg">
-            Real GitHub repos. Real problems. From disaster response to peer learning — each project has a story.
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-white/35 mt-3 font-body max-w-lg"
+          >
+            Recent GitHub work, refreshed around the repos active in 2026.
+            Civic tools, peer learning, job workflows, real-time chat, and
+            disaster response all live here.
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((p,i) => <Card key={p.repo} p={p} i={i}/>)}
+          {projects.map((p, i) => (
+            <Card key={p.repo} p={p} i={i} />
+          ))}
         </div>
 
-        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:.8}}
-          className="mt-10 text-center">
-          <a href="https://github.com/aayush2724" target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 gc border border-white/10 rounded-xl px-7 py-3.5 font-mono text-sm text-white/40 hover:text-white hover:border-white/20 transition-all">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            See all repos → github.com/aayush2724
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-10 text-center"
+        >
+          <a
+            href="https://github.com/aayush2724"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 gc border border-white/10 rounded-lg px-7 py-3.5 font-mono text-sm text-white/40 hover:text-white hover:border-white/20 transition-all"
+          >
+            See all repos - github.com/aayush2724
           </a>
         </motion.div>
       </div>

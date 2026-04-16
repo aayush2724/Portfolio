@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const primary = [
-  { name:'DSA (C++)', pct:78, icon:'⚡', color:'#f59e0b', tag:'Core Strength', note:'400+ LeetCode problems solved' },
+  { name:'DSA (C++)', pct:78, icon:'DS', color:'#f59e0b', tag:'Core Strength', note:'345 LeetCode problems solved' },
   { name:'JavaScript', pct:82, icon:'🌐', color:'#facc15', tag:'Primary Language', note:'ES2024 · Async · DOM · Node' },
   { name:'React', pct:78, icon:'⚛️', color:'#06b6d4', tag:'Frontend', note:'Hooks · Context · Framer Motion' },
   { name:'Node.js', pct:68, icon:'🖥️', color:'#22c55e', tag:'Backend', note:'Express · REST APIs · JWT' },
@@ -108,9 +108,9 @@ export default function Skills() {
               className="gc rounded-2xl p-6 border border-amber-500/15 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500/6 to-transparent pointer-events-none"/>
               <div className="relative z-10">
-                <div className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-4">LeetCode · aayush2717</div>
+                <div className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-4">LeetCode - aayush2717</div>
                 <div className="grid grid-cols-2 gap-4">
-                  {[{l:'Solved',v:'400+'},{l:'Focus',v:'Medium'},{l:'Topics',v:'Trees,DP,Graph'},{l:'Streak',v:'Active'}].map(x=>(
+                  {[{l:'Solved',v:'345'},{l:'Focus',v:'Medium'},{l:'Topics',v:'Trees,DP,Graph'},{l:'Streak',v:'25 days'}].map(x=>(
                     <div key={x.l} className="text-center">
                       <div className="font-display font-bold text-lg text-amber-400 leading-none">{x.v}</div>
                       <div className="font-mono text-xs text-white/25 mt-1">{x.l}</div>
@@ -119,7 +119,7 @@ export default function Skills() {
                 </div>
                 <a href="https://leetcode.com/aayush2717" target="_blank" rel="noopener noreferrer"
                   className="mt-4 block text-center font-mono text-xs text-amber-500/60 hover:text-amber-400 transition-colors">
-                  View profile →
+                  View profile -&gt;
                 </a>
               </div>
             </motion.div>
