@@ -54,7 +54,7 @@ const events = [
   {
     year: "Right Now →",
     title: "Building, solving, strumming",
-    desc: "2nd year CS student with 10+ repos, 300–600 LC solved, more projects in progress. Leveling up every day.",
+    desc: "2nd year CS student with 12+ GitHub repos, 400+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.",
     icon: "🚀",
     color: "#a855f7",
   },

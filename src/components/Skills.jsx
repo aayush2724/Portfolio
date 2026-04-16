@@ -2,19 +2,21 @@ import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const primary = [
-  { name:'DSA (C++)', pct:72, icon:'⚡', color:'#f59e0b', tag:'Core Strength', note:'300–600 LeetCode problems' },
-  { name:'JavaScript', pct:80, icon:'🌐', color:'#facc15', tag:'Primary Language', note:'ES2024 · Async · DOM' },
-  { name:'React', pct:75, icon:'⚛️', color:'#06b6d4', tag:'Frontend', note:'Hooks · Context · Framer' },
-  { name:'Node.js', pct:65, icon:'🖥️', color:'#22c55e', tag:'Backend', note:'Express · REST APIs · JWT' },
+  { name:'DSA (C++)', pct:78, icon:'⚡', color:'#f59e0b', tag:'Core Strength', note:'400+ LeetCode problems solved' },
+  { name:'JavaScript', pct:82, icon:'🌐', color:'#facc15', tag:'Primary Language', note:'ES2024 · Async · DOM · Node' },
+  { name:'React', pct:78, icon:'⚛️', color:'#06b6d4', tag:'Frontend', note:'Hooks · Context · Framer Motion' },
+  { name:'Node.js', pct:68, icon:'🖥️', color:'#22c55e', tag:'Backend', note:'Express · REST APIs · JWT' },
 ];
 
 const secondary = [
-  { name:'TypeScript', pct:55, color:'#3b82f6' },
-  { name:'Python', pct:60, color:'#a855f7' },
-  { name:'MongoDB', pct:60, color:'#22c55e' },
-  { name:'Tailwind CSS', pct:85, color:'#06b6d4' },
-  { name:'Git & GitHub', pct:78, color:'#f97316' },
-  { name:'HTML/CSS', pct:88, color:'#f59e0b' },
+  { name:'TypeScript', pct:58, color:'#3b82f6' },
+  { name:'Python', pct:62, color:'#a855f7' },
+  { name:'MongoDB', pct:63, color:'#22c55e' },
+  { name:'Tailwind CSS', pct:88, color:'#06b6d4' },
+  { name:'Git & GitHub', pct:82, color:'#f97316' },
+  { name:'HTML/CSS', pct:90, color:'#f59e0b' },
+  { name:'SQL', pct:55, color:'#ec4899' },
+  { name:'Express.js', pct:65, color:'#94a3b8' },
 ];
 
 function PrimaryCard({ s, delay }) {
@@ -108,7 +110,7 @@ export default function Skills() {
               <div className="relative z-10">
                 <div className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-4">LeetCode · aayush2717</div>
                 <div className="grid grid-cols-2 gap-4">
-                  {[{l:'Solved',v:'300–600'},{l:'Focus',v:'Medium'},{l:'Topics',v:'Trees,DP,Graph'},{l:'Streak',v:'Active'}].map(x=>(
+                  {[{l:'Solved',v:'400+'},{l:'Focus',v:'Medium'},{l:'Topics',v:'Trees,DP,Graph'},{l:'Streak',v:'Active'}].map(x=>(
                     <div key={x.l} className="text-center">
                       <div className="font-display font-bold text-lg text-amber-400 leading-none">{x.v}</div>
                       <div className="font-mono text-xs text-white/25 mt-1">{x.l}</div>
