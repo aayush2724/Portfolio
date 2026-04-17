@@ -2,6 +2,8 @@
 
 Modern personal portfolio built with React, Vite, and Tailwind CSS to showcase my projects, skills, and growth as a CS student.
 
+🔗 **Live Demo:** [https://port-folio-nu-wheat.vercel.app/](https://port-folio-nu-wheat.vercel.app/)
+
 ## Overview
 
 This portfolio includes:
@@ -20,11 +22,11 @@ This portfolio includes:
 
 ## Featured Work
 
-- Citizen Resolver System - civic issue resolution and helpline workflow
-- TaskFlow - new productivity and workflow project
-- Skillnest - peer-to-peer skill exchange platform
-- RSB Secure - visitor management system with authentication and notifications
-- Disaster Relief Platform - full-stack disaster response solution
+- **Citizen Resolver System** - civic issue resolution and helpline workflow
+- **TaskFlow** - new productivity and workflow project
+- **Skillnest** - peer-to-peer skill exchange platform
+- **RSB Secure** - visitor management system with authentication and notifications
+- **Disaster Relief Platform** - full-stack disaster response solution
 
 ## Highlights
 
@@ -36,15 +38,22 @@ This portfolio includes:
 
 ## Links
 
-- GitHub: https://github.com/aayush2724
-- LeetCode: https://leetcode.com/aayush2717
-- LinkedIn: https://linkedin.com/in/aayush2724
+- 🌐 **Live Site:** [port-folio-nu-wheat.vercel.app](https://port-folio-nu-wheat.vercel.app/)
+- 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724)
+- 🧩 **LeetCode:** [leetcode.com/aayush2717](https://leetcode.com/aayush2717)
+- 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)
 
 ## Run Locally
 
 ```bash
-npm install
-npm run dev
-```
+# Clone the repository
+git clone https://github.com/aayush2724/port-folio.git
 
-Built by Aayush.
+# Navigate to the project directory
+cd port-folio
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
