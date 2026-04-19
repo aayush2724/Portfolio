@@ -7,14 +7,14 @@ const fallbackStats = {
   avatar: "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
   realName: "aayush2717",
   stats: {
-    totalSolved: 345,
-    easy: 170,
-    medium: 156,
+    totalSolved: 350,
+    easy: 172,
+    medium: 159,
     hard: 19,
-    totalSubmissions: 587,
+    totalSubmissions: 781,
   },
   streak: 25,
-  totalActiveDays: 183,
+  totalActiveDays: 187,
 };
 
 const cards = [
@@ -135,7 +135,7 @@ export default function LeetcodeStats() {
               ["Submissions", stats.stats.totalSubmissions],
               ["Current streak", stats.streak],
               ["Active days", stats.totalActiveDays],
-              ["Synced", syncedFromApi ? "Live" : "Apr 17"],
+              ["Synced", syncedFromApi ? "Live" : "Apr 20"],
             ].map(([label, value], index) => (
               <motion.div
                 key={label}

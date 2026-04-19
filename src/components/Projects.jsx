@@ -3,6 +3,19 @@ import { motion, useInView } from "framer-motion";
 
 const projects = [
   {
+    name: "LeadForge",
+    repo: "LeadForge",
+    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping.",
+    tags: ["Python", "AI/ML", "Data Pipeline", "Automation"],
+    color: "#f97316",
+    grad: "from-orange-500/15 to-red-500/5",
+    mark: "LF",
+    gh: "https://github.com/aayush2724/LeadForge",
+    highlight: "Lead scoring | Multi-phase enrichment | SerpAPI + Apollo",
+    featured: true,
+    updated: "Apr 19, 2026",
+  },
+  {
     name: "Citizen Resolver System",
     repo: "Citizen-Resolver-System",
     desc: "A civic support portal for logging citizen issues, tracking resolution flow, and keeping helpline work organized from intake to action.",
@@ -18,15 +31,15 @@ const projects = [
   {
     name: "TaskFlow",
     repo: "TaskFlow",
-    desc: "A fresh productivity workspace for shaping tasks into a clean flow. Recently started, with the repo ready for the next implementation push.",
-    tags: ["Productivity", "Planning", "Workflow"],
+    desc: "A MERN-stack productivity workspace with task management, Kanban boards, and a glassmorphism UI. Designed for clean workflow orchestration from planning to completion.",
+    tags: ["React", "Node.js", "MongoDB", "Productivity"],
     color: "#22c55e",
     grad: "from-green-500/15 to-emerald-500/5",
     mark: "TF",
     gh: "https://github.com/aayush2724/TaskFlow",
-    highlight: "Newest repo | Workflow focus | In progress",
+    highlight: "Kanban board | MERN stack | Glassmorphism UI",
     featured: true,
-    updated: "Apr 16, 2026",
+    updated: "Apr 17, 2026",
   },
   {
     name: "Skillnest",
@@ -225,9 +238,9 @@ export default function Projects() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-3 font-body max-w-lg"
           >
-            Recent GitHub work, refreshed around the repos active in 2026.
-            Civic tools, peer learning, job workflows, real-time chat, and
-            disaster response all live here.
+            Recent GitHub work — AI pipelines, civic tools, peer learning,
+            job workflows, real-time chat, and disaster response. Updated
+            live from the latest pushes.
           </motion.p>
         </div>
 
