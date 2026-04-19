@@ -201,7 +201,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-extrabold leading-none tracking-tighter text-white"
-            style={{ fontSize: "clamp(5rem, 16vw, 13rem)" }}
+            style={{ fontSize: "clamp(4rem, 12vw, 9.5rem)" }}
           >
             Aayush
           </motion.h1>

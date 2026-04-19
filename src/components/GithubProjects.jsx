@@ -77,13 +77,21 @@ const GitHubProjects = () => {
   }
 
   return (
-    <section className="py-12 px-4">
+    <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-center text-gray-900 dark:text-white">
-          GitHub Projects
-        </h2>
+        <div className="mb-12">
+          <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+            Chapter 03.5 — GitHub
+          </p>
+          <h2 className="font-display font-extrabold text-5xl md:text-6xl text-white">
+            Live from <span className="ga">GitHub</span>
+          </h2>
+          <p className="text-white/35 mt-3 font-body max-w-xl">
+            Repos auto-synced daily — showing the most recently updated projects.
+          </p>
+        </div>
         {error && (
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 -mt-8 mb-8">
+          <p className="font-mono text-xs text-white/20 -mt-8 mb-8 text-center">
             {error}
           </p>
         )}
@@ -95,19 +103,19 @@ const GitHubProjects = () => {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-105 transform"
+            className="group gc rounded-2xl border border-white/7 hover:border-amber-500/20 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-amber-500/5 hover:-translate-y-1 transform"
             >
               <div className="p-6 h-full flex flex-col">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="font-display font-bold text-white text-base group-hover:text-amber-400 transition-colors">
                     {project.name}
                   </h3>
-                  <Github className="w-6 h-6 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+                  <Github className="w-5 h-5 text-white/20 group-hover:text-amber-400/60 transition-colors" />
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">
+                <p className="text-white/40 text-xs font-body leading-relaxed mb-4 flex-grow line-clamp-3">
                   {project.description}
                 </p>
 
@@ -115,14 +123,14 @@ const GitHubProjects = () => {
                 {(project.language || project.topics.length > 0) && (
                   <div className="mb-4 flex flex-wrap gap-2">
                     {project.language && (
-                      <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-semibold">
+                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-full border border-amber-500/20 text-amber-400/70 bg-amber-500/5">
                         {project.language}
                       </span>
                     )}
                     {project.topics.slice(0, 2).map((topic) => (
                       <span 
                         key={topic}
-                        className="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs"
+                        className="font-mono text-xs px-2.5 py-0.5 rounded-full border border-white/8 text-white/30"
                       >
                         {topic}
                       </span>
@@ -131,15 +139,13 @@ const GitHubProjects = () => {
                 )}
 
                 {/* Footer Stats */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                      <Star className="w-4 h-4" />
-                      <span className="text-sm font-semibold">{project.stars}</span>
-                    </div>
+                <div className="flex items-center justify-between pt-4 border-t border-white/6">
+                  <div className="flex items-center gap-1 text-white/25 font-mono text-xs">
+                    <Star className="w-3.5 h-3.5" />
+                    <span>{project.stars}</span>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Updated: {project.updatedAt}
+                  <span className="font-mono text-xs text-white/20">
+                    {project.updatedAt}
                   </span>
                 </div>
               </div>
@@ -153,7 +159,7 @@ const GitHubProjects = () => {
             href="https://github.com/aayush2724"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-semibold hover:shadow-lg transition-all"
+            className="inline-flex items-center gap-2 gc border border-white/10 rounded-xl px-7 py-3.5 font-mono text-sm text-white/40 hover:text-white hover:border-white/20 transition-all"
           >
             <Github className="w-5 h-5" />
             View All Projects on GitHub
@@ -161,8 +167,8 @@ const GitHubProjects = () => {
         </div>
 
         {/* Last Updated */}
-        <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-8">
-          Projects refresh every 12 hours • Last synced: {new Date().toLocaleTimeString()}
+        <div className="text-center font-mono text-xs text-white/15 mt-8">
+          Auto-synced daily via GitHub Actions
         </div>
       </div>
     </section>
