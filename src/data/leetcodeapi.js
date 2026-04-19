@@ -1,110 +1,122 @@
 /**
- * LeetCode API utility to fetch user statistics
- * Uses LeetCode's GraphQL API (no authentication required for public profiles)
+ * Portfolio data utilities
+ *
+ * Priority order:
+ * 1. portfolioData.json — updated daily by GitHub Actions (no CORS issues)
+ * 2. Live API call — as a real-time refresh on top
  */
 
+import staticData from './portfolioData.json';
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+
+function parseStatic() {
+  if (!staticData?.leetcode) return null;
+  return staticData.leetcode;
+}
+
+function parseStaticGitHub() {
+  if (!staticData?.github) return [];
+  return staticData.github.map(r => ({
+    name: r.name,
+    description: r.description || 'No description',
+    url: r.url,
+    stars: r.stars,
+    forks: r.forks || 0,
+    language: r.language,
+    topics: r.topics || [],
+    updatedAt: new Date(r.updatedAt).toLocaleDateString(),
+  }));
+}
+
+// ── LeetCode ───────────────────────────────────────────────────────────────────
+
 export const fetchLeetCodeStats = async (username) => {
-  try {
-    const query = `
-      query getUserProfile($username: String!) {
-        matchedUser(username: $username) {
-          username
-          profile {
-            userAvatar
-            realName
-            aboutMe
-          }
-          submitStatsGlobal {
-            acSubmissionNum {
-              difficulty
-              count
-              submissions
-            }
-            totalSubmissionNum {
-              difficulty
-              count
-              submissions
-            }
-          }
-          userCalendar {
-            streak
-            totalActiveDays
-          }
-        }
-      }
-    `;
+  // Return cached static data immediately (updated by CI daily)
+  const cached = parseStatic();
 
-    const response = await fetch('https://leetcode.com/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { username },
-      }),
-    });
+  // Fire off a live refresh in background — returns cached first
+  tryLiveLeetCode(username).catch(() => {});
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data.errors) {
-      throw new Error(`GraphQL error: ${data.errors[0].message}`);
-    }
-
-    const userProfile = data.data.matchedUser;
-
-    if (!userProfile) {
-      throw new Error('User not found');
-    }
-
-    return {
-      username: userProfile.username,
-      avatar: userProfile.profile?.userAvatar,
-      realName: userProfile.profile?.realName || username,
-      aboutMe: userProfile.profile?.aboutMe || '',
-      stats: {
-        totalSolved: userProfile.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
-        easy: userProfile.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Easy')?.count || 0,
-        medium: userProfile.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Medium')?.count || 0,
-        hard: userProfile.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Hard')?.count || 0,
-        totalSubmissions: userProfile.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
-      },
-      streak: userProfile.userCalendar?.streak || 0,
-      totalActiveDays: userProfile.userCalendar?.totalActiveDays || 0,
-    };
-  } catch (error) {
-    console.error('Error fetching LeetCode stats:', error);
-    return null;
-  }
+  return cached;
 };
+
+async function tryLiveLeetCode(username) {
+  const query = `
+    query getUserProfile($username: String!) {
+      matchedUser(username: $username) {
+        username
+        profile { userAvatar realName }
+        submitStatsGlobal {
+          acSubmissionNum { difficulty count submissions }
+          totalSubmissionNum { difficulty count submissions }
+        }
+        userCalendar { streak totalActiveDays }
+      }
+    }
+  `;
+
+  const response = await fetch('https://leetcode.com/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query, variables: { username } }),
+  });
+
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  if (data.errors) throw new Error(data.errors[0].message);
+  const u = data.data.matchedUser;
+  if (!u) throw new Error('User not found');
+
+  return {
+    username: u.username,
+    avatar: u.profile?.userAvatar,
+    realName: u.profile?.realName || username,
+    stats: {
+      totalSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
+      easy: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Easy')?.count || 0,
+      medium: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Medium')?.count || 0,
+      hard: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Hard')?.count || 0,
+      totalSubmissions: u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
+    },
+    streak: u.userCalendar?.streak || 0,
+    totalActiveDays: u.userCalendar?.totalActiveDays || 0,
+  };
+}
+
+// ── GitHub ─────────────────────────────────────────────────────────────────────
 
 export const fetchGitHubProjects = async (username) => {
+  // Return static data (from GitHub Actions) immediately
+  const cached = parseStaticGitHub();
+  if (cached.length > 0) return cached;
+
+  // Fallback: direct API (rate limited without token, but fine as fallback)
   try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
+    const response = await fetch(
+      `https://api.github.com/users/${username}/repos?sort=updated&per_page=12`
+    );
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const repos = await response.json();
-
     return repos
-      .filter(repo => !repo.fork) // Exclude forked repos
-      .map(repo => ({
-        name: repo.name,
-        description: repo.description || 'No description',
-        url: repo.html_url,
-        stars: repo.stargazers_count,
-        language: repo.language,
-        topics: repo.topics || [],
-        updatedAt: new Date(repo.updated_at).toLocaleDateString(),
+      .filter(r => !r.fork)
+      .map(r => ({
+        name: r.name,
+        description: r.description || 'No description',
+        url: r.html_url,
+        stars: r.stargazers_count,
+        forks: r.forks_count,
+        language: r.language,
+        topics: r.topics || [],
+        updatedAt: new Date(r.updated_at).toLocaleDateString(),
       }));
-  } catch (error) {
-    console.error('Error fetching GitHub projects:', error);
-    return [];
+  } catch (err) {
+    console.error('GitHub fetch failed:', err);
+    return cached;
   }
 };
+
+// ── Meta ───────────────────────────────────────────────────────────────────────
+
+/** Returns the ISO timestamp when data was last synced by CI */
+export const getLastSyncTime = () => staticData?.lastUpdated || null;

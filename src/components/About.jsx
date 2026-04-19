@@ -14,7 +14,7 @@ const chapters = [
     emoji: "🧠",
     tag: "The Grind",
     title: "DSA changed how I think",
-    body: "LeetCode became my daily puzzle. Arrays, trees, graphs, and DP each forced me to slow down and think differently. 345 solved, a 25-day streak, and still going.",
+    body: "LeetCode became my daily puzzle. Arrays, trees, graphs, and DP each forced me to slow down and think differently. 350 solved, a 25-day streak, and still going.",
     color: "#06b6d4",
     side: "right",
   },
@@ -111,7 +111,7 @@ export default function About() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-4 max-w-md mx-auto font-body text-base"
           >
-            A first-year CS student from India, building real things, solving
+            A 2nd-year CS student from India, building real things, solving
             real problems, and mastering classic rock on a six-string.
           </motion.p>
         </div>

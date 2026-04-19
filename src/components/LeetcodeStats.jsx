@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { fetchLeetCodeStats } from "../data/leetcodeapi";
+import { fetchLeetCodeStats, getLastSyncTime } from "../data/leetcodeapi";
 
 const fallbackStats = {
   username: "aayush2717",
@@ -26,6 +26,10 @@ const cards = [
 export default function LeetcodeStats() {
   const [stats, setStats] = useState(fallbackStats);
   const [syncedFromApi, setSyncedFromApi] = useState(false);
+
+  const lastSync = getLastSyncTime()
+    ? new Date(getLastSyncTime()).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })
+    : 'Apr 20';
 
   useEffect(() => {
     let mounted = true;
@@ -135,7 +139,7 @@ export default function LeetcodeStats() {
               ["Submissions", stats.stats.totalSubmissions],
               ["Current streak", stats.streak],
               ["Active days", stats.totalActiveDays],
-              ["Synced", syncedFromApi ? "Live" : "Apr 20"],
+              ["Synced", syncedFromApi ? "Live" : lastSync],
             ].map(([label, value], index) => (
               <motion.div
                 key={label}

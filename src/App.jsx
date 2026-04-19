@@ -12,6 +12,7 @@ import Contact from "./components/Contact";
 import CommandPalette from "./components/CommandPalette";
 import LeetcodeStats from "./components/LeetcodeStats";
 import GitHubProjects from "./components/GithubProjects";
+import MarqueeTicker from "./components/MarqueeTicker";
 
 function Loader() {
   return (
@@ -78,6 +79,7 @@ export default function App() {
           <Navbar onCmd={() => setCmdOpen(true)} />
           <main>
             <Hero />
+            <MarqueeTicker />
             <About />
             <Skills />
             <LeetcodeStats />

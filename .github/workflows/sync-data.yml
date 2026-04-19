@@ -1,0 +1,47 @@
+name: Sync Portfolio Data
+
+on:
+  schedule:
+    # Runs every day at midnight UTC (5:30 AM IST)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-data.yml'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch LeetCode & GitHub data
+        run: node .github/scripts/fetch-data.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LEETCODE_USERNAME: aayush2717
+          GITHUB_USERNAME: aayush2724
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet src/data/portfolioData.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit & push updated data
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Portfolio Sync Bot"
+          git add src/data/portfolioData.json
+          git commit -m "chore: auto-sync LeetCode stats and GitHub repos [skip ci]"
+          git push

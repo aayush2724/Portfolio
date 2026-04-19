@@ -2,27 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens ──────────────────────────────────────────────────────────── */
 :root {
   --void: #04040a;
-  --ink: #0a0a12;
+  --ink: #080810;
   --amber: #f59e0b;
+  --amber-dim: #d97706;
   --cyan: #06b6d4;
   --purple: #a855f7;
   --green: #22c55e;
-  --glass: rgba(255, 255, 255, 0.035);
-  --glass-b: rgba(255, 255, 255, 0.07);
+  --glass: rgba(255, 255, 255, 0.032);
+  --glass-b: rgba(255, 255, 255, 0.065);
+  --glass-hover: rgba(255, 255, 255, 0.055);
+  --border: rgba(255, 255, 255, 0.07);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  cursor: none;
-}
+html { scroll-behavior: smooth; cursor: none; }
 
 body {
   background: var(--void);
@@ -30,19 +28,18 @@ body {
   font-family: "DM Sans", sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar {
-  width: 3px;
-}
-::-webkit-scrollbar-track {
-  background: var(--void);
-}
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--void); }
 ::-webkit-scrollbar-thumb {
-  background: var(--amber);
+  background: linear-gradient(to bottom, var(--amber), var(--purple));
   border-radius: 2px;
 }
 
+/* ── Custom cursor ──────────────────────────────────────────────────────────── */
 .cursor {
   position: fixed;
   width: 20px;
@@ -52,7 +49,6 @@ body {
   transform: translate3d(-10px, -10px, 0);
   will-change: transform;
 }
-
 .cursor::before {
   content: "";
   position: absolute;
@@ -60,45 +56,45 @@ body {
   height: 4px;
   background: var(--amber);
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow:
-    0 0 8px var(--amber),
-    0 0 16px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 8px var(--amber), 0 0 16px rgba(245,158,11,.3);
+  transition: width .15s, height .15s, box-shadow .15s;
 }
-
 .cursor::after {
   content: "";
   position: absolute;
   width: 20px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--amber), transparent);
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
-
 .cursor.active::before {
-  width: 8px;
-  height: 8px;
-  box-shadow:
-    0 0 12px var(--amber),
-    0 0 24px rgba(245, 158, 11, 0.4);
+  width: 8px; height: 8px;
+  box-shadow: 0 0 14px var(--amber), 0 0 30px rgba(245,158,11,.4);
 }
 
+/* ── Utility classes ────────────────────────────────────────────────────────── */
+
+/* Glass card */
 .gc {
   background: var(--glass);
   border: 1px solid var(--glass-b);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
+.gc:hover { background: var(--glass-hover); }
 
+/* Gradient text — amber to red to purple */
 .gt {
   background: linear-gradient(135deg, #f59e0b, #ef4444 50%, #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Gradient text — amber gold */
 .ga {
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
   -webkit-background-clip: text;
@@ -106,6 +102,26 @@ body {
   background-clip: text;
 }
 
+/* Shimmer text effect */
+.gshimmer {
+  background: linear-gradient(90deg, #f59e0b 0%, #fde68a 40%, #f59e0b 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+
+/* ── Grid background ────────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(245,158,11,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,.018) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* ── Film grain / noise overlay ─────────────────────────────────────────────── */
 body::after {
   content: "";
   position: fixed;
@@ -113,36 +129,51 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
-  opacity: 0.35;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
 }
 
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(245, 158, 11, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
+/* ── Marquee ticker ─────────────────────────────────────────────────────────── */
+.marquee-outer {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 32s linear infinite;
+}
+.marquee-inner:hover { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
+/* ── Bento card hover glow ──────────────────────────────────────────────────── */
+.bento-card {
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.4s ease;
+}
+.bento-card:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-16px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
 }
 @keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 .blink::after {
   content: "█";
   animation: blink 1s step-end infinite;
   color: var(--amber);
+}
+
+/* ── Selection ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fff;
 }

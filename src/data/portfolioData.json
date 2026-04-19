@@ -1,0 +1,119 @@
+{
+  "lastUpdated": "2026-04-20T00:23:00.000Z",
+  "leetcode": {
+    "username": "aayush2717",
+    "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
+    "ranking": 0,
+    "stats": {
+      "totalSolved": 350,
+      "easy": 172,
+      "medium": 159,
+      "hard": 19,
+      "totalSubmissions": 781
+    },
+    "streak": 25,
+    "totalActiveDays": 187
+  },
+  "github": [
+    {
+      "name": "LeadForge",
+      "description": "AI-powered B2B lead generation and enrichment pipeline with multi-phase scoring via Apollo, Crunchbase, and SerpAPI.",
+      "url": "https://github.com/aayush2724/LeadForge",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": ["ai", "automation", "lead-generation"],
+      "updatedAt": "2026-04-19T00:00:00.000Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "Personal portfolio site built with React + Vite + Framer Motion.",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["portfolio", "react", "vite"],
+      "updatedAt": "2026-04-17T00:00:00.000Z"
+    },
+    {
+      "name": "RSB-Visitor-Management-System",
+      "description": "Secure visitor management system with admin workflows, WhatsApp notifications, and JWT auth.",
+      "url": "https://github.com/aayush2724/RSB-Visitor-Management-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["fullstack", "auth", "nodejs"],
+      "updatedAt": "2026-04-17T00:00:00.000Z"
+    },
+    {
+      "name": "TaskFlow",
+      "description": "MERN-stack productivity workspace with Kanban boards and glassmorphism UI.",
+      "url": "https://github.com/aayush2724/TaskFlow",
+      "stars": 1,
+      "forks": 1,
+      "language": "JavaScript",
+      "topics": ["productivity", "mern", "react"],
+      "updatedAt": "2026-04-17T00:00:00.000Z"
+    },
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "Civic support portal for logging citizen issues, tracking resolution flow, and helpline workflows.",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["civictech", "react"],
+      "updatedAt": "2026-04-16T00:00:00.000Z"
+    },
+    {
+      "name": "Skillnest",
+      "description": "Peer-to-peer learning and skill exchange platform.",
+      "url": "https://github.com/aayush2724/Skillnest",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["edtech", "community"],
+      "updatedAt": "2026-04-12T00:00:00.000Z"
+    },
+    {
+      "name": "Job-Portal",
+      "description": "TypeScript job portal with listings, application flow, authentication, filtering, and recruiter dashboard.",
+      "url": "https://github.com/aayush2724/Job-Portal",
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": ["typescript", "react", "fullstack"],
+      "updatedAt": "2026-03-15T00:00:00.000Z"
+    },
+    {
+      "name": "Disaster-relief-system",
+      "description": "Relief coordination platform for managing affected zones, dispatching resources, and organizing response teams.",
+      "url": "https://github.com/aayush2724/Disaster-relief-system",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["fullstack", "relief"],
+      "updatedAt": "2026-03-14T00:00:00.000Z"
+    },
+    {
+      "name": "HackFindo",
+      "description": "Hackathon discovery and team-formation platform.",
+      "url": "https://github.com/aayush2724/HackFindo",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["community", "hackathons"],
+      "updatedAt": "2026-03-05T00:00:00.000Z"
+    },
+    {
+      "name": "chatRoom",
+      "description": "Lightweight real-time group chat app with rooms and WebSocket-powered communication.",
+      "url": "https://github.com/aayush2724/chatRoom",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["websockets", "realtime"],
+      "updatedAt": "2026-02-23T00:00:00.000Z"
+    }
+  ]
+}
