@@ -2,7 +2,7 @@
 
 Modern personal portfolio built with React, Vite, and Tailwind CSS to showcase my projects, skills, and growth as a CS student.
 
-🔗 **Live Demo:** [https://port-folio-nu-wheat.vercel.app/](https://port-folio-nu-wheat.vercel.app/)
+🔗 **Live Demo:** [https://portfolio-nine-sage-30.vercel.app/](https://portfolio-nine-sage-30.vercel.app/)
 
 ## Overview
 
@@ -38,7 +38,7 @@ This portfolio includes:
 
 ## Links
 
-- 🌐 **Live Site:** [port-folio-nu-wheat.vercel.app](https://port-folio-nu-wheat.vercel.app/)
+- 🌐 **Live Site:** [portfolio-nine-sage-30.vercel.app](https://portfolio-nine-sage-30.vercel.app/)
 - 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724)
 - 🧩 **LeetCode:** [leetcode.com/aayush2717](https://leetcode.com/aayush2717)
 - 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)
