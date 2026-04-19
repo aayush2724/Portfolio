@@ -1,119 +1,139 @@
 {
-  "lastUpdated": "2026-04-20T00:23:00.000Z",
+  "lastUpdated": "2026-04-19T20:34:34.700Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 0,
+    "ranking": 359545,
     "stats": {
       "totalSolved": 350,
       "easy": 172,
       "medium": 159,
       "hard": 19,
-      "totalSubmissions": 781
+      "totalSubmissions": 367
     },
     "streak": 25,
     "totalActiveDays": 187
   },
   "github": [
     {
-      "name": "LeadForge",
-      "description": "AI-powered B2B lead generation and enrichment pipeline with multi-phase scoring via Apollo, Crunchbase, and SerpAPI.",
-      "url": "https://github.com/aayush2724/LeadForge",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": ["ai", "automation", "lead-generation"],
-      "updatedAt": "2026-04-19T00:00:00.000Z"
-    },
-    {
       "name": "Portfolio",
-      "description": "Personal portfolio site built with React + Vite + Framer Motion.",
+      "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
-      "topics": ["portfolio", "react", "vite"],
-      "updatedAt": "2026-04-17T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-04-19T20:34:26Z"
+    },
+    {
+      "name": "LeadForge",
+      "description": "",
+      "url": "https://github.com/aayush2724/LeadForge",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-04-19T14:40:24Z"
     },
     {
       "name": "RSB-Visitor-Management-System",
-      "description": "Secure visitor management system with admin workflows, WhatsApp notifications, and JWT auth.",
+      "description": "",
       "url": "https://github.com/aayush2724/RSB-Visitor-Management-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
-      "topics": ["fullstack", "auth", "nodejs"],
-      "updatedAt": "2026-04-17T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-04-17T16:10:51Z"
     },
     {
       "name": "TaskFlow",
-      "description": "MERN-stack productivity workspace with Kanban boards and glassmorphism UI.",
+      "description": "",
       "url": "https://github.com/aayush2724/TaskFlow",
       "stars": 1,
       "forks": 1,
       "language": "JavaScript",
-      "topics": ["productivity", "mern", "react"],
-      "updatedAt": "2026-04-17T00:00:00.000Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "Civic support portal for logging citizen issues, tracking resolution flow, and helpline workflows.",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": ["civictech", "react"],
-      "updatedAt": "2026-04-16T00:00:00.000Z"
-    },
-    {
-      "name": "Skillnest",
-      "description": "Peer-to-peer learning and skill exchange platform.",
-      "url": "https://github.com/aayush2724/Skillnest",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": ["edtech", "community"],
-      "updatedAt": "2026-04-12T00:00:00.000Z"
-    },
-    {
-      "name": "Job-Portal",
-      "description": "TypeScript job portal with listings, application flow, authentication, filtering, and recruiter dashboard.",
-      "url": "https://github.com/aayush2724/Job-Portal",
-      "stars": 0,
-      "forks": 0,
-      "language": "TypeScript",
-      "topics": ["typescript", "react", "fullstack"],
-      "updatedAt": "2026-03-15T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-04-17T08:57:08Z"
     },
     {
       "name": "Disaster-relief-system",
-      "description": "Relief coordination platform for managing affected zones, dispatching resources, and organizing response teams.",
+      "description": "",
       "url": "https://github.com/aayush2724/Disaster-relief-system",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
-      "topics": ["fullstack", "relief"],
-      "updatedAt": "2026-03-14T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-04-17T07:10:41Z"
     },
     {
-      "name": "HackFindo",
-      "description": "Hackathon discovery and team-formation platform.",
-      "url": "https://github.com/aayush2724/HackFindo",
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-04-17T07:10:24Z"
+    },
+    {
+      "name": "Skillnest",
+      "description": "",
+      "url": "https://github.com/aayush2724/Skillnest",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
-      "topics": ["community", "hackathons"],
-      "updatedAt": "2026-03-05T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-04-12T17:39:43Z"
+    },
+    {
+      "name": "AI-E1-2025-26",
+      "description": "",
+      "url": "https://github.com/aayush2724/AI-E1-2025-26",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-03-24T09:48:59Z"
+    },
+    {
+      "name": "Job-Portal",
+      "description": "",
+      "url": "https://github.com/aayush2724/Job-Portal",
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": [],
+      "updatedAt": "2026-03-15T10:44:34Z"
     },
     {
       "name": "chatRoom",
-      "description": "Lightweight real-time group chat app with rooms and WebSocket-powered communication.",
+      "description": "",
       "url": "https://github.com/aayush2724/chatRoom",
       "stars": 0,
       "forks": 0,
+      "language": "HTML",
+      "topics": [],
+      "updatedAt": "2026-02-23T17:10:54Z"
+    },
+    {
+      "name": "quiz-app",
+      "description": "",
+      "url": "https://github.com/aayush2724/quiz-app",
+      "stars": 0,
+      "forks": 0,
       "language": "JavaScript",
-      "topics": ["websockets", "realtime"],
-      "updatedAt": "2026-02-23T00:00:00.000Z"
+      "topics": [],
+      "updatedAt": "2026-01-15T16:10:58Z"
+    },
+    {
+      "name": "expense-tracker",
+      "description": "",
+      "url": "https://github.com/aayush2724/expense-tracker",
+      "stars": 0,
+      "forks": 0,
+      "language": "CSS",
+      "topics": [],
+      "updatedAt": "2026-01-15T10:43:35Z"
     }
   ]
 }
