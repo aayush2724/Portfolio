@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-04-20T03:21:58.076Z",
+  "lastUpdated": "2026-04-21T02:55:16.843Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 359545,
+    "ranking": 354705,
     "stats": {
-      "totalSolved": 350,
-      "easy": 172,
+      "totalSolved": 351,
+      "easy": 173,
       "medium": 159,
       "hard": 19,
-      "totalSubmissions": 367
+      "totalSubmissions": 368
     },
     "streak": 25,
-    "totalActiveDays": 187
+    "totalActiveDays": 188
   },
   "github": [
     {
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-19T21:05:56Z"
+      "updatedAt": "2026-04-20T03:22:02Z"
     },
     {
       "name": "LeadForge",
