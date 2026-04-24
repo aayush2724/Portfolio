@@ -240,7 +240,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-extrabold leading-none tracking-tight metal-title whitespace-nowrap"
+            className="font-display font-extrabold leading-none tracking-tight metal-title whitespace-nowrap pr-2"
             style={{ fontSize: "clamp(2.5rem, 10vw, 9.5rem)" }}
           >
             AAYUSH
