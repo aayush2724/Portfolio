@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 
 const roles = [
   "Full-Stack Developer",
@@ -12,36 +18,60 @@ const roles = [
 function ParticleCanvas() {
   const ref = useRef(null);
   useEffect(() => {
-    const c = ref.current, ctx = c.getContext("2d");
-    let raf, mouse = { x: -999, y: -999 };
-    const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
+    const c = ref.current,
+      ctx = c.getContext("2d");
+    let raf,
+      mouse = { x: -999, y: -999 };
+    const resize = () => {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    };
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
     const pts = Array.from({ length: 80 }, () => ({
       x: Math.random() * innerWidth,
       y: Math.random() * innerHeight,
       vx: (Math.random() - 0.5) * 0.3,
       vy: (Math.random() - 0.5) * 0.3,
       r: Math.random() * 1.2 + 0.3,
-      col: ["#f59e0b", "#06b6d4", "#a855f7", "#22c55e"][Math.floor(Math.random() * 4)],
+      col: ["#f59e0b", "#06b6d4", "#a855f7", "#22c55e"][
+        Math.floor(Math.random() * 4)
+      ],
       o: Math.random() * 0.35 + 0.08,
     }));
     const draw = () => {
       ctx.clearRect(0, 0, c.width, c.height);
       pts.forEach((p, i) => {
-        const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
-        if (d < 120) { p.vx += (dx / d) * 0.45; p.vy += (dy / d) * 0.45; }
-        p.x += p.vx; p.y += p.vy; p.vx *= 0.985; p.vy *= 0.985;
-        if (p.x < 0) p.x = c.width; if (p.x > c.width) p.x = 0;
-        if (p.y < 0) p.y = c.height; if (p.y > c.height) p.y = 0;
+        const dx = p.x - mouse.x,
+          dy = p.y - mouse.y,
+          d = Math.hypot(dx, dy);
+        if (d < 120) {
+          p.vx += (dx / d) * 0.45;
+          p.vy += (dy / d) * 0.45;
+        }
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+        if (p.x < 0) p.x = c.width;
+        if (p.x > c.width) p.x = 0;
+        if (p.y < 0) p.y = c.height;
+        if (p.y > c.height) p.y = 0;
         pts.slice(i + 1).forEach((q) => {
-          const dx2 = p.x - q.x, dy2 = p.y - q.y, d2 = Math.hypot(dx2, dy2);
+          const dx2 = p.x - q.x,
+            dy2 = p.y - q.y,
+            d2 = Math.hypot(dx2, dy2);
           if (d2 < 100) {
             ctx.beginPath();
             ctx.strokeStyle = `rgba(245,158,11,${0.08 * (1 - d2 / 100)})`;
             ctx.lineWidth = 0.4;
-            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
           }
         });
         ctx.beginPath();
@@ -54,15 +84,19 @@ function ParticleCanvas() {
       raf = requestAnimationFrame(draw);
     };
     draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
-  return <canvas ref={ref} className="absolute inset-0 pointer-events-none" />;
+  return <canvas ref={ref} className="fixed inset-0 pointer-events-none z-0" />;
 }
 
 // ── Magnetic button ────────────────────────────────────────────────────────────
 function MagneticButton({ children, className, href, ...props }) {
   const ref = useRef(null);
-  const x = useMotionValue(0), y = useMotionValue(0);
+  const x = useMotionValue(0),
+    y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 150, damping: 15 });
   const sy = useSpring(y, { stiffness: 150, damping: 15 });
 
@@ -74,7 +108,10 @@ function MagneticButton({ children, className, href, ...props }) {
     x.set((e.clientX - cx) * 0.35);
     y.set((e.clientY - cy) * 0.35);
   };
-  const handleLeave = () => { x.set(0); y.set(0); };
+  const handleLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
     <motion.a
@@ -125,7 +162,9 @@ function ScrollIndicator() {
       transition={{ delay: 2.2 }}
       className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
     >
-      <span className="font-mono text-[10px] text-white/15 tracking-[0.25em] uppercase">scroll</span>
+      <span className="font-mono text-[10px] text-white/15 tracking-[0.25em] uppercase">
+        scroll
+      </span>
       <div className="w-px h-12 bg-gradient-to-b from-amber-500/50 to-transparent relative overflow-hidden">
         <motion.div
           className="absolute w-full bg-amber-400"
@@ -148,7 +187,8 @@ const stats = [
 
 // ── Hero ───────────────────────────────────────────────────────────────────────
 export default function Hero() {
-  const mx = useMotionValue(0), my = useMotionValue(0);
+  const mx = useMotionValue(0),
+    my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 35, damping: 20 });
   const sy = useSpring(my, { stiffness: 35, damping: 20 });
   const rx = useTransform(sy, [-300, 300], [5, -5]);
@@ -163,14 +203,14 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       <ParticleCanvas />
 
       {/* layered glows */}
-      <div className="absolute top-1/4 left-1/5 w-[600px] h-[600px] bg-amber-500/[0.035] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/[0.015] rounded-full blur-[140px] pointer-events-none" />
+      <div className="fixed top-1/4 left-1/5 w-[600px] h-[600px] bg-amber-500/[0.05] rounded-full blur-[120px] pointer-events-none animate-pulse z-0" />
+      <div className="fixed bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/[0.04] rounded-full blur-[100px] pointer-events-none animate-pulse z-0" style={{ animationDelay: '1s' }} />
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/[0.03] rounded-full blur-[140px] pointer-events-none animate-pulse z-0" style={{ animationDelay: '2s' }} />
 
       {/* Main content */}
       <motion.div
@@ -194,16 +234,16 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Name — split by character for stagger */}
-        <div className="overflow-hidden mb-2">
+        {/* Name */}
+        <div className="mb-4">
           <motion.h1
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-extrabold leading-none tracking-tighter text-white"
+            className="font-display font-extrabold leading-none tracking-tight metal-title"
             style={{ fontSize: "clamp(4rem, 12vw, 9.5rem)" }}
           >
-            Aayush
+            AAYUSH
           </motion.h1>
         </div>
 
@@ -221,13 +261,13 @@ export default function Hero() {
 
         {/* Tagline */}
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 1 }}
-          className="text-white/30 font-body text-base md:text-lg max-w-md mx-auto mb-12 leading-relaxed"
+          className="text-white/35 font-body text-base md:text-lg max-w-lg mx-auto mb-12 leading-relaxed"
         >
-          I build things that matter — civic tools, AI pipelines, and full‑stack
-          products — then unwind with{" "}
+          I build things that matter — secure systems, relief platforms, and
+          learning tools — then unwind with{" "}
           <span className="text-amber-400/70 italic">Stairway to Heaven</span> on guitar.
         </motion.p>
 
@@ -257,6 +297,15 @@ export default function Hero() {
             </svg>
             aayush2724
           </MagneticButton>
+
+          <MagneticButton
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-9 py-4 gc border border-amber-500/30 rounded-2xl text-sm font-display font-medium text-amber-300 hover:border-amber-500/60 hover:text-amber-200 transition-colors duration-300"
+          >
+            Resume
+          </MagneticButton>
         </motion.div>
       </motion.div>
 
@@ -270,8 +319,12 @@ export default function Hero() {
         <div className="gc border border-white/8 rounded-2xl px-8 py-5 grid grid-cols-4 divide-x divide-white/8">
           {stats.map((s) => (
             <div key={s.label} className="text-center px-4">
-              <div className="font-display font-extrabold text-xl text-amber-400">{s.value}</div>
-              <div className="font-mono text-[10px] text-white/25 tracking-wider mt-1 uppercase">{s.label}</div>
+              <div className="font-display font-extrabold text-xl text-amber-400">
+                {s.value}
+              </div>
+              <div className="font-mono text-[10px] text-white/25 tracking-wider mt-1 uppercase">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>
@@ -281,10 +334,16 @@ export default function Hero() {
       <div className="absolute top-24 right-8 font-mono text-xs text-white/8 text-right hidden xl:block leading-6 select-none">
         <div className="text-amber-500/25">// aayush.config.ts</div>
         <div>export default {"{"}</div>
-        <div className="text-cyan-400/20">{"  "}stack: ["React","Node","C++","Python"],</div>
-        <div className="text-purple-400/20">{"  "}guitar: "Stairway to Heaven 🎸",</div>
+        <div className="text-cyan-400/20">
+          {"  "}stack: ["React","Node","C++","Python"],
+        </div>
+        <div className="text-purple-400/20">
+          {"  "}guitar: "Stairway to Heaven 🎸",
+        </div>
         <div className="text-green-400/20">{"  "}leetcode: "aayush2717",</div>
-        <div className="text-amber-400/20">{"  "}status: "always building…"</div>
+        <div className="text-amber-400/20">
+          {"  "}status: "always building…"
+        </div>
         <div>{"}"}</div>
       </div>
 

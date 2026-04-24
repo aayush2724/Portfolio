@@ -8,13 +8,13 @@ const fallbackStats = {
   realName: "aayush2717",
   stats: {
     totalSolved: 350,
-    easy: 172,
-    medium: 159,
+    easy: 169,
+    medium: 162,
     hard: 19,
     totalSubmissions: 781,
   },
   streak: 25,
-  totalActiveDays: 187,
+  totalActiveDays: 189,
 };
 
 const cards = [
@@ -28,8 +28,11 @@ export default function LeetcodeStats() {
   const [syncedFromApi, setSyncedFromApi] = useState(false);
 
   const lastSync = getLastSyncTime()
-    ? new Date(getLastSyncTime()).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })
-    : 'Apr 20';
+    ? new Date(getLastSyncTime()).toLocaleDateString("en-IN", {
+        month: "short",
+        day: "numeric",
+      })
+    : "Apr 20";
 
   useEffect(() => {
     let mounted = true;

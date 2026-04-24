@@ -103,6 +103,13 @@ const cmds = [
     },
   },
   {
+    id: "resume",
+    label: "Open Resume PDF",
+    icon: "📄",
+    cat: "Action",
+    fn: () => window.open("/resume.pdf", "_blank"),
+  },
+  {
     id: "rsb",
     label: "Open RSB Secure on GitHub",
     icon: "🛡️",

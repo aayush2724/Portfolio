@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-04-23T02:56:56.667Z",
+  "lastUpdated": "2026-04-24T00:00:00.000Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
     "ranking": 353497,
     "stats": {
-      "totalSolved": 354,
-      "easy": 173,
+      "totalSolved": 350,
+      "easy": 169,
       "medium": 162,
       "hard": 19,
-      "totalSubmissions": 371
+      "totalSubmissions": 781
     },
     "streak": 25,
     "totalActiveDays": 189
