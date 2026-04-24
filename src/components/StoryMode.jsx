@@ -174,7 +174,7 @@ export default function StoryMode() {
         </motion.div>
 
         {/* Stats */}
-        <motion.div className="mt-8 grid grid-cols-3 gap-4">
+        <motion.div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="gc rounded-xl p-4 text-center">
             <div className="text-sm text-white/60 mb-1">Total XP</div>
             <motion.div
