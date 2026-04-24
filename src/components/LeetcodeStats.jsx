@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { fetchLeetCodeStats, getLastSyncTime } from "../data/leetcodeapi";
+import portfolioData from "../data/portfolioData.json";
 
-const fallbackStats = {
-  username: "aayush2717",
-  avatar: "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-  realName: "aayush2717",
-  stats: {
-    totalSolved: 350,
-    easy: 169,
-    medium: 162,
-    hard: 19,
-    totalSubmissions: 781,
-  },
-  streak: 25,
-  totalActiveDays: 189,
-};
+const fallbackStats = portfolioData.leetcode;
 
 const cards = [
   { key: "easy", label: "Easy", color: "#22c55e" },

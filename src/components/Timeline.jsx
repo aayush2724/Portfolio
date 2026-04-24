@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import portfolioData from "../data/portfolioData.json";
 
 const events = [
   {
@@ -75,7 +76,7 @@ const events = [
   {
     year: "Right Now →",
     title: "Building, solving, strumming",
-    desc: "2nd year CS student with 12+ GitHub repos, 350+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.",
+    desc: `2nd year CS student with 12+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.`,
     icon: "🚀",
     color: "#a855f7",
   },

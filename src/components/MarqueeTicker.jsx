@@ -2,6 +2,8 @@
  * MarqueeTicker — scrolling strip between sections
  * Shows tech stack, achievements, personality snippets
  */
+import portfolioData from "../data/portfolioData.json";
+
 const items = [
   "React",
   "Node.js",
@@ -10,7 +12,7 @@ const items = [
   "TypeScript",
   "MongoDB",
   "Framer Motion",
-  "350+ LeetCode",
+  `${portfolioData.leetcode.stats.totalSolved}+ LeetCode`,
   "10+ Projects",
   "AI Pipelines",
   "WebSockets",

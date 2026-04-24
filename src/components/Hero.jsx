@@ -6,6 +6,7 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
+import portfolioData from "../data/portfolioData.json";
 
 const roles = [
   "Full-Stack Developer",
@@ -179,10 +180,10 @@ function ScrollIndicator() {
 
 // ── Stats strip ────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "350+", label: "LeetCode solved" },
+  { value: `${portfolioData.leetcode.stats.totalSolved}+`, label: "LeetCode solved" },
   { value: "10+", label: "Projects shipped" },
   { value: "2nd yr", label: "CS student" },
-  { value: "25d", label: "Active streak" },
+  { value: `${portfolioData.leetcode.streak}d`, label: "Active streak" },
 ];
 
 // ── Hero ───────────────────────────────────────────────────────────────────────

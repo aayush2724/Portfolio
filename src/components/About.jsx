@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import portfolioData from "../data/portfolioData.json";
 
 const chapters = [
   {
@@ -14,7 +15,7 @@ const chapters = [
     emoji: "🧠",
     tag: "The Grind",
     title: "DSA changed how I think",
-    body: "LeetCode became my daily puzzle. Arrays, trees, graphs, and DP each forced me to slow down and think differently. 350 solved, a 25-day streak, and still going.",
+    body: `LeetCode became my daily puzzle. Arrays, trees, graphs, and DP each forced me to slow down and think differently. ${portfolioData.leetcode.stats.totalSolved} solved, a ${portfolioData.leetcode.streak}-day streak, and still going.`,
     color: "#06b6d4",
     side: "right",
   },
