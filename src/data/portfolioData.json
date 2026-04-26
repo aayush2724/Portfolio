@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-04-25T02:47:14.813Z",
+  "lastUpdated": "2026-04-26T03:24:38.444Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 347433,
+    "ranking": 346043,
     "stats": {
-      "totalSolved": 357,
-      "easy": 174,
-      "medium": 164,
+      "totalSolved": 359,
+      "easy": 175,
+      "medium": 165,
       "hard": 19,
-      "totalSubmissions": 374
+      "totalSubmissions": 377
     },
     "streak": 25,
-    "totalActiveDays": 191
+    "totalActiveDays": 192
   },
   "github": [
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-04-25T23:23:46Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-24T15:52:15Z"
+      "updatedAt": "2026-04-25T02:47:20Z"
     },
     {
       "name": "LeadForge",
@@ -64,16 +74,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-04-17T07:10:41Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-17T07:10:24Z"
     },
     {
       "name": "Skillnest",
