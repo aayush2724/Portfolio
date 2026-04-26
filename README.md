@@ -7,6 +7,7 @@ Modern personal portfolio built with React, Vite, and Tailwind CSS to showcase m
 ## Overview
 
 This portfolio includes:
+
 - Interactive sections for About, Skills, Projects, Timeline, Life, and Contact
 - Responsive design for desktop, tablet, and mobile
 - Smooth animations, glassmorphic styling, and a custom cursor
@@ -30,10 +31,10 @@ This portfolio includes:
 
 ## Highlights
 
-- 345 LeetCode problems solved
+- 359 LeetCode problems solved
 - 25-day LeetCode streak
 - Recent GitHub work synced through April 2026
-- 15+ GitHub repositories
+- 12 featured GitHub repositories
 - Strong focus on full-stack development and DSA
 
 ## Links
@@ -57,3 +58,4 @@ npm install
 
 # Start the development server
 npm run dev
+```
