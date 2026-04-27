@@ -182,8 +182,6 @@ function ScrollIndicator() {
 const stats = [
   { value: `${portfolioData.leetcode.stats.totalSolved}+`, label: "LeetCode solved" },
   { value: `${portfolioData.github.length}+`, label: "Projects shipped" },
-  { value: `#${portfolioData.leetcode.ranking.toLocaleString()}`, label: "LeetCode rank" },
-  { value: `${portfolioData.leetcode.totalActiveDays}d`, label: "Active days" },
 ];
 
 // ── Hero ───────────────────────────────────────────────────────────────────────
