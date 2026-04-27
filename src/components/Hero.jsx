@@ -181,9 +181,9 @@ function ScrollIndicator() {
 // ── Stats strip ────────────────────────────────────────────────────────────────
 const stats = [
   { value: `${portfolioData.leetcode.stats.totalSolved}+`, label: "LeetCode solved" },
-  { value: "10+", label: "Projects shipped" },
-  { value: "2nd yr", label: "CS student" },
-  { value: `${portfolioData.leetcode.streak}d`, label: "Active streak" },
+  { value: `${portfolioData.github.length}+`, label: "Projects shipped" },
+  { value: `#${portfolioData.leetcode.ranking.toLocaleString()}`, label: "LeetCode rank" },
+  { value: `${portfolioData.leetcode.totalActiveDays}d`, label: "Active days" },
 ];
 
 // ── Hero ───────────────────────────────────────────────────────────────────────
@@ -204,7 +204,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-x-clip"
     >
       <ParticleCanvas />
 
@@ -236,13 +236,13 @@ export default function Hero() {
         </motion.div>
 
         {/* Name */}
-        <div className="mb-4">
+        <div className="mb-4 overflow-visible">
           <motion.h1
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-extrabold leading-none tracking-tight metal-title whitespace-nowrap pr-2"
-            style={{ fontSize: "clamp(2.5rem, 10vw, 9.5rem)" }}
+            className="font-display font-extrabold leading-none tracking-tight metal-title"
+            style={{ fontSize: "clamp(2.5rem, 9.5vw, 9rem)", letterSpacing: "-0.02em", padding: "0 0.15em" }}
           >
             AAYUSH
           </motion.h1>
