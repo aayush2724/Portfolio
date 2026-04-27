@@ -317,9 +317,14 @@ export default function Hero() {
         transition={{ delay: 1.6, duration: 0.8 }}
         className="relative z-10 mt-20 w-full max-w-3xl mx-auto px-4 sm:px-6"
       >
-        <div className="gc border border-white/8 rounded-2xl p-4 md:px-8 md:py-5 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0 md:divide-x divide-white/8">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center px-2 md:px-4">
+        <div className="gc border border-white/8 rounded-2xl px-4 py-5 md:px-8 flex flex-wrap md:flex-nowrap items-center justify-around">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`flex-1 min-w-[45%] md:min-w-0 text-center py-2 md:py-0 ${
+                i > 0 ? "md:border-l md:border-white/10" : ""
+              } ${i % 2 === 1 ? "border-l border-white/10 md:border-l md:border-white/10" : ""}`}
+            >
               <div className="font-display font-extrabold text-xl md:text-2xl text-amber-400">
                 {s.value}
               </div>
