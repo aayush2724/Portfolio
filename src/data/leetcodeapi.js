@@ -6,7 +6,7 @@
  * 2. Live API call — as a real-time refresh on top
  */
 
-import staticData from './portfolioData.json';
+import staticData from "./portfolioData.json";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -17,9 +17,9 @@ function parseStatic() {
 
 function parseStaticGitHub() {
   if (!staticData?.github) return [];
-  return staticData.github.map(r => ({
+  return staticData.github.map((r) => ({
     name: r.name,
-    description: r.description || 'No description',
+    description: r.description || "No description",
     url: r.url,
     stars: r.stars,
     forks: r.forks || 0,
@@ -56,9 +56,9 @@ async function tryLiveLeetCode(username) {
     }
   `;
 
-  const response = await fetch('https://leetcode.com/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const response = await fetch("https://leetcode.com/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables: { username } }),
   });
 
@@ -66,7 +66,7 @@ async function tryLiveLeetCode(username) {
   const data = await response.json();
   if (data.errors) throw new Error(data.errors[0].message);
   const u = data.data.matchedUser;
-  if (!u) throw new Error('User not found');
+  if (!u) throw new Error("User not found");
 
   return {
     username: u.username,
@@ -74,9 +74,16 @@ async function tryLiveLeetCode(username) {
     realName: u.profile?.realName || username,
     stats: {
       totalSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
-      easy: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Easy')?.count || 0,
-      medium: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Medium')?.count || 0,
-      hard: u.submitStatsGlobal.acSubmissionNum.find(s => s.difficulty === 'Hard')?.count || 0,
+      easy:
+        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
+          ?.count || 0,
+      medium:
+        u.submitStatsGlobal.acSubmissionNum.find(
+          (s) => s.difficulty === "Medium",
+        )?.count || 0,
+      hard:
+        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
+          ?.count || 0,
       totalSubmissions: u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
     },
     streak: u.userCalendar?.streak || 0,
@@ -87,22 +94,20 @@ async function tryLiveLeetCode(username) {
 // ── GitHub ─────────────────────────────────────────────────────────────────────
 
 export const fetchGitHubProjects = async (username) => {
-  // Return static data (from GitHub Actions) immediately
+  // Prefer live GitHub data so deleted/renamed repos disappear immediately.
   const cached = parseStaticGitHub();
-  if (cached.length > 0) return cached;
 
-  // Fallback: direct API (rate limited without token, but fine as fallback)
   try {
     const response = await fetch(
-      `https://api.github.com/users/${username}/repos?sort=updated&per_page=12`
+      `https://api.github.com/users/${username}/repos?sort=updated&per_page=12`,
     );
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const repos = await response.json();
     return repos
-      .filter(r => !r.fork)
-      .map(r => ({
+      .filter((r) => !r.fork)
+      .map((r) => ({
         name: r.name,
-        description: r.description || 'No description',
+        description: r.description || "No description",
         url: r.html_url,
         stars: r.stargazers_count,
         forks: r.forks_count,
@@ -111,7 +116,8 @@ export const fetchGitHubProjects = async (username) => {
         updatedAt: new Date(r.updated_at).toLocaleDateString(),
       }));
   } catch (err) {
-    console.error('GitHub fetch failed:', err);
+    console.error("GitHub fetch failed:", err);
+    // Fall back to last synced static data when live API fails.
     return cached;
   }
 };

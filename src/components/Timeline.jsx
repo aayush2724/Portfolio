@@ -34,7 +34,7 @@ const events = [
   {
     year: "Building Era",
     title: "First real full-stack app",
-    desc: "Built RSB Secure — a cyberpunk visitor management system with JWT auth and WhatsApp integration. First time a project felt genuinely production-grade.",
+    desc: "Built a visitor management platform with secure workflows, authentication, and dashboard-first UX. First time a project felt genuinely production-grade.",
     icon: "🛡️",
     color: "#22c55e",
   },
@@ -53,9 +53,9 @@ const events = [
     color: "#f59e0b",
   },
   {
-    year: "MERN Mastery",
-    title: "TaskFlow Workspace",
-    desc: "Built a full-scale productivity tracking workspace with Kanban boards, drag-and-drop, and a premium glassmorphism UI.",
+    year: "TypeScript Build",
+    title: "Job Portal",
+    desc: "Built a TypeScript job portal with authentication, listing filters, and recruiter-side dashboard workflows.",
     icon: "📋",
     color: "#06b6d4",
   },

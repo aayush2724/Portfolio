@@ -1,43 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { fetchGitHubProjects } from '../data/leetcodeapi';
-import { Github, Star } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { fetchGitHubProjects } from "../data/leetcodeapi";
+import { Github, Star } from "lucide-react";
 
 const fallbackProjects = [
   {
-    name: 'LeadForge',
-    description: 'AI-powered B2B lead generation and enrichment pipeline with multi-phase scoring.',
-    url: 'https://github.com/aayush2724/LeadForge',
+    name: "LeadForge",
+    description:
+      "AI-powered B2B lead generation and enrichment pipeline with multi-phase scoring.",
+    url: "https://github.com/aayush2724/LeadForge",
     stars: 0,
-    language: 'Python',
-    topics: ['ai', 'automation'],
-    updatedAt: '4/19/2026',
+    language: "Python",
+    topics: ["ai", "automation"],
+    updatedAt: "4/19/2026",
   },
   {
-    name: 'Citizen-Resolver-System',
-    description: 'Civic issue resolver and helpline workflow project.',
-    url: 'https://github.com/aayush2724/Citizen-Resolver-System',
+    name: "Citizen-Resolver-System",
+    description: "Civic issue resolver and helpline workflow project.",
+    url: "https://github.com/aayush2724/Citizen-Resolver-System",
     stars: 1,
-    language: 'JavaScript',
-    topics: ['civictech', 'react'],
-    updatedAt: '4/16/2026',
+    language: "JavaScript",
+    topics: ["civictech", "react"],
+    updatedAt: "4/16/2026",
   },
   {
-    name: 'TaskFlow',
-    description: 'MERN-stack productivity workspace with Kanban board and glassmorphism UI.',
-    url: 'https://github.com/aayush2724/TaskFlow',
-    stars: 1,
-    language: 'JavaScript',
-    topics: ['productivity', 'mern'],
-    updatedAt: '4/17/2026',
+    name: "Job-Portal",
+    description:
+      "TypeScript job portal with listings, auth flow, and recruiter dashboard patterns.",
+    url: "https://github.com/aayush2724/Job-Portal",
+    stars: 0,
+    language: "TypeScript",
+    topics: ["typescript", "fullstack"],
+    updatedAt: "3/15/2026",
   },
   {
-    name: 'RSB-Visitor-Management-System',
-    description: 'Secure visitor management system with admin workflows.',
-    url: 'https://github.com/aayush2724/RSB-Visitor-Management-System',
+    name: "Visitor-Management-System",
+    description:
+      "Visitor management project with secure records and admin-side workflow controls.",
+    url: "https://github.com/aayush2724/Visitor-Management-System",
     stars: 1,
-    language: 'JavaScript',
-    topics: ['fullstack', 'auth'],
-    updatedAt: '4/17/2026',
+    language: "JavaScript",
+    topics: ["fullstack", "workflow"],
+    updatedAt: "4/28/2026",
   },
 ];
 
@@ -48,9 +51,11 @@ const GitHubProjects = () => {
 
   useEffect(() => {
     const getProjects = async () => {
-      const data = await fetchGitHubProjects('aayush2724');
+      const data = await fetchGitHubProjects("aayush2724");
       setProjects(data && data.length > 0 ? data : fallbackProjects);
-      setError(data && data.length > 0 ? null : 'Showing recent saved GitHub work');
+      setError(
+        data && data.length > 0 ? null : "Showing recent saved GitHub work",
+      );
       setLoading(false);
     };
 
@@ -87,7 +92,8 @@ const GitHubProjects = () => {
             Live from <span className="ga">GitHub</span>
           </h2>
           <p className="text-white/35 mt-3 font-body max-w-xl">
-            Repos auto-synced daily — showing the most recently updated projects.
+            Repos auto-synced daily — showing the most recently updated
+            projects.
           </p>
         </div>
         {error && (
@@ -103,7 +109,7 @@ const GitHubProjects = () => {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-            className="group gc rounded-2xl border border-white/7 hover:border-amber-500/20 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-amber-500/5 hover:-translate-y-1 transform"
+              className="group gc rounded-2xl border border-white/7 hover:border-amber-500/20 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-amber-500/5 hover:-translate-y-1 transform"
             >
               <div className="p-6 h-full flex flex-col">
                 {/* Header */}
@@ -128,7 +134,7 @@ const GitHubProjects = () => {
                       </span>
                     )}
                     {project.topics.slice(0, 2).map((topic) => (
-                      <span 
+                      <span
                         key={topic}
                         className="font-mono text-xs px-2.5 py-0.5 rounded-full border border-white/8 text-white/30"
                       >

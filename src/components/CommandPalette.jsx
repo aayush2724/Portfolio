@@ -110,13 +110,13 @@ const cmds = [
     fn: () => window.open("/resume.pdf", "_blank"),
   },
   {
-    id: "rsb",
-    label: "Open RSB Secure on GitHub",
+    id: "vms",
+    label: "Open Visitor Management on GitHub",
     icon: "🛡️",
     cat: "Project",
     fn: () =>
       window.open(
-        "https://github.com/aayush2724/RSB-Visitor-Management-System",
+        "https://github.com/aayush2724/Visitor-Management-System",
         "_blank",
       ),
   },
