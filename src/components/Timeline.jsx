@@ -74,6 +74,13 @@ const events = [
     color: "#ef4444",
   },
   {
+    year: "Hackathon Win",
+    title: "3rd Place at NIT Trichy",
+    desc: "Secured 3rd place in the ThinkRoot x Vortex'26 Hackathon with LeadForge, competing among college teams and presenting a complete AI lead-generation workflow.",
+    icon: "🥉",
+    color: "#f59e0b",
+  },
+  {
     year: "Right Now →",
     title: "Building, solving, strumming",
     desc: `2nd year CS student with 12+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.`,

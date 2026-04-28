@@ -5,13 +5,19 @@ const projects = [
   {
     name: "LeadForge",
     repo: "LeadForge",
-    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping.",
+    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping. Built for the ThinkRoot x Vortex'26 Hackathon at NIT Trichy, where it secured 3rd place.",
     tags: ["Python", "AI/ML", "Data Pipeline", "Automation"],
     color: "#f97316",
     grad: "from-orange-500/15 to-red-500/5",
     mark: "LF",
     gh: "https://github.com/aayush2724/LeadForge",
-    highlight: "Lead scoring | Multi-phase enrichment | SerpAPI + Apollo",
+    media: {
+      src: "/leadforge-hackathon-proof.svg",
+      alt: "LeadForge - 3rd Place at ThinkRoot x Vortex'26 Hackathon, NIT Trichy",
+      caption: "Hackathon Proof · ThinkRoot x Vortex'26",
+    },
+    highlight:
+      "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
     featured: true,
     updated: "Apr 19, 2026",
   },
@@ -123,6 +129,7 @@ const projects = [
 
 function Card({ p, i }) {
   const [hov, setHov] = useState(false);
+  const [mediaFailed, setMediaFailed] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -183,6 +190,27 @@ function Card({ p, i }) {
           {p.highlight}
         </div>
 
+        {p.media && (
+          <div className="mb-4 rounded-lg overflow-hidden border border-white/10 bg-black/25">
+            {!mediaFailed ? (
+              <img
+                src={p.media.src}
+                alt={p.media.alt}
+                className="w-full h-28 object-cover"
+                loading="lazy"
+                onError={() => setMediaFailed(true)}
+              />
+            ) : (
+              <div className="h-28 flex items-center justify-center bg-gradient-to-br from-amber-500/15 to-red-500/10 text-white/45 font-mono text-xs text-center px-3">
+                Hackathon media unavailable
+              </div>
+            )}
+            <div className="px-3 py-2 font-mono text-[10px] tracking-wider uppercase text-amber-300/80 border-t border-white/10">
+              {p.media.caption}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-wrap gap-1.5 mb-5">
           {p.tags.map((t) => (
             <span
@@ -238,9 +266,9 @@ export default function Projects() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-3 font-body max-w-lg"
           >
-            Recent GitHub work — AI pipelines, civic tools, peer learning,
-            job workflows, real-time chat, and disaster response. Updated
-            live from the latest pushes.
+            Recent GitHub work — AI pipelines, civic tools, peer learning, job
+            workflows, real-time chat, and disaster response. Updated live from
+            the latest pushes.
           </motion.p>
         </div>
 

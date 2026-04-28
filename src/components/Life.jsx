@@ -143,6 +143,7 @@ function LearningViz() {
 /* ── Achievements Visual ── */
 function AchieveViz() {
   const milestones = [
+    { icon: "🥉", text: "3rd place - ThinkRoot x Vortex'26 (LeadForge)" },
     { icon: "💻", text: "10+ repos on GitHub" },
     { icon: "🧩", text: "300–600 LeetCode solved" },
     { icon: "🏗️", text: "3 full-stack apps shipped" },
