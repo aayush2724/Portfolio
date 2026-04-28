@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-04-28T03:34:49.171Z",
+  "lastUpdated": "2026-04-28T17:17:42.785Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 341907,
+    "ranking": 340491,
     "stats": {
-      "totalSolved": 361,
+      "totalSolved": 362,
       "easy": 176,
-      "medium": 166,
+      "medium": 167,
       "hard": 19,
-      "totalSubmissions": 379
+      "totalSubmissions": 380
     },
     "streak": 25,
-    "totalActiveDays": 194
+    "totalActiveDays": 195
   },
   "github": [
     {
-      "name": "RSB-Visitor-Management-System",
+      "name": "Visitor-Management-System",
       "description": "",
-      "url": "https://github.com/aayush2724/RSB-Visitor-Management-System",
+      "url": "https://github.com/aayush2724/Visitor-Management-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-27T22:36:30Z"
+      "updatedAt": "2026-04-28T13:45:34Z"
     },
     {
       "name": "Portfolio",
@@ -33,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-27T20:48:46Z"
+      "updatedAt": "2026-04-28T03:34:53Z"
     },
     {
       "name": "Citizen-Resolver-System",

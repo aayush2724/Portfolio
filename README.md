@@ -31,7 +31,7 @@ This portfolio includes:
 
 ## Highlights
 
-- 359 LeetCode problems solved
+- 362 LeetCode problems solved
 - 25-day LeetCode streak
 - Recent GitHub work synced through April 2026
 - 12 featured GitHub repositories
