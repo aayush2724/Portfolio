@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-01T03:44:50.894Z",
+  "lastUpdated": "2026-05-02T00:00:00.000Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 339272,
+    "ranking": 340491,
     "stats": {
       "totalSolved": 363,
       "easy": 176,
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-01T03:44:55Z"
+    },
+    {
       "name": "Citizen-Resolver-System",
       "description": "",
       "url": "https://github.com/aayush2724/Citizen-Resolver-System",
@@ -24,16 +34,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-04-30T05:26:26Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-30T03:34:05Z"
     },
     {
       "name": "Job-Portal",
