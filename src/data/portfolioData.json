@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-05-02T03:19:55.579Z",
+  "lastUpdated": "2026-05-03T03:36:58.723Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 337931,
+    "ranking": 336627,
     "stats": {
-      "totalSolved": 364,
+      "totalSolved": 365,
       "easy": 176,
-      "medium": 169,
+      "medium": 170,
       "hard": 19,
-      "totalSubmissions": 382
+      "totalSubmissions": 383
     },
     "streak": 25,
-    "totalActiveDays": 197
+    "totalActiveDays": 199
   },
   "github": [
+    {
+      "name": "Chord-Detector",
+      "description": "",
+      "url": "https://github.com/aayush2724/Chord-Detector",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-05-02T20:48:05Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-01T19:14:14Z"
+      "updatedAt": "2026-05-02T03:19:59Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -124,16 +134,6 @@
       "language": "CSS",
       "topics": [],
       "updatedAt": "2026-01-15T10:43:35Z"
-    },
-    {
-      "name": "e-commerce-",
-      "description": "",
-      "url": "https://github.com/aayush2724/e-commerce-",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-01-14T12:36:10Z"
     }
   ]
 }
