@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-05-03T03:36:58.723Z",
+  "lastUpdated": "2026-05-04T03:35:11.081Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 336627,
+    "ranking": 330964,
     "stats": {
-      "totalSolved": 365,
-      "easy": 176,
-      "medium": 170,
+      "totalSolved": 368,
+      "easy": 177,
+      "medium": 172,
       "hard": 19,
-      "totalSubmissions": 383
+      "totalSubmissions": 387
     },
     "streak": 25,
     "totalActiveDays": 199
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-03T03:37:02Z"
+    },
     {
       "name": "Chord-Detector",
       "description": "",
@@ -24,16 +34,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-05-02T20:48:05Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-02T03:19:59Z"
     },
     {
       "name": "Citizen-Resolver-System",
