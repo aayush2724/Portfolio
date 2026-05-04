@@ -28,8 +28,9 @@ export default function LeetcodeStats() {
     const getStats = async () => {
       const data = await fetchLeetCodeStats("aayush2717");
       if (mounted && data) {
-        setStats(data);
-        setSyncedFromApi(true);
+        const { __live, ...clean } = data;
+        setStats(clean);
+        setSyncedFromApi(Boolean(__live));
       }
     };
 

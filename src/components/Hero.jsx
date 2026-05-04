@@ -7,6 +7,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
+import { fetchGitHubProjects, fetchLeetCodeStats } from "../data/leetcodeapi";
 
 const roles = [
   "Full-Stack Developer",
@@ -178,12 +179,6 @@ function ScrollIndicator() {
   );
 }
 
-// ── Stats strip ────────────────────────────────────────────────────────────────
-const stats = [
-  { value: `${portfolioData.leetcode.stats.totalSolved}+`, label: "LeetCode solved" },
-  { value: `${portfolioData.github.length}+`, label: "Projects shipped" },
-];
-
 // ── Hero ───────────────────────────────────────────────────────────────────────
 export default function Hero() {
   const mx = useMotionValue(0),
@@ -192,6 +187,37 @@ export default function Hero() {
   const sy = useSpring(my, { stiffness: 35, damping: 20 });
   const rx = useTransform(sy, [-300, 300], [5, -5]);
   const ry = useTransform(sx, [-300, 300], [-5, 5]);
+  const [counts, setCounts] = useState({
+    solved: portfolioData.leetcode.stats.totalSolved,
+    projects: portfolioData.github.length,
+  });
+
+  useEffect(() => {
+    let mounted = true;
+
+    const syncCounts = async () => {
+      const [lc, gh] = await Promise.all([
+        fetchLeetCodeStats("aayush2717"),
+        fetchGitHubProjects("aayush2724"),
+      ]);
+
+      if (!mounted) return;
+      setCounts({
+        solved: lc?.stats?.totalSolved ?? portfolioData.leetcode.stats.totalSolved,
+        projects: gh?.length ?? portfolioData.github.length,
+      });
+    };
+
+    syncCounts();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const stats = [
+    { value: `${counts.solved}+`, label: "LeetCode solved" },
+    { value: `${counts.projects}+`, label: "Projects shipped" },
+  ];
 
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();

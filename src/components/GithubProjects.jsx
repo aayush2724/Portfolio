@@ -81,6 +81,8 @@ const GitHubProjects = () => {
     );
   }
 
+  const activeProjects = projects.slice(0, 6);
+
   return (
     <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
@@ -103,7 +105,7 @@ const GitHubProjects = () => {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project) => (
+          {activeProjects.map((project) => (
             <a
               key={project.name}
               href={project.url}

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import portfolioData from "../data/portfolioData.json";
 
 /* ── Guitar Visual: strum-able strings ── */
 function GuitarViz({ color }) {
@@ -142,11 +143,13 @@ function LearningViz() {
 
 /* ── Achievements Visual ── */
 function AchieveViz() {
+  const totalSolved = portfolioData.leetcode.stats.totalSolved;
+  const totalRepos = portfolioData.github.length;
   const milestones = [
     { icon: "🥉", text: "3rd place - ThinkRoot x Vortex'26 (LeadForge)" },
-    { icon: "💻", text: "10+ repos on GitHub" },
-    { icon: "🧩", text: "300–600 LeetCode solved" },
-    { icon: "🏗️", text: "3 full-stack apps shipped" },
+    { icon: "💻", text: `${totalRepos}+ repos on GitHub` },
+    { icon: "🧩", text: `${totalSolved}+ LeetCode solved` },
+    { icon: "🏗️", text: "Full-stack apps shipped" },
     { icon: "🐍", text: "Python · AI/ML exploration" },
     { icon: "🤝", text: "OSS contributor" },
   ];
@@ -188,7 +191,7 @@ const cards = [
     id: "dsa",
     emoji: "⚡",
     title: "Problem Solving",
-    sub: "LeetCode · 300–600 solved",
+    sub: `LeetCode · ${portfolioData.leetcode.stats.totalSolved}+ solved`,
     color: "#f59e0b",
     grad: "from-amber-500/12 to-orange-500/4",
     desc: "DSA on LeetCode is my daily habit. Trees, graphs, dynamic programming — each problem rewires how I think. Not grinding for a badge, grinding to actually think better.",

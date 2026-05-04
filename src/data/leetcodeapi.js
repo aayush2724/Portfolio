@@ -32,13 +32,13 @@ function parseStaticGitHub() {
 // ── LeetCode ───────────────────────────────────────────────────────────────────
 
 export const fetchLeetCodeStats = async (username) => {
-  // Return cached static data immediately (updated by CI daily)
   const cached = parseStatic();
-
-  // Fire off a live refresh in background — returns cached first
-  tryLiveLeetCode(username).catch(() => {});
-
-  return cached;
+  try {
+    const live = await tryLiveLeetCode(username);
+    return { ...live, __live: true };
+  } catch {
+    return cached ? { ...cached, __live: false } : null;
+  }
 };
 
 async function tryLiveLeetCode(username) {

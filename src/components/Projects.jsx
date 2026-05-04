@@ -11,15 +11,24 @@ const projects = [
     grad: "from-orange-500/15 to-red-500/5",
     mark: "LF",
     gh: "https://github.com/aayush2724/LeadForge",
-    media: {
-      src: "/leadforge-hackathon-proof.svg",
-      alt: "LeadForge - 3rd Place at ThinkRoot x Vortex'26 Hackathon, NIT Trichy",
-      caption: "Hackathon Proof · ThinkRoot x Vortex'26",
-    },
+    badge: "3rd Place Winner",
     highlight:
       "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
     featured: true,
     updated: "Apr 19, 2026",
+  },
+  {
+    name: "Chord Detector",
+    repo: "Chord-Detector",
+    desc: "A computer vision model that detects guitar chords visually from a live camera feed while I play. Current focus: frame preprocessing, hand/fret localization, and real-time chord classification.",
+    tags: ["Python", "Computer Vision", "ML", "OpenCV"],
+    color: "#3b82f6",
+    grad: "from-blue-500/15 to-cyan-500/5",
+    mark: "CD",
+    gh: "https://github.com/aayush2724/Chord-Detector",
+    highlight: "Camera input | Chord classification | Real-time inference",
+    featured: true,
+    updated: "May 2, 2026",
   },
   {
     name: "Citizen Resolver System",
@@ -44,7 +53,7 @@ const projects = [
     mark: "SN",
     gh: "https://github.com/aayush2724/Skillnest",
     highlight: "Skill exchange | Zero cost | Community learning",
-    featured: true,
+    featured: false,
     updated: "Apr 12, 2026",
   },
   {
@@ -90,7 +99,6 @@ const projects = [
 
 function Card({ p, i }) {
   const [hov, setHov] = useState(false);
-  const [mediaFailed, setMediaFailed] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -138,7 +146,7 @@ function Card({ p, i }) {
               className="font-mono text-[10px] px-2 py-0.5 rounded-md"
               style={{ background: `${p.color}18`, color: p.color }}
             >
-              Recent
+              {p.badge || "Active"}
             </span>
           )}
         </div>
@@ -150,27 +158,6 @@ function Card({ p, i }) {
         <div className="font-mono text-xs mb-4 px-2 py-1 rounded-lg border border-white/5 text-white/30 bg-white/2">
           {p.highlight}
         </div>
-
-        {p.media && (
-          <div className="mb-4 rounded-lg overflow-hidden border border-white/10 bg-black/25">
-            {!mediaFailed ? (
-              <img
-                src={p.media.src}
-                alt={p.media.alt}
-                className="w-full h-28 object-cover"
-                loading="lazy"
-                onError={() => setMediaFailed(true)}
-              />
-            ) : (
-              <div className="h-28 flex items-center justify-center bg-gradient-to-br from-amber-500/15 to-red-500/10 text-white/45 font-mono text-xs text-center px-3">
-                Hackathon media unavailable
-              </div>
-            )}
-            <div className="px-3 py-2 font-mono text-[10px] tracking-wider uppercase text-amber-300/80 border-t border-white/10">
-              {p.media.caption}
-            </div>
-          </div>
-        )}
 
         <div className="flex flex-wrap gap-1.5 mb-5">
           {p.tags.map((t) => (
@@ -200,6 +187,7 @@ function Card({ p, i }) {
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
+  const activeProjects = projects.filter((p) => p.featured);
 
   return (
     <section id="projects" className="py-28 px-6 relative">
@@ -234,7 +222,7 @@ export default function Projects() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((p, i) => (
+          {activeProjects.map((p, i) => (
             <Card key={p.repo} p={p} i={i} />
           ))}
         </div>

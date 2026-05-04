@@ -13,7 +13,7 @@ const items = [
   "MongoDB",
   "Framer Motion",
   `${portfolioData.leetcode.stats.totalSolved}+ LeetCode`,
-  "10+ Projects",
+  `${portfolioData.github.length}+ Projects`,
   "AI Pipelines",
   "WebSockets",
   "Full‑Stack Dev",

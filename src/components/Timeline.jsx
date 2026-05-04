@@ -27,7 +27,7 @@ const events = [
   {
     year: "DSA Journey",
     title: "LeetCode became daily",
-    desc: "Started grinding LeetCode. Arrays → Linked Lists → Trees → Graphs → DP. Somewhere between 300–600 problems in and still learning new patterns every week.",
+    desc: `Started grinding LeetCode. Arrays -> Linked Lists -> Trees -> Graphs -> DP. ${portfolioData.leetcode.stats.totalSolved}+ problems in and still learning new patterns every week.`,
     icon: "🧠",
     color: "#06b6d4",
   },
@@ -74,6 +74,13 @@ const events = [
     color: "#ef4444",
   },
   {
+    year: "Computer Vision + Music",
+    title: "Chord Detector via Camera",
+    desc: "Shifted the chord project direction to computer vision. Building a model that detects guitar chords visually from a live camera feed while I play.",
+    icon: "📷",
+    color: "#22c55e",
+  },
+  {
     year: "Hackathon Win",
     title: "3rd Place at NIT Trichy",
     desc: "Secured 3rd place in the ThinkRoot x Vortex'26 Hackathon with LeadForge, competing among college teams and presenting a complete AI lead-generation workflow.",
@@ -83,7 +90,7 @@ const events = [
   {
     year: "Right Now →",
     title: "Building, solving, strumming",
-    desc: `2nd year CS student with 12+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.`,
+    desc: `2nd year CS student with ${portfolioData.github.length}+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.`,
     icon: "🚀",
     color: "#a855f7",
   },

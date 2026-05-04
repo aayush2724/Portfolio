@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Visitor Management Cover</title>
+  <desc id="desc">Secure visitor flow dashboard visual for visitor management project.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect x="100" y="90" width="1000" height="520" rx="24" fill="#0b1220" opacity="0.55"/>
+  <rect x="150" y="150" width="260" height="390" rx="18" fill="#99f6e4" opacity="0.18"/>
+  <rect x="450" y="160" width="600" height="95" rx="12" fill="#e2e8f0" opacity="0.18"/>
+  <rect x="450" y="280" width="600" height="95" rx="12" fill="#e2e8f0" opacity="0.14"/>
+  <rect x="450" y="400" width="600" height="95" rx="12" fill="#e2e8f0" opacity="0.1"/>
+  <text x="145" y="620" fill="#ecfeff" font-size="52" font-family="Verdana, Geneva, sans-serif" font-weight="700">Visitor Management System</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Skillnest Cover</title>
+  <desc id="desc">Community learning themed cover image for Skillnest.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <circle cx="280" cy="250" r="110" fill="#f5d0fe" opacity="0.22"/>
+  <circle cx="540" cy="220" r="85" fill="#fbcfe8" opacity="0.2"/>
+  <circle cx="770" cy="280" r="100" fill="#e9d5ff" opacity="0.2"/>
+  <circle cx="980" cy="220" r="90" fill="#f5d0fe" opacity="0.16"/>
+  <rect x="160" y="390" width="880" height="130" rx="26" fill="#0b1220" opacity="0.4"/>
+  <text x="210" y="470" fill="#fdf4ff" font-size="62" font-family="Verdana, Geneva, sans-serif" font-weight="700">Skillnest</text>
+  <text x="210" y="520" fill="#f5d0fe" font-size="30" font-family="Verdana, Geneva, sans-serif">Teach what you know. Learn what you need.</text>
+</svg>
