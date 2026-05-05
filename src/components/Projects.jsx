@@ -20,15 +20,15 @@ const projects = [
   {
     name: "Chord Detector",
     repo: "Chord-Detector",
-    desc: "A computer vision model that detects guitar chords visually from a live camera feed while I play. Current focus: frame preprocessing, hand/fret localization, and real-time chord classification.",
+    desc: "A chord intelligence project currently being rebuilt with a new direction. Focus now is cleaner signal pipelines, stronger feature extraction, and more reliable real-time recognition.",
     tags: ["Python", "Computer Vision", "ML", "OpenCV"],
     color: "#3b82f6",
     grad: "from-blue-500/15 to-cyan-500/5",
     mark: "CD",
     gh: "https://github.com/aayush2724/Chord-Detector",
-    highlight: "Camera input | Chord classification | Real-time inference",
+    highlight: "Signal pipeline | Feature extraction | Real-time recognition",
     featured: true,
-    updated: "May 2, 2026",
+    updated: "May 5, 2026",
   },
   {
     name: "Citizen Resolver System",

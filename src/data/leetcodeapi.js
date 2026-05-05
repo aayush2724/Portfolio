@@ -51,7 +51,7 @@ async function tryLiveLeetCode(username) {
           acSubmissionNum { difficulty count submissions }
           totalSubmissionNum { difficulty count submissions }
         }
-        userCalendar { streak totalActiveDays }
+        userCalendar { streak totalActiveDays submissionCalendar }
       }
     }
   `;
@@ -67,6 +67,19 @@ async function tryLiveLeetCode(username) {
   if (data.errors) throw new Error(data.errors[0].message);
   const u = data.data.matchedUser;
   if (!u) throw new Error("User not found");
+
+  let calendar = {};
+  try {
+    const parsed = JSON.parse(u.userCalendar?.submissionCalendar || "{}");
+    calendar = Object.fromEntries(
+      Object.entries(parsed).map(([ts, count]) => {
+        const date = new Date(Number(ts) * 1000).toISOString().slice(0, 10);
+        return [date, Number(count) || 0];
+      }),
+    );
+  } catch {
+    calendar = {};
+  }
 
   return {
     username: u.username,
@@ -88,6 +101,7 @@ async function tryLiveLeetCode(username) {
     },
     streak: u.userCalendar?.streak || 0,
     totalActiveDays: u.userCalendar?.totalActiveDays || 0,
+    calendar,
   };
 }
 

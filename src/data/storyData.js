@@ -60,13 +60,13 @@ export const storyChapters = [
   {
     id: 4,
     title: "Beyond Code",
-    subtitle: "The developer who plays guitar",
+    subtitle: "The builder beyond code",
     description: "Because code isn't everything - creativity is everywhere",
     color: "from-green-500 to-emerald-600",
     scenes: [
       {
         id: 1,
-        text: "By day, a developer. By night, a Bollywood guitarist exploring rhythm and melody",
+        text: "By day, a developer. Beyond classes, always exploring new ideas and side builds",
         challenge: null,
       },
       {

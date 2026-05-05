@@ -2,60 +2,6 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
 
-/* ── Guitar Visual: strum-able strings ── */
-function GuitarViz({ color }) {
-  const [vib, setVib] = useState(false);
-  const strings = [0, 1, 2, 3, 4, 5];
-  return (
-    <div
-      className="flex flex-col items-center gap-3 py-4 cursor-pointer select-none"
-      onClick={() => {
-        setVib(true);
-        setTimeout(() => setVib(false), 900);
-      }}
-    >
-      <div className="font-mono text-xs text-white/15 mb-1">
-        tap to strum 🎸
-      </div>
-      <div className="relative w-48 h-24">
-        {/* frets */}
-        {[0, 25, 50, 75, 100].map((x) => (
-          <div
-            key={x}
-            className="absolute top-0 bottom-0 border-l border-white/5"
-            style={{ left: `${x}%` }}
-          />
-        ))}
-        {strings.map((s, i) => (
-          <motion.div
-            key={s}
-            className="absolute w-full rounded-full"
-            style={{
-              top: `${6 + i * 17}%`,
-              height: `${1 + i * 0.25}px`,
-              background: `rgba(255,255,255,${0.12 + i * 0.025})`,
-            }}
-            animate={
-              vib
-                ? {
-                    scaleY: [1, 4, 0.4, 3, 1],
-                    skewX: [0, 3, -3, 1.5, 0],
-                    transition: { duration: 0.55, delay: i * 0.06 },
-                  }
-                : {}
-            }
-          />
-        ))}
-        <div className="absolute left-0 top-0 bottom-0 w-3 rounded-sm border border-white/10 bg-white/4" />
-        <div className="absolute right-0 top-0 bottom-0 w-4 rounded-sm border border-white/10 bg-white/4" />
-      </div>
-      <div className="font-mono text-xs text-white/20 italic">
-        currently learning: Mere Bina
-      </div>
-    </div>
-  );
-}
-
 /* ── DSA Visual: animated LeetCode-style heatmap ── */
 function DSAViz() {
   const weeks = 35;
@@ -178,16 +124,6 @@ function AchieveViz() {
 
 const cards = [
   {
-    id: "guitar",
-    emoji: "🎸",
-    title: "Guitar",
-    sub: "1–2 years · Classic Rock",
-    color: "#a855f7",
-    grad: "from-purple-500/12 to-pink-500/4",
-    desc: "Self-taught for 1–2 years, learning Stairway to Heaven — one of the greatest guitar solos ever written. Music and code share the same thing — both need you to be fully present. Still chasing that perfect run through the solo.",
-    Viz: GuitarViz,
-  },
-  {
     id: "dsa",
     emoji: "⚡",
     title: "Problem Solving",
@@ -298,8 +234,8 @@ export default function Life() {
             transition={{ delay: 0.2 }}
             className="text-white/35 mt-4 max-w-md mx-auto font-body"
           >
-            A 2nd year CS student who plays guitar, grinds LeetCode, reads
-            algorithms books, and builds things that matter.
+            A 2nd year CS student who grinds LeetCode, reads algorithm books,
+            and keeps building things that matter.
           </motion.p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

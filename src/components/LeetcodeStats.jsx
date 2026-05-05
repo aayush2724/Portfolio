@@ -151,6 +151,7 @@ export default function LeetcodeStats() {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );

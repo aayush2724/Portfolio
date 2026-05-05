@@ -52,6 +52,7 @@ const GitHubProjects = () => {
   useEffect(() => {
     const getProjects = async () => {
       const data = await fetchGitHubProjects("aayush2724");
+
       setProjects(data && data.length > 0 ? data : fallbackProjects);
       setError(
         data && data.length > 0 ? null : "Showing recent saved GitHub work",

@@ -89,8 +89,8 @@ const events = [
   },
   {
     year: "Right Now →",
-    title: "Building, solving, strumming",
-    desc: `2nd year CS student with ${portfolioData.github.length}+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, crafting full-stack projects that matter. Leveling up every single day.`,
+    title: "Building, solving, Chord Detector",
+    desc: `2nd year CS student with ${portfolioData.github.length}+ GitHub repos, ${portfolioData.leetcode.stats.totalSolved}+ LC problems solved, and currently rebuilding Chord Detector with a new direction. Leveling up every single day.`,
     icon: "🚀",
     color: "#a855f7",
   },
