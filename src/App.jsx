@@ -11,7 +11,7 @@ import Timeline from "./components/Timeline";
 import Contact from "./components/Contact";
 import CommandPalette from "./components/CommandPalette";
 import LeetcodeStats from "./components/LeetcodeStats";
-import GitHubProjects from "./components/GithubProjects";
+import PortfolioBot from "./components/PortfolioBot";
 import MarqueeTicker from "./components/MarqueeTicker";
 
 function Loader() {
@@ -83,8 +83,8 @@ export default function App() {
             <About />
             <Skills />
             <LeetcodeStats />
-            <GitHubProjects />
             <Projects />
+            <PortfolioBot />
             <Life />
             <Timeline />
             <Contact />

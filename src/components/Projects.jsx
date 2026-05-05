@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-const projects = [
+export const projects = [
   {
     name: "LeadForge",
     repo: "LeadForge",
