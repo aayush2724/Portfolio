@@ -1,17 +1,71 @@
 import React, { useState, useEffect, useRef } from "react";
-import { projects } from "./Projects";
 import portfolioData from "../data/portfolioData.json";
+
+const projectsData = [
+  {
+    name: "LeadForge",
+    repo: "LeadForge",
+    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping. Built for the ThinkRoot x Vortex'26 Hackathon at NIT Trichy, where it secured 3rd place.",
+    tags: ["Python", "AI/ML", "Data Pipeline", "Automation"],
+    gh: "https://github.com/aayush2724/LeadForge",
+  },
+  {
+    name: "Chord Detector",
+    repo: "Chord-Detector",
+    desc: "A chord intelligence project currently being rebuilt with a new direction. Focus now is cleaner signal pipelines, stronger feature extraction, and more reliable real-time recognition.",
+    tags: ["Python", "Computer Vision", "ML", "OpenCV"],
+    gh: "https://github.com/aayush2724/Chord-Detector",
+  },
+  {
+    name: "Citizen Resolver System",
+    repo: "Citizen-Resolver-System",
+    desc: "A civic support portal for logging citizen issues, tracking resolution flow, and keeping helpline work organized from intake to action.",
+    tags: ["React", "Vite", "Routing", "CivicTech"],
+    gh: "https://github.com/aayush2724/Citizen-Resolver-System",
+  },
+  {
+    name: "Skillnest",
+    repo: "Skillnest",
+    desc: "A peer-to-peer learning platform where people can teach what they know and learn what they need without turning knowledge into a paywall.",
+    tags: ["JavaScript", "EdTech", "Community"],
+    gh: "https://github.com/aayush2724/Skillnest",
+  },
+  {
+    name: "Job Portal",
+    repo: "Job-Portal",
+    desc: "A TypeScript job portal with listings, application flow, authentication, filtering, and recruiter-facing dashboard patterns.",
+    tags: ["TypeScript", "React", "Full Stack"],
+    gh: "https://github.com/aayush2724/Job-Portal",
+  },
+  {
+    name: "Disaster Relief System",
+    repo: "Disaster-relief-system",
+    desc: "A relief coordination platform for managing affected zones, dispatching resources, tracking supplies, and organizing response teams.",
+    tags: ["JavaScript", "Full Stack", "Relief Ops"],
+    gh: "https://github.com/aayush2724/Disaster-relief-system",
+  },
+  {
+    name: "chatRoom",
+    repo: "chatRoom",
+    desc: "A lightweight real-time group chat app with rooms, live message broadcasting, and WebSocket-powered communication.",
+    tags: ["HTML", "JavaScript", "WebSockets"],
+    gh: "https://github.com/aayush2724/chatRoom",
+  },
+];
 
 function findBestProjectMatch(query) {
   const q = query.toLowerCase();
   let best = null;
   let bestScore = 0;
-  for (const p of projects) {
+  for (const p of projectsData) {
     let score = 0;
-    if (p.name.toLowerCase().includes(q)) score += 10;
-    if (p.repo && p.repo.toLowerCase().includes(q)) score += 8;
-    if ((p.desc || "").toLowerCase().includes(q)) score += 5;
-    for (const t of p.tags || []) if (t.toLowerCase().includes(q)) score += 3;
+    const pNameLower = p.name.toLowerCase();
+    const pRepoLower = p.repo ? p.repo.toLowerCase() : "";
+    const pDescLower = (p.desc || "").toLowerCase();
+    if (pNameLower.includes(q) || q.includes(pNameLower)) score += 10;
+    if (pRepoLower && (pRepoLower.includes(q) || q.includes(pRepoLower))) score += 8;
+    if (pDescLower.includes(q)) score += 5;
+    for (const t of p.tags || []) if (q.includes(t.toLowerCase())) score += 3;
     if (score > bestScore) {
       bestScore = score;
       best = p;
