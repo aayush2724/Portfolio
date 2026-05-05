@@ -76,6 +76,42 @@ function findBestProjectMatch(query) {
 
 function searchPortfolio(query) {
   const q = query.toLowerCase();
+  const profile = portfolioData.profile || {};
+
+  const isPersonalityQuestion =
+    q.includes("personality") ||
+    q.includes("analyze me") ||
+    q.includes("analyze my personality") ||
+    q.includes("what am i like") ||
+    q.includes("who am i") ||
+    q.includes("about me");
+
+  if (isPersonalityQuestion) {
+    const traits = (profile.traits || []).join(", ");
+    const freeTime = (profile.freeTime || []).join(", ");
+    const funFacts = (profile.funFacts || []).join(", ");
+
+    return (
+      `${profile.summary || "You come across as thoughtful and grounded."}\n\n` +
+      `Traits: ${traits || "curious, consistent, and practical"}\n` +
+      `Free time: ${freeTime || "coding, music, and exploring new ideas"}\n` +
+      `Extras: ${funFacts || "a mix of technical and creative interests"}`
+    );
+  }
+
+  const isFreeTimeQuestion =
+    q.includes("free time") ||
+    q.includes("hobbies") ||
+    q.includes("hobby") ||
+    q.includes("weekend") ||
+    q.includes("music") ||
+    q.includes("guitar") ||
+    q.includes("sports");
+
+  if (isFreeTimeQuestion && profile.freeTime) {
+    return `In free time, Aayush usually keeps a mix of ${profile.freeTime.join(", ")}. That makes him come across as creative, steady, and curious about new things.`;
+  }
+
   // Check projects first
   const p = findBestProjectMatch(q);
   if (p) {
@@ -110,7 +146,10 @@ function searchPortfolio(query) {
 export default function PortfolioBot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi — I'm PortfolioBot. Ask me about projects, skills, or LeetCode stats." },
+    {
+      from: "bot",
+      text: "Hey, I’m PortfolioBot. Ask me about Aayush’s projects, personality, free time, or LeetCode stats.",
+    },
   ]);
   const [input, setInput] = useState("");
   const endRef = useRef(null);
@@ -136,16 +175,23 @@ export default function PortfolioBot() {
     <div>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 gc border border-white/8 rounded-full px-4 py-3 text-sm font-mono text-white/90"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 text-sm font-display font-semibold text-black shadow-[0_0_0_1px_rgba(251,191,36,0.18),0_12px_40px_rgba(251,191,36,0.28)] transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(251,191,36,0.28),0_16px_48px_rgba(251,191,36,0.36)]"
       >
+        <span className="relative flex h-2.5 w-2.5">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-white/80 opacity-75 animate-ping" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+        </span>
         {open ? "Close" : "Chat"}
       </button>
 
       {open && (
-        <div className="fixed right-5 bottom-20 w-96 max-w-[92vw] z-50 bg-[#071024] border border-white/6 rounded-xl shadow-lg p-3">
-          <div className="h-64 overflow-auto p-2 space-y-2">
+        <div className="fixed right-5 bottom-20 w-96 max-w-[92vw] z-50 rounded-xl border border-white/8 bg-[#071024] p-3 shadow-2xl shadow-black/40">
+          <div className="mb-2 rounded-lg border border-white/5 bg-white/3 px-3 py-2 font-display text-sm font-semibold tracking-wide text-white">
+            PortfolioBot
+          </div>
+          <div className="h-64 overflow-auto p-2 space-y-2 font-body">
             {messages.map((m, i) => (
-              <div key={i} className={m.from === "bot" ? "text-white/80 text-sm" : "text-amber-300 text-sm text-right"}>
+              <div key={i} className={m.from === "bot" ? "text-white/85 text-sm" : "text-amber-300 text-sm text-right"}>
                 <pre className="whitespace-pre-wrap">{m.text}</pre>
               </div>
             ))}
@@ -158,10 +204,10 @@ export default function PortfolioBot() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") send(input);
               }}
-              placeholder="Ask about a project, skill, or 'LeetCode'"
-              className="flex-1 px-3 py-2 rounded-md bg-white/3 text-white placeholder-white/30 outline-none"
+              placeholder="Ask about projects, personality, hobbies, or LeetCode"
+              className="flex-1 rounded-md border border-white/10 bg-slate-950/95 px-3 py-2 font-body text-white caret-amber-400 outline-none placeholder:text-white/35 focus:border-amber-400/40 focus:ring-2 focus:ring-amber-400/20"
             />
-            <button onClick={() => send(input)} className="px-3 py-2 rounded-md bg-amber-500 text-black font-bold">
+            <button onClick={() => send(input)} className="rounded-md bg-amber-500 px-3 py-2 font-display font-semibold text-black transition-colors hover:bg-amber-400">
               Send
             </button>
           </div>

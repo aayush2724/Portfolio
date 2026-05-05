@@ -14,6 +14,13 @@
     "streak": 25,
     "totalActiveDays": 201
   },
+  "profile": {
+    "summary": "Calm, curious, and disciplined. You seem to like building things steadily, learning by doing, and keeping a mix of code, music, and hands-on exploration in your routine.",
+    "traits": ["calm", "curious", "disciplined"],
+    "freeTime": ["music", "guitar", "side projects", "exploring other tech stuff"],
+    "funFacts": ["plays guitar", "likes sports"],
+    "tone": "friendly"
+  },
   "github": [
     {
       "name": "AI-E1-2025-26",
