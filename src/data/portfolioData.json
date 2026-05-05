@@ -2,138 +2,142 @@
   "lastUpdated": "2026-05-05T10:30:00.000Z",
   "leetcode": {
     "username": "aayush2717",
-    "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 329618,
-    "stats": {
-      "totalSolved": 371,
-      "easy": 177,
-      "medium": 173,
-      "hard": 19,
-      "totalSubmissions": 904
-    },
-    "streak": 25,
-    "totalActiveDays": 199
-  },
-  "github": [
     {
-      "name": "AI-E1-2025-26",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/AI-E1-2025-26",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T09:35:53.000Z"
-    },
-    {
-      "name": "CertSentinel",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/CertSentinel",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T09:28:41.000Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-03T03:37:02Z"
-    },
-    {
-      "name": "Chord-Detector",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Chord-Detector",
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-02T20:48:05Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-30T05:26:26.000Z"
-    },
-    {
-      "name": "Job-Portal",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Job-Portal",
-      "stars": 0,
-      "forks": 0,
-      "language": "TypeScript",
-      "topics": [],
-      "updatedAt": "2026-04-29T02:43:45.000Z"
-    },
-    {
-      "name": "Visitor-Management-System",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Visitor-Management-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-29T01:07:01.000Z"
-    },
-    {
-      "name": "aayush2724",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/aayush2724",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-04-29T00:29:32.000Z"
-    },
-    {
-      "name": "LeadForge",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/LeadForge",
-      "stars": 1,
-      "forks": 1,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-04-28T19:22:26.000Z"
-    },
-    {
-      "name": "Disaster-relief-system",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Disaster-relief-system",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-17T07:10:41.000Z"
-    },
-    {
-      "name": "Skillnest",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Skillnest",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-12T17:39:43.000Z"
-    },
-    {
-      "name": "chatRoom",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/chatRoom",
-      "stars": 0,
-      "forks": 0,
-      "language": "HTML",
-      "topics": [],
-      "updatedAt": "2026-02-23T17:10:54.000Z"
+      "lastUpdated": "2026-05-05T16:12:24.230Z",
+      "leetcode": {
+        "username": "aayush2717",
+        "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
+        "ranking": 330964,
+        "stats": {
+          "totalSolved": 371,
+          "easy": 177,
+          "medium": 174,
+          "hard": 20,
+          "totalSubmissions": 391
+        },
+        "streak": 25,
+        "totalActiveDays": 201
+      },
+      "github": [
+        {
+          "name": "AI-E1-2025-26",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/AI-E1-2025-26",
+          "stars": 0,
+          "forks": 0,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-05-05T09:35:53.000Z"
+        },
+        {
+          "name": "CertSentinel",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/CertSentinel",
+          "stars": 0,
+          "forks": 0,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-05-05T09:28:41.000Z"
+        },
+        {
+          "name": "Portfolio",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Portfolio",
+          "stars": 1,
+          "forks": 0,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-05-05T03:22:26.000Z"
+        },
+        {
+          "name": "Chord-Detector",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Chord-Detector",
+          "stars": 1,
+          "forks": 0,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-05-05T01:47:49.000Z"
+        },
+        {
+          "name": "Citizen-Resolver-System",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+          "stars": 1,
+          "forks": 0,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-04-30T05:26:26.000Z"
+        },
+        {
+          "name": "Job-Portal",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Job-Portal",
+          "stars": 0,
+          "forks": 0,
+          "language": "TypeScript",
+          "topics": [],
+          "updatedAt": "2026-04-29T02:43:45.000Z"
+        },
+        {
+          "name": "Visitor-Management-System",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Visitor-Management-System",
+          "stars": 1,
+          "forks": 0,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-04-29T01:07:01.000Z"
+        },
+        {
+          "name": "aayush2724",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/aayush2724",
+          "stars": 0,
+          "forks": 0,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-04-29T00:29:32.000Z"
+        },
+        {
+          "name": "LeadForge",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/LeadForge",
+          "stars": 1,
+          "forks": 1,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-04-28T19:22:26.000Z"
+        },
+        {
+          "name": "Disaster-relief-system",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Disaster-relief-system",
+          "stars": 1,
+          "forks": 0,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-04-17T07:10:41.000Z"
+        },
+        {
+          "name": "Skillnest",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/Skillnest",
+          "stars": 0,
+          "forks": 0,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-04-12T17:39:43.000Z"
+        },
+        {
+          "name": "chatRoom",
+          "description": "No description",
+          "url": "https://github.com/aayush2724/chatRoom",
+          "stars": 0,
+          "forks": 0,
+          "language": "HTML",
+          "topics": [],
+          "updatedAt": "2026-02-23T17:10:54.000Z"
+        }
+      ]
     }
-  ]
-}
