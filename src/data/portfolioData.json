@@ -1,146 +1,139 @@
 {
-  "lastUpdated": "2026-05-05T16:12:24.230Z",
+  "lastUpdated": "2026-05-06T03:32:28.080Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 330964,
+    "ranking": 326887,
     "stats": {
-      "totalSolved": 371,
-      "easy": 177,
+      "totalSolved": 372,
+      "easy": 178,
       "medium": 174,
       "hard": 20,
-      "totalSubmissions": 391
+      "totalSubmissions": 392
     },
     "streak": 25,
     "totalActiveDays": 201
   },
-  "profile": {
-    "summary": "Calm, curious, and disciplined. You seem to like building things steadily, learning by doing, and keeping a mix of code, music, and hands-on exploration in your routine.",
-    "traits": ["calm", "curious", "disciplined"],
-    "freeTime": ["music", "guitar", "side projects", "exploring other tech stuff"],
-    "funFacts": ["plays guitar", "likes sports"],
-    "tone": "friendly"
-  },
   "github": [
     {
-      "name": "AI-E1-2025-26",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/AI-E1-2025-26",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T09:35:53.000Z"
-    },
-    {
-      "name": "CertSentinel",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/CertSentinel",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T09:28:41.000Z"
-    },
-    {
       "name": "Portfolio",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-05T03:22:26.000Z"
+      "updatedAt": "2026-05-05T20:04:44Z"
+    },
+    {
+      "name": "AI-E1-2025-26",
+      "description": "",
+      "url": "https://github.com/aayush2724/AI-E1-2025-26",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-05-05T09:35:53Z"
+    },
+    {
+      "name": "CertSentinel",
+      "description": "",
+      "url": "https://github.com/aayush2724/CertSentinel",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-05-05T09:28:41Z"
     },
     {
       "name": "Chord-Detector",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Chord-Detector",
       "stars": 1,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-05-05T01:47:49.000Z"
+      "updatedAt": "2026-05-05T01:47:49Z"
     },
     {
       "name": "Citizen-Resolver-System",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Citizen-Resolver-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-30T05:26:26.000Z"
+      "updatedAt": "2026-04-30T05:26:26Z"
     },
     {
       "name": "Job-Portal",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Job-Portal",
       "stars": 0,
       "forks": 0,
       "language": "TypeScript",
       "topics": [],
-      "updatedAt": "2026-04-29T02:43:45.000Z"
+      "updatedAt": "2026-04-29T02:43:45Z"
     },
     {
       "name": "Visitor-Management-System",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Visitor-Management-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-29T01:07:01.000Z"
-    },
-    {
-      "name": "aayush2724",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/aayush2724",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-04-29T00:29:32.000Z"
+      "updatedAt": "2026-04-29T01:07:01Z"
     },
     {
       "name": "LeadForge",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/LeadForge",
       "stars": 1,
       "forks": 1,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-04-28T19:22:26.000Z"
+      "updatedAt": "2026-04-28T19:22:26Z"
     },
     {
       "name": "Disaster-relief-system",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Disaster-relief-system",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-17T07:10:41.000Z"
+      "updatedAt": "2026-04-17T07:10:41Z"
     },
     {
       "name": "Skillnest",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Skillnest",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-12T17:39:43.000Z"
+      "updatedAt": "2026-04-12T17:39:43Z"
     },
     {
       "name": "chatRoom",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/chatRoom",
       "stars": 0,
       "forks": 0,
       "language": "HTML",
       "topics": [],
-      "updatedAt": "2026-02-23T17:10:54.000Z"
+      "updatedAt": "2026-02-23T17:10:54Z"
+    },
+    {
+      "name": "quiz-app",
+      "description": "",
+      "url": "https://github.com/aayush2724/quiz-app",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-01-15T16:10:58Z"
     }
   ]
 }
