@@ -1,27 +1,40 @@
 {
-  "lastUpdated": "2026-05-05T16:12:24.230Z",
+  "lastUpdated": "2026-05-07T03:32:42.301Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 326887,
+    "ranking": 325649,
     "stats": {
-      "totalSolved": 371,
-      "easy": 177,
-      "medium": 174,
+      "totalSolved": 373,
+      "easy": 178,
+      "medium": 175,
       "hard": 20,
-      "totalSubmissions": 391
+      "totalSubmissions": 393
     },
     "streak": 25,
     "totalActiveDays": 202
   },
-  "profile": {
-    "summary": "Calm, curious, and disciplined. You seem to like building things steadily, learning by doing, and keeping a mix of code, music, and hands-on exploration in your routine.",
-    "traits": ["calm", "curious", "disciplined"],
-    "freeTime": ["music", "guitar", "side projects", "exploring other tech stuff"],
-    "funFacts": ["plays guitar", "likes sports"],
-    "tone": "friendly"
-  },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-06T23:44:54Z"
+    },
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-06T23:14:25Z"
+    },
     {
       "name": "AI-E1-2025-26",
       "description": "",
@@ -40,17 +53,7 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-05-05T09:28:41.000Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-05T03:22:26.000Z"
+      "updatedAt": "2026-05-05T09:28:41Z"
     },
     {
       "name": "Chord-Detector",
@@ -61,16 +64,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-05-05T01:47:49Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-30T05:26:26.000Z"
     },
     {
       "name": "Job-Portal",
@@ -90,17 +83,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-04-29T01:07:01.000Z"
-    },
-    {
-      "name": "aayush2724",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/aayush2724",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-04-29T00:29:32.000Z"
+      "updatedAt": "2026-04-29T01:07:01Z"
     },
     {
       "name": "LeadForge",
