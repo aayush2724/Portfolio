@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-05-10T03:39:53.227Z",
+  "lastUpdated": "2026-05-11T03:53:32.019Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 321669,
+    "ranking": 319129,
     "stats": {
-      "totalSolved": 377,
-      "easy": 178,
-      "medium": 179,
+      "totalSolved": 379,
+      "easy": 179,
+      "medium": 180,
       "hard": 20,
-      "totalSubmissions": 397
+      "totalSubmissions": 399
     },
     "streak": 25,
-    "totalActiveDays": 205
+    "totalActiveDays": 207
   },
   "github": [
     {
-      "name": "Portfolio",
+      "name": "CertSentinel",
       "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
+      "url": "https://github.com/aayush2724/CertSentinel",
+      "stars": 0,
       "forks": 0,
-      "language": "JavaScript",
+      "language": "Python",
       "topics": [],
-      "updatedAt": "2026-05-09T03:27:36Z"
+      "updatedAt": "2026-05-10T18:52:29Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -33,7 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-07T22:30:36Z"
+      "updatedAt": "2026-05-10T13:45:53Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-10T03:39:58Z"
     },
     {
       "name": "AI-E1-2025-26",
@@ -44,16 +54,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-05-05T09:35:53Z"
-    },
-    {
-      "name": "CertSentinel",
-      "description": "",
-      "url": "https://github.com/aayush2724/CertSentinel",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T09:28:41Z"
     },
     {
       "name": "Chord-Detector",
