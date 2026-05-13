@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-12T03:36:40.590Z",
+  "lastUpdated": "2026-05-13T03:45:25.714Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 315205,
+    "ranking": 314050,
     "stats": {
       "totalSolved": 381,
       "easy": 179,
@@ -16,14 +16,24 @@
   },
   "github": [
     {
-      "name": "CertSentinel",
+      "name": "Citizen-Resolver-System",
       "description": "",
-      "url": "https://github.com/aayush2724/CertSentinel",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-12T17:58:41Z"
+    },
+    {
+      "name": "MedVerify",
+      "description": "",
+      "url": "https://github.com/aayush2724/MedVerify",
       "stars": 0,
       "forks": 0,
-      "language": "Python",
+      "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-12T00:21:40Z"
+      "updatedAt": "2026-05-12T17:25:17Z"
     },
     {
       "name": "Portfolio",
@@ -33,17 +43,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-11T03:53:36Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-10T13:45:53Z"
+      "updatedAt": "2026-05-12T03:36:44Z"
     },
     {
       "name": "AI-E1-2025-26",
