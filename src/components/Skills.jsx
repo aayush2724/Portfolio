@@ -33,7 +33,7 @@ function PrimaryCard({ s, delay }) {
       className="gc rounded-2xl p-6 border border-white/7 relative overflow-hidden cursor-default transition-all duration-400"
       style={{boxShadow: hov?`0 0 40px ${s.color}15`:'none'}}>
       <div className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500"
-        style={{opacity: hov?.1:0, background:`radial-gradient(circle at 20% 50%, ${s.color}10, transparent 65%)`}}/>
+        style={{opacity: hov ? 1 : 0, background:`radial-gradient(circle at 20% 50%, ${s.color}10, transparent 65%)`}}/>
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center gap-3">
@@ -70,12 +70,8 @@ function MiniBar({ s, delay }) {
         <span style={{color:s.color}}>{s.pct}%</span>
       </div>
       <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-        <motion.div initial={{width:0}} animate={inView?{width:`${s.pct}%`}:{}}
+          <motion.div initial={{width:0}} animate={inView?{width:`${s.pct}%`}:{}}
           transition={{duration:.9,delay:delay+.15}}
-
-        <div className="mb-8">
-          <Skills3DOrbit />
-        </div>
           className="h-full rounded-full" style={{background:s.color}}/>
       </div>
     </div>
@@ -96,6 +92,10 @@ export default function Skills() {
             className="font-display font-extrabold text-5xl md:text-6xl text-white">
             What I <span className="ga">wield</span>
           </motion.h2>
+        </div>
+
+        <div className="mb-8">
+          <Skills3DOrbit />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
