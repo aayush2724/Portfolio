@@ -8,7 +8,6 @@ import {
 } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
 import { fetchGitHubProjects, fetchLeetCodeStats } from "../data/leetcodeapi";
-import Scene3D from "../three/Scene3D";
 
 const roles = [
   "Full-Stack Developer",
@@ -17,83 +16,6 @@ const roles = [
   "Guitarist 🎸",
 ];
 
-// ── Particle canvas ────────────────────────────────────────────────────────────
-function ParticleCanvas() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const c = ref.current,
-      ctx = c.getContext("2d");
-    let raf,
-      mouse = { x: -999, y: -999 };
-    const resize = () => {
-      c.width = window.innerWidth;
-      c.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-    const pts = Array.from({ length: 80 }, () => ({
-      x: Math.random() * innerWidth,
-      y: Math.random() * innerHeight,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.2 + 0.3,
-      col: ["#f59e0b", "#06b6d4", "#a855f7", "#22c55e"][
-        Math.floor(Math.random() * 4)
-      ],
-      o: Math.random() * 0.35 + 0.08,
-    }));
-    const draw = () => {
-      ctx.clearRect(0, 0, c.width, c.height);
-      pts.forEach((p, i) => {
-        const dx = p.x - mouse.x,
-          dy = p.y - mouse.y,
-          d = Math.hypot(dx, dy);
-        if (d < 120) {
-          p.vx += (dx / d) * 0.45;
-          p.vy += (dy / d) * 0.45;
-        }
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.985;
-        p.vy *= 0.985;
-        if (p.x < 0) p.x = c.width;
-        if (p.x > c.width) p.x = 0;
-        if (p.y < 0) p.y = c.height;
-        if (p.y > c.height) p.y = 0;
-        pts.slice(i + 1).forEach((q) => {
-          const dx2 = p.x - q.x,
-            dy2 = p.y - q.y,
-            d2 = Math.hypot(dx2, dy2);
-          if (d2 < 100) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(245,158,11,${0.08 * (1 - d2 / 100)})`;
-            ctx.lineWidth = 0.4;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
-          }
-        });
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.col;
-        ctx.globalAlpha = p.o;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      });
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-  return <canvas ref={ref} className="fixed inset-0 pointer-events-none z-0" />;
-}
 
 // ── Magnetic button ────────────────────────────────────────────────────────────
 function MagneticButton({ children, className, href, ...props }) {
@@ -231,9 +153,6 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center overflow-x-clip"
     >
-      <Scene3D />
-      <ParticleCanvas />
-
       {/* layered glows */}
       <div className="fixed top-1/4 left-1/5 w-[600px] h-[600px] bg-amber-500/[0.05] rounded-full blur-[120px] pointer-events-none animate-pulse z-0" />
       <div className="fixed bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/[0.04] rounded-full blur-[100px] pointer-events-none animate-pulse z-0" style={{ animationDelay: '1s' }} />

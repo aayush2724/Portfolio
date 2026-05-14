@@ -13,6 +13,7 @@ import CommandPalette from "./components/CommandPalette";
 import LeetcodeStats from "./components/LeetcodeStats";
 import PortfolioBot from "./components/PortfolioBot";
 import MarqueeTicker from "./components/MarqueeTicker";
+import Scene3D from "./three/Scene3D";
 
 function Loader() {
   return (
@@ -73,6 +74,7 @@ export default function App() {
   return (
     <>
       <CustomCursor />
+      <Scene3D />
       <AnimatePresence mode="wait">{loading && <Loader />}</AnimatePresence>
       {!loading && (
         <>

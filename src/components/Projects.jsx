@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import ProjectCard3D from "../three/ProjectCard3D";
 
 export const projects = [
   {
@@ -98,45 +99,26 @@ export const projects = [
 ];
 
 function Card({ p, i }) {
-  const [hov, setHov] = useState(false);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      className="gc rounded-lg border border-white/7 overflow-hidden relative transition-all duration-500 p-6 group"
-      style={{ boxShadow: hov ? `0 20px 55px ${p.color}14` : "none" }}
-    >
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${p.grad} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-      />
-      <motion.div
-        className="absolute -top-8 -right-8 w-28 h-28 rounded-full blur-2xl pointer-events-none"
-        style={{ background: p.color }}
-        animate={{ opacity: hov ? 0.1 : 0 }}
-        transition={{ duration: 0.4 }}
-      />
-
-      <div className="relative z-10">
+    <ProjectCard3D p={p} i={i}>
+      <div>
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div
               className="w-11 h-11 rounded-lg flex items-center justify-center text-sm font-display font-bold border border-white/8"
-              style={{ background: `${p.color}12`, color: p.color }}
+              style={{
+                background: `${p.color}18`,
+                color: p.color,
+                boxShadow: `inset 0 0 18px ${p.color}25, 0 6px 14px ${p.color}25`,
+              }}
             >
               {p.mark}
             </div>
             <div>
-              <div className="font-display font-bold text-white text-sm">
+              <div className="underline-grow font-display font-bold text-white text-sm">
                 {p.name}
               </div>
-              <div className="font-mono text-xs text-white/25 mt-1">
+              <div className="font-mono text-xs text-white/30 mt-1">
                 Updated {p.updated}
               </div>
             </div>
@@ -144,18 +126,21 @@ function Card({ p, i }) {
           {p.featured && (
             <span
               className="font-mono text-[10px] px-2 py-0.5 rounded-md"
-              style={{ background: `${p.color}18`, color: p.color }}
+              style={{ background: `${p.color}22`, color: p.color }}
             >
               {p.badge || "Active"}
             </span>
           )}
         </div>
 
-        <p className="text-white/45 text-xs font-body leading-relaxed mb-3">
+        <p className="text-white/55 text-xs font-body leading-relaxed mb-3">
           {p.desc}
         </p>
 
-        <div className="font-mono text-xs mb-4 px-2 py-1 rounded-lg border border-white/5 text-white/30 bg-white/2">
+        <div
+          className="font-mono text-xs mb-4 px-2 py-1 rounded-lg border border-white/8 text-white/45 bg-white/3"
+          style={{ borderColor: `${p.color}30` }}
+        >
           {p.highlight}
         </div>
 
@@ -163,7 +148,7 @@ function Card({ p, i }) {
           {p.tags.map((t) => (
             <span
               key={t}
-              className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/8 text-white/35"
+              className="text-xs font-mono px-2.5 py-0.5 rounded-full border border-white/10 text-white/50"
             >
               {t}
             </span>
@@ -174,20 +159,21 @@ function Card({ p, i }) {
           href={p.gh}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-mono text-xs text-amber-400/70 hover:text-amber-300 transition-colors"
+          className="inline-flex items-center gap-2 font-mono text-xs text-amber-400 hover:text-amber-200 transition-colors"
+          data-testid={`project-link-${p.repo}`}
         >
           Open repository
           <span aria-hidden="true">-&gt;</span>
         </a>
       </div>
-    </motion.div>
+    </ProjectCard3D>
   );
 }
 
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-  const activeProjects = projects.filter((p) => p.featured);
+  const activeProjects = projects;
 
   return (
     <section id="projects" className="py-28 px-6 relative">
