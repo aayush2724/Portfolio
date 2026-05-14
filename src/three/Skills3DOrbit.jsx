@@ -3,7 +3,6 @@ import {
   Float,
   Text,
   Center,
-  MeshTransmissionMaterial,
   Sparkles,
   OrbitControls,
 } from "@react-three/drei";
@@ -72,17 +71,13 @@ function CentralCore() {
     <Float speed={1.5} rotationIntensity={1} floatIntensity={0.6}>
       <mesh ref={ref}>
         <icosahedronGeometry args={[1.05, 8]} />
-        <MeshTransmissionMaterial
+        <meshPhysicalMaterial
           color="#f59e0b"
           transmission={0.95}
           roughness={0.05}
           thickness={0.6}
           ior={1.3}
-          chromaticAberration={0.4}
-          backside
-          distortion={0.4}
-          distortionScale={0.3}
-          temporalDistortion={0.2}
+          transparent
         />
       </mesh>
     </Float>
