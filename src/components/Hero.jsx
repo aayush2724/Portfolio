@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
 import { fetchGitHubProjects, fetchLeetCodeStats } from "../data/leetcodeapi";
+import Scene3D from "../three/Scene3D";
 
 const roles = [
   "Full-Stack Developer",
@@ -230,6 +231,7 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center overflow-x-clip"
     >
+      <Scene3D />
       <ParticleCanvas />
 
       {/* layered glows */}

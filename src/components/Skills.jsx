@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import portfolioData from "../data/portfolioData.json";
+import Skills3DOrbit from "../three/Skills3DOrbit";
 
 const primary = [
   { name:'DSA (C++)', pct:78, icon:'DS', color:'#f59e0b', tag:'Core Strength', note:`${portfolioData.leetcode.stats.totalSolved} LeetCode problems solved` },
@@ -71,6 +72,10 @@ function MiniBar({ s, delay }) {
       <div className="h-1 bg-white/5 rounded-full overflow-hidden">
         <motion.div initial={{width:0}} animate={inView?{width:`${s.pct}%`}:{}}
           transition={{duration:.9,delay:delay+.15}}
+
+        <div className="mb-8">
+          <Skills3DOrbit />
+        </div>
           className="h-full rounded-full" style={{background:s.color}}/>
       </div>
     </div>
