@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-13T03:45:25.714Z",
+  "lastUpdated": "2026-05-14T03:43:59.042Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 314050,
+    "ranking": 314226,
     "stats": {
       "totalSolved": 381,
       "easy": 179,
@@ -23,7 +23,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-12T17:58:41Z"
+      "updatedAt": "2026-05-13T20:00:28Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-13T03:45:29Z"
     },
     {
       "name": "MedVerify",
@@ -34,16 +44,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-05-12T17:25:17Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-12T03:36:44Z"
     },
     {
       "name": "AI-E1-2025-26",
