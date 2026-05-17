@@ -2,7 +2,7 @@
 
 Modern personal portfolio built with React, Vite, and Tailwind CSS to showcase my projects, skills, and growth as a CS student.
 
-🔗 **Live Demo:** [https://portfolio-nine-sage-30.vercel.app/](https://portfolio-nine-sage-30.vercel.app/)
+🔗 **Live Demo:** [https://aayush-2724.vercel.app/](https://portfolio-nine-sage-30.vercel.app/)
 
 ## Overview
 
