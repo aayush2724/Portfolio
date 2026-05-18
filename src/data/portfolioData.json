@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-17T03:49:35.349Z",
+  "lastUpdated": "2026-05-18T04:01:30.265Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 309317,
+    "ranking": 308256,
     "stats": {
       "totalSolved": 386,
       "easy": 180,
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-16T03:31:44Z"
+      "updatedAt": "2026-05-17T12:20:38Z"
     },
     {
       "name": "Citizen-Resolver-System",
