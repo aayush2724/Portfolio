@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-19T03:55:33.297Z",
+  "lastUpdated": "2026-05-20T03:55:54.747Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 307121,
+    "ranking": 306021,
     "stats": {
       "totalSolved": 388,
       "easy": 180,
@@ -12,18 +12,38 @@
       "totalSubmissions": 408
     },
     "streak": 25,
-    "totalActiveDays": 212
+    "totalActiveDays": 211
   },
   "github": [
     {
       "name": "Beatzy",
       "description": "",
       "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-19T19:15:38Z"
+    },
+    {
+      "name": "Disaster-relief-system",
+      "description": "",
+      "url": "https://github.com/aayush2724/Disaster-relief-system",
       "stars": 0,
       "forks": 0,
-      "language": null,
+      "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-19T02:18:48Z"
+      "updatedAt": "2026-05-19T04:07:58Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-19T03:55:37Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -44,16 +64,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-05-18T17:34:30Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-18T04:01:34Z"
     },
     {
       "name": "AI-E1-2025-26",
@@ -104,16 +114,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-04-28T19:22:26Z"
-    },
-    {
-      "name": "Disaster-relief-system",
-      "description": "",
-      "url": "https://github.com/aayush2724/Disaster-relief-system",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-17T07:10:41Z"
     },
     {
       "name": "Skillnest",
