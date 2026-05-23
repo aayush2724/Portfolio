@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-22T03:59:54.756Z",
+  "lastUpdated": "2026-05-23T03:36:59.628Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 302515,
+    "ranking": 302676,
     "stats": {
       "totalSolved": 391,
       "easy": 180,
@@ -12,18 +12,18 @@
       "totalSubmissions": 411
     },
     "streak": 25,
-    "totalActiveDays": 212
+    "totalActiveDays": 213
   },
   "github": [
     {
-      "name": "Citizen-Resolver-System",
+      "name": "Beatzy",
       "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "url": "https://github.com/aayush2724/Beatzy",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-21T13:48:48Z"
+      "updatedAt": "2026-05-22T18:58:51Z"
     },
     {
       "name": "Portfolio",
@@ -33,17 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-21T04:05:00Z"
+      "updatedAt": "2026-05-22T03:59:59Z"
     },
     {
-      "name": "Beatzy",
+      "name": "Citizen-Resolver-System",
       "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-19T19:15:38Z"
+      "updatedAt": "2026-05-21T13:48:48Z"
     },
     {
       "name": "Disaster-relief-system",
