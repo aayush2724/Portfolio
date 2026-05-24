@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-05-23T03:36:59.628Z",
+  "lastUpdated": "2026-05-24T03:58:47.957Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 302676,
+    "ranking": 302838,
     "stats": {
       "totalSolved": 391,
       "easy": 180,
@@ -12,9 +12,19 @@
       "totalSubmissions": 411
     },
     "streak": 25,
-    "totalActiveDays": 213
+    "totalActiveDays": 214
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-23T03:37:03Z"
+    },
     {
       "name": "Beatzy",
       "description": "",
@@ -24,16 +34,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-05-22T18:58:51Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-22T03:59:59Z"
     },
     {
       "name": "Citizen-Resolver-System",
