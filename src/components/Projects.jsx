@@ -47,61 +47,6 @@ export const projects = [
     featured: true,
     updated: "May 5, 2026",
   },
-  {
-    name: "LeadForge",
-    repo: "LeadForge",
-    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping. 3rd place at ThinkRoot x Vortex'26 Hackathon, NIT Trichy.",
-    tags: ["Python", "AI/ML", "Data Pipeline", "Automation"],
-    color: "#f97316",
-    grad: "from-orange-500/15 to-red-500/5",
-    mark: "LF",
-    gh: "https://github.com/aayush2724/LeadForge",
-    demo: "https://lead-forge-rust.vercel.app",
-    badge: "3rd Place Winner",
-    highlight:
-      "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
-    featured: false,
-    updated: "Apr 19, 2026",
-  },
-  {
-    name: "MedVerify",
-    repo: "MedVerify",
-    desc: "A medical verification platform for validating prescriptions, cross-checking drug interactions, and streamlining pharmacy workflows with intelligent document processing.",
-    tags: ["JavaScript", "React", "HealthTech"],
-    color: "#10b981",
-    grad: "from-emerald-500/15 to-green-500/5",
-    mark: "MV",
-    gh: "https://github.com/aayush2724/MedVerify",
-    highlight: "Prescription validation | Drug interaction | Smart workflows",
-    featured: false,
-    updated: "May 18, 2026",
-  },
-  {
-    name: "Visitor Management System",
-    repo: "Visitor-Management-System",
-    desc: "A visitor management project with secure digital records, check-in/check-out flows, and admin-side workflow controls for campus and office environments.",
-    tags: ["JavaScript", "Full Stack", "Workflow"],
-    color: "#8b5cf6",
-    grad: "from-violet-500/15 to-purple-500/5",
-    mark: "VM",
-    gh: "https://github.com/aayush2724/Visitor-Management-System",
-    highlight: "Secure records | Check-in flow | Admin dashboard",
-    featured: false,
-    updated: "Apr 28, 2026",
-  },
-  {
-    name: "Job Portal",
-    repo: "Job-Portal",
-    desc: "A TypeScript job portal with listings, application flow, authentication, filtering, and recruiter-facing dashboard patterns.",
-    tags: ["TypeScript", "React", "Full Stack"],
-    color: "#3b82f6",
-    grad: "from-blue-500/15 to-indigo-500/5",
-    mark: "JP",
-    gh: "https://github.com/aayush2724/Job-Portal",
-    highlight: "TypeScript | Auth | Recruiter dashboard",
-    featured: false,
-    updated: "Apr 29, 2026",
-  },
 ];
 
 function Card({ p, i }) {
@@ -207,9 +152,7 @@ export default function Projects() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-3 font-body max-w-lg"
           >
-            Recent GitHub work — AI pipelines, civic tools, peer learning, job
-            workflows, real-time chat, and disaster response. Updated live from
-            the latest pushes.
+            Recent GitHub work — Audio ML pipelines, civic tools, and real-time chord recognition. Updated live from the latest pushes.
           </motion.p>
         </div>
 
