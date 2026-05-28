@@ -59,7 +59,7 @@ export const projects = [
     mark: "MF",
     gh: "https://github.com/aayush2724/MindFlow",
     highlight: "Auth flows | Student portal | Dashboard",
-    featured: false,
+    featured: true,
     updated: "May 17, 2026",
   },
   {
@@ -73,7 +73,7 @@ export const projects = [
     gh: "https://github.com/aayush2724/Chord-Detector",
     badge: "ML Project",
     highlight: "Signal pipeline | Feature extraction | Real-time recognition",
-    featured: false,
+    featured: true,
     updated: "May 5, 2026",
   },
   {
@@ -86,7 +86,7 @@ export const projects = [
     mark: "VM",
     gh: "https://github.com/aayush2724/Visitor-Management-System",
     highlight: "Secure records | Check-in flow | Admin dashboard",
-    featured: false,
+    featured: true,
     updated: "Apr 28, 2026",
   },
   {
@@ -99,7 +99,7 @@ export const projects = [
     mark: "MV",
     gh: "https://github.com/aayush2724/MedVerify",
     highlight: "Prescription validation | Drug interaction | Smart workflows",
-    featured: false,
+    featured: true,
     updated: "May 18, 2026",
   },
   {
@@ -112,7 +112,7 @@ export const projects = [
     mark: "JP",
     gh: "https://github.com/aayush2724/Job-Portal",
     highlight: "TypeScript | Auth | Recruiter dashboard",
-    featured: false,
+    featured: true,
     updated: "Apr 29, 2026",
   },
 ];
