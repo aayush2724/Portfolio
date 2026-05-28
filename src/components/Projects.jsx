@@ -4,20 +4,20 @@ import ProjectCard3D from "../three/ProjectCard3D";
 
 export const projects = [
   {
-    name: "Beatzy",
-    repo: "Beatzy",
-    desc: "A full-stack music analysis platform with AI-powered audio intelligence. Features real-time audio visualization, ML-driven genre classification, and a cinematic 'Sonic Singularity' results interface. Deployed across Vercel, Render, and Hugging Face.",
-    tags: ["JavaScript", "React", "AI/ML", "Full Stack"],
-    color: "#f43f5e",
-    grad: "from-rose-500/15 to-pink-500/5",
-    mark: "BZ",
-    gh: "https://github.com/aayush2724/Beatzy",
-    demo: "https://beatzy-zeta.vercel.app",
-    badge: "Deployed Live",
+    name: "LeadForge",
+    repo: "LeadForge",
+    desc: "An AI-powered B2B lead generation and enrichment pipeline. Automates prospect sourcing, scoring, and multi-phase enrichment via Apollo, Crunchbase, and job-board scraping. 3rd place at ThinkRoot x Vortex'26 Hackathon, NIT Trichy.",
+    tags: ["Python", "AI/ML", "Data Pipeline", "Automation"],
+    color: "#f97316",
+    grad: "from-orange-500/15 to-red-500/5",
+    mark: "LF",
+    gh: "https://github.com/aayush2724/LeadForge",
+    demo: "https://lead-forge-rust.vercel.app",
+    badge: "3rd Place Winner",
     highlight:
-      "Audio ML pipeline | Sonic Singularity UI | Vercel + Render + HF",
+      "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
     featured: true,
-    updated: "May 28, 2026",
+    updated: "Apr 19, 2026",
   },
   {
     name: "Citizen Resolver System",
@@ -34,6 +34,35 @@ export const projects = [
     updated: "May 21, 2026",
   },
   {
+    name: "Beatzy",
+    repo: "Beatzy",
+    desc: "A full-stack music analysis platform with AI-powered audio intelligence. Features real-time audio visualization, ML-driven genre classification, and a cinematic 'Sonic Singularity' results interface. Deployed across Vercel, Render, and Hugging Face.",
+    tags: ["JavaScript", "React", "AI/ML", "Full Stack"],
+    color: "#f43f5e",
+    grad: "from-rose-500/15 to-pink-500/5",
+    mark: "BZ",
+    gh: "https://github.com/aayush2724/Beatzy",
+    demo: "https://beatzy-zeta.vercel.app",
+    badge: "Deployed Live",
+    highlight:
+      "Audio ML pipeline | Sonic Singularity UI | Vercel + Render + HF",
+    featured: true,
+    updated: "May 28, 2026",
+  },
+  {
+    name: "MindFlow",
+    repo: "MindFlow",
+    desc: "A student and counselor portal for mental health and hackathon demonstration. Features persistent database-backed test credentials, full authentication, and dashboard flows.",
+    tags: ["React", "Full Stack", "Authentication"],
+    color: "#eab308",
+    grad: "from-yellow-500/15 to-amber-500/5",
+    mark: "MF",
+    gh: "https://github.com/aayush2724/MindFlow",
+    highlight: "Auth flows | Student portal | Dashboard",
+    featured: false,
+    updated: "May 17, 2026",
+  },
+  {
     name: "Chord Detector",
     repo: "Chord-Detector",
     desc: "A chord intelligence project with cleaner signal pipelines, stronger feature extraction, and reliable real-time recognition. Built with Python, OpenCV, and custom ML models for audio analysis.",
@@ -44,8 +73,47 @@ export const projects = [
     gh: "https://github.com/aayush2724/Chord-Detector",
     badge: "ML Project",
     highlight: "Signal pipeline | Feature extraction | Real-time recognition",
-    featured: true,
+    featured: false,
     updated: "May 5, 2026",
+  },
+  {
+    name: "Visitor Management System",
+    repo: "Visitor-Management-System",
+    desc: "A visitor management project with secure digital records, check-in/check-out flows, and admin-side workflow controls for campus and office environments.",
+    tags: ["JavaScript", "Full Stack", "Workflow"],
+    color: "#8b5cf6",
+    grad: "from-violet-500/15 to-purple-500/5",
+    mark: "VM",
+    gh: "https://github.com/aayush2724/Visitor-Management-System",
+    highlight: "Secure records | Check-in flow | Admin dashboard",
+    featured: false,
+    updated: "Apr 28, 2026",
+  },
+  {
+    name: "MedVerify",
+    repo: "MedVerify",
+    desc: "A medical verification platform for validating prescriptions, cross-checking drug interactions, and streamlining pharmacy workflows with intelligent document processing.",
+    tags: ["JavaScript", "React", "HealthTech"],
+    color: "#10b981",
+    grad: "from-emerald-500/15 to-green-500/5",
+    mark: "MV",
+    gh: "https://github.com/aayush2724/MedVerify",
+    highlight: "Prescription validation | Drug interaction | Smart workflows",
+    featured: false,
+    updated: "May 18, 2026",
+  },
+  {
+    name: "Job Portal",
+    repo: "Job-Portal",
+    desc: "A TypeScript job portal with listings, application flow, authentication, filtering, and recruiter-facing dashboard patterns.",
+    tags: ["TypeScript", "React", "Full Stack"],
+    color: "#6366f1",
+    grad: "from-indigo-500/15 to-blue-500/5",
+    mark: "JP",
+    gh: "https://github.com/aayush2724/Job-Portal",
+    highlight: "TypeScript | Auth | Recruiter dashboard",
+    featured: false,
+    updated: "Apr 29, 2026",
   },
 ];
 
@@ -152,7 +220,7 @@ export default function Projects() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-3 font-body max-w-lg"
           >
-            Recent GitHub work — Audio ML pipelines, civic tools, and real-time chord recognition. Updated live from the latest pushes.
+            Recent GitHub work — AI pipelines, civic tools, music analysis platforms, health verification, and job workflows. Updated live from the latest pushes.
           </motion.p>
         </div>
 
