@@ -110,31 +110,31 @@ const cmds = [
     fn: () => window.open("/resume.pdf", "_blank"),
   },
   {
-    id: "vms",
-    label: "Open Visitor Management on GitHub",
-    icon: "🛡️",
+    id: "beatzy",
+    label: "Open Beatzy on GitHub",
+    icon: "🎵",
     cat: "Project",
     fn: () =>
       window.open(
-        "https://github.com/aayush2724/Visitor-Management-System",
+        "https://github.com/aayush2724/Beatzy",
         "_blank",
       ),
   },
   {
-    id: "skill",
-    label: "Open Skillnest on GitHub",
-    icon: "🧠",
+    id: "crs",
+    label: "Open Citizen Resolver on GitHub",
+    icon: "🏛️",
     cat: "Project",
-    fn: () => window.open("https://github.com/aayush2724/Skillnest", "_blank"),
+    fn: () => window.open("https://github.com/aayush2724/Citizen-Resolver-System", "_blank"),
   },
   {
-    id: "dr",
-    label: "Open Disaster Relief on GitHub",
-    icon: "🆘",
+    id: "cd",
+    label: "Open Chord Detector on GitHub",
+    icon: "🎸",
     cat: "Project",
     fn: () =>
       window.open(
-        "https://github.com/aayush2724/Disaster-relief-system",
+        "https://github.com/aayush2724/Chord-Detector",
         "_blank",
       ),
   },

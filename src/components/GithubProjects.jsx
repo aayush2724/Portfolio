@@ -4,14 +4,13 @@ import { Github, Star } from "lucide-react";
 
 const fallbackProjects = [
   {
-    name: "LeadForge",
-    description:
-      "AI-powered B2B lead generation and enrichment pipeline with multi-phase scoring.",
-    url: "https://github.com/aayush2724/LeadForge",
-    stars: 0,
-    language: "Python",
-    topics: ["ai", "automation"],
-    updatedAt: "4/19/2026",
+    name: "Beatzy",
+    description: "Full-stack music analysis platform with AI-powered audio intelligence.",
+    url: "https://github.com/aayush2724/Beatzy",
+    stars: 1,
+    language: "JavaScript",
+    topics: ["react", "ai"],
+    updatedAt: "5/28/2026",
   },
   {
     name: "Citizen-Resolver-System",
@@ -20,27 +19,25 @@ const fallbackProjects = [
     stars: 1,
     language: "JavaScript",
     topics: ["civictech", "react"],
-    updatedAt: "4/16/2026",
+    updatedAt: "5/21/2026",
   },
   {
-    name: "Job-Portal",
-    description:
-      "TypeScript job portal with listings, auth flow, and recruiter dashboard patterns.",
-    url: "https://github.com/aayush2724/Job-Portal",
+    name: "MedVerify",
+    description: "Medical verification platform for prescriptions and intelligent document processing.",
+    url: "https://github.com/aayush2724/MedVerify",
     stars: 0,
-    language: "TypeScript",
-    topics: ["typescript", "fullstack"],
-    updatedAt: "3/15/2026",
+    language: "JavaScript",
+    topics: ["healthtech", "react"],
+    updatedAt: "5/18/2026",
   },
   {
-    name: "Visitor-Management-System",
-    description:
-      "Visitor management project with secure records and admin-side workflow controls.",
-    url: "https://github.com/aayush2724/Visitor-Management-System",
+    name: "Chord-Detector",
+    description: "Chord intelligence project with real-time audio analysis and ML models.",
+    url: "https://github.com/aayush2724/Chord-Detector",
     stars: 1,
-    language: "JavaScript",
-    topics: ["fullstack", "workflow"],
-    updatedAt: "4/28/2026",
+    language: "Python",
+    topics: ["ml", "computervision"],
+    updatedAt: "5/5/2026",
   },
 ];
 
