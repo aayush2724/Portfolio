@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-05-29T03:59:32.817Z",
+  "lastUpdated": "2026-05-30T03:46:09.684Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 299877,
+    "ranking": 297642,
     "stats": {
-      "totalSolved": 395,
-      "easy": 183,
+      "totalSolved": 396,
+      "easy": 184,
       "medium": 189,
       "hard": 23,
-      "totalSubmissions": 416
+      "totalSubmissions": 417
     },
     "streak": 25,
-    "totalActiveDays": 212
+    "totalActiveDays": 213
   },
   "github": [
+    {
+      "name": "MedVerify",
+      "description": "",
+      "url": "https://github.com/aayush2724/MedVerify",
+      "stars": 0,
+      "forks": 1,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-29T20:22:53Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-28T19:47:52Z"
+      "updatedAt": "2026-05-29T03:59:36Z"
     },
     {
       "name": "Beatzy",
@@ -54,16 +64,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-05-19T04:07:58Z"
-    },
-    {
-      "name": "MedVerify",
-      "description": "",
-      "url": "https://github.com/aayush2724/MedVerify",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-18T17:34:30Z"
     },
     {
       "name": "AI-E1-2025-26",
