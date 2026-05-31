@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-05-30T03:46:09.684Z",
+  "lastUpdated": "2026-05-31T04:11:38.273Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 297642,
+    "ranking": 297799,
     "stats": {
-      "totalSolved": 396,
+      "totalSolved": 397,
       "easy": 184,
-      "medium": 189,
+      "medium": 190,
       "hard": 23,
-      "totalSubmissions": 417
+      "totalSubmissions": 418
     },
     "streak": 25,
-    "totalActiveDays": 213
+    "totalActiveDays": 214
   },
   "github": [
     {
@@ -23,17 +23,7 @@
       "forks": 1,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-29T20:22:53Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-29T03:59:36Z"
+      "updatedAt": "2026-05-30T18:04:45Z"
     },
     {
       "name": "Beatzy",
@@ -43,7 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-28T19:08:48Z"
+      "updatedAt": "2026-05-30T11:02:12Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-30T03:46:13Z"
     },
     {
       "name": "Citizen-Resolver-System",
