@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-05-31T04:11:38.273Z",
+  "lastUpdated": "2026-06-01T04:25:42.445Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 297799,
+    "ranking": 296828,
     "stats": {
-      "totalSolved": 397,
-      "easy": 184,
+      "totalSolved": 398,
+      "easy": 185,
       "medium": 190,
       "hard": 23,
-      "totalSubmissions": 418
+      "totalSubmissions": 419
     },
     "streak": 25,
-    "totalActiveDays": 214
+    "totalActiveDays": 215
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-31T04:11:42Z"
+    },
     {
       "name": "MedVerify",
       "description": "",
@@ -34,16 +44,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-05-30T11:02:12Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-05-30T03:46:13Z"
     },
     {
       "name": "Citizen-Resolver-System",
