@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import ProjectCard3D from "../three/ProjectCard3D";
 
 export const projects = [
@@ -14,9 +14,9 @@ export const projects = [
     gh: "https://github.com/aayush2724/LeadForge",
     demo: "https://lead-forge-rust.vercel.app",
     badge: "3rd Place Winner",
-    highlight:
-      "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
+    highlight: "3rd Place - ThinkRoot x Vortex'26 | Lead scoring | SerpAPI + Apollo",
     featured: true,
+    updatedAt: "2026-04-19",
     updated: "Apr 19, 2026",
   },
   {
@@ -31,6 +31,7 @@ export const projects = [
     badge: "Largest Codebase",
     highlight: "Citizen complaints | Status tracking | Resolver workflow",
     featured: true,
+    updatedAt: "2026-05-21",
     updated: "May 21, 2026",
   },
   {
@@ -44,9 +45,9 @@ export const projects = [
     gh: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
     badge: "Deployed Live",
-    highlight:
-      "Audio ML pipeline | Sonic Singularity UI | Vercel + Render + HF",
+    highlight: "Audio ML pipeline | Sonic Singularity UI | Vercel + Render + HF",
     featured: true,
+    updatedAt: "2026-05-28",
     updated: "May 28, 2026",
   },
   {
@@ -60,6 +61,7 @@ export const projects = [
     gh: "https://github.com/aayush2724/MindFlow",
     highlight: "Auth flows | Student portal | Dashboard",
     featured: true,
+    updatedAt: "2026-05-17",
     updated: "May 17, 2026",
   },
   {
@@ -74,6 +76,7 @@ export const projects = [
     badge: "ML Project",
     highlight: "Signal pipeline | Feature extraction | Real-time recognition",
     featured: true,
+    updatedAt: "2026-05-05",
     updated: "May 5, 2026",
   },
   {
@@ -87,6 +90,7 @@ export const projects = [
     gh: "https://github.com/aayush2724/Visitor-Management-System",
     highlight: "Secure records | Check-in flow | Admin dashboard",
     featured: true,
+    updatedAt: "2026-04-28",
     updated: "Apr 28, 2026",
   },
   {
@@ -100,6 +104,7 @@ export const projects = [
     gh: "https://github.com/aayush2724/MedVerify",
     highlight: "Prescription validation | Drug interaction | Smart workflows",
     featured: true,
+    updatedAt: "2026-05-18",
     updated: "May 18, 2026",
   },
   {
@@ -113,9 +118,36 @@ export const projects = [
     gh: "https://github.com/aayush2724/Job-Portal",
     highlight: "TypeScript | Auth | Recruiter dashboard",
     featured: true,
+    updatedAt: "2026-04-29",
     updated: "Apr 29, 2026",
   },
 ];
+
+// Sort by most recently updated
+const sortedByRecent = [...projects].sort(
+  (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+);
+const recentProjects = sortedByRecent.slice(0, 3);
+
+function timeAgo(dateStr) {
+  const now = new Date("2026-06-02");
+  const then = new Date(dateStr);
+  const diffDays = Math.floor((now - then) / (1000 * 60 * 60 * 24));
+  if (diffDays === 0) return "Today";
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays}d ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+  return `${Math.floor(diffDays / 30)}mo ago`;
+}
+
+function RecentBadge({ dateStr }) {
+  return (
+    <span className="inline-flex items-center gap-1 font-mono text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/12 text-amber-400/80 border border-amber-500/20">
+      <span className="w-1 h-1 rounded-full bg-amber-400 animate-pulse" />
+      {timeAgo(dateStr)}
+    </span>
+  );
+}
 
 function Card({ p, i }) {
   return (
@@ -137,8 +169,8 @@ function Card({ p, i }) {
               <div className="underline-grow font-display font-bold text-white text-sm">
                 {p.name}
               </div>
-              <div className="font-mono text-xs text-white/30 mt-1">
-                Updated {p.updated}
+              <div className="font-mono text-xs text-white/30 mt-1 flex items-center gap-1.5">
+                <span>Updated {p.updated}</span>
               </div>
             </div>
           </div>
@@ -174,30 +206,90 @@ function Card({ p, i }) {
           ))}
         </div>
 
-        <a
-          href={p.gh}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-mono text-xs text-amber-400 hover:text-amber-200 transition-colors"
-          data-testid={`project-link-${p.repo}`}
-        >
-          Open repository
-          <span aria-hidden="true">-&gt;</span>
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href={p.gh}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-mono text-xs text-amber-400 hover:text-amber-200 transition-colors"
+          >
+            Open repository
+            <span aria-hidden="true">-&gt;</span>
+          </a>
+          {p.demo && (
+            <a
+              href={p.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-mono text-xs text-white/30 hover:text-white/60 transition-colors"
+            >
+              Live demo
+              <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
       </div>
     </ProjectCard3D>
   );
 }
 
+function RecentCard({ p, i }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: i * 0.08 }}
+      className="flex items-center gap-4 p-3.5 rounded-xl border border-white/6 bg-white/[0.025] hover:bg-white/[0.04] hover:border-white/10 transition-all group"
+    >
+      <div
+        className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-xs font-display font-bold border border-white/8"
+        style={{
+          background: `${p.color}18`,
+          color: p.color,
+          boxShadow: `inset 0 0 12px ${p.color}20`,
+        }}
+      >
+        {p.mark}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          <span className="font-display font-semibold text-white text-xs truncate">{p.name}</span>
+          <RecentBadge dateStr={p.updatedAt} />
+        </div>
+        <div className="font-mono text-[10px] text-white/30 truncate">{p.highlight}</div>
+      </div>
+      <a
+        href={p.gh}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex-shrink-0 font-mono text-[10px] text-white/25 group-hover:text-amber-400 transition-colors"
+        aria-label={`Open ${p.name} repo`}
+      >
+        →
+      </a>
+    </motion.div>
+  );
+}
+
+const FILTERS = ["All", "AI/ML", "Full Stack", "Python", "React", "TypeScript"];
+
 export default function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-  const activeProjects = projects;
+  const [filter, setFilter] = useState("All");
+
+  const filtered =
+    filter === "All"
+      ? projects
+      : projects.filter((p) => p.tags.some((t) => t === filter));
 
   return (
     <section id="projects" className="py-28 px-6 relative">
       <div className="absolute left-0 top-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto">
+
+        {/* Header */}
         <div ref={ref} className="mb-14">
           <motion.p
             initial={{ opacity: 0 }}
@@ -220,15 +312,72 @@ export default function Projects() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-white/35 mt-3 font-body max-w-lg"
           >
-            Recent GitHub work — AI pipelines, civic tools, music analysis platforms, health verification, and job workflows. Updated live from the latest pushes.
+            Recent GitHub work — AI pipelines, civic tools, music analysis platforms, health verification, and job workflows.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {activeProjects.map((p, i) => (
-            <Card key={p.repo} p={p} i={i} />
+        {/* Recently Updated strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.7 }}
+          className="mb-12"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="font-mono text-xs text-amber-500/70 tracking-widest uppercase">Recently Updated</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {recentProjects.map((p, i) => (
+              <RecentCard key={p.repo} p={p} i={i} />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Filter tabs */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="flex flex-wrap gap-2 mb-8"
+        >
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`font-mono text-xs px-3 py-1.5 rounded-full border transition-all duration-200 ${
+                filter === f
+                  ? "bg-amber-500/15 border-amber-500/40 text-amber-400"
+                  : "border-white/8 text-white/35 hover:text-white/60 hover:border-white/15"
+              }`}
+            >
+              {f}
+              {f !== "All" && (
+                <span className="ml-1.5 text-white/20">
+                  {projects.filter((p) => p.tags.includes(f)).length}
+                </span>
+              )}
+            </button>
           ))}
-        </div>
+        </motion.div>
+
+        {/* Cards grid */}
+        <AnimatePresence mode="popLayout">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filtered.map((p, i) => (
+              <motion.div
+                key={p.repo}
+                layout
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.94 }}
+                transition={{ duration: 0.3, delay: i * 0.04 }}
+              >
+                <Card p={p} i={i} />
+              </motion.div>
+            ))}
+          </div>
+        </AnimatePresence>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -243,7 +392,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 gc border border-white/10 rounded-lg px-7 py-3.5 font-mono text-sm text-white/40 hover:text-white hover:border-white/20 transition-all"
           >
-            See all repos - github.com/aayush2724
+            See all repos — github.com/aayush2724
           </a>
         </motion.div>
       </div>
