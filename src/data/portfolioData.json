@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-06-01T04:25:42.445Z",
+  "lastUpdated": "2026-06-02T04:19:08.354Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 296828,
+    "ranking": 294670,
     "stats": {
-      "totalSolved": 398,
-      "easy": 185,
+      "totalSolved": 399,
+      "easy": 186,
       "medium": 190,
       "hard": 23,
-      "totalSubmissions": 419
+      "totalSubmissions": 420
     },
     "streak": 25,
-    "totalActiveDays": 215
+    "totalActiveDays": 216
   },
   "github": [
     {
-      "name": "Portfolio",
+      "name": "Beatzy",
       "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
+      "url": "https://github.com/aayush2724/Beatzy",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-31T04:11:42Z"
+      "updatedAt": "2026-06-01T22:42:56Z"
     },
     {
       "name": "MedVerify",
@@ -33,17 +33,17 @@
       "forks": 1,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-30T18:04:45Z"
+      "updatedAt": "2026-06-01T17:06:42Z"
     },
     {
-      "name": "Beatzy",
+      "name": "Portfolio",
       "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
+      "url": "https://github.com/aayush2724/Portfolio",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-30T11:02:12Z"
+      "updatedAt": "2026-06-01T04:25:47Z"
     },
     {
       "name": "Citizen-Resolver-System",
