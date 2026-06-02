@@ -2,41 +2,243 @@ import React, { useState, useEffect, useRef } from "react";
 import portfolioData from "../data/portfolioData.json";
 import { projects } from "./Projects";
 
-// ---------- System prompt for Claude ----------
-const SYSTEM_PROMPT = `You are PortfolioBot — the smart, concise assistant embedded in Aayush Sharma's developer portfolio. You speak in a direct, confident, slightly casual tone. Never be verbose; match the aesthetic of a dark, minimal portfolio site.
+// Custom keywords mapped to each project to ensure accurate matching
+const projectKeywords = {
+  "LeadForge": ["leadforge", "lead forge", "lead-forge"],
+  "Citizen Resolver System": ["citizen resolver", "citizen-resolver", "citizen", "resolver"],
+  "Beatzy": ["beatzy"],
+  "MindFlow": ["mindflow", "mind flow", "mind-flow"],
+  "Chord Detector": ["chord detector", "chord-detector", "chord", "detector"],
+  "Visitor Management System": ["visitor management", "visitor-management", "visitor"],
+  "MedVerify": ["medverify", "med verify", "medical"],
+  "Job Portal": ["job portal", "job-portal", "job"]
+};
 
-About Aayush:
-- Full-stack & AI/ML developer, B.E. AI-ML student (2024–2028) at National Institute of Engineering, Mysore
-- Based in Bengaluru, India
-- Team: "Panic-At-The-Deadline" with Kaki Harshita — regular hackathon competitors
-- GitHub: github.com/aayush2724 | LeetCode: aayush2717
-- Stack: React, Vite, Tailwind, Node.js, Express, FastAPI, Python, MongoDB, MySQL, Firebase, Three.js, Framer Motion
-- Interests: Civic tech, AI/ML pipelines, music (learning Stairway to Heaven on guitar ~1–2 years), competitive programming
+// ---------- Offline simulated AI engine ----------
+function searchPortfolio(query) {
+  const q = query.toLowerCase().trim();
 
-LeetCode stats: ${portfolioData.leetcode.stats.totalSolved} solved (${portfolioData.leetcode.stats.easy} easy, ${portfolioData.leetcode.stats.medium} medium, ${portfolioData.leetcode.stats.hard} hard), ${portfolioData.leetcode.streak}-day streak, rank ${portfolioData.leetcode.ranking}.
+  // 1. Greetings
+  if (
+    q === "hi" ||
+    q === "hello" ||
+    q === "hey" ||
+    q === "hey there" ||
+    q === "yo" ||
+    q === "sup" ||
+    q.includes("greet") ||
+    q.includes("good morning") ||
+    q.includes("good afternoon")
+  ) {
+    return "Hey there! I'm **PortfolioBot**. Ask me about my projects, hackathon achievements, tech stack, or LeetCode statistics!";
+  }
 
-Projects (most recent first):
-${projects
-  .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-  .map(
-    (p) =>
-      `- ${p.name} (${p.updated}): ${p.desc} Tags: ${p.tags.join(", ")}. Repo: ${p.gh}${p.demo ? ` Demo: ${p.demo}` : ""}`
-  )
-  .join("\n")}
+  // 2. Specific Projects (Checked before general keywords like 'about')
+  for (const p of projects) {
+    const keywords = projectKeywords[p.name] || [p.name.toLowerCase()];
+    if (keywords.some(kw => q.includes(kw))) {
+      return `**${p.name}** ${p.badge ? `(${p.badge})` : ""}\n\n` +
+        `${p.desc}\n\n` +
+        `**Stack:** ${p.tags.join(", ")}\n` +
+        `**Highlights:** ${p.highlight}\n\n` +
+        `👉 [GitHub Repository](${p.gh}) ${p.demo ? `| [Live Demo](${p.demo})` : ""}`;
+    }
+  }
 
-Hackathon achievements:
-- 3rd Place, ThinkRoot x Vortex'26 @ NIT Trichy — LeadForge (AI B2B lead pipeline)
-- Goldman Sachs India Hackathon 2026 — multi-agent drone routing (C++)
-- Samsung ennovateX AX Hackathon — Phantom Memory (3-tier adaptive memory for mobile agents)
+  // 3. LeetCode Stats
+  if (
+    q.includes("leetcode") ||
+    q.includes("leet code") ||
+    q.includes("ranking") ||
+    q.includes("streak") ||
+    q.includes("solved") ||
+    q.includes("dsa") ||
+    q.includes("rating") ||
+    q.includes("problems")
+  ) {
+    const lc = portfolioData.leetcode;
+    if (lc && lc.stats) {
+      return `I have solved **${lc.stats.totalSolved}** problems on LeetCode (${lc.stats.easy} easy, ${lc.stats.medium} medium, ${lc.stats.hard} hard) with a current streak of **${lc.streak}** days and active days of **${lc.totalActiveDays}**. My global rank is **#${lc.ranking}** under username [aayush2717](https://leetcode.com/aayush2717).`;
+    }
+    return "I'm active on LeetCode as [aayush2717](https://leetcode.com/aayush2717), where I regularly solve data structures and algorithm problems.";
+  }
 
-Rules:
-1. Keep answers under 4 sentences unless a detailed breakdown is explicitly asked for
-2. When mentioning a project, always include the GitHub link
-3. If asked about tech stack for a project, list the key technologies concisely
-4. If you don't know something specific, say so honestly — don't hallucinate
-5. You can be slightly witty but stay professional
-6. Format multi-item answers as short bullet lines, not prose walls
-7. Never say "As an AI language model" — you are PortfolioBot, period`;
+  // 4. Hackathons
+  if (
+    q.includes("hackathon") ||
+    q.includes("wins") ||
+    q.includes("win") ||
+    q.includes("competition") ||
+    q.includes("thinkroot") ||
+    q.includes("vortex") ||
+    q.includes("goldman") ||
+    q.includes("samsung") ||
+    q.includes("ennovatex") ||
+    q.includes("panic-at-the-deadline") ||
+    q.includes("achievements")
+  ) {
+    return "I regularly compete in hackathons with my teammate **Kaki Harshita** under our team name **Panic-At-The-Deadline**:\n\n" +
+      "- 🥉 **3rd Place** at ThinkRoot x Vortex'26 (NIT Trichy) with [LeadForge](https://github.com/aayush2724/LeadForge) (an AI B2B lead generation pipeline)\n" +
+      "- 🚀 **Goldman Sachs India Hackathon 2026** — built a multi-agent drone routing optimization system in C++\n" +
+      "- 📱 **Samsung ennovateX AX Hackathon** — built *Phantom Memory*, a 3-tier adaptive memory pipeline for mobile agents";
+  }
+
+  // 5. Tech Stack / Skills
+  if (
+    q.includes("stack") ||
+    q.includes("tech") ||
+    q.includes("skills") ||
+    q.includes("languages") ||
+    q.includes("frameworks") ||
+    q.includes("tools") ||
+    q.includes("python") ||
+    q.includes("react") ||
+    q.includes("javascript") ||
+    q.includes("typescript") ||
+    q.includes("c++") ||
+    q.includes("databases") ||
+    q.includes("database")
+  ) {
+    return "Here is my core developer toolkit:\n\n" +
+      "- **Languages:** JavaScript, TypeScript, Python, C++\n" +
+      "- **Frontend:** React, Vite, Tailwind CSS, Framer Motion, Three.js (3D web design)\n" +
+      "- **Backend:** Node.js, Express, FastAPI\n" +
+      "- **Databases & Services:** MongoDB, MySQL, Firebase, Redis, MinIO (S3-compatible storage)\n\n" +
+      "I enjoy working on full-stack pipelines, civic tech, and AI/ML agents.";
+  }
+
+  // 6. Contact / Socials / Hire
+  if (
+    q.includes("contact") ||
+    q.includes("hire") ||
+    q.includes("email") ||
+    q.includes("connect") ||
+    q.includes("social") ||
+    q.includes("linkedin") ||
+    q.includes("instagram") ||
+    q.includes("resume")
+  ) {
+    return "Let's get in touch! Here are my links:\n\n" +
+      "- 📧 **Email:** [aayush2615@gmail.com](mailto:aayush2615@gmail.com)\n" +
+      "- 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)\n" +
+      "- 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724)\n" +
+      "- 📸 **Instagram:** [@aayussh.27](https://instagram.com/aayussh.27)";
+  }
+
+  // 7. Guitar / Music / Hobbies / Free Time
+  if (
+    q.includes("guitar") ||
+    q.includes("music") ||
+    q.includes("stairway") ||
+    q.includes("hobbies") ||
+    q.includes("hobby") ||
+    q.includes("free time") ||
+    q.includes("weekend")
+  ) {
+    return "Outside of coding and hackathons, I love music and am learning to play the guitar — I've been trying to master **Stairway to Heaven** for about 1-2 years now! 🎸";
+  }
+
+  // 8. General Projects
+  if (
+    q.includes("project") ||
+    q.includes("shipped") ||
+    q.includes("recent") ||
+    q.includes("built") ||
+    q.includes("work") ||
+    q.includes("repos")
+  ) {
+    const sorted = [...projects].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    const latest = sorted[0];
+    return `I've shipped several projects in AI pipelines, full-stack, and civic tech. My top featured works include **LeadForge**, **Beatzy**, **Citizen Resolver System**, and **MindFlow**.\n\n` +
+      `My most recently updated project is **${latest.name}** (updated ${latest.updated}). You can ask me details about any project, or check out my [GitHub profile](https://github.com/aayush2724).`;
+  }
+
+  // 9. Learning
+  if (q.includes("learning") || q.includes("learn") || q.includes("study") || q.includes("current")) {
+    return "Right now, I am focusing on building reliable AI/ML pipelines, exploring multi-agent workflows (like Phantom Memory), and learning to play **Stairway to Heaven** on guitar!";
+  }
+
+  // 10. About Me / Bio / College / Location
+  if (
+    q.includes("about") ||
+    q.includes("who is") ||
+    q.includes("who are you") ||
+    q.includes("yourself") ||
+    q.includes("bio") ||
+    q.includes("profile") ||
+    q.includes("college") ||
+    q.includes("nie") ||
+    q.includes("mysore") ||
+    q.includes("bengaluru") ||
+    q.includes("bangalore") ||
+    q.includes("where do you")
+  ) {
+    return "I'm a B.E. AI-ML student (Class of 2028) at **The National Institute of Engineering (NIE), Mysore**, currently based in Bengaluru, India. \n\n" +
+      "I'm passionate about full-stack web apps, civic tech, and AI/ML pipeline engineering. I regularly participate in hackathons with my team **Panic-At-The-Deadline**.";
+  }
+
+  // 11. Default Witty Fallbacks
+  const fallbacks = [
+    "I'm not sure I have that specific detail in my memory bank. Try asking about my **projects** (like LeadForge or Beatzy), my **tech stack**, **hackathon wins**, or my **LeetCode rank**!",
+    "That's outside my current scope! Ask me about my **projects**, what I'm **learning**, or how my **guitar** lessons are coming along.",
+    "My local database doesn't have an answer for that. Ask me about **LeadForge**, **LeetCode**, or how to contact me!",
+    "Hmm, I didn't quite catch that. Try asking about **skills**, **hackathons**, or specific projects like the **Citizen Resolver System**!"
+  ];
+  const randIndex = Math.floor(Math.random() * fallbacks.length);
+  return fallbacks[randIndex];
+}
+
+// Helper to parse basic markdown bold and links into React elements
+function formatMessageText(text) {
+  if (!text) return "";
+  const parts = [];
+  let lastIndex = 0;
+  
+  // Match bold (**text**) or links ([label](url))
+  const regex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
+  let match;
+  
+  while ((match = regex.exec(text)) !== null) {
+    const matchIndex = match.index;
+    const matchText = match[0];
+    
+    // Add text before match
+    if (matchIndex > lastIndex) {
+      parts.push(text.slice(lastIndex, matchIndex));
+    }
+    
+    if (matchText.startsWith("**") && matchText.endsWith("**")) {
+      parts.push(
+        <strong key={matchIndex} className="font-semibold text-amber-400">
+          {matchText.slice(2, -2)}
+        </strong>
+      );
+    } else if (matchText.startsWith("[") && matchText.includes("](")) {
+      const closingBracket = matchText.indexOf("]");
+      const label = matchText.slice(1, closingBracket);
+      const url = matchText.slice(closingBracket + 2, -1);
+      parts.push(
+        <a
+          key={matchIndex}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-400 hover:text-amber-300 underline font-medium transition-colors"
+        >
+          {label}
+        </a>
+      );
+    }
+    
+    lastIndex = regex.lastIndex;
+  }
+  
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  
+  return parts.length > 0 ? parts : text;
+}
 
 // ---------- Suggested prompts ----------
 const SUGGESTIONS = [
@@ -67,31 +269,6 @@ export default function PortfolioBot() {
     }
   }, [open]);
 
-  const callClaude = async (userText, history) => {
-    const apiMessages = [
-      ...history.map((m) => ({
-        role: m.from === "user" ? "user" : "assistant",
-        content: m.text,
-      })),
-      { role: "user", content: userText },
-    ];
-
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: apiMessages,
-      }),
-    });
-
-    if (!res.ok) throw new Error(`API error ${res.status}`);
-    const data = await res.json();
-    return data.content?.[0]?.text ?? "Something went wrong. Try again.";
-  };
-
   const send = async (text) => {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
@@ -100,13 +277,17 @@ export default function PortfolioBot() {
     const userMsg = { from: "user", text: trimmed, id: Date.now() };
     setMessages((m) => [...m, userMsg]);
     setLoading(true);
+    
     try {
-      const reply = await callClaude(trimmed, messages);
+      // Simulate natural typing delay based on query length (600ms to 1000ms)
+      const delay = Math.min(1000, Math.max(600, trimmed.length * 12));
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      const reply = searchPortfolio(trimmed);
       setMessages((m) => [...m, { from: "bot", text: reply, id: Date.now() + 1 }]);
-    } catch {
+    } catch (error) {
       setMessages((m) => [
         ...m,
-        { from: "bot", text: "Network hiccup — check connection and try again.", id: Date.now() + 1 },
+        { from: "bot", text: "Something went wrong. Try again.", id: Date.now() + 1 },
       ]);
     } finally {
       setLoading(false);
@@ -152,7 +333,7 @@ export default function PortfolioBot() {
                 <div className="font-display text-sm font-semibold text-white">PortfolioBot</div>
                 <div className="font-mono text-[9px] text-amber-400/60 flex items-center gap-1">
                   <span className="w-1 h-1 rounded-full bg-amber-400 animate-pulse" />
-                  Powered by Claude
+                  Offline AI Assistant
                 </div>
               </div>
             </div>
@@ -190,7 +371,9 @@ export default function PortfolioBot() {
                       : "bg-white/[0.04] border border-white/6 text-white/85 rounded-bl-sm"
                   }`}
                 >
-                  <pre className="whitespace-pre-wrap font-body text-sm leading-relaxed">{m.text}</pre>
+                  <div className="whitespace-pre-wrap font-body text-sm leading-relaxed">
+                    {formatMessageText(m.text)}
+                  </div>
                 </div>
               </div>
             ))}
