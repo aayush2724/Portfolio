@@ -2,7 +2,7 @@
 
 ## What Was Added
 
-Three new CS-themed components have been integrated into your portfolio:
+Four new CS-themed components have been integrated into your portfolio:
 
 ### 1. ✅ TerminalCard (Integrated in Hero)
 **Location:** `src/components/TerminalCard.jsx`  
@@ -14,9 +14,23 @@ A live typing terminal animation that shows developer commands:
 - Includes MacOS-style window controls
 - Respects `prefers-reduced-motion` for accessibility
 
-### 2. ✅ SortViz (Integrated in LeetCode Stats)
+### 2. ✅ Pathfinding (Integrated in LeetCode Stats) ⭐ NEW
+**Location:** `src/components/Pathfinding.jsx`  
+**Used in:** LeetCode Stats section (side-by-side with SortViz)
+
+An animated BFS pathfinding visualizer:
+- Watches the search wave expand from start (green) to goal (pink)
+- Shows shortest path lighting up in real-time (golden)
+- Auto-regenerates new mazes in a continuous loop
+- Visual narrative: green start → violet exploration → golden path → pink goal
+- Displays Big-O notation `O(V+E)`
+- Only animates when in viewport
+
+**Why this is powerful:** Clear narrative that anyone can understand ("it's finding a path"), while CS folks instantly recognize the BFS algorithm. Shows you don't just solve problems—you understand them deeply enough to visualize them.
+
+### 3. ✅ SortViz (Integrated in LeetCode Stats)
 **Location:** `src/components/SortViz.jsx`  
-**Used in:** LeetCode Stats section (below stats grid)
+**Used in:** LeetCode Stats section (side-by-side with Pathfinding)
 
 An animated bubble sort visualization:
 - Shows real-time sorting algorithm in action
@@ -25,7 +39,7 @@ An animated bubble sort visualization:
 - Only animates when in viewport
 - Reshuffles and repeats continuously
 
-### 3. ⭐ CodeRain (Optional - Not Yet Integrated)
+### 4. ⭐ CodeRain (Optional - Not Yet Integrated)
 **Location:** `src/components/CodeRain.jsx`  
 **Usage:** Background effect for any section
 
@@ -66,9 +80,38 @@ import CodeRain from "./CodeRain"
 </section>
 ```
 
+## Summary of Changes
+
+### 📁 New Files Created
+- `src/components/TerminalCard.jsx`
+- `src/components/Pathfinding.jsx` ⭐ NEW
+- `src/components/SortViz.jsx`
+- `src/components/CodeRain.jsx`
+- `CS_COMPONENTS_README.md` (this documentation)
+
+### 🔧 Files Modified
+- `src/components/Hero.jsx` - Added TerminalCard below stats
+- `src/components/LeetcodeStats.jsx` - Added Pathfinding and SortViz in side-by-side grid
+- `src/index.css` - Added `.glass` utility class
+
+### 🎯 Why This Works
+
+These components showcase your DSA background through **visual proof**, not just claims:
+
+1. **Terminal** = You build real things
+2. **Pathfinding (BFS)** = You understand graph algorithms and search strategies ⭐
+3. **Sort visualization** = You understand complexity and algorithmic thinking
+4. **Clean implementation** = You write quality code
+
+The pathfinding visualizer is especially powerful because:
+- **Universal understanding** - Anyone can see it's finding a path
+- **Technical depth** - CS people recognize BFS immediately
+- **Engaging narrative** - Start → explore → solve → repeat
+- **Shows mastery** - You don't just use algorithms, you can visualize them
+
 ## Other CS-Themed Ideas
 
-From the original suggestions, here are more quick wins:
+From the original suggestions, here are more quick wins you can add later:
 
 ### Konami Code Easter Egg
 Add this hook to detect ↑↑↓↓←→←→BA:
@@ -144,20 +187,27 @@ Add to a name on hover:
 - Your existing `usePrefersReducedMotion` hook
 
 ### Performance
-- TerminalCard: Lightweight interval-based typing
-- SortViz: Only animates when in viewport
-- CodeRain: Throttled to ~18fps, uses requestAnimationFrame
+- **TerminalCard**: Lightweight interval-based typing
+- **Pathfinding**: Only animates when in viewport, efficient BFS implementation
+- **SortViz**: Only animates when in viewport, throttled updates
+- **CodeRain**: Throttled to ~18fps, uses requestAnimationFrame
 
 ### Accessibility
 - All components respect `prefers-reduced-motion`
+- Pathfinding shows static solved maze for reduced motion users
 - CodeRain marked with `aria-hidden`
-- Semantic HTML maintained
+- Semantic HTML maintained throughout
 
 ## What Makes This Special
 
-Most portfolios just *claim* DSA skills. Yours now *shows* them:
+Most portfolios just *claim* DSA skills. Yours now *shows* them in action:
+
+✨ **The Narrative:**
 - Terminal commands prove you build
-- Live sorting visualization proves you understand algorithms
+- BFS pathfinding proves you understand graph algorithms
+- Live sorting proves you understand complexity analysis
 - Clean, performant implementation proves you write quality code
 
-The combination tells the story: "I don't just solve problems — I understand them deeply enough to visualize them."
+**The combination tells the story:** "I don't just solve problems — I understand them deeply enough to visualize and teach them."
+
+This is the kind of portfolio that makes recruiters pause and actually explore, and makes engineers want to hire you because you clearly *get it*.
