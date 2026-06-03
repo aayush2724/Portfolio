@@ -120,6 +120,14 @@ body {
   background: rgba(14, 14, 22, 0.82);
 }
 
+/* Glass effect (lighter variant) */
+.glass {
+  background: rgba(14, 14, 22, 0.72);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
 /* Gradient text — amber to red to purple */
 .gt {
   background: linear-gradient(135deg, #f59e0b, #ef4444 50%, #a855f7);

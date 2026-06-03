@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { fetchLeetCodeStats, getLastSyncTime } from "../data/leetcodeapi";
 import portfolioData from "../data/portfolioData.json";
+import SortViz from "./SortViz";
 
 const fallbackStats = portfolioData.leetcode;
 
@@ -151,6 +152,17 @@ export default function LeetcodeStats() {
             ))}
           </div>
         </div>
+
+        {/* DSA Sorting Visualizer */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="mt-6"
+        >
+          <SortViz count={32} />
+        </motion.div>
 
       </div>
     </section>

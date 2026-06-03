@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
 import { fetchGitHubProjects, fetchLeetCodeStats } from "../data/leetcodeapi";
+import TerminalCard from "./TerminalCard";
 
 const roles = [
   "Full-Stack Developer",
@@ -279,6 +280,16 @@ export default function Hero() {
             </div>
           ))}
         </div>
+      </motion.div>
+
+      {/* Terminal Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.9, duration: 0.8 }}
+        className="relative z-10 mt-8 w-full max-w-3xl mx-auto px-4 sm:px-6"
+      >
+        <TerminalCard className="rounded-2xl border border-white/8" />
       </motion.div>
 
       {/* Code snippet decoration */}
