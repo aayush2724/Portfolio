@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-06-02T04:19:08.354Z",
+  "lastUpdated": "2026-06-03T04:38:40.125Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 294670,
+    "ranking": 293721,
     "stats": {
-      "totalSolved": 399,
-      "easy": 186,
-      "medium": 190,
+      "totalSolved": 403,
+      "easy": 188,
+      "medium": 192,
       "hard": 23,
-      "totalSubmissions": 420
+      "totalSubmissions": 424
     },
     "streak": 25,
-    "totalActiveDays": 216
+    "totalActiveDays": 217
   },
   "github": [
     {
@@ -23,7 +23,27 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-01T22:42:56Z"
+      "updatedAt": "2026-06-02T19:16:27Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-02T15:17:44Z"
+    },
+    {
+      "name": "Visitor-Management-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Visitor-Management-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "HTML",
+      "topics": [],
+      "updatedAt": "2026-06-02T07:36:34Z"
     },
     {
       "name": "MedVerify",
@@ -34,16 +54,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-01T17:06:42Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-01T04:25:47Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -94,16 +104,6 @@
       "language": "TypeScript",
       "topics": [],
       "updatedAt": "2026-04-29T02:43:45Z"
-    },
-    {
-      "name": "Visitor-Management-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Visitor-Management-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-29T01:07:01Z"
     },
     {
       "name": "LeadForge",
