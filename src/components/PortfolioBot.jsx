@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import portfolioData from "../data/portfolioData.json";
-import { projects } from "./Projects";
+import { projects } from "../data/projects";
 
 // Custom keywords mapped to each project to ensure accurate matching
 const projectKeywords = {

@@ -202,8 +202,8 @@ export default function CommandPalette({ isOpen, onClose }) {
             transition={{ duration: 0.15 }}
             className="fixed inset-0 z-[100] flex items-start justify-center pt-32"
             style={{
-              background: "rgba(4,4,10,.82)",
-              backdropFilter: "blur(8px)",
+              background: "rgba(10, 10, 11, 0.85)",
+              backdropFilter: "blur(12px)",
             }}
             onClick={onClose}
           >
@@ -211,17 +211,19 @@ export default function CommandPalette({ isOpen, onClose }) {
               initial={{ opacity: 0, scale: 0.94, y: -18 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: -18 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-lg mx-5 gc border border-white/10 rounded-2xl overflow-hidden"
+              className="w-full max-w-lg mx-5 rounded-2xl overflow-hidden border"
               style={{
-                boxShadow:
-                  "0 40px 100px rgba(0,0,0,.85),0 0 0 1px rgba(245,158,11,.08)",
+                background: "var(--surface)",
+                borderColor: "var(--line)",
+                boxShadow: "0 40px 100px rgba(0,0,0,.85)",
               }}
             >
-              <div className="flex items-center gap-3 px-4 py-4 border-b border-white/7">
+              <div className="flex items-center gap-3 px-4 py-4 border-b" style={{ borderColor: "var(--line)" }}>
                 <svg
-                  className="w-4 h-4 text-white/25 flex-shrink-0"
+                  className="w-4 h-4 flex-shrink-0"
+                  style={{ color: "var(--muted)" }}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -239,9 +241,10 @@ export default function CommandPalette({ isOpen, onClose }) {
                   onChange={(e) => setQ(e.target.value)}
                   onKeyDown={onKey}
                   placeholder="Search commands, projects, socials..."
-                  className="flex-1 bg-transparent outline-none text-white font-mono text-sm placeholder-white/20"
+                  className="flex-1 bg-transparent outline-none font-mono text-sm"
+                  style={{ color: "var(--fg)", caretColor: "var(--accent)" }}
                 />
-                <kbd className="font-mono text-xs text-white/18 border border-white/10 rounded px-1.5 py-0.5">
+                <kbd className="font-mono text-xs border rounded px-1.5 py-0.5" style={{ color: "var(--muted)", borderColor: "var(--line)" }}>
                   esc
                 </kbd>
               </div>
@@ -249,7 +252,7 @@ export default function CommandPalette({ isOpen, onClose }) {
               <div className="max-h-80 overflow-y-auto py-2">
                 {Object.entries(grouped).map(([cat, items]) => (
                   <div key={cat}>
-                    <div className="px-4 py-2 text-xs font-mono text-white/18 tracking-widest uppercase">
+                    <div className="px-4 py-2 text-xs font-mono tracking-widest uppercase" style={{ color: "var(--muted)", opacity: 0.5 }}>
                       {cat}
                     </div>
                     {items.map((cmd) => {
@@ -260,18 +263,22 @@ export default function CommandPalette({ isOpen, onClose }) {
                           key={cmd.id}
                           onClick={() => run(cmd)}
                           onMouseEnter={() => setSel(gi)}
-                          className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${isS ? "bg-amber-500/8" : ""}`}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors"
+                          style={{
+                            background: isS ? "rgba(212, 255, 63, 0.08)" : "transparent",
+                          }}
                         >
                           <span className="text-lg w-7 text-center flex-shrink-0">
                             {cmd.icon}
                           </span>
                           <span
-                            className={`font-body text-sm flex-1 ${isS ? "text-amber-400" : "text-white/60"}`}
+                            className="font-body text-sm flex-1"
+                            style={{ color: isS ? "var(--accent)" : "var(--muted)" }}
                           >
                             {cmd.label}
                           </span>
                           {isS && (
-                            <kbd className="font-mono text-xs text-white/18 border border-white/10 rounded px-1.5 py-0.5">
+                            <kbd className="font-mono text-xs border rounded px-1.5 py-0.5" style={{ color: "var(--muted)", borderColor: "var(--line)" }}>
                               ↵
                             </kbd>
                           )}
@@ -281,23 +288,23 @@ export default function CommandPalette({ isOpen, onClose }) {
                   </div>
                 ))}
                 {!filtered.length && (
-                  <div className="px-4 py-8 text-center font-mono text-xs text-white/20">
+                  <div className="px-4 py-8 text-center font-mono text-xs" style={{ color: "var(--muted)", opacity: 0.5 }}>
                     No results for "{q}"
                   </div>
                 )}
               </div>
 
-              <div className="px-4 py-3 border-t border-white/5 flex gap-4 text-xs font-mono text-white/18">
+              <div className="px-4 py-3 border-t flex gap-4 text-xs font-mono" style={{ borderColor: "var(--line)", color: "var(--muted)" }}>
                 <span>
-                  <kbd className="border border-white/10 rounded px-1">↑↓</kbd>{" "}
+                  <kbd className="border rounded px-1" style={{ borderColor: "var(--line)" }}>↑↓</kbd>{" "}
                   navigate
                 </span>
                 <span>
-                  <kbd className="border border-white/10 rounded px-1">↵</kbd>{" "}
+                  <kbd className="border rounded px-1" style={{ borderColor: "var(--line)" }}>↵</kbd>{" "}
                   select
                 </span>
                 <span>
-                  <kbd className="border border-white/10 rounded px-1">esc</kbd>{" "}
+                  <kbd className="border rounded px-1" style={{ borderColor: "var(--line)" }}>esc</kbd>{" "}
                   close
                 </span>
               </div>
@@ -312,7 +319,12 @@ export default function CommandPalette({ isOpen, onClose }) {
             initial={{ opacity: 0, y: 16, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.92 }}
-            className="fixed bottom-6 right-6 z-[200] gc border border-amber-500/25 rounded-xl px-5 py-3 font-mono text-sm text-amber-400"
+            className="fixed bottom-6 right-6 z-[200] border rounded-xl px-5 py-3 font-mono text-sm"
+            style={{
+              background: "var(--surface)",
+              borderColor: "var(--accent)",
+              color: "var(--accent)",
+            }}
           >
             {toast}
           </motion.div>
