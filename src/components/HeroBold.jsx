@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState } from "react"
+import { TypingTerminal } from "./Terminal"
 
 export default function HeroBold() {
   const { scrollY } = useScroll()
@@ -55,11 +56,29 @@ export default function HeroBold() {
             <span><b className="text-[var(--fg)]">25-day</b> streak</span>
           </motion.div>
 
+          {/* Terminal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 max-w-lg"
+          >
+            <TypingTerminal
+              title="aayush@portfolio — zsh"
+              path="~"
+              steps={[
+                { cmd: "whoami", out: "Aayush Kumar — CS student & full-stack dev" },
+                { cmd: "cat skills.txt", out: "React · Node · Python · C++ · DSA" },
+                { cmd: "./launch --status", out: "🚀 available for opportunities" },
+              ]}
+            />
+          </motion.div>
+
           {/* CTA */}
           <motion.a
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
             href="#projects"
             className="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 hover:gap-5"
           >

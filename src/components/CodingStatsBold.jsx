@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import Reveal from "./Reveal"
+import CommandLabel from "./CommandLabel"
+import AsciiBox from "./AsciiBox"
 
 function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
   const [count, setCount] = useState(0)
@@ -65,17 +67,16 @@ export default function CodingStatsBold() {
         {/* Header */}
         <Reveal>
           <div className="mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-              By The Numbers
-            </p>
+            <CommandLabel className="mb-3">cat ~/stats.json</CommandLabel>
             <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
               Coding Stats
             </h2>
           </div>
         </Reveal>
 
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Stats Grid wrapped in AsciiBox */}
+        <AsciiBox label="metrics" className="mb-8">
+          <div className="grid md:grid-cols-3 gap-8">
           
           {/* LeetCode */}
           <Reveal delay={0.1}>
@@ -202,6 +203,7 @@ export default function CodingStatsBold() {
             </div>
           </Reveal>
         </div>
+        </AsciiBox>
 
         {/* Optional: Profile Links */}
         <Reveal delay={0.4}>

@@ -1,4 +1,8 @@
+import { useState } from "react"
 import Coverflow3D from "./Coverflow3D"
+import CommandLabel from "./CommandLabel"
+import CaseStudyModal from "./CaseStudyModal"
+import { getCaseStudyByName } from "../data/caseStudies"
 
 const PROJECTS = [
   {
@@ -68,14 +72,39 @@ const PROJECTS = [
 ]
 
 export default function ProjectsBold() {
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const handleProjectClick = (projectTitle) => {
+    const caseStudy = getCaseStudyByName(projectTitle)
+    if (caseStudy) {
+      setSelectedProject(caseStudy)
+      setModalOpen(true)
+    }
+  }
+
+  // Map projects to include click handler
+  const projectsWithHandlers = PROJECTS.map(project => ({
+    ...project,
+    onCardClick: () => handleProjectClick(project.title)
+  }))
+
   return (
     <section id="projects" className="relative py-28">
       <div className="mb-10 px-6 md:px-16">
-        <p className="text-[var(--accent)] tracking-[0.3em] text-xs mb-3">SELECTED WORK</p>
+        <CommandLabel className="mb-3">ls ~/projects --featured</CommandLabel>
         <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">Projects</h2>
-        <p className="mt-3 text-sm text-[var(--muted)]">Drag, scroll, or use ← → to explore. Click the centered card to open.</p>
+        <p className="mt-3 text-sm text-[var(--muted)]">
+          Drag, scroll, or use ← → to explore. Click the centered card for case study.
+        </p>
       </div>
-      <Coverflow3D projects={PROJECTS} />
+      <Coverflow3D projects={projectsWithHandlers} onProjectClick={handleProjectClick} />
+      
+      <CaseStudyModal 
+        caseStudy={selectedProject} 
+        isOpen={modalOpen} 
+        onClose={() => setModalOpen(false)} 
+      />
     </section>
   )
 }

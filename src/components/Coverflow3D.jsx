@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 
-export default function Coverflow3D({ projects = [] }) {
+export default function Coverflow3D({ projects = [], onProjectClick }) {
   const [index, setIndex] = useState(0)
   const containerRef = useRef(null)
   const n = projects.length
@@ -73,7 +73,7 @@ export default function Coverflow3D({ projects = [] }) {
           return (
             <motion.article
               key={p.id ?? i}
-              className="coverflow-card absolute h-[60%] w-[290px] md:w-[360px] cursor-pointer overflow-hidden rounded-3xl"
+              className="coverflow-card absolute h-[65%] w-[290px] md:w-[380px] cursor-pointer overflow-hidden rounded-3xl"
               style={{ transformStyle: "preserve-3d", zIndex: 100 - abs }}
               animate={{
                 x: offset * 230,
@@ -90,7 +90,15 @@ export default function Coverflow3D({ projects = [] }) {
               whileHover={isCenter ? { y: -10 } : {}}
               onClick={() => {
                 if (drag.current.moved) { drag.current.moved = false; return }
-                if (isCenter) { if (p.link) window.open(p.link, "_blank") }
+                if (isCenter) {
+                  // If onProjectClick callback exists, use it (for case study modal)
+                  if (onProjectClick) {
+                    onProjectClick(p.title)
+                  } else if (p.link) {
+                    // Otherwise fall back to opening link
+                    window.open(p.link, "_blank")
+                  }
+                }
                 else setIndex(i)
               }}
             >
@@ -105,26 +113,40 @@ export default function Coverflow3D({ projects = [] }) {
                   <div className="absolute inset-0"
                     style={{ background: "linear-gradient(150deg, #15151a, #0a0a0b)" }} />
                 )}
-                {/* number watermark */}
-                <span className="absolute right-4 top-2 font-display text-7xl md:text-8xl leading-none opacity-10">
+                {/* number watermark - smaller and more subtle */}
+                <span className="absolute right-3 top-3 font-display text-6xl leading-none opacity-[0.06]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                {/* gradient scrim */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                {/* content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <div className="mb-3 flex flex-wrap gap-2">
-                    {(p.tags ?? []).slice(0, 3).map((t) => (
-                      <span key={t} className="rounded-full border border-white/15 px-2.5 py-1 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                {/* gradient scrim - stronger for better readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+                {/* content - more spacious layout */}
+                <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-8">
+                  {/* Tags - only show 2 most important */}
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {(p.tags ?? []).slice(0, 2).map((t) => (
+                      <span 
+                        key={t} 
+                        className="rounded-full border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white/80"
+                      >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <h3 className="font-display text-2xl md:text-3xl uppercase leading-none">{p.title}</h3>
-                  <p className="mt-2 text-sm text-[var(--muted)] line-clamp-2">{p.description}</p>
-                  {isCenter && p.link && (
-                    <span className="mt-4 inline-flex w-fit items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[var(--accent-ink)]">
-                      View project →
+                  
+                  {/* Title - more spacing */}
+                  <h3 className="font-display text-2xl md:text-3xl uppercase leading-tight text-white mb-3">
+                    {p.title}
+                  </h3>
+                  
+                  {/* Description - better line height and spacing */}
+                  <p className="text-sm leading-relaxed text-white/70 line-clamp-2 mb-5">
+                    {p.description}
+                  </p>
+                  
+                  {/* CTA button - only show on center card */}
+                  {isCenter && (
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--accent-ink)] shadow-lg">
+                      {onProjectClick ? "View case study →" : "View project →"}
                     </span>
                   )}
                 </div>

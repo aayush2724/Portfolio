@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
+import DownloadResumeButton from "./DownloadResumeButton"
+import CommandLabel from "./CommandLabel"
 
 export default function ContactBold() {
   const [time, setTime] = useState("")
@@ -30,6 +32,11 @@ export default function ContactBold() {
     <section id="contact" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl">
         
+        {/* Command Label */}
+        <Reveal>
+          <CommandLabel className="mb-8">./contact --open</CommandLabel>
+        </Reveal>
+
         {/* Main CTA */}
         <Reveal>
           <div className="text-center mb-20">
@@ -41,7 +48,7 @@ export default function ContactBold() {
             {/* Email */}
             <motion.a
               href="mailto:aayush2615@gmail.com"
-              className="inline-block font-display text-3xl md:text-5xl relative group"
+              className="inline-block font-display text-3xl md:text-5xl relative group mb-8"
               style={{ color: "var(--fg)" }}
               whileHover={{ scale: 1.02 }}
             >
@@ -55,6 +62,11 @@ export default function ContactBold() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               />
             </motion.a>
+
+            {/* Download Resume Button */}
+            <div className="mt-8">
+              <DownloadResumeButton />
+            </div>
           </div>
         </Reveal>
 

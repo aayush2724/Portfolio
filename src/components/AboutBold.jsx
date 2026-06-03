@@ -1,10 +1,16 @@
 import Reveal from "./Reveal"
+import CommandLabel from "./CommandLabel"
 
 export default function AboutBold() {
   return (
     <section id="about" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl">
         
+        {/* Command Label */}
+        <Reveal>
+          <CommandLabel className="mb-6">cat about.md</CommandLabel>
+        </Reveal>
+
         {/* Manifesto */}
         <Reveal>
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16">
