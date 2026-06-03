@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
 
 const chapters = [
   {
@@ -91,35 +93,29 @@ export default function About() {
     <section id="about" className="py-28 px-6">
       <div className="max-w-4xl mx-auto">
         <div ref={ref} className="mb-16 text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
-          >
-            Chapter 01 — My Story
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+              Chapter 01 — My Story
+            </p>
+          </Reveal>
+          <AnimatedHeading
+            text="More than a GitHub profile"
+            as="h2"
             className="font-display font-extrabold text-5xl md:text-6xl text-white leading-tight"
-          >
-            More than a <span className="gt">GitHub profile</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-white/35 mt-4 max-w-md mx-auto font-body text-base"
-          >
-            A 2nd-year CS student from India, building real things, solving
-            real problems, and mastering classic rock on a six-string.
-          </motion.p>
+          />
+          <Reveal delay={0.15}>
+            <p className="text-white/35 mt-4 max-w-md mx-auto font-body text-base">
+              A 2nd-year CS student from India, building real things, solving
+              real problems, and mastering classic rock on a six-string.
+            </p>
+          </Reveal>
         </div>
 
         <div className="space-y-7">
           {chapters.map((c, i) => (
-            <Chapter key={i} c={c} i={i} />
+            <Reveal key={i} delay={i * 0.08} direction={c.side === "left" ? "left" : "right"}>
+              <Chapter c={c} i={i} />
+            </Reveal>
           ))}
         </div>
 

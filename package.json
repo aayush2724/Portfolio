@@ -10,13 +10,14 @@
     "sync-data": "node scripts/update-data.js"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "framer-motion": "^11.0.0",
+    "lenis": "^1.3.23",
+    "lucide-react": "^0.383.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "framer-motion": "^11.0.0",
-    "lucide-react": "^0.383.0",
-    "three": "^0.160.0",
-    "@react-three/fiber": "^8.15.16",
-    "@react-three/drei": "^9.96.5"
+    "three": "^0.160.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",

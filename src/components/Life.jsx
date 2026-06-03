@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
 
 /* ── DSA Visual: animated LeetCode-style heatmap ── */
 function DSAViz() {
@@ -213,30 +215,22 @@ export default function Life() {
       <div className="absolute bottom-1/3 left-0 w-64 h-64 bg-cyan-500/4 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className="mb-16 text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
-          >
-            Chapter 04 — Beyond Code
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+              Chapter 04 — Beyond Code
+            </p>
+          </Reveal>
+          <AnimatedHeading
+            text="Life outside the terminal"
+            as="h2"
             className="font-display font-extrabold text-5xl md:text-6xl text-white leading-tight"
-          >
-            Life outside <span className="gt">the terminal</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-white/35 mt-4 max-w-md mx-auto font-body"
-          >
-            A 2nd year CS student who grinds LeetCode, reads algorithm books,
-            and keeps building things that matter.
-          </motion.p>
+          />
+          <Reveal delay={0.15}>
+            <p className="text-white/35 mt-4 max-w-md mx-auto font-body">
+              A 2nd year CS student who grinds LeetCode, reads algorithm books,
+              and keeps building things that matter.
+            </p>
+          </Reveal>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {cards.map((c, i) => (

@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import portfolioData from "../data/portfolioData.json";
 import Skills3DOrbit from "../three/Skills3DOrbit";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
 
 const primary = [
   { name:'DSA (C++)', pct:78, icon:'DS', color:'#f59e0b', tag:'Core Strength', note:`${portfolioData.leetcode.stats.totalSolved} LeetCode problems solved` },
@@ -45,7 +47,7 @@ function PrimaryCard({ s, delay }) {
           </div>
           <div className="font-display font-extrabold text-2xl" style={{color:s.color}}>{s.pct}<span className="text-base">%</span></div>
         </div>
-        <p className="text-white/35 text-xs font-mono mb-4">{s.note}</p>
+        <p className="text-white/60 text-xs font-mono mb-4">{s.note}</p>
         <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
           <motion.div initial={{width:0}} animate={inView?{width:`${s.pct}%`}:{}}
             transition={{duration:1.2,delay:delay+.3,ease:[0.16,1,0.3,1]}}
@@ -86,12 +88,14 @@ export default function Skills() {
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 bg-amber-500/3 rounded-full blur-3xl pointer-events-none"/>
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className="mb-14">
-          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">Chapter 02 — Skills</motion.p>
-          <motion.h2 initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{duration:.8,delay:.1}}
-            className="font-display font-extrabold text-5xl md:text-6xl text-white">
-            What I <span className="ga">wield</span>
-          </motion.h2>
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">Chapter 02 — Skills</p>
+          </Reveal>
+          <AnimatedHeading
+            text="What I wield"
+            as="h2"
+            className="font-display font-extrabold text-5xl md:text-6xl text-white"
+          />
         </div>
 
         <div className="mb-8">
@@ -105,7 +109,7 @@ export default function Skills() {
           <div className="space-y-5">
             <motion.div initial={{opacity:0,x:30}} whileInView={{opacity:1,x:0}} viewport={{once:true}}
               transition={{duration:.7}} className="gc rounded-2xl p-6 border border-white/7">
-              <div className="font-mono text-xs text-white/25 tracking-widest uppercase mb-5">Also in my toolkit</div>
+              <div className="font-mono text-xs text-white/60 tracking-widest uppercase mb-5">Also in my toolkit</div>
               {secondary.map((s,i) => <MiniBar key={s.name} s={s} delay={i*.08}/>)}
             </motion.div>
 

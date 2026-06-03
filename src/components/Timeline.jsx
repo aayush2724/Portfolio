@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
 
 const events = [
   {
@@ -166,29 +168,21 @@ export default function Timeline() {
     <section id="timeline" className="py-28 px-6 relative">
       <div className="max-w-4xl mx-auto">
         <div ref={ref} className="mb-20 text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
-          >
-            Chapter 05 — Journey
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+              Chapter 05 — Journey
+            </p>
+          </Reveal>
+          <AnimatedHeading
+            text="The timeline"
+            as="h2"
             className="font-display font-extrabold text-5xl md:text-6xl text-white"
-          >
-            The <span className="ga">timeline</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-white/35 mt-3 font-body"
-          >
-            Every milestone that shaped me.
-          </motion.p>
+          />
+          <Reveal delay={0.15}>
+            <p className="text-white/35 mt-3 font-body">
+              Every milestone that shaped me.
+            </p>
+          </Reveal>
         </div>
 
         <div ref={container} className="relative">

@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
+import MagneticButton from "./MagneticButton";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -64,30 +67,22 @@ export default function Contact() {
       <div className="absolute inset-0 bg-gradient-to-t from-amber-500/3 to-transparent pointer-events-none" />
       <div className="max-w-3xl mx-auto text-center">
         <div ref={ref}>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
-          >
-            Chapter 06 — Connect
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+              Chapter 06 — Connect
+            </p>
+          </Reveal>
+          <AnimatedHeading
+            text="Let's talk"
+            as="h2"
             className="font-display font-extrabold text-5xl md:text-6xl text-white mb-5"
-          >
-            Let's <span className="gt">talk</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-white/35 font-body text-base max-w-md mx-auto mb-12"
-          >
-            Open to internships, collaborations, project ideas, or just a
-            conversation about DSA, guitars, or building things.
-          </motion.p>
+          />
+          <Reveal delay={0.15}>
+            <p className="text-white/35 font-body text-base max-w-md mx-auto mb-12">
+              Open to internships, collaborations, project ideas, or just a
+              conversation about DSA, guitars, or building things.
+            </p>
+          </Reveal>
         </div>
 
         {/* Email */}

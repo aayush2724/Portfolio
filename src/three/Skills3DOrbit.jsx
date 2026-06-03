@@ -145,7 +145,7 @@ export default function Skills3DOrbit() {
           minPolarAngle={Math.PI / 3}
         />
       </Canvas>
-      <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-widest text-white/30">
+      <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/70 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
         drag to rotate · skills orbit
       </div>
     </div>

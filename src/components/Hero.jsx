@@ -154,7 +154,7 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-x-clip"
     >
       {/* layered glows */}
-      <div className="fixed top-1/4 left-1/5 w-[600px] h-[600px] bg-amber-500/[0.05] rounded-full blur-[120px] pointer-events-none animate-pulse z-0" />
+      <div className="fixed top-1/4 left-1/5 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(124,58,237,0.22),transparent_65%)] blur-[120px] pointer-events-none animate-pulse z-0" />
       <div className="fixed bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/[0.04] rounded-full blur-[100px] pointer-events-none animate-pulse z-0" style={{ animationDelay: '1s' }} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/[0.03] rounded-full blur-[140px] pointer-events-none animate-pulse z-0" style={{ animationDelay: '2s' }} />
 
@@ -299,6 +299,9 @@ export default function Hero() {
       </div>
 
       <ScrollIndicator />
+
+      {/* readability scrim — darkens where glow is brightest */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(10,10,15,0.55)_100%)] pointer-events-none" />
     </section>
   );
 }

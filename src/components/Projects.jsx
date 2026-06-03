@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import ProjectCard3D from "../three/ProjectCard3D";
+import AnimatedHeading from "./AnimatedHeading";
+import Reveal from "./Reveal";
 
 export const projects = [
   {
@@ -291,29 +293,21 @@ export default function Projects() {
 
         {/* Header */}
         <div ref={ref} className="mb-14">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3"
-          >
-            Chapter 03 - Projects
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+          <Reveal>
+            <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+              Chapter 03 - Projects
+            </p>
+          </Reveal>
+          <AnimatedHeading
+            text="Things I've shipped"
+            as="h2"
             className="font-display font-extrabold text-5xl md:text-6xl text-white"
-          >
-            Things I've <span className="gt">shipped</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-white/35 mt-3 font-body max-w-lg"
-          >
-            Recent GitHub work — AI pipelines, civic tools, music analysis platforms, health verification, and job workflows.
-          </motion.p>
+          />
+          <Reveal delay={0.15}>
+            <p className="text-white/35 mt-3 font-body max-w-lg">
+              Recent GitHub work — AI pipelines, civic tools, music analysis platforms, health verification, and job workflows.
+            </p>
+          </Reveal>
         </div>
 
         {/* Recently Updated strip */}

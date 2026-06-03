@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CustomCursor from "./components/CustomCursor";
 import Navbar from "./components/Navbar";
@@ -13,7 +13,10 @@ import CommandPalette from "./components/CommandPalette";
 import LeetcodeStats from "./components/LeetcodeStats";
 import PortfolioBot from "./components/PortfolioBot";
 import MarqueeTicker from "./components/MarqueeTicker";
-import Scene3D from "./three/Scene3D";
+import ScrollProgress from "./components/ScrollProgress";
+import { useLenis } from "./context/motion";
+
+const ScrollScene = lazy(() => import("./three/ScrollScene"));
 
 function Loader() {
   return (
@@ -55,6 +58,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [cmdOpen, setCmdOpen] = useState(false);
 
+  // Boot smooth scrolling (Lenis)
+  useLenis();
+
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(t);
@@ -73,13 +79,20 @@ export default function App() {
 
   return (
     <>
+      {/* Scroll progress bar at top */}
+      <ScrollProgress />
+
+      {/* Floating 3D blob background */}
+      <Suspense fallback={null}>
+        <ScrollScene />
+      </Suspense>
+
       <CustomCursor />
-      <Scene3D />
       <AnimatePresence mode="wait">{loading && <Loader />}</AnimatePresence>
       {!loading && (
         <>
           <Navbar onCmd={() => setCmdOpen(true)} />
-          <main>
+          <main className="relative z-10">
             <Hero />
             <MarqueeTicker />
             <About />
