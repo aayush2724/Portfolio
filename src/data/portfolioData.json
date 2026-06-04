@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-06-03T04:38:40.125Z",
+  "lastUpdated": "2026-06-04T04:23:22.740Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 293721,
+    "ranking": 289907,
     "stats": {
-      "totalSolved": 403,
+      "totalSolved": 405,
       "easy": 188,
-      "medium": 192,
+      "medium": 194,
       "hard": 23,
-      "totalSubmissions": 424
+      "totalSubmissions": 426
     },
     "streak": 25,
-    "totalActiveDays": 217
+    "totalActiveDays": 218
   },
   "github": [
     {
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-02T19:16:27Z"
+      "updatedAt": "2026-06-03T23:37:33Z"
     },
     {
       "name": "Portfolio",
@@ -33,17 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-02T15:17:44Z"
+      "updatedAt": "2026-06-03T20:07:52Z"
     },
     {
-      "name": "Visitor-Management-System",
+      "name": "CheckMate",
       "description": "",
-      "url": "https://github.com/aayush2724/Visitor-Management-System",
+      "url": "https://github.com/aayush2724/CheckMate",
       "stars": 1,
       "forks": 0,
       "language": "HTML",
       "topics": [],
-      "updatedAt": "2026-06-02T07:36:34Z"
+      "updatedAt": "2026-06-03T10:33:09Z"
     },
     {
       "name": "MedVerify",
