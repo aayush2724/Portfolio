@@ -93,6 +93,93 @@ export const caseStudies = [
   },
 
   {
+    id: "beatzy",
+    name: "Beatzy",
+    tagline: "Real-Time Music Collaboration Platform for Producers",
+    badge: null,
+    cover: "/Beatzy.png",
+
+    problem: {
+      title: "Music Producers Lack Collaborative Tools",
+      description: "Beatmakers and producers often work in isolation, sharing beats via email or Dropbox. There's no real-time platform for discovering collaborators, sharing work-in-progress, or getting instant feedback from the producer community.",
+      painPoints: [
+        "No dedicated social platform for beat producers",
+        "Difficult to find collaborators with compatible styles",
+        "Feedback loops are slow (email, SoundCloud comments)",
+        "Hard to discover new producers and trending beats"
+      ]
+    },
+
+    approach: {
+      description: "Built a social platform combining SoundCloud-style beat sharing with real-time collaboration features. Producers can upload beats, create collaborative playlists, and get instant feedback through comments and reactions.",
+      keyFeatures: [
+        "Beat upload with waveform visualization and playback controls",
+        "Social feed showing latest uploads from followed producers",
+        "Collaborative playlists (multiple producers can add beats)",
+        "Real-time comments and reaction system",
+        "Producer profiles with genre tags and follower counts",
+        "Search and discovery based on genre, tempo, and mood tags"
+      ]
+    },
+
+    stack: {
+      frontend: ["React", "Wavesurfer.js", "Framer Motion"],
+      backend: ["Firebase (Auth, Firestore, Storage)"],
+      database: ["Firestore (NoSQL)"],
+      infrastructure: ["Firebase Hosting", "Firebase Cloud Functions"],
+      tools: ["Web Audio API", "React Player"]
+    },
+
+    role: {
+      title: "Full-Stack Developer",
+      responsibilities: [
+        "Designed and implemented Firebase backend architecture (Firestore schema, security rules)",
+        "Built React frontend with waveform visualization using Wavesurfer.js",
+        "Implemented real-time updates using Firestore listeners",
+        "Created collaborative playlist system with conflict resolution",
+        "Built audio player with custom controls and seek functionality",
+        "Deployed on Firebase Hosting with custom domain"
+      ],
+      teamSize: "Solo project",
+      duration: "3 weeks"
+    },
+
+    outcomes: {
+      metrics: [
+        { label: "Beta Users", value: "30+", description: "Producer community members" },
+        { label: "Beats Uploaded", value: "150+", description: "During testing phase" },
+        { label: "Avg Session Time", value: "12 min", description: "User engagement" },
+        { label: "Playlist Collaborations", value: "20+", description: "Multi-producer playlists" }
+      ],
+      impact: "Successfully tested with local producer community. Users praised the clean UI and real-time features. Feedback loop reduced from hours (SoundCloud comments) to seconds."
+    },
+
+    challenges: [
+      {
+        challenge: "Large audio file uploads (50MB+ beats)",
+        solution: "Implemented chunked upload with progress tracking and automatic format conversion"
+      },
+      {
+        challenge: "Waveform generation performance for long tracks",
+        solution: "Moved waveform generation to Cloud Functions and cached results in Storage"
+      },
+      {
+        challenge: "Real-time collaboration conflicts (simultaneous edits)",
+        solution: "Used Firestore transactions and optimistic UI updates with rollback"
+      }
+    ],
+
+    links: {
+      github: "https://github.com/aayush2724/Beatzy",
+      demo: null,
+      demo_note: "Firebase project currently in development mode"
+    },
+
+    tags: ["React", "Firebase", "Web Audio API", "Real-time", "Music Tech"],
+    updatedAt: "2026-06-02T19:16:27Z"
+  },
+
+  {
     id: "citizen-resolver",
     name: "Citizen Resolver",
     tagline: "Public Complaint Resolution Platform for Civic Issues",
@@ -264,93 +351,6 @@ export const caseStudies = [
 
     tags: ["Python", "Machine Learning", "Audio Processing", "TensorFlow", "Signal Processing"],
     updatedAt: "2026-05-05T01:47:49Z"
-  },
-
-  {
-    id: "beatzy",
-    name: "Beatzy",
-    tagline: "Real-Time Music Collaboration Platform for Producers",
-    badge: null,
-    cover: "/chatroom-cover.svg",
-
-    problem: {
-      title: "Music Producers Lack Collaborative Tools",
-      description: "Beatmakers and producers often work in isolation, sharing beats via email or Dropbox. There's no real-time platform for discovering collaborators, sharing work-in-progress, or getting instant feedback from the producer community.",
-      painPoints: [
-        "No dedicated social platform for beat producers",
-        "Difficult to find collaborators with compatible styles",
-        "Feedback loops are slow (email, SoundCloud comments)",
-        "Hard to discover new producers and trending beats"
-      ]
-    },
-
-    approach: {
-      description: "Built a social platform combining SoundCloud-style beat sharing with real-time collaboration features. Producers can upload beats, create collaborative playlists, and get instant feedback through comments and reactions.",
-      keyFeatures: [
-        "Beat upload with waveform visualization and playback controls",
-        "Social feed showing latest uploads from followed producers",
-        "Collaborative playlists (multiple producers can add beats)",
-        "Real-time comments and reaction system",
-        "Producer profiles with genre tags and follower counts",
-        "Search and discovery based on genre, tempo, and mood tags"
-      ]
-    },
-
-    stack: {
-      frontend: ["React", "Wavesurfer.js", "Framer Motion"],
-      backend: ["Firebase (Auth, Firestore, Storage)"],
-      database: ["Firestore (NoSQL)"],
-      infrastructure: ["Firebase Hosting", "Firebase Cloud Functions"],
-      tools: ["Web Audio API", "React Player"]
-    },
-
-    role: {
-      title: "Full-Stack Developer",
-      responsibilities: [
-        "Designed and implemented Firebase backend architecture (Firestore schema, security rules)",
-        "Built React frontend with waveform visualization using Wavesurfer.js",
-        "Implemented real-time updates using Firestore listeners",
-        "Created collaborative playlist system with conflict resolution",
-        "Built audio player with custom controls and seek functionality",
-        "Deployed on Firebase Hosting with custom domain"
-      ],
-      teamSize: "Solo project",
-      duration: "3 weeks"
-    },
-
-    outcomes: {
-      metrics: [
-        { label: "Beta Users", value: "30+", description: "Producer community members" },
-        { label: "Beats Uploaded", value: "150+", description: "During testing phase" },
-        { label: "Avg Session Time", value: "12 min", description: "User engagement" },
-        { label: "Playlist Collaborations", value: "20+", description: "Multi-producer playlists" }
-      ],
-      impact: "Successfully tested with local producer community. Users praised the clean UI and real-time features. Feedback loop reduced from hours (SoundCloud comments) to seconds."
-    },
-
-    challenges: [
-      {
-        challenge: "Large audio file uploads (50MB+ beats)",
-        solution: "Implemented chunked upload with progress tracking and automatic format conversion"
-      },
-      {
-        challenge: "Waveform generation performance for long tracks",
-        solution: "Moved waveform generation to Cloud Functions and cached results in Storage"
-      },
-      {
-        challenge: "Real-time collaboration conflicts (simultaneous edits)",
-        solution: "Used Firestore transactions and optimistic UI updates with rollback"
-      }
-    ],
-
-    links: {
-      github: "https://github.com/aayush2724/Beatzy",
-      demo: null,
-      demo_note: "Firebase project currently in development mode"
-    },
-
-    tags: ["React", "Firebase", "Web Audio API", "Real-time", "Music Tech"],
-    updatedAt: "2026-06-02T19:16:27Z"
   },
 
   {

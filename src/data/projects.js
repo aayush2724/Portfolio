@@ -11,17 +11,6 @@ export const projects = [
     updated: "Apr 28, 2026"
   },
   {
-    name: "Citizen Resolver System",
-    desc: "Public complaint resolution platform connecting citizens with government authorities for civic issue tracking and resolution.",
-    tags: ["React", "Node.js", "MongoDB", "Express"],
-    gh: "https://github.com/aayush2724/Citizen-Resolver-System",
-    demo: null,
-    badge: null,
-    highlight: "Real-time status tracking with automated authority routing and public transparency dashboard.",
-    updatedAt: "2026-05-21T13:48:48Z",
-    updated: "May 21, 2026"
-  },
-  {
     name: "Beatzy",
     desc: "Music collaboration platform with real-time beat sharing and social features for producers and artists.",
     tags: ["JavaScript", "React", "WebAudio API", "Firebase"],
@@ -31,6 +20,17 @@ export const projects = [
     highlight: "Interactive waveform visualization and collaborative playlist management for music creators.",
     updatedAt: "2026-06-02T19:16:27Z",
     updated: "Jun 2, 2026"
+  },
+  {
+    name: "Citizen Resolver System",
+    desc: "Public complaint resolution platform connecting citizens with government authorities for civic issue tracking and resolution.",
+    tags: ["React", "Node.js", "MongoDB", "Express"],
+    gh: "https://github.com/aayush2724/Citizen-Resolver-System",
+    demo: null,
+    badge: null,
+    highlight: "Real-time status tracking with automated authority routing and public transparency dashboard.",
+    updatedAt: "2026-05-21T13:48:48Z",
+    updated: "May 21, 2026"
   },
   {
     name: "MindFlow",

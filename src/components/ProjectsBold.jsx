@@ -18,6 +18,16 @@ const PROJECTS = [
   },
   {
     id: 2,
+    title: "Beatzy",
+    description: "Music collaboration platform with real-time beat sharing and social features for producers.",
+    tags: ["React", "Firebase", "Web Audio"],
+    link: "https://github.com/aayush2724/Beatzy",
+    image: "/Beatzy.png",
+    badge: "Music Tech",
+    earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
+  },
+  {
+    id: 3,
     title: "Citizen Resolver",
     description: "Public complaint resolution platform connecting citizens with government authorities.",
     tags: ["React", "Node.js", "MongoDB"],
@@ -27,7 +37,7 @@ const PROJECTS = [
     earthy: "from-[#4a3728] to-[#2c1e14]" // Espresso
   },
   {
-    id: 3,
+    id: 4,
     title: "Checkmate",
     description: "Advanced chess platform with real-time matchmaking and AI analysis capabilities.",
     tags: ["Socket.io", "React", "Node.js"],
@@ -35,16 +45,6 @@ const PROJECTS = [
     image: "",
     badge: "Strategy",
     earthy: "from-[#6b4423] to-[#3d2b1f]" // Clay
-  },
-  {
-    id: 4,
-    title: "Beatzy",
-    description: "Music collaboration platform with real-time beat sharing and social features for producers.",
-    tags: ["React", "Firebase", "Web Audio"],
-    link: "https://github.com/aayush2724/Beatzy",
-    image: "/chatroom-cover.svg",
-    badge: "Music Tech",
-    earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
   },
   {
     id: 5,
