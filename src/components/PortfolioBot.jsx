@@ -309,11 +309,16 @@ export default function PortfolioBot() {
       {/* Floating trigger button */}
       <button
         onClick={handleOpen}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-r from-[#6b4423] to-[#3d2b1f] px-4 py-3 text-sm font-display font-semibold text-white/90 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
+        style={{ 
+          background: "var(--accent)", 
+          color: "var(--accent-ink)",
+          boxShadow: "0 0 20px rgba(212, 255, 63, 0.2)"
+        }}
       >
         <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-white/40 opacity-75 animate-ping" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+          <span className="absolute inline-flex h-full w-full rounded-full bg-black/40 opacity-75 animate-ping" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-black/60" />
         </span>
         {open ? "Close" : "Ask me"}
       </button>
@@ -407,7 +412,7 @@ export default function PortfolioBot() {
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="font-mono text-[10px] px-2.5 py-1 rounded-full border border-white/8 text-white/35 hover:text-amber-400 hover:border-amber-500/30 transition-all bg-white/[0.02]"
+                    className="font-mono text-[10px] px-2.5 py-1 rounded-full border border-white/8 text-white/35 hover:text-[var(--accent)] hover:border-[var(--accent)]/30 transition-all bg-white/[0.01]"
                   >
                     {s}
                   </button>
