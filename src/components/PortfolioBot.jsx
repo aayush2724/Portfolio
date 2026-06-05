@@ -209,7 +209,7 @@ function formatMessageText(text) {
     
     if (matchText.startsWith("**") && matchText.endsWith("**")) {
       parts.push(
-        <strong key={matchIndex} className="font-semibold text-amber-400">
+        <strong key={matchIndex} className="font-semibold text-[#d7ccc8]">
           {matchText.slice(2, -2)}
         </strong>
       );
@@ -223,7 +223,7 @@ function formatMessageText(text) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-amber-400 hover:text-amber-300 underline font-medium transition-colors"
+          className="text-[#a1887f] hover:text-[#d7ccc8] underline font-medium transition-colors"
         >
           {label}
         </a>
@@ -309,31 +309,31 @@ export default function PortfolioBot() {
       {/* Floating trigger button */}
       <button
         onClick={handleOpen}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 text-sm font-display font-semibold text-black shadow-[0_0_0_1px_rgba(251,191,36,0.18),0_12px_40px_rgba(251,191,36,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(251,191,36,0.28),0_16px_48px_rgba(251,191,36,0.36)]"
+        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-white/10 bg-gradient-to-r from-[#6b4423] to-[#3d2b1f] px-4 py-3 text-sm font-display font-semibold text-white/90 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
       >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-white/80 opacity-75 animate-ping" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-white/40 opacity-75 animate-ping" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
         </span>
         {open ? "Close" : "Ask me"}
       </button>
 
       {/* Chat window */}
       {open && (
-        <div className="fixed right-5 bottom-20 w-[400px] max-w-[92vw] z-50 rounded-2xl border border-white/8 bg-[#060b18] shadow-2xl shadow-black/60 overflow-hidden flex flex-col"
+        <div className="fixed right-5 bottom-20 w-[400px] max-w-[92vw] z-50 rounded-2xl border border-white/8 bg-[#0a0a0b] shadow-2xl shadow-black/60 overflow-hidden flex flex-col"
           style={{ maxHeight: "min(580px, 80vh)" }}>
 
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/6 bg-white/[0.02] flex-shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-                <span className="text-xs font-bold text-black">AI</span>
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#6b4423] to-[#3d2b1f] flex items-center justify-center">
+                <span className="text-[10px] font-bold text-white/90">AI</span>
               </div>
               <div>
-                <div className="font-display text-sm font-semibold text-white">PortfolioBot</div>
-                <div className="font-mono text-[9px] text-amber-400/60 flex items-center gap-1">
-                  <span className="w-1 h-1 rounded-full bg-amber-400 animate-pulse" />
-                  Offline AI Assistant
+                <div className="font-display text-sm font-semibold text-white/90">PortfolioBot</div>
+                <div className="font-mono text-[9px] text-white/30 flex items-center gap-1">
+                  <span className="w-1 h-1 rounded-full bg-[#6b4423] animate-pulse" />
+                  Offline Assistant
                 </div>
               </div>
             </div>
@@ -360,15 +360,15 @@ export default function PortfolioBot() {
             {messages.map((m) => (
               <div key={m.id} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
                 {m.from === "bot" && (
-                  <div className="w-6 h-6 rounded-md bg-gradient-to-br from-amber-500/30 to-orange-500/20 border border-amber-500/20 flex items-center justify-center text-[9px] font-bold text-amber-400 mr-2 flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#6b4423]/30 to-[#3d2b1f]/20 border border-white/10 flex items-center justify-center text-[9px] font-bold text-white/40 mr-2 flex-shrink-0 mt-0.5">
                     AI
                   </div>
                 )}
                 <div
                   className={`max-w-[82%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
                     m.from === "user"
-                      ? "bg-amber-500/15 border border-amber-500/25 text-amber-50 rounded-br-sm"
-                      : "bg-white/[0.04] border border-white/6 text-white/85 rounded-bl-sm"
+                      ? "bg-white/[0.06] border border-white/10 text-white/90 rounded-br-sm"
+                      : "bg-white/[0.02] border border-white/5 text-white/70 rounded-bl-sm"
                   }`}
                 >
                   <div className="whitespace-pre-wrap font-body text-sm leading-relaxed">
@@ -381,14 +381,14 @@ export default function PortfolioBot() {
             {/* Typing indicator */}
             {loading && (
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-amber-500/30 to-orange-500/20 border border-amber-500/20 flex items-center justify-center text-[9px] font-bold text-amber-400 flex-shrink-0">
+                <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#6b4423]/30 to-[#3d2b1f]/20 border border-white/10 flex items-center justify-center text-[9px] font-bold text-white/40 flex-shrink-0">
                   AI
                 </div>
-                <div className="bg-white/[0.04] border border-white/6 rounded-xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5">
+                <div className="bg-white/[0.02] border border-white/5 rounded-xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5">
                   {[0, 0.15, 0.3].map((delay, i) => (
                     <span
                       key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-amber-400/60"
+                      className="w-1.5 h-1.5 rounded-full bg-white/20"
                       style={{ animation: `bounce 1s ${delay}s infinite` }}
                     />
                   ))}
@@ -418,23 +418,23 @@ export default function PortfolioBot() {
 
           {/* Input */}
           <div className="px-3 pb-3 flex-shrink-0 border-t border-white/5 pt-3">
-            <div className="flex gap-2 items-center bg-white/[0.03] border border-white/8 rounded-xl px-3 py-2 focus-within:border-amber-500/30 focus-within:ring-1 focus-within:ring-amber-500/10 transition-all">
+            <div className="flex gap-2 items-center bg-white/[0.02] border border-white/8 rounded-xl px-3 py-2 focus-within:border-white/20 transition-all">
               <input
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
-                placeholder="Ask about projects, stack, or hackathons…"
+                placeholder="Ask something…"
                 disabled={loading}
-                className="flex-1 bg-transparent font-body text-sm text-white caret-amber-400 outline-none placeholder:text-white/20 disabled:opacity-50"
+                className="flex-1 bg-transparent font-body text-sm text-white/80 caret-white/50 outline-none placeholder:text-white/10 disabled:opacity-50"
               />
               <button
                 onClick={() => send(input)}
                 disabled={loading || !input.trim()}
-                className="flex-shrink-0 w-7 h-7 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                className="flex-shrink-0 w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M1 6L11 6M6 1L11 6L6 11" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M1 6L11 6M6 1L11 6L6 11" stroke="white" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
             </div>
