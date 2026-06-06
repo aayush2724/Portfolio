@@ -14,7 +14,7 @@ const PROJECTS = [
     link: "https://github.com/aayush2724/LeadForge",
     image: "/leadforge-hackathon-proof.svg",
     badge: "Hackathon",
-    earthy: "" // Featured image
+    earthy: "from-[#3a3530] to-[#1f1c18]"
   },
   {
     id: 2,
@@ -110,7 +110,6 @@ const PROJECTS = [
 
 function ProjectCard({ project, onClick }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
-  const isLeadForge = project.title === "LeadForge"
   const hasImage = project.image && project.image !== ""
 
   const handleMouseMove = (e) => {
@@ -136,26 +135,15 @@ function ProjectCard({ project, onClick }) {
     >
       {/* Background Layer */}
       <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-        {isLeadForge ? (
-          <>
-            <img 
-              src={project.image} 
-              alt={project.title}
-              className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-transparent to-transparent" />
-          </>
-        ) : (
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.earthy} opacity-80 group-hover:opacity-100 transition-all duration-500`}>
-             {hasImage && !isLeadForge && (
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="h-full w-full object-cover opacity-20 mix-blend-overlay grayscale group-hover:grayscale-0 transition-all"
-                />
-             )}
-          </div>
-        )}
+        <div className={`absolute inset-0 bg-gradient-to-br ${project.earthy} opacity-80 group-hover:opacity-100 transition-all duration-500`}>
+           {hasImage && (
+              <img 
+                src={project.image} 
+                alt={project.title}
+                className="h-full w-full object-cover opacity-20 mix-blend-overlay grayscale group-hover:grayscale-0 transition-all"
+              />
+           )}
+        </div>
       </div>
 
       {/* Decorative Grain Overlay */}
