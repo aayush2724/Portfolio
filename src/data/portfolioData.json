@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-06-05T04:06:28.342Z",
+  "lastUpdated": "2026-06-06T03:51:03.539Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 287531,
+    "ranking": 285173,
     "stats": {
-      "totalSolved": 407,
+      "totalSolved": 408,
       "easy": 188,
       "medium": 196,
-      "hard": 23,
-      "totalSubmissions": 428
+      "hard": 24,
+      "totalSubmissions": 429
     },
     "streak": 25,
-    "totalActiveDays": 219
+    "totalActiveDays": 220
   },
   "github": [
     {
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-04T21:33:59Z"
+      "updatedAt": "2026-06-06T00:24:50Z"
     },
     {
       "name": "Portfolio",
@@ -33,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-04T04:23:27Z"
+      "updatedAt": "2026-06-05T12:25:44Z"
     },
     {
       "name": "CheckMate",
