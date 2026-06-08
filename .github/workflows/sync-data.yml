@@ -2,13 +2,11 @@ name: Sync Portfolio Data
 
 on:
   schedule:
-    # Runs every day at midnight UTC (5:30 AM IST)
-    - cron: '0 0 * * *'
-  workflow_dispatch: # Allow manual trigger from GitHub UI
+    # Runs at 00:00 and 12:00 UTC (5:30 AM and 5:30 PM IST)
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - '.github/workflows/sync-data.yml'
 
 jobs:
   sync:

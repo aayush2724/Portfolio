@@ -126,7 +126,7 @@ async function main() {
   };
 
   const outPath = resolve(__dirname, '../../src/data/portfolioData.json');
-  writeFileSync(outPath, JSON.stringify(output, null, 2));
+  writeFileSync(outPath, JSON.stringify(output, null, 2) + '\n');
 
   console.log(`✅ Data written to ${outPath}`);
   if (leetcode) console.log(`   LeetCode: ${leetcode.stats.totalSolved} solved (${leetcode.stats.easy}E / ${leetcode.stats.medium}M / ${leetcode.stats.hard}H)`);
