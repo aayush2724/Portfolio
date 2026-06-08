@@ -1,12 +1,17 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState } from "react"
 import { TypingTerminal } from "./Terminal"
+import portfolioData from "../data/portfolioData.json"
 
 export default function HeroBold() {
   const { scrollY } = useScroll()
   const hintOpacity = useTransform(scrollY, [0, 100], [1, 0])
   const [imageLoaded, setImageLoaded] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+
+  const leetcodeSolved = portfolioData.leetcode?.stats?.totalSolved || "416"
+  const projectsShipped = (portfolioData.github?.length || 12) + "+"
+  const currentStreak = (portfolioData.leetcode?.streak || 25) + "-day"
 
   return (
     <section className="relative flex min-h-screen items-center px-6 md:px-16 py-20">
@@ -51,9 +56,9 @@ export default function HeroBold() {
             transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-sm md:text-base text-[var(--muted)]"
           >
-            <span><b className="text-[var(--fg)]">403</b> LeetCode solved</span>
-            <span><b className="text-[var(--fg)]">12+</b> projects shipped</span>
-            <span><b className="text-[var(--fg)]">25-day</b> streak</span>
+            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> LeetCode solved</span>
+            <span><b className="text-[var(--fg)]">{projectsShipped}</b> projects shipped</span>
+            <span><b className="text-[var(--fg)]">{currentStreak}</b> streak</span>
           </motion.div>
 
           {/* Terminal */}

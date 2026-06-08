@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
 import AsciiBox from "./AsciiBox"
+import { fetchLeetCodeStats } from "../data/leetcodeapi"
+import portfolioData from "../data/portfolioData.json"
 
 function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
   const [count, setCount] = useState(0)
@@ -10,7 +12,7 @@ function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   useEffect(() => {
-    if (!isInView) return
+    if (!isInView || isNaN(end)) return
     
     let startTime
     let animationFrame
@@ -40,21 +42,46 @@ function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
 }
 
 export default function CodingStatsBold() {
-  const [stats] = useState({
+  const [stats, setStats] = useState({
     leetcode: {
-      total: 403,
-      easy: 188,
-      medium: 192,
-      hard: 23,
+      total: portfolioData.leetcode?.stats?.totalSolved || 416,
+      easy: portfolioData.leetcode?.stats?.easy || 191,
+      medium: portfolioData.leetcode?.stats?.medium || 201,
+      hard: portfolioData.leetcode?.stats?.hard || 24,
     },
     github: {
-      contributions: 217, // totalActiveDays from data
-      repos: 12,
+      contributions: portfolioData.leetcode?.totalActiveDays || 223,
+      repos: portfolioData.github?.length || 12,
     },
     streak: {
-      current: 25,
+      current: portfolioData.leetcode?.streak || 25,
     }
   })
+
+  useEffect(() => {
+    const getStats = async () => {
+      const lc = await fetchLeetCodeStats("aayush2717")
+      if (lc && lc.stats) {
+        setStats(prev => ({
+          ...prev,
+          leetcode: {
+            total: lc.stats.totalSolved,
+            easy: lc.stats.easy,
+            medium: lc.stats.medium,
+            hard: lc.stats.hard,
+          },
+          streak: {
+            current: lc.streak,
+          },
+          github: {
+            ...prev.github,
+            contributions: lc.totalActiveDays
+          }
+        }))
+      }
+    }
+    getStats()
+  }, [])
 
   const easyPercent = (stats.leetcode.easy / stats.leetcode.total) * 100
   const mediumPercent = (stats.leetcode.medium / stats.leetcode.total) * 100
