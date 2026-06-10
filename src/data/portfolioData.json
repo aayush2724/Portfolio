@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-06-10T02:45:49.044Z",
+  "lastUpdated": "2026-06-10T15:00:58.591Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
-    "ranking": 275056,
+    "ranking": 274073,
     "stats": {
       "totalSolved": 417,
       "easy": 191,
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-09T14:52:21Z"
+      "updatedAt": "2026-06-10T02:45:53Z"
     },
     {
       "name": "AlgoVision",
