@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-10T15:00:58.591Z",
+  "lastUpdated": "2026-06-11T02:55:27.131Z",
   "leetcode": {
     "username": "aayush2717",
     "avatar": "https://assets.leetcode.com/users/aayush2717/avatar_1750018458.png",
@@ -16,16 +16,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-10T02:45:53Z"
-    },
-    {
       "name": "AlgoVision",
       "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
@@ -33,7 +23,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-09T10:02:21Z"
+      "updatedAt": "2026-06-10T22:23:04Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-10T15:07:45Z"
     },
     {
       "name": "Beatzy",
