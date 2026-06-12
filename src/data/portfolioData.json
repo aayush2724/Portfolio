@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-06-12T10:56:25.466Z",
+  "lastUpdated": "2026-06-12T11:06:11.138Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1927104,
     "stats": {
-      "totalSolved": 525,
+      "totalSolved": 475,
       "easy": 227,
       "medium": 237,
       "hard": 27,
@@ -23,7 +23,11 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
+<<<<<<< HEAD
       "updatedAt": "2026-06-12T10:56:17Z"
+=======
+      "updatedAt": "2026-06-12T10:56:29Z"
+>>>>>>> 7ab8bf5 (Update LeetCode base count from 450 to 400)
     },
     {
       "name": "AlgoVision",

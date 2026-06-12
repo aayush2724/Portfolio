@@ -86,7 +86,7 @@ async function tryLiveLeetCode(username) {
     avatar: u.profile?.userAvatar,
     realName: u.profile?.realName || username,
     stats: {
-      totalSolved: 450 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
+      totalSolved: 400 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:
         191 + (u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
           ?.count || 0),

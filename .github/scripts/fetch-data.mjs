@@ -62,7 +62,7 @@ async function fetchLeetCode() {
       avatar: u.profile?.userAvatar || '',
       ranking: u.profile?.ranking || 0,
       stats: {
-        totalSolved: 450 + (solved[0]?.count || 0),
+        totalSolved: 400 + (solved[0]?.count || 0),
         easy: 191 + (solved.find(s => s.difficulty === 'Easy')?.count || 0),
         medium: 201 + (solved.find(s => s.difficulty === 'Medium')?.count || 0),
         hard: 24 + (solved.find(s => s.difficulty === 'Hard')?.count || 0),

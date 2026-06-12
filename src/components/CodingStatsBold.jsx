@@ -44,7 +44,7 @@ function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
 export default function CodingStatsBold() {
   const [stats, setStats] = useState({
     leetcode: {
-      total: portfolioData.leetcode?.stats?.totalSolved || 450,
+      total: portfolioData.leetcode?.stats?.totalSolved || 400,
       easy: portfolioData.leetcode?.stats?.easy || 191,
       medium: portfolioData.leetcode?.stats?.medium || 201,
       hard: portfolioData.leetcode?.stats?.hard || 24,
@@ -65,7 +65,7 @@ export default function CodingStatsBold() {
         setStats(prev => ({
           ...prev,
           leetcode: {
-            total: Math.max(lc.stats.totalSolved, 450),
+            total: Math.max(lc.stats.totalSolved, 400),
             easy: lc.stats.easy,
             medium: lc.stats.medium,
             hard: lc.stats.hard,

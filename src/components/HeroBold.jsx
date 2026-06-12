@@ -9,7 +9,7 @@ export default function HeroBold() {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  const leetcodeSolved = (portfolioData.leetcode?.stats?.totalSolved || 450) + "+"
+  const leetcodeSolved = (portfolioData.leetcode?.stats?.totalSolved || 400) + "+"
   const projectsShipped = (portfolioData.github?.length || 12) + "+"
   const currentStreak = (portfolioData.leetcode?.streak || 25) + "-day"
 
