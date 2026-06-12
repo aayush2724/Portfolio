@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-12T11:06:11.138Z",
+  "lastUpdated": "2026-06-12T11:14:35.711Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -23,11 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-<<<<<<< HEAD
-      "updatedAt": "2026-06-12T10:56:17Z"
-=======
-      "updatedAt": "2026-06-12T10:56:29Z"
->>>>>>> 7ab8bf5 (Update LeetCode base count from 450 to 400)
+      "updatedAt": "2026-06-12T11:14:24Z"
     },
     {
       "name": "AlgoVision",
