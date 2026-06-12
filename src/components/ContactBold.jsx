@@ -92,7 +92,7 @@ export default function ContactBold() {
               LinkedIn
             </a>
             <a
-              href="https://leetcode.com/aayush2717"
+              href="https://leetcode.com/aayush2724"
               target="_blank"
               rel="noopener noreferrer"
               className="font-display text-xl uppercase transition-colors link-underline"

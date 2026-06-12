@@ -41,7 +41,7 @@ This portfolio includes:
 
 - 🌐 **Live Site:** [aayush-2724.vercel.app](https://aayush-2724.vercel.app/)
 - 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724)
-- 🧩 **LeetCode:** [leetcode.com/aayush2717](https://leetcode.com/aayush2717)
+- 🧩 **LeetCode:** [leetcode.com/aayush2724](https://leetcode.com/aayush2724)
 - 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)
 
 ## Run Locally

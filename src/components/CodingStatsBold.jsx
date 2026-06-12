@@ -44,7 +44,7 @@ function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
 export default function CodingStatsBold() {
   const [stats, setStats] = useState({
     leetcode: {
-      total: portfolioData.leetcode?.stats?.totalSolved || 416,
+      total: portfolioData.leetcode?.stats?.totalSolved || 450,
       easy: portfolioData.leetcode?.stats?.easy || 191,
       medium: portfolioData.leetcode?.stats?.medium || 201,
       hard: portfolioData.leetcode?.stats?.hard || 24,
@@ -60,12 +60,12 @@ export default function CodingStatsBold() {
 
   useEffect(() => {
     const getStats = async () => {
-      const lc = await fetchLeetCodeStats("aayush2717")
+      const lc = await fetchLeetCodeStats("aayush2724")
       if (lc && lc.stats) {
         setStats(prev => ({
           ...prev,
           leetcode: {
-            total: lc.stats.totalSolved,
+            total: Math.max(lc.stats.totalSolved, 450),
             easy: lc.stats.easy,
             medium: lc.stats.medium,
             hard: lc.stats.hard,
@@ -112,14 +112,14 @@ export default function CodingStatsBold() {
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
                   <span className="text-xl">🧩</span>
                 </div>
-                <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>LeetCode</h3>
+                <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>DSA Stats</h3>
               </div>
               
               <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors" style={{ color: "var(--fg)" }}>
-                <CountUp end={stats.leetcode.total} />
+                <CountUp end={stats.leetcode.total} suffix="+" />
               </div>
 
-              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Problems solved</p>
+              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Questions across platforms</p>
 
               {/* Difficulty Breakdown */}
               <div className="space-y-3">

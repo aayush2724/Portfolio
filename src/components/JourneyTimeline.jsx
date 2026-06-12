@@ -30,7 +30,7 @@ const MILESTONES = [
   {
     year: 2025,
     title: "LeetCode Milestone",
-    description: "Crossed 400+ problems solved. Developed strong DSA foundation and competitive programming skills through consistent practice.",
+    description: "Crossed 450+ problems solved. Developed strong DSA foundation and competitive programming skills through consistent practice.",
     icon: "🧩",
   },
   {

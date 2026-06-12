@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const LEETCODE_USERNAME = process.env.LEETCODE_USERNAME || 'aayush2717';
+const LEETCODE_USERNAME = process.env.LEETCODE_USERNAME || 'aayush2724';
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'aayush2724';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 

@@ -80,10 +80,10 @@ const cmds = [
   },
   {
     id: "lc",
-    label: "LeetCode → aayush2717",
+    label: "LeetCode → aayush2724",
     icon: "🧩",
     cat: "Social",
-    fn: () => window.open("https://leetcode.com/aayush2717", "_blank"),
+    fn: () => window.open("https://leetcode.com/aayush2724", "_blank"),
   },
   {
     id: "ig",

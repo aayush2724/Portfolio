@@ -58,9 +58,9 @@ function searchPortfolio(query) {
   ) {
     const lc = portfolioData.leetcode;
     if (lc && lc.stats) {
-      return `I have solved **${lc.stats.totalSolved}** problems on LeetCode (${lc.stats.easy} easy, ${lc.stats.medium} medium, ${lc.stats.hard} hard) with a current streak of **${lc.streak}** days and active days of **${lc.totalActiveDays}**. My global rank is **#${lc.ranking}** under username [aayush2717](https://leetcode.com/aayush2717).`;
+      return `I have solved **${lc.stats.totalSolved}** problems on LeetCode (${lc.stats.easy} easy, ${lc.stats.medium} medium, ${lc.stats.hard} hard) with a current streak of **${lc.streak}** days and active days of **${lc.totalActiveDays}**. My global rank is **#${lc.ranking}** under username [aayush2724](https://leetcode.com/aayush2724).`;
     }
-    return "I'm active on LeetCode as [aayush2717](https://leetcode.com/aayush2717), where I regularly solve data structures and algorithm problems.";
+    return "I'm active on LeetCode as [aayush2724](https://leetcode.com/aayush2724), where I regularly solve data structures and algorithm problems.";
   }
 
   // 4. Hackathons
