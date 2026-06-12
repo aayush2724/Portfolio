@@ -86,18 +86,18 @@ async function tryLiveLeetCode(username) {
     avatar: u.profile?.userAvatar,
     realName: u.profile?.realName || username,
     stats: {
-      totalSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
+      totalSolved: 450 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
-          ?.count || 0,
+        191 + (u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
+          ?.count || 0),
       medium:
-        u.submitStatsGlobal.acSubmissionNum.find(
+        201 + (u.submitStatsGlobal.acSubmissionNum.find(
           (s) => s.difficulty === "Medium",
-        )?.count || 0,
+        )?.count || 0),
       hard:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
-          ?.count || 0,
-      totalSubmissions: u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
+        24 + (u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
+          ?.count || 0),
+      totalSubmissions: 440 + (u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0),
     },
     streak: u.userCalendar?.streak || 0,
     totalActiveDays: u.userCalendar?.totalActiveDays || 0,

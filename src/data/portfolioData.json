@@ -1,19 +1,30 @@
 {
-  "lastUpdated": "2026-06-12T02:52:10.021Z",
+  "lastUpdated": "2026-06-12T10:01:31.843Z",
   "leetcode": {
     "username": "aayush2724",
-    "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1750018458.png",
+    "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
+    "ranking": 2173815,
     "stats": {
-      "totalSolved": 450,
-      "easy": 191,
-      "medium": 203,
-      "hard": 24,
-      "totalSubmissions": 442
+      "totalSolved": 524,
+      "easy": 227,
+      "medium": 236,
+      "hard": 27,
+      "totalSubmissions": 516
     },
-    "streak": 25,
-    "totalActiveDays": 225
+    "streak": 6,
+    "totalActiveDays": 6
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-12T02:52:14Z"
+    },
     {
       "name": "AlgoVision",
       "description": "",
@@ -23,16 +34,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-12T00:40:23Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-11T15:42:18Z"
     },
     {
       "name": "Beatzy",
