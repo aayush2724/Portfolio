@@ -8,6 +8,26 @@ import { getCaseStudyByName } from "../data/caseStudies"
 const PROJECTS = [
   {
     id: 1,
+    title: "DeskGuard",
+    description: "Workspace security and monitor system that detects unauthorized access using real-time surveillance.",
+    tags: ["JavaScript", "Node.js", "OpenCV"],
+    link: "https://github.com/aayush2724/DeskGuard",
+    image: "", // Add if available
+    badge: "New",
+    earthy: "from-[#2d3436] to-[#000000]" // Onyx
+  },
+  {
+    id: 2,
+    title: "AlgoVision",
+    description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
+    tags: ["React", "Framer Motion", "Algorithms"],
+    link: "https://github.com/aayush2724/AlgoVision",
+    image: "", // Add if available
+    badge: "Education",
+    earthy: "from-[#2c3e50] to-[#000000]" // Midnight
+  },
+  {
+    id: 3,
     title: "LeadForge",
     description: "AI-powered lead generation and management tool for sales teams.",
     tags: ["Python", "AI", "FastAPI"],
@@ -17,7 +37,7 @@ const PROJECTS = [
     earthy: "from-[#3a3530] to-[#1f1c18]"
   },
   {
-    id: 2,
+    id: 4,
     title: "Beatzy",
     description: "Music collaboration platform with real-time beat sharing and social features for producers.",
     tags: ["React", "Firebase", "Web Audio"],
@@ -27,7 +47,7 @@ const PROJECTS = [
     earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
   },
   {
-    id: 3,
+    id: 5,
     title: "Citizen Resolver",
     description: "Public complaint resolution platform connecting citizens with government authorities.",
     tags: ["React", "Node.js", "MongoDB"],
@@ -37,7 +57,7 @@ const PROJECTS = [
     earthy: "from-[#4a3728] to-[#2c1e14]" // Espresso
   },
   {
-    id: 4,
+    id: 6,
     title: "Checkmate",
     description: "Advanced chess platform with real-time matchmaking and AI analysis capabilities.",
     tags: ["Socket.io", "React", "Node.js"],
@@ -47,7 +67,7 @@ const PROJECTS = [
     earthy: "from-[#6b4423] to-[#3d2b1f]" // Clay
   },
   {
-    id: 5,
+    id: 7,
     title: "Disaster Relief System",
     description: "Emergency resource coordination platform for disaster management and relief operations.",
     tags: ["React", "Express", "Real-time"],
@@ -57,7 +77,7 @@ const PROJECTS = [
     earthy: "from-[#5a4a3a] to-[#352b21]" // Stone
   },
   {
-    id: 6,
+    id: 8,
     title: "Job Portal",
     description: "Full-stack job board with application tracking and employer-candidate matching.",
     tags: ["TypeScript", "Next.js", "Prisma"],
@@ -67,7 +87,7 @@ const PROJECTS = [
     earthy: "from-[#7a6a4a] to-[#4a3a2a]" // Ochre
   },
   {
-    id: 7,
+    id: 9,
     title: "Chord Detector",
     description: "ML-powered music analysis tool that identifies guitar chords from audio input.",
     tags: ["Python", "ML", "Audio"],
@@ -77,7 +97,7 @@ const PROJECTS = [
     earthy: "from-[#4a5a6a] to-[#2a3a4a]" // Slate
   },
   {
-    id: 8,
+    id: 10,
     title: "Visitor Management",
     description: "Secure check-in system for tracking and managing building visitors with QR codes.",
     tags: ["HTML", "PHP", "MySQL"],
@@ -87,7 +107,7 @@ const PROJECTS = [
     earthy: "from-[#5d4037] to-[#3e2723]" // Deep Clay
   },
   {
-    id: 9,
+    id: 11,
     title: "SkillNest",
     description: "Learning platform connecting students with skill-based courses and mentorship.",
     tags: ["React", "Node", "WebRTC"],
@@ -97,7 +117,7 @@ const PROJECTS = [
     earthy: "from-[#4b4e53] to-[#2c2e31]" // Charcoal
   },
   {
-    id: 10,
+    id: 12,
     title: "ChatRoom",
     description: "Real-time messaging application with rooms, authentication, and presence indicators.",
     tags: ["Socket.io", "Node", "Express"],

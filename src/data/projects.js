@@ -1,5 +1,49 @@
 export const projects = [
   {
+    name: "DeskGuard",
+    desc: "Workspace security and monitor system that detects unauthorized access using real-time surveillance and movement alerts.",
+    tags: ["JavaScript", "Node.js", "OpenCV", "Pusher"],
+    gh: "https://github.com/aayush2724/DeskGuard",
+    demo: null,
+    badge: "New",
+    highlight: "Real-time security monitoring with instant alerts and automated intrusion logging for personal workspaces.",
+    updatedAt: "2026-06-13T18:35:44Z",
+    updated: "Jun 13, 2026"
+  },
+  {
+    name: "AlgoVision",
+    desc: "Interactive algorithm visualizer designed to help students understand complex data structures through real-time step-by-step execution.",
+    tags: ["JavaScript", "React", "Framer Motion", "Algorithms"],
+    gh: "https://github.com/aayush2724/AlgoVision",
+    demo: null,
+    badge: null,
+    highlight: "Visualizing complex graph and sorting algorithms with interactive controls and performance metrics.",
+    updatedAt: "2026-06-12T10:04:04Z",
+    updated: "Jun 12, 2026"
+  },
+  {
+    name: "CheckMate",
+    desc: "Multiplayer chess platform featuring real-time move validation, timed matches, and integrated chat for competitive play.",
+    tags: ["HTML", "JavaScript", "WebSockets", "CSS"],
+    gh: "https://github.com/aayush2724/CheckMate",
+    demo: null,
+    badge: null,
+    highlight: "Low-latency multiplayer experience using WebSockets with complete FEN-based move validation logic.",
+    updatedAt: "2026-06-03T10:33:09Z",
+    updated: "Jun 3, 2026"
+  },
+  {
+    name: "Disaster Relief System",
+    desc: "Emergency response platform for coordinating resource allocation, victim tracking, and volunteer management during disasters.",
+    tags: ["React", "Node.js", "Leaflet", "MongoDB"],
+    gh: "https://github.com/aayush2724/Disaster-relief-system",
+    demo: null,
+    badge: null,
+    highlight: "Geospatial mapping of incident zones with real-time resource tracking and authority coordination dashboard.",
+    updatedAt: "2026-05-19T04:07:58Z",
+    updated: "May 19, 2026"
+  },
+  {
     name: "LeadForge",
     desc: "AI-powered B2B lead generation pipeline that automates prospect discovery and qualification.",
     tags: ["Python", "FastAPI", "AI/ML", "LangChain"],

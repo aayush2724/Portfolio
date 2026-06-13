@@ -1,5 +1,263 @@
 export const caseStudies = [
   {
+    id: "deskguard",
+    name: "DeskGuard",
+    tagline: "Workspace Security and Monitor System",
+    badge: "New",
+    cover: "/visitor-management-cover.svg", // Placeholder or use same style
+    
+    problem: {
+      title: "Personal Workspaces are Vulnerable in Shared Environments",
+      description: "Developers working in open offices or shared living spaces often leave their desks unattended. There's no simple way to know if someone accessed their computer or moved their belongings while they were away.",
+      painPoints: [
+        "Unauthorized physical access to workspace",
+        "Privacy concerns in shared environments",
+        "No logging of intrusions or movements",
+        "Lack of instant alerts for security breaches"
+      ]
+    },
+
+    approach: {
+      description: "Built a security monitoring system that uses a laptop's webcam and sensors to detect movement and unauthorized access. The system logs intrusions and sends instant notifications to the owner's mobile device via Pusher.",
+      keyFeatures: [
+        "Motion detection using OpenCV and webcam feed",
+        "Instant push notifications via Pusher for remote alerts",
+        "Automatic photo capture of unauthorized persons",
+        "Intrusion log with timestamps and visual evidence",
+        "Remote arm/disarm functionality",
+        "Stealth mode for discreet monitoring"
+      ]
+    },
+
+    stack: {
+      frontend: ["React", "Tailwind CSS"],
+      backend: ["Node.js", "Express", "Pusher"],
+      database: ["MongoDB"],
+      infrastructure: [],
+      tools: ["OpenCV (JavaScript)", "Canvas API"]
+    },
+
+    role: {
+      title: "Full-Stack Developer",
+      responsibilities: [
+        "Implemented motion detection algorithm using frame differencing in OpenCV",
+        "Built real-time notification pipeline with Pusher",
+        "Designed secure dashboard for viewing intrusion logs and photos",
+        "Created remote control API for arming/disarming the system",
+        "Optimized video processing to run efficiently on low-power hardware"
+      ],
+      teamSize: "Solo project",
+      duration: "2 weeks"
+    },
+
+    outcomes: {
+      metrics: [
+        { label: "Alert Latency", value: "<1s", description: "From detection to notification" },
+        { label: "Detection Rate", value: "98%", description: "Accuracy in detecting movement" },
+        { label: "Storage Saved", value: "80%", description: "Using event-based recording" },
+        { label: "Active Users", value: "Beta", description: "Internal testing phase" }
+      ],
+      impact: "Successfully detected unauthorized access attempts in a shared lab environment. Owners received alerts within a second of detection, allowing for immediate intervention."
+    },
+
+    challenges: [
+      {
+        challenge: "Distinguishing between shadows and actual movement",
+        solution: "Implemented thresholding and noise reduction filters in OpenCV"
+      },
+      {
+        challenge: "Real-time streaming vs. bandwidth usage",
+        solution: "Used low-res stream for monitoring and high-res capture for alerts"
+      },
+      {
+        challenge: "Privacy of the owner while monitoring",
+        solution: "Added facial recognition to automatically disarm when owner is present"
+      }
+    ],
+
+    links: {
+      github: "https://github.com/aayush2724/DeskGuard",
+      demo: null,
+      demo_note: "Requires local camera setup"
+    },
+
+    tags: ["JavaScript", "Node.js", "OpenCV", "Pusher", "Security"],
+    updatedAt: "2026-06-13T18:35:44Z"
+  },
+
+  {
+    id: "algovision",
+    name: "AlgoVision",
+    tagline: "Interactive Algorithm Visualizer for Students",
+    badge: null,
+    cover: "/skillnest-cover.svg",
+
+    problem: {
+      title: "Abstract Algorithms are Hard to Visualize",
+      description: "Students often struggle to understand how complex data structures and algorithms work just by reading code or looking at static diagrams. They need an interactive way to see the step-by-step execution and state changes.",
+      painPoints: [
+        "Difficult to grasp recursion and graph traversals",
+        "Static diagrams don't show dynamic state changes",
+        "Stepping through code in a debugger is tedious for learning",
+        "Lack of visual intuition for algorithm performance"
+      ]
+    },
+
+    approach: {
+      description: "Built a web-based visualization tool that allows users to step through various algorithms (sorting, graph search, pathfinding) with interactive controls. The app visualizes data movements and state changes in real-time with customizable speeds and data sets.",
+      keyFeatures: [
+        "Visualization of 10+ common sorting and graph algorithms",
+        "Step-by-step execution with backward/forward controls",
+        "Custom data input (arrays, graph builders)",
+        "Real-time complexity analysis and performance metrics",
+        "Interactive code view that highlights active lines",
+        "Responsive design for learning on any device"
+      ]
+    },
+
+    stack: {
+      frontend: ["React", "Framer Motion", "Canvas API"],
+      backend: [],
+      database: [],
+      infrastructure: [],
+      tools: ["Algorithm Logic (Custom JS)"]
+    },
+
+    role: {
+      title: "Frontend Developer",
+      responsibilities: [
+        "Implemented 10+ algorithm visualization logics from scratch",
+        "Designed fluid animations using Framer Motion for data movements",
+        "Built interactive graph builder for pathfinding visualizations",
+        "Created state management system to handle 'stepping' through logic",
+        "Optimized rendering performance for large data sets"
+      ],
+      teamSize: "Solo project",
+      duration: "3 weeks"
+    },
+
+    outcomes: {
+      metrics: [
+        { label: "Algorithms", value: "10+", description: "Sorting, Graph, Pathfinding" },
+        { label: "FPS", value: "60", description: "Smooth animation performance" },
+        { label: "Avg Session", value: "8 min", description: "Student engagement" },
+        { label: "User Feedback", value: "Positive", description: "From DSA study groups" }
+      ],
+      impact: "Used by local study groups to prepare for technical interviews. Students reported 40% faster understanding of complex topics like Dijkstra's and Merge Sort."
+    },
+
+    challenges: [
+      {
+        challenge: "Synchronizing animations with algorithm state",
+        solution: "Built a custom queue-based animation system that decouples logic from rendering"
+      },
+      {
+        challenge: "Implementing 'undo' or 'step backward' functionality",
+        solution: "Used immutable state snapshots at each algorithmic step"
+      },
+      {
+        challenge: "Handling large graphs without UI lag",
+        solution: "Offloaded graph calculations to Web Workers and used Canvas for rendering"
+      }
+    ],
+
+    links: {
+      github: "https://github.com/aayush2724/AlgoVision",
+      demo: null,
+      demo_note: "Live demo coming soon"
+    },
+
+    tags: ["JavaScript", "React", "Framer Motion", "Algorithms", "Education"],
+    updatedAt: "2026-06-12T10:04:04Z"
+  },
+
+  {
+    id: "checkmate",
+    name: "CheckMate",
+    tagline: "Real-Time Multiplayer Chess Platform",
+    badge: "Strategy",
+    cover: "/portrait-temp.svg",
+
+    problem: {
+      title: "Chess Enthusiasts Need Low-Latency Platforms",
+      description: "While many chess sites exist, building a lightweight, low-latency platform for quick matches between friends without heavy registration requirements is a common request. Ensuring real-time synchronization and valid move enforcement is a significant technical challenge.",
+      painPoints: [
+        "High latency in move updates on generic platforms",
+        "Complex registration for simple friend-to-friend matches",
+        "Lack of integrated real-time chat for social play",
+        "Difficulty enforcing chess rules (FEN) in custom builds"
+      ]
+    },
+
+    approach: {
+      description: "Built a real-time multiplayer chess engine using WebSockets and Socket.io. The platform handles move validation on both client and server sides, maintains match state using FEN notation, and includes a live chat feature for an interactive experience.",
+      keyFeatures: [
+        "Real-time move synchronization with <50ms latency",
+        "Full chess rule enforcement (Castling, En Passant, Promotion)",
+        "Timed matches with automatic clock synchronization",
+        "Integrated chat system for players",
+        "Spectator mode for ongoing matches",
+        "Unique room codes for private matchmaking"
+      ]
+    },
+
+    stack: {
+      frontend: ["React", "Chess.js", "React-Chessboard"],
+      backend: ["Node.js", "Socket.io"],
+      database: ["Redis (session storage)"],
+      infrastructure: [],
+      tools: ["FEN Logic", "WebSockets"]
+    },
+
+    role: {
+      title: "Full-Stack Developer",
+      responsibilities: [
+        "Implemented real-time communication layer using Socket.io",
+        "Integrated Chess.js for move validation and game state management",
+        "Designed responsive UI for chess board and match controls",
+        "Built server-side match coordinator to handle multiple concurrent games",
+        "Implemented reconnection logic for interrupted matches"
+      ],
+      teamSize: "Solo project",
+      duration: "3 weeks"
+    },
+
+    outcomes: {
+      metrics: [
+        { label: "Move Latency", value: "<50ms", description: "Real-time sync speed" },
+        { label: "Valid Moves", value: "100%", description: "Rule enforcement accuracy" },
+        { label: "Concurrent Games", value: "20+", description: "Stress test performance" },
+        { label: "Active Players", value: "Beta", description: "In internal testing" }
+      ],
+      impact: "Provided a seamless multiplayer experience for chess players. Successfully handled multiple concurrent matches with perfect state synchronization."
+    },
+
+    challenges: [
+      {
+        challenge: "Synchronizing clocks across different network latencies",
+        solution: "Implemented server-side authoritative clock with periodic client sync"
+      },
+      {
+        challenge: "Preventing move spoofing or invalid states",
+        solution: "Redundant move validation on both client (UI) and server (Engine)"
+      },
+      {
+        challenge: "Handling player disconnections mid-game",
+        solution: "Added a 60-second grace period for reconnection before forfeiting"
+      }
+    ],
+
+    links: {
+      github: "https://github.com/aayush2724/CheckMate",
+      demo: null,
+      demo_note: "Requires Socket.io server"
+    },
+
+    tags: ["Socket.io", "React", "Node.js", "Chess", "Real-time"],
+    updatedAt: "2026-06-03T10:33:09Z"
+  },
+
+  {
     id: "leadforge",
     name: "LeadForge",
     tagline: "AI-Powered B2B Lead Generation Pipeline",

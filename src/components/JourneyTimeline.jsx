@@ -41,8 +41,14 @@ const MILESTONES = [
   },
   {
     year: 2026,
-    title: "Open For Opportunities",
-    description: "Seeking full-time roles and internships. Ready to build impactful products at scale and contribute to innovative teams.",
+    title: "Advanced System Design",
+    description: "Built DeskGuard and AlgoVision. Focused on building highly performant and scalable web applications with advanced security features.",
+    icon: "🛡️",
+  },
+  {
+    year: 2026,
+    title: "Current Focus & Goals",
+    description: "Deepening expertise in full-stack architecture and AI integration. Actively seeking opportunities to build impactful software at scale.",
     icon: "🎯",
   },
 ]
