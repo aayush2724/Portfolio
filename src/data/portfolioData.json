@@ -1,163 +1,128 @@
 {
-<<<<<<< HEAD
-  "lastUpdated": "2026-06-13T13:44:43.324Z",
-=======
-  "lastUpdated": "2026-06-13T19:53:57.954Z",
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
+  "lastUpdated": "2026-06-13T20:34:15.136Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1742320,
     "stats": {
-<<<<<<< HEAD
-      "totalSolved": 486,
-      "easy": 231,
-      "medium": 244,
+      "totalSolved": 491,
+      "easy": 233,
+      "medium": 247,
       "hard": 27,
-      "totalSubmissions": 529
-=======
-      "totalSolved": 91,
-      "easy": 42,
-      "medium": 46,
-      "hard": 3,
-      "totalSubmissions": 94
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
+      "totalSubmissions": 534
     },
     "streak": 7,
     "totalActiveDays": 7
   },
   "github": [
     {
-      "name": "DeskGuard",
-<<<<<<< HEAD
-      "description": "",
-=======
-      "description": "No description",
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
-      "url": "https://github.com/aayush2724/DeskGuard",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-<<<<<<< HEAD
-      "updatedAt": "2026-06-13T13:40:32Z"
-=======
-      "updatedAt": "2026-06-13T18:35:44.000Z"
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
-    },
-    {
       "name": "Portfolio",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-<<<<<<< HEAD
-      "updatedAt": "2026-06-13T02:44:55Z"
-=======
-      "updatedAt": "2026-06-13T13:44:47.000Z"
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
+      "updatedAt": "2026-06-13T20:34:07Z"
+    },
+    {
+      "name": "DeskGuard",
+      "description": "",
+      "url": "https://github.com/aayush2724/DeskGuard",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-13T18:35:44Z"
     },
     {
       "name": "AlgoVision",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-12T10:04:04.000Z"
+      "updatedAt": "2026-06-12T10:04:04Z"
     },
     {
       "name": "Beatzy",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Beatzy",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-08T23:16:25.000Z"
+      "updatedAt": "2026-06-08T23:16:25Z"
     },
     {
       "name": "Citizen-Resolver-System",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Citizen-Resolver-System",
       "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-06T16:37:05.000Z"
+      "updatedAt": "2026-06-06T16:37:05Z"
     },
     {
       "name": "CheckMate",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/CheckMate",
       "stars": 1,
       "forks": 0,
       "language": "HTML",
       "topics": [],
-      "updatedAt": "2026-06-03T10:33:09.000Z"
+      "updatedAt": "2026-06-03T10:33:09Z"
     },
     {
       "name": "MedVerify",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/MedVerify",
       "stars": 0,
       "forks": 1,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-01T17:06:42.000Z"
+      "updatedAt": "2026-06-01T17:06:42Z"
     },
     {
       "name": "Disaster-relief-system",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Disaster-relief-system",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-05-19T04:07:58.000Z"
-    },
-    {
-      "name": "aayush2724",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/aayush2724",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-05-13T04:07:27.000Z"
+      "updatedAt": "2026-05-19T04:07:58Z"
     },
     {
       "name": "AI-E1-2025-26",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/AI-E1-2025-26",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-05-05T09:35:53.000Z"
+      "updatedAt": "2026-05-05T09:35:53Z"
     },
     {
       "name": "Chord-Detector",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Chord-Detector",
       "stars": 1,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-05-05T01:47:49.000Z"
+      "updatedAt": "2026-05-05T01:47:49Z"
     },
     {
       "name": "Job-Portal",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Job-Portal",
       "stars": 0,
       "forks": 0,
       "language": "TypeScript",
       "topics": [],
-<<<<<<< HEAD
       "updatedAt": "2026-04-29T02:43:45Z"
     },
     {
@@ -169,9 +134,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-04-28T19:22:26Z"
-=======
-      "updatedAt": "2026-04-29T02:43:45.000Z"
->>>>>>> ab2541a (feat: add DeskGuard project and update portfolio data, project lists, and journey timeline)
     }
   ]
 }
