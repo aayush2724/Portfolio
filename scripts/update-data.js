@@ -95,7 +95,7 @@ async function fetchLiveLeetCode(username) {
     avatar: u.profile?.userAvatar,
     realName: u.profile?.realName || username,
     stats: {
-      totalSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
+      totalSolved: 420 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:
         u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
           ?.count || 0,
@@ -113,22 +113,75 @@ async function fetchLiveLeetCode(username) {
   };
 }
 
+async function fetchGitHubContributions(username) {
+  if (!username) return 0;
+  
+  // 1. Try GraphQL API (requires token)
+  if (GITHUB_TOKEN) {
+    const query = `
+      query($username:String!) {
+        user(login: $username) {
+          contributionsCollection {
+            contributionCalendar {
+              totalContributions
+            }
+          }
+        }
+      }
+    `;
+
+    try {
+      const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query, variables: { username } }),
+      });
+      const data = await res.json();
+      const count = data?.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions;
+      if (count !== undefined) return count;
+    } catch (err) {
+      console.warn("GitHub GraphQL contributions fetch failed:", err.message);
+    }
+  }
+
+  // 2. Fallback: Try a public contributions API (no token needed)
+  try {
+    const res = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
+    const data = await res.json();
+    const currentYear = new Date().getFullYear().toString();
+    const yearData = data.years?.find(y => y.year === currentYear);
+    return yearData?.total || 0;
+  } catch (err) {
+    console.warn("GitHub public contributions fetch failed:", err.message);
+    return 0;
+  }
+}
+
 async function main() {
   const staticData = await readStatic();
 
   // GitHub
-  const ghUser = extractGithubUsername(staticData) || process.env.GITHUB_USER;
+  const ghUser = extractGithubUsername(staticData) || process.env.GITHUB_USER || "aayush2724";
   let github = staticData.github || [];
+  let githubStats = staticData.githubStats || { contributions: 0 };
+
   try {
-    const live = await fetchGitHubRepos(ghUser);
-    if (live && live.length) github = live;
-    console.log(`Fetched ${github.length} repos for ${ghUser}`);
+    const [repos, contributions] = await Promise.all([
+      fetchGitHubRepos(ghUser),
+      fetchGitHubContributions(ghUser)
+    ]);
+    if (repos && repos.length) github = repos;
+    githubStats.contributions = contributions || githubStats.contributions;
+    console.log(`Fetched ${github.length} repos and ${contributions} contributions for ${ghUser}`);
   } catch (err) {
     console.warn("GitHub sync failed, keeping static list:", err.message);
   }
 
   // LeetCode
-  const lcUser = staticData?.leetcode?.username || process.env.LEETCODE_USER;
+  const lcUser = staticData?.leetcode?.username || process.env.LEETCODE_USER || "aayush2724";
   let leetcode = staticData.leetcode || null;
   try {
     const liveLc = await fetchLiveLeetCode(lcUser);
@@ -152,6 +205,7 @@ async function main() {
     lastUpdated: new Date().toISOString(),
     leetcode,
     github,
+    githubStats,
   };
 
   await writeStatic(out);

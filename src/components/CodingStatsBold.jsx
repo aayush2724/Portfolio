@@ -50,7 +50,7 @@ export default function CodingStatsBold() {
       hard: portfolioData.leetcode?.stats?.hard || 24,
     },
     github: {
-      contributions: portfolioData.leetcode?.totalActiveDays || 223,
+      contributions: portfolioData.githubStats?.contributions || 223,
       repos: portfolioData.github?.length || 12,
     },
     streak: {
@@ -60,7 +60,11 @@ export default function CodingStatsBold() {
 
   useEffect(() => {
     const getStats = async () => {
-      const lc = await fetchLeetCodeStats("aayush2724")
+      const [lc, ghContribs] = await Promise.all([
+        fetchLeetCodeStats("aayush2724"),
+        fetchGitHubContributions("aayush2724")
+      ])
+
       if (lc && lc.stats) {
         setStats(prev => ({
           ...prev,
@@ -75,7 +79,7 @@ export default function CodingStatsBold() {
           },
           github: {
             ...prev.github,
-            contributions: lc.totalActiveDays
+            contributions: ghContribs || prev.github.contributions
           }
         }))
       }
@@ -178,7 +182,7 @@ export default function CodingStatsBold() {
                 <CountUp end={stats.github.contributions} />
               </div>
 
-              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Active coding days this year</p>
+              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Total contributions this year</p>
 
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>

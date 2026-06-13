@@ -86,17 +86,17 @@ async function tryLiveLeetCode(username) {
     avatar: u.profile?.userAvatar,
     realName: u.profile?.realName || username,
     stats: {
-      totalSolved: 400 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
+      totalSolved: 420 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:
-        191 + (u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
-          ?.count || 0),
+        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
+          ?.count || 0,
       medium:
-        201 + (u.submitStatsGlobal.acSubmissionNum.find(
+        u.submitStatsGlobal.acSubmissionNum.find(
           (s) => s.difficulty === "Medium",
-        )?.count || 0),
+        )?.count || 0,
       hard:
-        24 + (u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
-          ?.count || 0),
+        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
+          ?.count || 0,
       totalSubmissions: 440 + (u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0),
     },
     streak: u.userCalendar?.streak || 0,
@@ -133,6 +133,19 @@ export const fetchGitHubProjects = async (username) => {
     console.error("GitHub fetch failed:", err);
     // Fall back to last synced static data when live API fails.
     return cached;
+  }
+};
+
+export const fetchGitHubContributions = async (username) => {
+  try {
+    const res = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
+    const data = await res.json();
+    const currentYear = new Date().getFullYear().toString();
+    const yearData = data.years?.find(y => y.year === currentYear);
+    return yearData?.total || 0;
+  } catch (err) {
+    console.error("GitHub contributions fetch failed:", err);
+    return staticData.githubStats?.contributions || 0;
   }
 };
 
