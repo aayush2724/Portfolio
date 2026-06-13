@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-06-13T02:44:51.177Z",
+  "lastUpdated": "2026-06-13T13:44:43.324Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1927156,
+    "ranking": 1742320,
     "stats": {
       "totalSolved": 486,
       "easy": 231,
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "DeskGuard",
+      "description": "",
+      "url": "https://github.com/aayush2724/DeskGuard",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-13T13:40:32Z"
+    },
+    {
       "name": "Portfolio",
       "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-12T14:43:22Z"
+      "updatedAt": "2026-06-13T02:44:55Z"
     },
     {
       "name": "AlgoVision",
@@ -124,16 +134,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-04-28T19:22:26Z"
-    },
-    {
-      "name": "Skillnest",
-      "description": "",
-      "url": "https://github.com/aayush2724/Skillnest",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-12T17:39:43Z"
     }
   ]
 }
