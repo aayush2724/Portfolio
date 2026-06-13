@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-06-12T14:43:17.603Z",
+  "lastUpdated": "2026-06-13T02:44:51.177Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1927156,
     "stats": {
-      "totalSolved": 475,
-      "easy": 227,
-      "medium": 237,
+      "totalSolved": 486,
+      "easy": 231,
+      "medium": 244,
       "hard": 27,
-      "totalSubmissions": 518
+      "totalSubmissions": 529
     },
     "streak": 6,
     "totalActiveDays": 6
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-12T11:14:40Z"
+      "updatedAt": "2026-06-12T14:43:22Z"
     },
     {
       "name": "AlgoVision",
