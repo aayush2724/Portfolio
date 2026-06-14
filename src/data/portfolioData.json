@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-06-14T02:56:10.740Z",
+  "lastUpdated": "2026-06-14T13:47:32.823Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1742320,
+    "ranking": 1603872,
     "stats": {
-      "totalSolved": 515,
-      "easy": 45,
+      "totalSolved": 516,
+      "easy": 46,
       "medium": 47,
       "hard": 3,
-      "totalSubmissions": 98
+      "totalSubmissions": 101
     },
     "streak": 8,
     "totalActiveDays": 8
   },
   "github": [
     {
-      "name": "Beatzy",
+      "name": "DeskGuard",
       "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
-      "stars": 1,
+      "url": "https://github.com/aayush2724/DeskGuard",
+      "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-14T00:24:11Z"
+      "updatedAt": "2026-06-14T11:34:57Z"
     },
     {
       "name": "Portfolio",
@@ -33,17 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-13T20:46:07Z"
+      "updatedAt": "2026-06-14T02:56:14Z"
     },
     {
-      "name": "DeskGuard",
+      "name": "Beatzy",
       "description": "",
-      "url": "https://github.com/aayush2724/DeskGuard",
-      "stars": 0,
+      "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 1,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-13T18:35:44Z"
+      "updatedAt": "2026-06-14T00:24:11Z"
     },
     {
       "name": "AlgoVision",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 524
+    "contributions": 525
   }
 }
