@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-06-13T20:46:03.717Z",
+  "lastUpdated": "2026-06-14T02:56:10.740Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1742320,
     "stats": {
-      "totalSolved": 511,
-      "easy": 42,
-      "medium": 46,
+      "totalSolved": 515,
+      "easy": 45,
+      "medium": 47,
       "hard": 3,
-      "totalSubmissions": 94
+      "totalSubmissions": 98
     },
-    "streak": 7,
-    "totalActiveDays": 7
+    "streak": 8,
+    "totalActiveDays": 8
   },
   "github": [
+    {
+      "name": "Beatzy",
+      "description": "",
+      "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-14T00:24:11Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-13T20:45:56Z"
+      "updatedAt": "2026-06-13T20:46:07Z"
     },
     {
       "name": "DeskGuard",
@@ -44,16 +54,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-12T10:04:04Z"
-    },
-    {
-      "name": "Beatzy",
-      "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-08T23:16:25Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 519
+    "contributions": 524
   }
 }
