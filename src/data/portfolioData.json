@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-06-14T13:47:32.823Z",
+  "lastUpdated": "2026-06-15T03:29:18.655Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1603872,
     "stats": {
-      "totalSolved": 516,
-      "easy": 46,
-      "medium": 47,
+      "totalSolved": 520,
+      "easy": 47,
+      "medium": 50,
       "hard": 3,
-      "totalSubmissions": 101
+      "totalSubmissions": 105
     },
-    "streak": 8,
-    "totalActiveDays": 8
+    "streak": 9,
+    "totalActiveDays": 9
   },
   "github": [
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-15T01:01:49Z"
+    },
     {
       "name": "DeskGuard",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-14T11:34:57Z"
+      "updatedAt": "2026-06-14T23:24:49Z"
     },
     {
       "name": "Portfolio",
@@ -33,7 +43,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-14T02:56:14Z"
+      "updatedAt": "2026-06-14T13:47:37Z"
     },
     {
       "name": "Beatzy",
@@ -54,16 +64,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-12T10:04:04Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-06T16:37:05Z"
     },
     {
       "name": "CheckMate",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 525
+    "contributions": 528
   }
 }
