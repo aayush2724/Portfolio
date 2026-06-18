@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-06-18T02:53:27.903Z",
+  "lastUpdated": "2026-06-18T14:53:42.946Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1480487,
+    "ranking": 1458142,
     "stats": {
-      "totalSolved": 526,
+      "totalSolved": 528,
       "easy": 50,
-      "medium": 53,
+      "medium": 55,
       "hard": 3,
-      "totalSubmissions": 112
+      "totalSubmissions": 114
     },
-    "streak": 11,
-    "totalActiveDays": 11
+    "streak": 12,
+    "totalActiveDays": 12
   },
   "github": [
     {
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-17T15:00:02Z"
+      "updatedAt": "2026-06-18T02:53:32Z"
     },
     {
       "name": "Citizen-Resolver-System",
