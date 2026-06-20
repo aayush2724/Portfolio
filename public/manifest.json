@@ -1,0 +1,16 @@
+{
+  "name": "Aayush Kumar — Portfolio",
+  "short_name": "Aayush",
+  "description": "Portfolio of Aayush Kumar — CS student, full-stack developer, and hackathon competitor.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#d4ff3f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

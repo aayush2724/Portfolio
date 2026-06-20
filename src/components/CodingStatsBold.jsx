@@ -3,8 +3,20 @@ import { motion, useInView } from "framer-motion"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
 import AsciiBox from "./AsciiBox"
+import GitHubHeatmap from "./GitHubHeatmap"
 import { fetchLeetCodeStats } from "../data/leetcodeapi"
 import portfolioData from "../data/portfolioData.json"
+
+async function fetchGitHubContributions(username) {
+  try {
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`)
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.total?.['2026'] || data.total?.['2025'] || null
+  } catch {
+    return null
+  }
+}
 
 function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
   const [count, setCount] = useState(0)
@@ -205,6 +217,11 @@ export default function CodingStatsBold() {
           </Reveal>
         </div>
         </AsciiBox>
+
+        {/* GitHub Heatmap */}
+        <div className="mt-8">
+          <GitHubHeatmap totalContributions={stats.github.contributions} />
+        </div>
 
         {/* Optional: Profile Links */}
         <Reveal delay={0.4}>
