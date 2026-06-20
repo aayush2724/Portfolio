@@ -15,6 +15,7 @@ const AboutBold = lazy(() => import("./components/AboutBold"));
 const SkillsMarquee = lazy(() => import("./components/SkillsMarquee"));
 const CodingStatsBold = lazy(() => import("./components/CodingStatsBold"));
 const JourneyTimeline = lazy(() => import("./components/JourneyTimeline"));
+const Testimonials = lazy(() => import("./components/Testimonials"));
 const BeyondCodeBento = lazy(() => import("./components/BeyondCodeBento"));
 const ContactBold = lazy(() => import("./components/ContactBold"));
 const PortfolioBot = lazy(() => import("./components/PortfolioBot"));
@@ -100,6 +101,7 @@ export default function App() {
               <SkillsMarquee />
               <CodingStatsBold />
               <JourneyTimeline />
+              <Testimonials />
               <BeyondCodeBento />
               <PortfolioBot />
               <ContactBold />
