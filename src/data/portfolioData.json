@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-19T14:48:48.226Z",
+  "lastUpdated": "2026-06-20T02:43:31.760Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "Beatzy",
+      "description": "",
+      "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-20T00:43:48Z"
+    },
+    {
       "name": "Portfolio",
       "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-19T03:39:53Z"
+      "updatedAt": "2026-06-19T14:48:54Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -44,16 +54,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-14T23:24:49Z"
-    },
-    {
-      "name": "Beatzy",
-      "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-14T00:24:11Z"
     },
     {
       "name": "AlgoVision",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 528
+    "contributions": 533
   }
 }
