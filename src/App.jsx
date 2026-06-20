@@ -113,7 +113,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2 }}
             onClick={() => setCmdOpen(true)}
-            className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"
+            className="fixed bottom-5 left-6 z-40 flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"
             style={{
               borderColor: "var(--line)",
               color: "var(--muted)",

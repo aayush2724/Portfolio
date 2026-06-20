@@ -14,7 +14,7 @@ export default function HeroBold() {
   const currentStreak = (portfolioData.leetcode?.streak || 25) + "-day"
 
   return (
-    <section className="relative flex min-h-screen items-center px-6 md:px-16 py-20">
+    <section id="hero" className="relative flex min-h-screen items-center px-6 md:px-16 py-20">
       <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         
         {/* Left: Text Content */}
