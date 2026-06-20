@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-20T10:55:44.962Z",
+  "lastUpdated": "2026-06-20T13:46:25.131Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -16,6 +16,26 @@
   },
   "github": [
     {
+      "name": "Chord-Detector",
+      "description": "",
+      "url": "https://github.com/aayush2724/Chord-Detector",
+      "stars": 1,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-06-20T11:10:00Z"
+    },
+    {
+      "name": "DeskGuard",
+      "description": "",
+      "url": "https://github.com/aayush2724/DeskGuard",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-20T11:09:23Z"
+    },
+    {
       "name": "Portfolio",
       "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
@@ -23,7 +43,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-20T10:55:34Z"
+      "updatedAt": "2026-06-20T10:55:49Z"
     },
     {
       "name": "Beatzy",
@@ -44,16 +64,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-15T01:01:49Z"
-    },
-    {
-      "name": "DeskGuard",
-      "description": "",
-      "url": "https://github.com/aayush2724/DeskGuard",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-14T23:24:49Z"
     },
     {
       "name": "AlgoVision",
@@ -106,16 +116,6 @@
       "updatedAt": "2026-05-05T09:35:53Z"
     },
     {
-      "name": "Chord-Detector",
-      "description": "",
-      "url": "https://github.com/aayush2724/Chord-Detector",
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-05-05T01:47:49Z"
-    },
-    {
       "name": "Job-Portal",
       "description": "",
       "url": "https://github.com/aayush2724/Job-Portal",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 540
+    "contributions": 543
   }
 }
