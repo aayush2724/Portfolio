@@ -10,7 +10,6 @@
     "sync-data": "node scripts/update-data.js"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@vercel/analytics": "^2.0.1",
