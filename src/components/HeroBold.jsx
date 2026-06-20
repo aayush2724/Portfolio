@@ -66,7 +66,7 @@ export default function HeroBold() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 max-w-lg max-h-[180px] overflow-hidden"
+            className="mt-8 max-w-lg"
           >
             <TypingTerminal
               title="aayush@portfolio — zsh"
@@ -74,6 +74,9 @@ export default function HeroBold() {
               steps={[
                 { cmd: "whoami", out: "Aayush Kumar — CS student & full-stack dev" },
                 { cmd: "cat skills.txt", out: "React · Node · Python · C++ · DSA" },
+                { cmd: "ls projects/", out: "portfolio  chess-app  leetcode-tracker  discord-bot" },
+                { cmd: "cat contact.txt", out: "aayush2615@gmail.com" },
+                { cmd: "echo $STATUS", out: "open to work & collaboration" },
                 { cmd: "./launch --status", out: "🚀 available for opportunities" },
               ]}
             />
