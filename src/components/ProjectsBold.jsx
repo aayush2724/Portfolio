@@ -130,6 +130,7 @@ const PROJECTS = [
 
 function ProjectCard({ project, onClick }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
   const hasImage = project.image && project.image !== ""
 
   const handleMouseMove = (e) => {
@@ -142,6 +143,7 @@ function ProjectCard({ project, onClick }) {
     const rotateX = (y - centerY) / 25
     const rotateY = (centerX - x) / 25
     setRotate({ x: rotateX, y: rotateY })
+    setMousePos({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 })
   }
 
   return (
@@ -149,56 +151,84 @@ function ProjectCard({ project, onClick }) {
       style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
       animate={{ rotateX: rotate.x, rotateY: rotate.y }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => setRotate({ x: 0, y: 0 })}
+      onMouseLeave={() => { setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) }}
       onClick={onClick}
-      className="group relative h-[85%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/5 bg-[#0D0D0D] cursor-pointer snap-center flex-shrink-0 transition-all shadow-2xl"
+      className="group relative h-[85%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/5 bg-[#0D0D0D] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-2xl"
     >
-      {/* Background Layer */}
-      <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.earthy} opacity-80 group-hover:opacity-100 transition-all duration-500`}>
-           {hasImage && (
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="h-full w-full object-cover opacity-20 mix-blend-overlay grayscale group-hover:grayscale-0 transition-all"
-              />
-           )}
-        </div>
+      {/* Animated gradient mesh background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 60% at ${mousePos.x}% ${mousePos.y}%, rgba(212,255,63,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 80% at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(255,255,255,0.04) 0%, transparent 50%),
+              radial-gradient(ellipse 100% 100% at 20% 80%, rgba(212,255,63,0.05) 0%, transparent 50%),
+              radial-gradient(ellipse 100% 100% at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 50%),
+              linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, ${project.earthy.split(' ')[1]?.replace('to-', '') || '#000000'} 100%)
+            `,
+          }}
+        />
+        {/* Mesh noise overlay for texture */}
+        <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>")`,
+        }} />
+        {hasImage && (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-overlay grayscale group-hover:grayscale-0 group-hover:opacity-25 transition-all duration-700"
+          />
+        )}
       </div>
 
-      {/* Decorative Grain Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* Hover glow border */}
+      <div
+        className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(300px circle at ${mousePos.x}% ${mousePos.y}%, rgba(212,255,63,0.12) 0%, transparent 60%)`,
+        }}
+      />
+
+      {/* Top edge glow line */}
+      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-[rgba(212,255,63,0.3)] transition-all duration-500" />
+
+      {/* Left edge glow line */}
+      <div className="absolute left-0 top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-white/5 to-transparent group-hover:via-[rgba(212,255,63,0.15)] transition-all duration-500" />
+
+      {/* Corner accent dot */}
+      <div className="absolute top-4 left-4 w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[rgba(212,255,63,0.6)] group-hover:shadow-[0_0_12px_rgba(212,255,63,0.4)] transition-all duration-500" />
 
       {/* Content Wrapper */}
       <div className="absolute inset-0 p-8 flex flex-col justify-between z-10" style={{ transform: "translateZ(40px)" }}>
         <div className="flex justify-between items-start">
            <span className="text-[10px] font-mono text-white/30 tracking-widest">{project.id.toString().padStart(2, '0')}</span>
-           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/50 border border-white/10 bg-black/10 backdrop-blur-md px-3 py-1 rounded-full group-hover:text-white group-hover:border-white/20 transition-all">
+           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/50 border border-white/10 bg-black/10 backdrop-blur-md px-3 py-1 rounded-full group-hover:text-[rgba(212,255,63,0.9)] group-hover:border-[rgba(212,255,63,0.2)] group-hover:bg-[rgba(212,255,63,0.05)] transition-all duration-500">
              {project.badge}
            </span>
         </div>
 
         <div className="space-y-4">
            <div className="space-y-2">
-              <h3 className="font-display text-4xl uppercase tracking-tighter text-white leading-none">
+              <h3 className="font-display text-4xl uppercase tracking-tighter text-white leading-none group-hover:text-white transition-colors duration-500">
                 {project.title}
               </h3>
-              <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 max-w-[95%] group-hover:text-white/80 transition-colors">
+              <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 max-w-[95%] group-hover:text-white/80 transition-colors duration-500">
                 {project.description}
               </p>
            </div>
            
-           <div className="flex items-center justify-between pt-6 border-t border-white/10">
+           <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-white/15 transition-colors duration-500">
               <div className="flex gap-3">
                  {project.tags.slice(0, 2).map(tag => (
-                   <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/50 transition-colors">
+                   <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/50 transition-colors duration-500">
                      {tag}
                    </span>
                  ))}
               </div>
-              <div className="flex items-center gap-2 text-white/90 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                 <span className="text-[10px] font-black uppercase tracking-widest">Explore</span>
-                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              <div className="flex items-center gap-2 text-white/90 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
+                 <span className="text-[10px] font-black uppercase tracking-widest text-[rgba(212,255,63,0.8)]">Explore</span>
+                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.8)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </div>
            </div>
         </div>

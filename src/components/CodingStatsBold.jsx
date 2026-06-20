@@ -45,9 +45,6 @@ export default function CodingStatsBold() {
   const [stats, setStats] = useState({
     leetcode: {
       total: portfolioData.leetcode?.stats?.totalSolved || 400,
-      easy: portfolioData.leetcode?.stats?.easy || 191,
-      medium: portfolioData.leetcode?.stats?.medium || 201,
-      hard: portfolioData.leetcode?.stats?.hard || 24,
     },
     github: {
       contributions: portfolioData.githubStats?.contributions || 223,
@@ -70,9 +67,6 @@ export default function CodingStatsBold() {
           ...prev,
           leetcode: {
             total: Math.max(lc.stats.totalSolved, 400),
-            easy: lc.stats.easy,
-            medium: lc.stats.medium,
-            hard: lc.stats.hard,
           },
           streak: {
             current: lc.streak,
@@ -86,10 +80,6 @@ export default function CodingStatsBold() {
     }
     getStats()
   }, [])
-
-  const easyPercent = (stats.leetcode.easy / stats.leetcode.total) * 100
-  const mediumPercent = (stats.leetcode.medium / stats.leetcode.total) * 100
-  const hardPercent = (stats.leetcode.hard / stats.leetcode.total) * 100
 
   return (
     <section id="stats" className="relative py-32 px-6 md:px-16">
@@ -123,47 +113,27 @@ export default function CodingStatsBold() {
                 <CountUp end={stats.leetcode.total} suffix="+" />
               </div>
 
-              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Questions across platforms</p>
+              <p className="text-sm mb-4" style={{ color: "var(--muted)" }}>Consistency & problem solving</p>
 
-              {/* Difficulty Breakdown */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs">
-                  <span style={{ color: "var(--muted)" }}>Easy</span>
-                  <span style={{ color: "var(--fg)" }}>{stats.leetcode.easy}</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span style={{ color: "var(--muted)" }}>Medium</span>
-                  <span style={{ color: "var(--fg)" }}>{stats.leetcode.medium}</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span style={{ color: "var(--muted)" }}>Hard</span>
-                  <span style={{ color: "var(--fg)" }}>{stats.leetcode.hard}</span>
-                </div>
-              </div>
+              <p className="text-base font-semibold mb-5" style={{ color: "var(--fg)" }}>
+                "I don't count the days. I make the days count."
+              </p>
 
-              {/* Progress Bar */}
-              <div className="mt-6 h-2 rounded-full overflow-hidden flex" style={{ background: "var(--surface)" }}>
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${easyPercent}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  style={{ background: "rgba(212, 255, 63, 0.6)" }}
-                />
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${mediumPercent}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.6 }}
-                  style={{ background: "rgba(212, 255, 63, 0.8)" }}
-                />
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${hardPercent}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.7 }}
-                  style={{ background: "var(--accent)" }}
-                />
+              {/* Topics Covered */}
+              <div className="flex flex-wrap gap-2">
+                {["Trees", "Graphs", "DP", "Sliding Window", "Backtracking", "Binary Search", "Stacks", "Tries"].map((topic) => (
+                  <span
+                    key={topic}
+                    className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border"
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "rgba(212,255,63,0.2)",
+                      background: "rgba(212,255,63,0.05)",
+                    }}
+                  >
+                    {topic}
+                  </span>
+                ))}
               </div>
             </div>
           </Reveal>

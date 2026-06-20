@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import InteractiveGrid from "./components/InteractiveGrid";
+import ShaderBackground from "./components/ShaderBackground";
 import AccentCursor from "./components/AccentCursor";
 import Navbar from "./components/Navbar";
 import HeroBold from "./components/HeroBold";
@@ -75,6 +76,9 @@ export default function App() {
 
   return (
     <>
+      {/* Shader background */}
+      <ShaderBackground />
+
       {/* Interactive grid background */}
       <InteractiveGrid />
 
