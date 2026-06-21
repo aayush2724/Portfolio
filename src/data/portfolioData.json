@@ -1,30 +1,20 @@
 {
-  "lastUpdated": "2026-06-20T13:46:25.131Z",
+  "lastUpdated": "2026-06-21T02:59:58.208Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1426667,
     "stats": {
-      "totalSolved": 531,
+      "totalSolved": 532,
       "easy": 52,
       "medium": 56,
-      "hard": 3,
-      "totalSubmissions": 117
+      "hard": 4,
+      "totalSubmissions": 118
     },
-    "streak": 13,
-    "totalActiveDays": 13
+    "streak": 14,
+    "totalActiveDays": 14
   },
   "github": [
-    {
-      "name": "Chord-Detector",
-      "description": "",
-      "url": "https://github.com/aayush2724/Chord-Detector",
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-06-20T11:10:00Z"
-    },
     {
       "name": "DeskGuard",
       "description": "",
@@ -33,7 +23,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-20T11:09:23Z"
+      "updatedAt": "2026-06-20T19:44:36Z"
+    },
+    {
+      "name": "Chord-Detector",
+      "description": "",
+      "url": "https://github.com/aayush2724/Chord-Detector",
+      "stars": 1,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-06-20T19:39:55Z"
     },
     {
       "name": "Portfolio",
@@ -43,7 +43,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-20T10:55:49Z"
+      "updatedAt": "2026-06-20T13:46:29Z"
     },
     {
       "name": "Beatzy",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 543
+    "contributions": 545
   }
 }
