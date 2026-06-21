@@ -69,6 +69,7 @@ export default function HeroBold() {
             className="mt-8 max-w-lg"
           >
             <TypingTerminal
+              className="h-[380px] sm:h-[320px]"
               title="aayush@portfolio — zsh"
               path="~"
               steps={[

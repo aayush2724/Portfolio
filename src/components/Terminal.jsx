@@ -37,16 +37,16 @@ export function Block({ path = "~", cmd, out, typing = false }) {
 }
 
 /* static window — drop any children inside */
-export function Terminal({ title = "aayush@portfolio — zsh", className = "", children }) {
+export function Terminal({ title = "aayush@portfolio — zsh", className = "", children, bodyRef }) {
   return (
     <div
-      className={`overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] font-mono text-sm shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] ${className}`}
+      className={`flex flex-col overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] font-mono text-sm shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] ${className}`}
     >
-      <div className="flex items-center gap-3 border-b border-[var(--line)] bg-white/[0.02] px-4 py-2.5">
+      <div className="flex-shrink-0 flex items-center gap-3 border-b border-[var(--line)] bg-white/[0.02] px-4 py-2.5">
         <Dots />
         <span className="text-xs text-[var(--muted)]">{title}</span>
       </div>
-      <div className="p-4 leading-relaxed">{children}</div>
+      <div ref={bodyRef} className="flex-grow overflow-y-auto p-4 leading-relaxed">{children}</div>
     </div>
   )
 }
@@ -62,6 +62,19 @@ export function TypingTerminal({
   const [curCmd, setCurCmd] = useState("")  // partial command
   const [curOut, setCurOut] = useState(null)
   const timers = useRef([])
+  const bodyRef = useRef(null)
+
+  // Scroll to bottom helper
+  const scrollToBottom = () => {
+    if (bodyRef.current) {
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight
+    }
+  }
+
+  // Scroll on content changes
+  useEffect(() => {
+    scrollToBottom()
+  }, [done, curCmd, curOut])
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -99,7 +112,7 @@ export function TypingTerminal({
   const typingNow = curCmd !== "" || curOut !== null
 
   return (
-    <Terminal title={title} className={className}>
+    <Terminal title={title} className={className} bodyRef={bodyRef}>
       {done.map((s, i) => (
         <Block key={i} path={path} cmd={s.cmd} out={s.out} />
       ))}
