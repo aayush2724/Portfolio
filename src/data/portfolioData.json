@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-06-21T02:59:58.208Z",
+  "lastUpdated": "2026-06-21T13:43:55.539Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1426667,
+    "ranking": 1416823,
     "stats": {
       "totalSolved": 532,
       "easy": 52,
@@ -15,6 +15,16 @@
     "totalActiveDays": 14
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-21T13:43:48Z"
+    },
     {
       "name": "DeskGuard",
       "description": "",
@@ -34,16 +44,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-06-20T19:39:55Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-20T13:46:29Z"
     },
     {
       "name": "Beatzy",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 545
+    "contributions": 546
   }
 }
