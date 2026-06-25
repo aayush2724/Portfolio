@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-24T14:12:57.345Z",
+  "lastUpdated": "2026-06-25T02:39:21.911Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-24T14:14:58Z"
+    },
+    {
       "name": "DeskGuard",
       "description": "",
       "url": "https://github.com/aayush2724/DeskGuard",
@@ -24,16 +34,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-24T08:54:04Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-24T02:38:03Z"
     },
     {
       "name": "Chord-Detector",
