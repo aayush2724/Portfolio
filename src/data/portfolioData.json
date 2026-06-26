@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-06-26T02:42:31.445Z",
+  "lastUpdated": "2026-06-26T14:09:30.731Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1328629,
+    "ranking": 1272756,
     "stats": {
-      "totalSolved": 544,
-      "easy": 55,
-      "medium": 65,
-      "hard": 4,
-      "totalSubmissions": 130
+      "totalSolved": 547,
+      "easy": 56,
+      "medium": 66,
+      "hard": 5,
+      "totalSubmissions": 133
     },
-    "streak": 19,
-    "totalActiveDays": 19
+    "streak": 20,
+    "totalActiveDays": 20
   },
   "github": [
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-06-26T03:03:08Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-25T14:12:00Z"
+      "updatedAt": "2026-06-26T02:42:36Z"
     },
     {
       "name": "DeskGuard",
@@ -54,16 +64,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-20T00:43:48Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-15T01:01:49Z"
     },
     {
       "name": "AlgoVision",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 577
+    "contributions": 579
   }
 }
