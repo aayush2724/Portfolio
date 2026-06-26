@@ -1,30 +1,20 @@
 {
-  "lastUpdated": "2026-06-25T14:10:26.578Z",
+  "lastUpdated": "2026-06-26T02:42:31.445Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 1328629,
     "stats": {
-      "totalSolved": 543,
+      "totalSolved": 544,
       "easy": 55,
-      "medium": 64,
+      "medium": 65,
       "hard": 4,
-      "totalSubmissions": 129
+      "totalSubmissions": 130
     },
     "streak": 19,
     "totalActiveDays": 19
   },
   "github": [
-    {
-      "name": "Auralis",
-      "description": "",
-      "url": "https://github.com/aayush2724/Auralis",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-06-25T14:04:53Z"
-    },
     {
       "name": "Portfolio",
       "description": "",
@@ -33,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-25T02:39:26Z"
+      "updatedAt": "2026-06-25T14:12:00Z"
     },
     {
       "name": "DeskGuard",
@@ -134,9 +124,19 @@
       "language": "TypeScript",
       "topics": [],
       "updatedAt": "2026-04-29T02:43:45Z"
+    },
+    {
+      "name": "LeadForge",
+      "description": "",
+      "url": "https://github.com/aayush2724/LeadForge",
+      "stars": 1,
+      "forks": 1,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-04-28T19:22:26Z"
     }
   ],
   "githubStats": {
-    "contributions": 572
+    "contributions": 577
   }
 }
