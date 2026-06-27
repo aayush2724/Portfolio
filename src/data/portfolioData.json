@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-06-27T02:34:31.803Z",
+  "lastUpdated": "2026-06-27T13:18:27.168Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1272756,
+    "ranking": 1211951,
     "stats": {
-      "totalSolved": 552,
+      "totalSolved": 554,
       "easy": 57,
-      "medium": 69,
-      "hard": 6,
-      "totalSubmissions": 138
+      "medium": 70,
+      "hard": 7,
+      "totalSubmissions": 140
     },
     "streak": 21,
     "totalActiveDays": 21
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-26T16:43:23Z"
+      "updatedAt": "2026-06-27T13:16:43Z"
     },
     {
       "name": "Portfolio",
@@ -33,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-26T14:09:35Z"
+      "updatedAt": "2026-06-27T02:34:36Z"
     },
     {
       "name": "DeskGuard",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 586
+    "contributions": 591
   }
 }
