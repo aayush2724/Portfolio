@@ -111,21 +111,21 @@ const cmds = [
   },
   {
     id: "beatzy",
-    label: "Open Beatzy on GitHub",
+    label: "Open Beatzy Live",
     icon: "🎵",
     cat: "Project",
     fn: () =>
       window.open(
-        "https://github.com/aayush2724/Beatzy",
+        "https://beatzy-zeta.vercel.app",
         "_blank",
       ),
   },
   {
     id: "crs",
-    label: "Open Citizen Resolver on GitHub",
+    label: "Open Citizen Resolver Live",
     icon: "🏛️",
     cat: "Project",
-    fn: () => window.open("https://github.com/aayush2724/Citizen-Resolver-System", "_blank"),
+    fn: () => window.open("https://civicresolve-jet.vercel.app", "_blank"),
   },
   {
     id: "cd",

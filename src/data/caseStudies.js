@@ -77,7 +77,7 @@ export const caseStudies = [
 
     links: {
       github: "https://github.com/aayush2724/DeskGuard",
-      demo: null,
+      demo: "https://deskguard-jade.vercel.app",
       demo_note: "Requires local camera setup"
     },
 
@@ -429,7 +429,7 @@ export const caseStudies = [
 
     links: {
       github: "https://github.com/aayush2724/Beatzy",
-      demo: null,
+      demo: "https://beatzy-zeta.vercel.app",
       demo_note: "Firebase project currently in development mode"
     },
 
@@ -516,7 +516,7 @@ export const caseStudies = [
 
     links: {
       github: "https://github.com/aayush2724/Citizen-Resolver-System",
-      demo: null,
+      demo: "https://civicresolve-jet.vercel.app",
       demo_note: "Video demo available on GitHub"
     },
 

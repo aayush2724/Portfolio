@@ -12,6 +12,7 @@ const PROJECTS = [
     description: "Workspace security and monitor system that detects unauthorized access using real-time surveillance.",
     tags: ["JavaScript", "Node.js", "OpenCV"],
     link: "https://github.com/aayush2724/DeskGuard",
+    demo: "https://deskguard-jade.vercel.app",
     image: "", // Add if available
     badge: "New",
     earthy: "from-[#2d3436] to-[#000000]" // Onyx
@@ -42,6 +43,7 @@ const PROJECTS = [
     description: "Music collaboration platform with real-time beat sharing and social features for producers.",
     tags: ["React", "Firebase", "Web Audio"],
     link: "https://github.com/aayush2724/Beatzy",
+    demo: "https://beatzy-zeta.vercel.app",
     image: "/Beatzy.png",
     badge: "Music Tech",
     earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
@@ -52,6 +54,7 @@ const PROJECTS = [
     description: "Public complaint resolution platform connecting citizens with government authorities.",
     tags: ["React", "Node.js", "MongoDB"],
     link: "https://github.com/aayush2724/Citizen-Resolver-System",
+    demo: "https://civicresolve-jet.vercel.app",
     image: "/citizen-resolver-cover.svg",
     badge: "Government",
     earthy: "from-[#4a3728] to-[#2c1e14]" // Espresso
@@ -227,7 +230,9 @@ function ProjectCard({ project, onClick }) {
                  ))}
               </div>
               <div className="flex items-center gap-2 text-white/90 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
-                 <span className="text-[10px] font-black uppercase tracking-widest text-[rgba(212,255,63,0.8)]">Explore</span>
+                 <span className="text-[10px] font-black uppercase tracking-widest text-[rgba(212,255,63,0.8)]">
+                   {project.demo ? "Live site" : "Case study"}
+                 </span>
                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.8)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </div>
            </div>
@@ -245,8 +250,13 @@ export default function ProjectsBold() {
   const { scrollXProgress } = useScroll({ container: scrollRef })
   const scaleX = useSpring(scrollXProgress, { stiffness: 100, damping: 30 })
 
-  const handleProjectClick = (projectTitle) => {
-    const caseStudy = getCaseStudyByName(projectTitle)
+  const handleProjectClick = (project) => {
+    if (project.demo) {
+      window.open(project.demo, "_blank", "noopener,noreferrer")
+      return
+    }
+
+    const caseStudy = getCaseStudyByName(project.title)
     if (caseStudy) {
       setSelectedProject(caseStudy)
       setModalOpen(true)
@@ -305,7 +315,7 @@ export default function ProjectsBold() {
             <ProjectCard 
               key={project.id} 
               project={project} 
-              onClick={() => handleProjectClick(project.title)} 
+              onClick={() => handleProjectClick(project)} 
             />
           ))}
           
