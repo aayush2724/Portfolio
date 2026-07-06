@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-05T13:16:35.190Z",
+  "lastUpdated": "2026-07-06T02:32:33.138Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -23,27 +23,67 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-07-05T12:23:25Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-07-05T02:27:50Z"
+      "updatedAt": "2026-07-05T17:05:32Z"
     },
     {
       "name": "Citizen-Resolver-System",
       "description": "",
       "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 1,
+      "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-28T03:04:53Z"
+      "updatedAt": "2026-07-05T15:52:15Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-07-05T15:52:14Z"
+    },
+    {
+      "name": "CheckMate",
+      "description": "",
+      "url": "https://github.com/aayush2724/CheckMate",
+      "stars": 0,
+      "forks": 0,
+      "language": "HTML",
+      "topics": [],
+      "updatedAt": "2026-07-05T15:52:11Z"
+    },
+    {
+      "name": "LeadForge",
+      "description": "",
+      "url": "https://github.com/aayush2724/LeadForge",
+      "stars": 0,
+      "forks": 1,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-07-05T15:52:09Z"
+    },
+    {
+      "name": "Chord-Detector",
+      "description": "",
+      "url": "https://github.com/aayush2724/Chord-Detector",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-07-05T15:52:00Z"
+    },
+    {
+      "name": "Beatzy",
+      "description": "",
+      "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-07-05T15:51:54Z"
     },
     {
       "name": "DeskGuard",
@@ -56,26 +96,6 @@
       "updatedAt": "2026-06-24T08:54:04Z"
     },
     {
-      "name": "Chord-Detector",
-      "description": "",
-      "url": "https://github.com/aayush2724/Chord-Detector",
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-06-20T19:39:55Z"
-    },
-    {
-      "name": "Beatzy",
-      "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
-      "stars": 1,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-20T00:43:48Z"
-    },
-    {
       "name": "AlgoVision",
       "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
@@ -84,16 +104,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-06-12T10:04:04Z"
-    },
-    {
-      "name": "CheckMate",
-      "description": "",
-      "url": "https://github.com/aayush2724/CheckMate",
-      "stars": 1,
-      "forks": 0,
-      "language": "HTML",
-      "topics": [],
-      "updatedAt": "2026-06-03T10:33:09Z"
     },
     {
       "name": "MedVerify",
@@ -124,19 +134,9 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-05-05T09:35:53Z"
-    },
-    {
-      "name": "Job-Portal",
-      "description": "",
-      "url": "https://github.com/aayush2724/Job-Portal",
-      "stars": 0,
-      "forks": 0,
-      "language": "TypeScript",
-      "topics": [],
-      "updatedAt": "2026-04-29T02:43:45Z"
     }
   ],
   "githubStats": {
-    "contributions": 618
+    "contributions": 628
   }
 }
