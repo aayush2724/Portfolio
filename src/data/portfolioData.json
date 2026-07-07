@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-06T15:17:42.132Z",
+  "lastUpdated": "2026-07-07T02:27:51.848Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -16,16 +16,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-07-06T02:32:38Z"
-    },
-    {
       "name": "Auralis",
       "description": "",
       "url": "https://github.com/aayush2724/Auralis",
@@ -33,7 +23,17 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-07-05T17:05:32Z"
+      "updatedAt": "2026-07-06T18:59:07Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-07-06T15:18:23Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 628
+    "contributions": 629
   }
 }
