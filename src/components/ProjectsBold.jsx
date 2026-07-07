@@ -1,5 +1,5 @@
-import { useState, useRef } from "react"
-import { motion, useScroll, useSpring } from "framer-motion"
+import { useState, useRef, useEffect } from "react"
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { ContainerScroll } from "./ui/container-scroll-animation"
 import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
@@ -131,12 +131,29 @@ const PROJECTS = [
   },
 ]
 
-function ProjectCard({ project, onClick }) {
+function ProjectCard({ project, onViewDescription, onViewDemo }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
+  const [showOptions, setShowOptions] = useState(false)
   const hasImage = project.image && project.image !== ""
+  const cardRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (cardRef.current && !cardRef.current.contains(e.target)) {
+        setShowOptions(false)
+      }
+    }
+    if (showOptions) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [showOptions])
 
   const handleMouseMove = (e) => {
+    if (showOptions) return;
     const card = e.currentTarget
     const rect = card.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -149,95 +166,155 @@ function ProjectCard({ project, onClick }) {
     setMousePos({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 })
   }
 
+  const handleCardClick = () => {
+    setShowOptions(true);
+  }
+
   return (
     <motion.div
+      ref={cardRef}
       style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-      animate={{ rotateX: rotate.x, rotateY: rotate.y }}
+      animate={{ rotateX: showOptions ? 0 : rotate.x, rotateY: showOptions ? 0 : rotate.y }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => { setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) }}
-      onClick={onClick}
-      className="group relative h-[85%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/5 bg-[#0D0D0D] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-2xl"
+      onMouseLeave={() => { if (!showOptions) { setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) } }}
+      onClick={handleCardClick}
+      className="group relative h-[85%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-2xl hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
     >
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-700"
-          style={{
-            background: `
-              radial-gradient(ellipse 80% 60% at ${mousePos.x}% ${mousePos.y}%, rgba(212,255,63,0.08) 0%, transparent 60%),
-              radial-gradient(ellipse 60% 80% at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(255,255,255,0.04) 0%, transparent 50%),
-              radial-gradient(ellipse 100% 100% at 20% 80%, rgba(212,255,63,0.05) 0%, transparent 50%),
-              radial-gradient(ellipse 100% 100% at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 50%),
-              linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, ${project.earthy.split(' ')[1]?.replace('to-', '') || '#000000'} 100%)
-            `,
-          }}
-        />
-        {/* Mesh noise overlay for texture */}
-        <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{
-          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>")`,
-        }} />
-        {hasImage && (
-          <img
-            src={project.image}
-            alt={project.title}
-            className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-overlay grayscale group-hover:grayscale-0 group-hover:opacity-25 transition-all duration-700"
+        {hasImage ? (
+          <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-105">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="absolute inset-0 h-full w-full object-cover opacity-40 transition-opacity duration-700 group-hover:opacity-50"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/80" />
+            <div
+              className="absolute inset-0 opacity-40 mix-blend-overlay group-hover:opacity-60 transition-opacity duration-700"
+              style={{
+                background: `linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, transparent 100%)`
+              }}
+            />
+          </div>
+        ) : (
+          <div
+            className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 60% at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(255,255,255,0.04) 0%, transparent 50%),
+                linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, ${project.earthy.split(' ')[1]?.replace('to-', '') || '#000000'} 100%)
+              `,
+            }}
           />
         )}
+        {/* Mesh noise overlay for texture */}
+        <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay" style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>")`,
+        }} />
       </div>
 
       {/* Hover glow border */}
       <div
         className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: `radial-gradient(300px circle at ${mousePos.x}% ${mousePos.y}%, rgba(212,255,63,0.12) 0%, transparent 60%)`,
+          background: `radial-gradient(300px circle at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.06) 0%, transparent 60%)`,
         }}
       />
 
       {/* Top edge glow line */}
-      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-[rgba(212,255,63,0.3)] transition-all duration-500" />
+      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/40 transition-all duration-500" />
 
       {/* Left edge glow line */}
-      <div className="absolute left-0 top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-white/5 to-transparent group-hover:via-[rgba(212,255,63,0.15)] transition-all duration-500" />
-
-      {/* Corner accent dot */}
-      <div className="absolute top-4 left-4 w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[rgba(212,255,63,0.6)] group-hover:shadow-[0_0_12px_rgba(212,255,63,0.4)] transition-all duration-500" />
+      <div className="absolute left-0 top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent group-hover:via-white/30 transition-all duration-500" />
 
       {/* Content Wrapper */}
-      <div className="absolute inset-0 p-8 flex flex-col justify-between z-10" style={{ transform: "translateZ(40px)" }}>
+      <div className={`absolute inset-0 p-8 flex flex-col justify-between z-10 transition-all duration-500 ${showOptions ? 'opacity-20 blur-sm scale-95' : 'opacity-100 scale-100'}`} style={{ transform: "translateZ(40px)" }}>
         <div className="flex justify-between items-start">
-           <span className="text-[10px] font-mono text-white/30 tracking-widest">{project.id.toString().padStart(2, '0')}</span>
-           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/50 border border-white/10 bg-black/10 backdrop-blur-md px-3 py-1 rounded-full group-hover:text-[rgba(212,255,63,0.9)] group-hover:border-[rgba(212,255,63,0.2)] group-hover:bg-[rgba(212,255,63,0.05)] transition-all duration-500">
+           <span className="text-[12px] font-mono text-white/50 tracking-widest bg-white/5 px-2 py-1 rounded-md backdrop-blur-sm border border-white/10">{project.id.toString().padStart(2, '0')}</span>
+           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/70 border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full group-hover:text-white group-hover:border-white/40 group-hover:bg-white/10 transition-all duration-500">
              {project.badge}
            </span>
         </div>
 
         <div className="space-y-4">
-           <div className="space-y-2">
-              <h3 className="font-display text-4xl uppercase tracking-tighter text-white leading-none group-hover:text-white transition-colors duration-500">
+           <div className="space-y-3">
+              <h3 className="font-display text-4xl uppercase tracking-tighter text-white leading-none drop-shadow-lg">
                 {project.title}
               </h3>
-              <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 max-w-[95%] group-hover:text-white/80 transition-colors duration-500">
+              <p className="text-[14px] text-white/70 leading-relaxed line-clamp-2 max-w-[95%] font-medium">
                 {project.description}
               </p>
            </div>
            
-           <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-white/15 transition-colors duration-500">
+           <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-white/20 transition-colors duration-500">
               <div className="flex gap-3">
                  {project.tags.slice(0, 2).map(tag => (
-                   <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/50 transition-colors duration-500">
+                   <span key={tag} className="text-[11px] font-bold uppercase tracking-widest text-white/50 group-hover:text-white/80 transition-colors duration-500">
                      {tag}
                    </span>
                  ))}
               </div>
-              <div className="flex items-center gap-2 text-white/90 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
-                 <span className="text-[10px] font-black uppercase tracking-widest text-[rgba(212,255,63,0.8)]">
-                   {project.demo ? "Live site" : "Case study"}
-                 </span>
-                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.8)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </div>
            </div>
         </div>
       </div>
+
+      {/* Options Overlay */}
+      <AnimatePresence>
+        {showOptions && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 z-50 bg-black/60 backdrop-blur-xl flex flex-col items-center justify-center p-8 gap-6"
+            style={{ transform: "translateZ(50px)" }}
+          >
+            <h4 className="text-white font-display text-2xl uppercase tracking-tight mb-2">Options</h4>
+            
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onViewDescription(project);
+                setShowOptions(false);
+              }}
+              className="w-full relative group overflow-hidden rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 transition-all duration-300 p-4 flex flex-col items-center gap-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/80"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span className="text-white font-bold uppercase tracking-widest text-sm">View Description</span>
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onViewDemo(project);
+                setShowOptions(false);
+              }}
+              className="w-full relative group overflow-hidden rounded-xl bg-[rgba(212,255,63,0.1)] hover:bg-[rgba(212,255,63,0.2)] border border-[rgba(212,255,63,0.3)] transition-all duration-300 p-4 flex flex-col items-center gap-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,255,63,0.1)] to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <span className="text-[rgba(212,255,63,0.9)] font-bold uppercase tracking-widest text-sm">
+                {project.demo || project.link ? "Live Demo" : "View Code"}
+              </span>
+            </button>
+            
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowOptions(false);
+              }}
+              className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
@@ -250,16 +327,22 @@ export default function ProjectsBold() {
   const { scrollXProgress } = useScroll({ container: scrollRef })
   const scaleX = useSpring(scrollXProgress, { stiffness: 100, damping: 30 })
 
-  const handleProjectClick = (project) => {
-    if (project.demo) {
-      window.open(project.demo, "_blank", "noopener,noreferrer")
-      return
-    }
-
+  const handleViewDescription = (project) => {
     const caseStudy = getCaseStudyByName(project.title)
     if (caseStudy) {
       setSelectedProject(caseStudy)
       setModalOpen(true)
+    } else {
+      // Fallback if no specific case study
+      setSelectedProject(project)
+      setModalOpen(true)
+    }
+  }
+
+  const handleViewDemo = (project) => {
+    const url = project.demo || project.link
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer")
     }
   }
 
@@ -315,7 +398,8 @@ export default function ProjectsBold() {
             <ProjectCard 
               key={project.id} 
               project={project} 
-              onClick={() => handleProjectClick(project)} 
+              onViewDescription={handleViewDescription}
+              onViewDemo={handleViewDemo}
             />
           ))}
           
@@ -331,3 +415,4 @@ export default function ProjectsBold() {
     </section>
   )
 }
+
