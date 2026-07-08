@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-07-08T02:01:40.730Z",
+  "lastUpdated": "2026-07-08T13:47:35.108Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 1011525,
+    "ranking": 999618,
     "stats": {
-      "totalSolved": 582,
+      "totalSolved": 584,
       "easy": 69,
-      "medium": 83,
+      "medium": 85,
       "hard": 10,
-      "totalSubmissions": 167
+      "totalSubmissions": 169
     },
     "streak": 27,
-    "totalActiveDays": 30
+    "totalActiveDays": 31
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-07-08T02:01:45Z"
+    },
     {
       "name": "Auralis",
       "description": "",
@@ -24,16 +34,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-07-07T15:58:39Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-07-07T14:15:29Z"
     },
     {
       "name": "Beatzy",
