@@ -42,13 +42,19 @@ const MILESTONES = [
   {
     year: 2026,
     title: "Advanced System Design",
-    description: "Built DeskGuard and AlgoVision. Focused on building highly performant and scalable web applications with advanced security features.",
+    description: "Built DeskGuard and AlgoVision while focusing on performance, architecture, and production-grade UI engineering.",
     icon: "🛡️",
   },
   {
     year: 2026,
+    title: "Auralis & AI Audio Work",
+    description: "Launched Auralis to explore AI-powered audio intelligence and deepen hands-on work with Python, ML workflows, and data pipelines.",
+    icon: "🎧",
+  },
+  {
+    year: 2026,
     title: "Current Focus & Goals",
-    description: "Deepening expertise in full-stack architecture and AI integration. Actively seeking opportunities to build impactful software at scale.",
+    description: "Building smarter full-stack products that combine strong UX, reliable systems, and practical AI features for real-world impact.",
     icon: "🎯",
   },
 ]

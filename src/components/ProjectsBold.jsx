@@ -8,6 +8,16 @@ import { getCaseStudyByName } from "../data/caseStudies"
 const PROJECTS = [
   {
     id: 1,
+    title: "Auralis",
+    description: "AI-powered audio intelligence project focused on extracting meaning and structure from complex sound inputs.",
+    tags: ["Python", "AI/ML", "Audio"],
+    link: "https://github.com/aayush2724/Auralis",
+    image: "",
+    badge: "Latest",
+    earthy: "from-[#1a2a3f] to-[#0b1017]"
+  },
+  {
+    id: 2,
     title: "DeskGuard",
     description: "Workspace security and monitor system that detects unauthorized access using real-time surveillance.",
     tags: ["JavaScript", "Node.js", "OpenCV"],
@@ -18,7 +28,7 @@ const PROJECTS = [
     earthy: "from-[#2d3436] to-[#000000]" // Onyx
   },
   {
-    id: 2,
+    id: 3,
     title: "AlgoVision",
     description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
     tags: ["React", "Framer Motion", "Algorithms"],
@@ -28,7 +38,7 @@ const PROJECTS = [
     earthy: "from-[#2c3e50] to-[#000000]" // Midnight
   },
   {
-    id: 3,
+    id: 4,
     title: "LeadForge",
     description: "AI-powered lead generation and management tool for sales teams.",
     tags: ["Python", "AI", "FastAPI"],
@@ -38,7 +48,7 @@ const PROJECTS = [
     earthy: "from-[#3a3530] to-[#1f1c18]"
   },
   {
-    id: 4,
+    id: 5,
     title: "Beatzy",
     description: "Music collaboration platform with real-time beat sharing and social features for producers.",
     tags: ["React", "Firebase", "Web Audio"],
@@ -49,7 +59,7 @@ const PROJECTS = [
     earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
   },
   {
-    id: 5,
+    id: 6,
     title: "Citizen Resolver",
     description: "Public complaint resolution platform connecting citizens with government authorities.",
     tags: ["React", "Node.js", "MongoDB"],
@@ -60,7 +70,7 @@ const PROJECTS = [
     earthy: "from-[#4a3728] to-[#2c1e14]" // Espresso
   },
   {
-    id: 6,
+    id: 7,
     title: "Checkmate",
     description: "Advanced chess platform with real-time matchmaking and AI analysis capabilities.",
     tags: ["Socket.io", "React", "Node.js"],
@@ -70,7 +80,7 @@ const PROJECTS = [
     earthy: "from-[#6b4423] to-[#3d2b1f]" // Clay
   },
   {
-    id: 7,
+    id: 8,
     title: "Disaster Relief System",
     description: "Emergency resource coordination platform for disaster management and relief operations.",
     tags: ["React", "Express", "Real-time"],
@@ -80,7 +90,7 @@ const PROJECTS = [
     earthy: "from-[#5a4a3a] to-[#352b21]" // Stone
   },
   {
-    id: 8,
+    id: 9,
     title: "Job Portal",
     description: "Full-stack job board with application tracking and employer-candidate matching.",
     tags: ["TypeScript", "Next.js", "Prisma"],
@@ -90,7 +100,7 @@ const PROJECTS = [
     earthy: "from-[#7a6a4a] to-[#4a3a2a]" // Ochre
   },
   {
-    id: 9,
+    id: 10,
     title: "Chord Detector",
     description: "ML-powered music analysis tool that identifies guitar chords from audio input.",
     tags: ["Python", "ML", "Audio"],
@@ -100,7 +110,7 @@ const PROJECTS = [
     earthy: "from-[#4a5a6a] to-[#2a3a4a]" // Slate
   },
   {
-    id: 10,
+    id: 11,
     title: "Visitor Management",
     description: "Secure check-in system for tracking and managing building visitors with QR codes.",
     tags: ["HTML", "PHP", "MySQL"],
@@ -110,7 +120,7 @@ const PROJECTS = [
     earthy: "from-[#5d4037] to-[#3e2723]" // Deep Clay
   },
   {
-    id: 11,
+    id: 12,
     title: "SkillNest",
     description: "Learning platform connecting students with skill-based courses and mentorship.",
     tags: ["React", "Node", "WebRTC"],
@@ -120,7 +130,7 @@ const PROJECTS = [
     earthy: "from-[#4b4e53] to-[#2c2e31]" // Charcoal
   },
   {
-    id: 12,
+    id: 13,
     title: "ChatRoom",
     description: "Real-time messaging application with rooms, authentication, and presence indicators.",
     tags: ["Socket.io", "Node", "Express"],
@@ -131,12 +141,21 @@ const PROJECTS = [
   },
 ]
 
-function ProjectCard({ project, onViewDescription, onViewDemo }) {
+function extractGradientColors(earthy) {
+  const colors = earthy?.match(/#(?:[0-9a-fA-F]{3}){1,2}/g) || []
+  return {
+    primary: colors[0] || "#1f2937",
+    secondary: colors[1] || "#000000",
+  }
+}
+
+function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
   const [showOptions, setShowOptions] = useState(false)
   const hasImage = project.image && project.image !== ""
   const cardRef = useRef(null)
+  const { primary, secondary } = extractGradientColors(project.earthy)
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -178,8 +197,17 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { if (!showOptions) { setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) } }}
       onClick={handleCardClick}
-      className="group relative h-[85%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-2xl hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+      className="group relative h-[88%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:-translate-y-1 hover:border-white/25 hover:shadow-[0_34px_110px_rgba(0,0,0,0.72)]"
     >
+      <div className="absolute inset-[1px] rounded-[22px] border border-white/5 pointer-events-none" />
+      <motion.div
+        aria-hidden
+        className="absolute -right-10 -top-10 h-32 w-32 rounded-full blur-3xl opacity-30"
+        style={{ background: primary }}
+        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
         {hasImage ? (
@@ -195,7 +223,7 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
             <div
               className="absolute inset-0 opacity-40 mix-blend-overlay group-hover:opacity-60 transition-opacity duration-700"
               style={{
-                background: `linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, transparent 100%)`
+                background: `linear-gradient(135deg, ${primary} 0%, transparent 100%)`
               }}
             />
           </div>
@@ -206,7 +234,7 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
               background: `
                 radial-gradient(ellipse 80% 60% at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.08) 0%, transparent 60%),
                 radial-gradient(ellipse 60% 80% at ${100 - mousePos.x}% ${100 - mousePos.y}%, rgba(255,255,255,0.04) 0%, transparent 50%),
-                linear-gradient(135deg, ${project.earthy.replace('from-', '').replace('to-', '').split(' ')[0]} 0%, ${project.earthy.split(' ')[1]?.replace('to-', '') || '#000000'} 100%)
+                linear-gradient(135deg, ${primary} 0%, ${secondary} 100%)
               `,
             }}
           />
@@ -234,8 +262,8 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
       {/* Content Wrapper */}
       <div className={`absolute inset-0 p-8 flex flex-col justify-between z-10 transition-all duration-500 ${showOptions ? 'opacity-20 blur-sm scale-95' : 'opacity-100 scale-100'}`} style={{ transform: "translateZ(40px)" }}>
         <div className="flex justify-between items-start">
-           <span className="text-[12px] font-mono text-white/50 tracking-widest bg-white/5 px-2 py-1 rounded-md backdrop-blur-sm border border-white/10">{project.id.toString().padStart(2, '0')}</span>
-           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/70 border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full group-hover:text-white group-hover:border-white/40 group-hover:bg-white/10 transition-all duration-500">
+           <span className="text-[12px] font-mono text-white/50 tracking-widest bg-white/5 px-2 py-1 rounded-md backdrop-blur-sm border border-white/10">{String(index + 1).padStart(2, '0')}</span>
+           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full group-hover:text-white group-hover:border-white/40 group-hover:bg-white/15 transition-all duration-500">
              {project.badge}
            </span>
         </div>
@@ -251,9 +279,9 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
            </div>
            
            <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-white/20 transition-colors duration-500">
-              <div className="flex gap-3">
-                 {project.tags.slice(0, 2).map(tag => (
-                   <span key={tag} className="text-[11px] font-bold uppercase tracking-widest text-white/50 group-hover:text-white/80 transition-colors duration-500">
+              <div className="flex gap-2.5 flex-wrap">
+                 {project.tags.slice(0, 3).map(tag => (
+                   <span key={tag} className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70 bg-white/[0.08] border border-white/10 rounded-full px-2.5 py-1 group-hover:text-white transition-colors duration-500">
                      {tag}
                    </span>
                  ))}
@@ -299,7 +327,7 @@ function ProjectCard({ project, onViewDescription, onViewDemo }) {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,255,63,0.1)] to-transparent -translate-x-full group-hover:animate-shimmer" />
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               <span className="text-[rgba(212,255,63,0.9)] font-bold uppercase tracking-widest text-sm">
-                {project.demo || project.link ? "Live Demo" : "View Code"}
+                {project.demo ? "Live Demo" : "View Code"}
               </span>
             </button>
             
@@ -394,10 +422,11 @@ export default function ProjectsBold() {
           ref={scrollRef}
           className="flex h-full w-full items-center gap-8 overflow-x-auto px-12 py-10 md:px-24 scrollbar-hide snap-x snap-mandatory"
         >
-          {PROJECTS.map((project) => (
+          {PROJECTS.map((project, index) => (
             <ProjectCard 
               key={project.id} 
               project={project} 
+              index={index}
               onViewDescription={handleViewDescription}
               onViewDemo={handleViewDemo}
             />
@@ -415,4 +444,3 @@ export default function ProjectsBold() {
     </section>
   )
 }
-

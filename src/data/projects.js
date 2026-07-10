@@ -1,5 +1,16 @@
 export const projects = [
   {
+    name: "Auralis",
+    desc: "AI-powered audio intelligence project for extracting structure, signals, and insights from complex sound data.",
+    tags: ["Python", "Machine Learning", "Audio Processing"],
+    gh: "https://github.com/aayush2724/Auralis",
+    demo: null,
+    badge: "Latest",
+    highlight: "Focused on practical audio ML workflows with clean preprocessing, feature extraction, and model experimentation.",
+    updatedAt: "2026-07-06T18:59:07Z",
+    updated: "Jul 6, 2026"
+  },
+  {
     name: "DeskGuard",
     desc: "Workspace security and monitor system that detects unauthorized access using real-time surveillance and movement alerts.",
     tags: ["JavaScript", "Node.js", "OpenCV", "Pusher"],
