@@ -4,8 +4,6 @@ import { Text, Float, MeshDistortMaterial, Sphere, Box, Torus } from "@react-thr
 import { motion, AnimatePresence } from "framer-motion"
 import * as THREE from "three"
 
-// ─── 3D Scene objects ────────────────────────────────────────────────────────
-
 function BouncingText() {
   const meshRef = useRef()
   useFrame((state) => {
@@ -19,24 +17,24 @@ function BouncingText() {
       <group ref={meshRef}>
         <Text
           fontSize={0.9}
-          color="#FFD700"
+          color="var(--accent)"
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2"
           outlineWidth={0.03}
-          outlineColor="#FF6B00"
+          outlineColor="var(--accent)"
         >
           404: DEPLOY
         </Text>
         <Text
           position={[0, -1.1, 0]}
           fontSize={0.9}
-          color="#FFD700"
+          color="var(--accent)"
           anchorX="center"
           anchorY="middle"
           font="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2"
           outlineWidth={0.03}
-          outlineColor="#FF6B00"
+          outlineColor="var(--accent)"
         >
           NOT FOUND
         </Text>
@@ -82,10 +80,10 @@ function SpinningDonut({ position }) {
     <Float speed={1.8} floatIntensity={0.6}>
       <Torus ref={meshRef} args={[0.5, 0.18, 32, 100]} position={position}>
         <meshStandardMaterial
-          color="#FF69B4"
+          color="var(--accent)"
           metalness={0.9}
           roughness={0.05}
-          emissive="#FF1493"
+          emissive="var(--accent)"
           emissiveIntensity={0.3}
         />
       </Torus>
@@ -106,10 +104,10 @@ function SpinningCube({ position }) {
     <Float speed={2.5} floatIntensity={1}>
       <Box ref={meshRef} args={[0.6, 0.6, 0.6]} position={position}>
         <meshStandardMaterial
-          color="#00FFFF"
+          color="var(--accent)"
           metalness={0.95}
           roughness={0.0}
-          emissive="#00BFFF"
+          emissive="var(--accent)"
           emissiveIntensity={0.4}
           wireframe={false}
         />
@@ -145,7 +143,7 @@ function ParticleField() {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.05} color="#FFD700" transparent opacity={0.6} sizeAttenuation />
+      <pointsMaterial size={0.05} color="var(--accent)" transparent opacity={0.6} sizeAttenuation />
     </points>
   )
 }
@@ -160,7 +158,6 @@ function SceneCamera() {
   return null
 }
 
-// ─── Funny messages that cycle ───────────────────────────────────────────────
 const LAZY_EXCUSES = [
   "\"I'll deploy it next sprint\" — the developer, every sprint since 2023 🗓️",
   "The dev is 'just fixing one more bug' before deploying... 🐛",
@@ -171,13 +168,11 @@ const LAZY_EXCUSES = [
   "The docker container is still building... since last Tuesday 🐳",
 ]
 
-// ─── Main component ──────────────────────────────────────────────────────────
 export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink }) {
   const [excuseIndex, setExcuseIndex] = useState(0)
   const [displayedExcuse, setDisplayedExcuse] = useState("")
   const [isTyping, setIsTyping] = useState(true)
 
-  // Cycle through excuses with typewriter effect
   useEffect(() => {
     if (!isOpen) return
     const excuse = LAZY_EXCUSES[excuseIndex]
@@ -204,7 +199,6 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
     return () => clearInterval(cycleInterval)
   }, [isOpen])
 
-  // Escape key closes
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose() }
     window.addEventListener("keydown", onKey)
@@ -220,12 +214,8 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-          style={{
-            background: "radial-gradient(ellipse at 30% 30%, #1a0a2e 0%, #0a0a0a 60%)",
-            fontFamily: "'Inter', sans-serif",
-          }}
+          style={{ background: "var(--bg)" }}
         >
-          {/* Scanline overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -233,33 +223,30 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
             }}
           />
 
-          {/* 3D Canvas */}
           <div className="absolute inset-0">
             <Canvas camera={{ position: [0, 0, 6], fov: 55 }}>
               <SceneCamera />
               <ambientLight intensity={0.3} />
-              <pointLight position={[5, 5, 5]} intensity={2} color="#FFD700" />
-              <pointLight position={[-5, -3, 3]} intensity={1.5} color="#FF69B4" />
-              <pointLight position={[0, -5, 2]} intensity={1} color="#00FFFF" />
+              <pointLight position={[5, 5, 5]} intensity={2} color="var(--accent)" />
+              <pointLight position={[-5, -3, 3]} intensity={1.5} color="var(--accent)" />
+              <pointLight position={[0, -5, 2]} intensity={1} color="var(--accent)" />
 
               <ParticleField />
               <BouncingText />
 
-              {/* Decorative 3D objects */}
-              <WobblyBlob position={[-4, 2, -1]} color="#8B5CF6" speed={1.2} />
-              <WobblyBlob position={[4.5, -1.5, -2]} color="#EC4899" speed={1.8} />
-              <WobblyBlob position={[-3.5, -2, -1]} color="#F59E0B" speed={2.1} />
+              <WobblyBlob position={[-4, 2, -1]} color="var(--surface)" speed={1.2} />
+              <WobblyBlob position={[4.5, -1.5, -2]} color="var(--surface)" speed={1.8} />
+              <WobblyBlob position={[-3.5, -2, -1]} color="var(--surface)" speed={2.1} />
               <SpinningDonut position={[3.5, 2.5, 0]} />
               <SpinningDonut position={[-4, 0.5, -1]} />
               <SpinningCube position={[4, -2.5, 0]} />
               <SpinningCube position={[-5, 1.5, -2]} />
 
-              {/* Sleeping emoji sphere */}
               <Float speed={1} floatIntensity={2}>
                 <Sphere args={[0.35, 32, 32]} position={[0, -2.8, 1]}>
                   <meshStandardMaterial
-                    color="#F59E0B"
-                    emissive="#D97706"
+                    color="var(--accent)"
+                    emissive="var(--accent)"
                     emissiveIntensity={0.4}
                     metalness={0.2}
                     roughness={0.6}
@@ -269,31 +256,28 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
             </Canvas>
           </div>
 
-          {/* UI Content layer */}
           <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl w-full pointer-events-none">
-            {/* Badge */}
             <motion.div
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
               className="mb-6 px-4 py-1.5 rounded-full border text-xs font-bold uppercase tracking-widest"
               style={{
-                borderColor: "rgba(251, 191, 36, 0.4)",
-                color: "#FCD34D",
-                background: "rgba(251, 191, 36, 0.08)",
+                borderColor: "var(--accent)",
+                color: "var(--accent)",
+                background: "rgba(212, 255, 63, 0.08)",
               }}
             >
               🚧 &nbsp;Deployment Status: Pending Since Forever
             </motion.div>
 
-            {/* Main heading */}
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
               className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4"
               style={{
-                background: "linear-gradient(135deg, #FFD700 0%, #FF6B00 50%, #FF1493 100%)",
+                background: "linear-gradient(135deg, var(--accent) 0%, var(--accent) 50%, var(--accent) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -307,12 +291,12 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl font-bold text-white/80 mb-3"
+              className="text-xl md:text-2xl font-bold text-[var(--fg)] mb-3"
             >
-              The developer was <span style={{ color: "#FFD700" }}>too lazy</span> to deploy{" "}
+              The developer was <span style={{ color: "var(--accent)" }}>too lazy</span> to deploy{" "}
               <span
                 style={{
-                  background: "linear-gradient(90deg, #a78bfa, #ec4899)",
+                  background: "linear-gradient(90deg, var(--accent), var(--accent))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -322,25 +306,23 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               </span>
             </motion.p>
 
-            {/* Typewriter excuse */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               className="h-16 flex items-center justify-center mb-8"
             >
-              <p className="text-sm md:text-base text-white/50 italic font-mono max-w-lg">
+              <p className="text-sm md:text-base text-[var(--muted)] italic font-mono max-w-lg">
                 {displayedExcuse}
                 {isTyping && (
                   <span
                     className="inline-block w-0.5 h-4 ml-0.5 animate-pulse align-middle"
-                    style={{ background: "#FFD700" }}
+                    style={{ background: "var(--accent)" }}
                   />
                 )}
               </p>
             </motion.div>
 
-            {/* Sleeping dev illustration */}
             <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -350,33 +332,31 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               😴💤
             </motion.div>
 
-            {/* CTA buttons */}
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 items-center pointer-events-auto"
             >
-              {/* GitHub button */}
               <a
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all duration-300"
                 style={{
-                  background: "linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.2))",
-                  border: "1px solid rgba(139,92,246,0.5)",
-                  color: "#fff",
+                  background: "var(--accent)",
+                  border: "1px solid var(--accent)",
+                  color: "var(--accent-ink)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, rgba(139,92,246,0.6), rgba(236,72,153,0.4))"
-                  e.currentTarget.style.borderColor = "rgba(139,92,246,0.9)"
+                  e.currentTarget.style.background = "var(--accent)"
+                  e.currentTarget.style.borderColor = "var(--accent)"
                   e.currentTarget.style.transform = "translateY(-3px) scale(1.02)"
-                  e.currentTarget.style.boxShadow = "0 20px 60px rgba(139,92,246,0.4)"
+                  e.currentTarget.style.boxShadow = "0 20px 60px rgba(212, 255, 63, 0.2)"
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, rgba(139,92,246,0.3), rgba(236,72,153,0.2))"
-                  e.currentTarget.style.borderColor = "rgba(139,92,246,0.5)"
+                  e.currentTarget.style.background = "var(--accent)"
+                  e.currentTarget.style.borderColor = "var(--accent)"
                   e.currentTarget.style.transform = "translateY(0) scale(1)"
                   e.currentTarget.style.boxShadow = "none"
                 }}
@@ -390,23 +370,24 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
                 </svg>
               </a>
 
-              {/* Back button */}
               <button
                 onClick={onClose}
                 className="flex items-center gap-2 px-6 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all duration-300 pointer-events-auto"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  color: "rgba(255,255,255,0.6)",
+                  background: "var(--surface)",
+                  border: "1px solid var(--line)",
+                  color: "var(--fg)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.1)"
-                  e.currentTarget.style.color = "#fff"
+                  e.currentTarget.style.background = "var(--surface)"
+                  e.currentTarget.style.borderColor = "var(--accent)"
+                  e.currentTarget.style.color = "var(--accent)"
                   e.currentTarget.style.transform = "translateY(-2px)"
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)"
-                  e.currentTarget.style.color = "rgba(255,255,255,0.6)"
+                  e.currentTarget.style.background = "var(--surface)"
+                  e.currentTarget.style.borderColor = "var(--line)"
+                  e.currentTarget.style.color = "var(--fg)"
                   e.currentTarget.style.transform = "translateY(0)"
                 }}
               >
@@ -417,18 +398,16 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               </button>
             </motion.div>
 
-            {/* Funny footer note */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
-              className="mt-10 text-xs text-white/20 font-mono"
+              className="mt-10 text-xs text-[var(--muted)] font-mono"
             >
               (The code exists. It's beautiful. It just... lives locally. 🏠)
             </motion.p>
           </div>
 
-          {/* Close button */}
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -436,17 +415,19 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
             onClick={onClose}
             className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200"
             style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              color: "rgba(255,255,255,0.5)",
+              background: "var(--surface)",
+              border: "1px solid var(--line)",
+              color: "var(--muted)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.15)"
-              e.currentTarget.style.color = "#fff"
+              e.currentTarget.style.background = "var(--surface)"
+              e.currentTarget.style.borderColor = "var(--accent)"
+              e.currentTarget.style.color = "var(--accent)"
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(255,255,255,0.08)"
-              e.currentTarget.style.color = "rgba(255,255,255,0.5)"
+              e.currentTarget.style.background = "var(--surface)"
+              e.currentTarget.style.borderColor = "var(--line)"
+              e.currentTarget.style.color = "var(--muted)"
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
