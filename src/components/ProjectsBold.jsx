@@ -3,6 +3,7 @@ import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { ContainerScroll } from "./ui/container-scroll-animation"
 import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
+import LazyDevPage from "./LazyDevPage"
 import { getCaseStudyByName } from "../data/caseStudies"
 
 const PROJECTS = [
@@ -12,6 +13,7 @@ const PROJECTS = [
     description: "AI-powered audio intelligence project focused on extracting meaning and structure from complex sound inputs.",
     tags: ["Python", "AI/ML", "Audio"],
     link: "https://github.com/aayush2724/Auralis",
+    demo: "https://auralis-client-five.vercel.app",
     image: "",
     badge: "Latest",
     earthy: "from-[#1a2a3f] to-[#0b1017]"
@@ -43,9 +45,21 @@ const PROJECTS = [
     description: "AI-powered lead generation and management tool for sales teams.",
     tags: ["Python", "AI", "FastAPI"],
     link: "https://github.com/aayush2724/LeadForge",
+    demo: "https://lead-forge-rust.vercel.app",
     image: "/leadforge-hackathon-proof.svg",
     badge: "Hackathon",
     earthy: "from-[#3a3530] to-[#1f1c18]"
+  },
+  {
+    id: 14,
+    title: "MindFlow",
+    description: "AI-powered student burnout detection platform with real-time wellness telemetry, counselor dashboards, and intervention alerts for educational institutions.",
+    tags: ["React", "Node.js", "Firebase"],
+    link: "https://github.com/aayush2724/MindFlow",
+    demo: "https://mind-flow-psi.vercel.app",
+    image: "",
+    badge: "EdTech",
+    earthy: "from-[#0d1f2d] to-[#00dbe722]" // Cyber Cyan
   },
   {
     id: 5,
@@ -152,27 +166,12 @@ function extractGradientColors(earthy) {
 function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
   const [rotate, setRotate] = useState({ x: 0, y: 0 })
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
-  const [showOptions, setShowOptions] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const hasImage = project.image && project.image !== ""
   const cardRef = useRef(null)
   const { primary, secondary } = extractGradientColors(project.earthy)
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (cardRef.current && !cardRef.current.contains(e.target)) {
-        setShowOptions(false)
-      }
-    }
-    if (showOptions) {
-      document.addEventListener("mousedown", handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [showOptions])
-
   const handleMouseMove = (e) => {
-    if (showOptions) return;
     const card = e.currentTarget
     const rect = card.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -185,19 +184,15 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
     setMousePos({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 })
   }
 
-  const handleCardClick = () => {
-    setShowOptions(true);
-  }
-
   return (
     <motion.div
       ref={cardRef}
       style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-      animate={{ rotateX: showOptions ? 0 : rotate.x, rotateY: showOptions ? 0 : rotate.y }}
+      animate={{ rotateX: isHovered ? rotate.x * 0.4 : rotate.x, rotateY: isHovered ? rotate.y * 0.4 : rotate.y }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => { if (!showOptions) { setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) } }}
-      onClick={handleCardClick}
-      className="group relative h-[88%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:-translate-y-1 hover:border-white/25 hover:shadow-[0_34px_110px_rgba(0,0,0,0.72)]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => { setIsHovered(false); setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) }}
+      className="group relative h-[88%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:-translate-y-2 hover:border-white/25 hover:shadow-[0_34px_110px_rgba(0,0,0,0.72)]"
     >
       <div className="absolute inset-[1px] rounded-[22px] border border-white/5 pointer-events-none" />
       <motion.div
@@ -259,15 +254,17 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
       {/* Left edge glow line */}
       <div className="absolute left-0 top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent group-hover:via-white/30 transition-all duration-500" />
 
-      {/* Content Wrapper */}
-      <div className={`absolute inset-0 p-8 flex flex-col justify-between z-10 transition-all duration-500 ${showOptions ? 'opacity-20 blur-sm scale-95' : 'opacity-100 scale-100'}`} style={{ transform: "translateZ(40px)" }}>
+      {/* Normal card content — blurs on hover */}
+      <div
+        className="absolute inset-0 p-8 flex flex-col justify-between z-10 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95"
+        style={{ transform: "translateZ(40px)" }}
+      >
         <div className="flex justify-between items-start">
            <span className="text-[12px] font-mono text-white/50 tracking-widest bg-white/5 px-2 py-1 rounded-md backdrop-blur-sm border border-white/10">{String(index + 1).padStart(2, '0')}</span>
-           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full group-hover:text-white group-hover:border-white/40 group-hover:bg-white/15 transition-all duration-500">
+           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80 border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full">
              {project.badge}
            </span>
         </div>
-
         <div className="space-y-4">
            <div className="space-y-3">
               <h3 className="font-display text-4xl uppercase tracking-tighter text-white leading-none drop-shadow-lg">
@@ -277,11 +274,10 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
                 {project.description}
               </p>
            </div>
-           
-           <div className="flex items-center justify-between pt-6 border-t border-white/10 group-hover:border-white/20 transition-colors duration-500">
+           <div className="flex items-center justify-between pt-6 border-t border-white/10 transition-colors duration-500">
               <div className="flex gap-2.5 flex-wrap">
                  {project.tags.slice(0, 3).map(tag => (
-                   <span key={tag} className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70 bg-white/[0.08] border border-white/10 rounded-full px-2.5 py-1 group-hover:text-white transition-colors duration-500">
+                   <span key={tag} className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70 bg-white/[0.08] border border-white/10 rounded-full px-2.5 py-1">
                      {tag}
                    </span>
                  ))}
@@ -290,56 +286,108 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
         </div>
       </div>
 
-      {/* Options Overlay */}
+      {/* ── HOVER OVERLAY ──────────────────────────────────────── */}
       <AnimatePresence>
-        {showOptions && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 z-50 bg-black/60 backdrop-blur-xl flex flex-col items-center justify-center p-8 gap-6"
-            style={{ transform: "translateZ(50px)" }}
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.97 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 z-50 flex flex-col justify-between p-8 rounded-3xl"
+            style={{
+              background: "linear-gradient(160deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.95) 100%)",
+              backdropFilter: "blur(20px)",
+              transform: "translateZ(50px)",
+            }}
           >
-            <h4 className="text-white font-display text-2xl uppercase tracking-tight mb-2">Options</h4>
-            
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onViewDescription(project);
-                setShowOptions(false);
-              }}
-              className="w-full relative group overflow-hidden rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 transition-all duration-300 p-4 flex flex-col items-center gap-2"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer" />
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/80"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              <span className="text-white font-bold uppercase tracking-widest text-sm">View Description</span>
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onViewDemo(project);
-                setShowOptions(false);
-              }}
-              className="w-full relative group overflow-hidden rounded-xl bg-[rgba(212,255,63,0.1)] hover:bg-[rgba(212,255,63,0.2)] border border-[rgba(212,255,63,0.3)] transition-all duration-300 p-4 flex flex-col items-center gap-2"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,255,63,0.1)] to-transparent -translate-x-full group-hover:animate-shimmer" />
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(212,255,63,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              <span className="text-[rgba(212,255,63,0.9)] font-bold uppercase tracking-widest text-sm">
-                {project.demo ? "Live Demo" : "View Code"}
+            {/* Header */}
+            <div className="flex justify-between items-start">
+              <span
+                className="text-[10px] font-black uppercase tracking-[0.25em] px-3 py-1 rounded-full"
+                style={{
+                  background: `linear-gradient(90deg, ${primary}33, ${primary}11)`,
+                  border: `1px solid ${primary}55`,
+                  color: primary,
+                }}
+              >
+                {project.badge}
               </span>
-            </button>
-            
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowOptions(false);
-              }}
-              className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
+              <span className="text-[11px] font-mono text-white/30 tracking-widest">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+            </div>
+
+            {/* Description block */}
+            <div className="flex-1 flex flex-col justify-center gap-5 py-4">
+              <h3 className="font-display text-3xl uppercase tracking-tighter text-white leading-none">
+                {project.title}
+              </h3>
+
+              <p className="text-[15px] text-white/75 leading-relaxed font-medium">
+                {project.description}
+              </p>
+
+              {/* Tags */}
+              <div className="flex gap-2 flex-wrap">
+                {project.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-bold uppercase tracking-[0.15em] rounded-full px-2.5 py-1"
+                    style={{
+                      background: `${primary}18`,
+                      border: `1px solid ${primary}44`,
+                      color: primary,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
+              {/* View Description */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onViewDescription(project)
+                }}
+                className="group/btn w-full flex items-center justify-center gap-2.5 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.85)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.13)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)" }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)" }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                View Description
+              </button>
+
+              {/* Live Link */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onViewDemo(project)
+                }}
+                className="w-full flex items-center justify-center gap-2.5 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, rgba(212,255,63,0.18), rgba(150,255,63,0.08))",
+                  border: "1px solid rgba(212,255,63,0.4)",
+                  color: "rgba(212,255,63,0.95)",
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                Live Demo
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -350,6 +398,8 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
 export default function ProjectsBold() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
+  const [lazyDevOpen, setLazyDevOpen] = useState(false)
+  const [lazyDevProject, setLazyDevProject] = useState(null)
   const scrollRef = useRef(null)
   
   const { scrollXProgress } = useScroll({ container: scrollRef })
@@ -368,9 +418,13 @@ export default function ProjectsBold() {
   }
 
   const handleViewDemo = (project) => {
-    const url = project.demo || project.link
-    if (url) {
-      window.open(url, "_blank", "noopener,noreferrer")
+    if (project.demo) {
+      // Has a live deployment — open it
+      window.open(project.demo, "_blank", "noopener,noreferrer")
+    } else {
+      // No deployment — show the funny lazy dev page
+      setLazyDevProject(project)
+      setLazyDevOpen(true)
     }
   }
 
@@ -440,6 +494,13 @@ export default function ProjectsBold() {
         caseStudy={selectedProject} 
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 
+      />
+
+      <LazyDevPage
+        isOpen={lazyDevOpen}
+        onClose={() => setLazyDevOpen(false)}
+        projectTitle={lazyDevProject?.title ?? ""}
+        githubLink={lazyDevProject?.link ?? "https://github.com/aayush2724"}
       />
     </section>
   )
