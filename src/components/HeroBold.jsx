@@ -56,9 +56,9 @@ export default function HeroBold() {
             transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-sm md:text-base text-[var(--muted)]"
           >
-            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> LeetCode solved</span>
-            <span><b className="text-[var(--fg)]">{projectsShipped}</b> projects shipped</span>
-            <span><b className="text-[var(--fg)]">{currentStreak}</b> streak</span>
+            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> Dsa Questions Solved</span>
+            <span><b className="text-[var(--fg)]">{projectsShipped}</b> Projects Shipped</span>
+            <span><b className="text-[var(--fg)]">{currentStreak}</b> Current Streak</span>
           </motion.div>
 
           {/* Terminal */}
