@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-25T13:07:59.535Z",
+  "lastUpdated": "2026-07-26T02:05:33.791Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -23,17 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-07-25T02:01:32Z"
-    },
-    {
-      "name": "Auralis",
-      "description": "",
-      "url": "https://github.com/aayush2724/Auralis",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-07-13T14:23:29Z"
+      "updatedAt": "2026-07-25T13:08:09Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -134,9 +124,19 @@
       "language": "TypeScript",
       "topics": [],
       "updatedAt": "2026-04-29T02:43:45Z"
+    },
+    {
+      "name": "Skillnest",
+      "description": "",
+      "url": "https://github.com/aayush2724/Skillnest",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-04-12T17:39:43Z"
     }
   ],
   "githubStats": {
-    "contributions": 677
+    "contributions": 692
   }
 }
