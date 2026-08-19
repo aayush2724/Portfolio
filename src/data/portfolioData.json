@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-08-18T12:30:47.270Z",
+  "lastUpdated": "2026-08-19T00:49:49.799Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 565865,
     "stats": {
-      "totalSolved": 692,
+      "totalSolved": 694,
       "easy": 102,
-      "medium": 149,
-      "hard": 21,
-      "totalSubmissions": 277
+      "medium": 150,
+      "hard": 22,
+      "totalSubmissions": 279
     },
     "streak": 36,
     "totalActiveDays": 71
@@ -23,7 +23,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-08-18T00:49:38Z"
+      "updatedAt": "2026-08-18T12:31:57Z"
     },
     {
       "name": "Beatzy",
