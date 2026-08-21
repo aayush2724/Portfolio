@@ -77,7 +77,8 @@ export function TypingTerminal({
   }, [done, curCmd, curOut])
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Skip animation if user prefers reduced motion or is on a mobile device (< 768px)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.innerWidth < 768) {
       setDone(steps)
       return
     }
