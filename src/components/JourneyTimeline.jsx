@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
+import AnimatedHeading from "./AnimatedHeading"
 
 const MILESTONES = [
   {
@@ -97,9 +98,11 @@ export default function JourneyTimeline() {
             <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
               The Story So Far
             </p>
-            <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
-              Journey
-            </h2>
+            <AnimatedHeading
+              text="Journey"
+              as="h2"
+              className="font-display text-5xl md:text-7xl uppercase leading-none"
+            />
           </div>
         </Reveal>
 

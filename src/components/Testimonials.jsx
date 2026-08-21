@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
+import AnimatedHeading from "./AnimatedHeading"
 
 const TESTIMONIALS = [
   {
@@ -87,9 +88,11 @@ export default function Testimonials() {
             <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
               What People Say
             </p>
-            <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
-              Testimonials
-            </h2>
+            <AnimatedHeading
+              text="Testimonials"
+              as="h2"
+              className="font-display text-5xl md:text-7xl uppercase leading-none"
+            />
           </div>
         </Reveal>
 

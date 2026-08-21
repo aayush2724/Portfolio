@@ -1,5 +1,6 @@
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
+import AnimatedHeading from "./AnimatedHeading"
 
 export default function AboutBold() {
   return (
@@ -12,12 +13,11 @@ export default function AboutBold() {
         </Reveal>
 
         {/* Manifesto */}
-        <Reveal>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16">
-            Building digital experiences that solve{" "}
-            <span style={{ color: "var(--accent)" }}>real problems</span>, one line of code at a time.
-          </h2>
-        </Reveal>
+        <div className="font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 text-white flex flex-wrap">
+          <AnimatedHeading text="Building digital experiences that solve" as="span" />
+          <AnimatedHeading text="real problems," as="span" className="text-[var(--accent)] ml-[0.25em]" />
+          <AnimatedHeading text="one line of code at a time." as="span" className="ml-[0.25em]" />
+        </div>
 
         {/* Two Column Layout */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">

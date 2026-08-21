@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
 import AsciiBox from "./AsciiBox"
+import AnimatedHeading from "./AnimatedHeading"
 import GitHubHeatmap from "./GitHubHeatmap"
 import { fetchLeetCodeStats } from "../data/leetcodeapi"
 import portfolioData from "../data/portfolioData.json"
@@ -53,6 +54,11 @@ function CountUp({ end, duration = 2, suffix = "", prefix = "" }) {
   )
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
+
 export default function CodingStatsBold() {
   const [stats, setStats] = useState({
     leetcode: {
@@ -94,139 +100,196 @@ export default function CodingStatsBold() {
   }, [])
 
   return (
-    <section id="stats" className="relative py-32 px-6 md:px-16">
+    <section id="stats" className="relative py-32 px-6 md:px-16 overflow-hidden">
       <div className="mx-auto max-w-6xl">
         
         {/* Header */}
         <Reveal>
           <div className="mb-16">
             <CommandLabel className="mb-3">cat ~/stats.json</CommandLabel>
-            <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
-              Coding Stats
-            </h2>
+            <AnimatedHeading
+              text="Coding Stats"
+              as="h2"
+              className="font-display text-5xl md:text-7xl uppercase leading-none"
+            />
           </div>
         </Reveal>
 
         {/* Stats Grid wrapped in AsciiBox */}
         <AsciiBox label="metrics" className="mb-8">
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
+            className="grid md:grid-cols-3 gap-8"
+          >
           
           {/* LeetCode */}
-          <Reveal delay={0.1}>
-            <div className="border rounded-3xl p-8 group hover:border-[var(--accent)] transition-all duration-300" style={{ borderColor: "var(--line)" }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
-                  <span className="text-xl">🧩</span>
-                </div>
-                <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>DSA Stats</h3>
-              </div>
-              
-              <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors" style={{ color: "var(--fg)" }}>
-                <CountUp end={stats.leetcode.total} suffix="+" />
-              </div>
-
-              <p className="text-sm mb-4" style={{ color: "var(--muted)" }}>Consistency & problem solving</p>
-
-              <p className="text-base font-semibold mb-5" style={{ color: "var(--fg)" }}>
-                "I don't count the days. I make the days count."
-              </p>
-
-              {/* Topics Covered */}
-              <div className="flex flex-wrap gap-2">
-                {["Trees", "Graphs", "DP", "Sliding Window", "Backtracking", "Binary Search", "Stacks", "Tries"].map((topic) => (
-                  <span
-                    key={topic}
-                    className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border"
-                    style={{
-                      color: "var(--accent)",
-                      borderColor: "rgba(212,255,63,0.2)",
-                      background: "rgba(212,255,63,0.05)",
-                    }}
-                  >
-                    {topic}
-                  </span>
-                ))}
-              </div>
+          <motion.div 
+            variants={cardVariants}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="border rounded-3xl p-8 group hover:border-[var(--accent)] transition-all duration-300 relative overflow-hidden" 
+            style={{ borderColor: "var(--line)" }}
+          >
+            <motion.div 
+              className="absolute -right-10 -top-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 22h20L12 2z"/>
+              </svg>
+            </motion.div>
+            
+            <div className="flex items-center gap-3 mb-4 relative z-10">
+              <motion.div 
+                whileHover={{ rotate: 180 }}
+                transition={{ duration: 0.5 }}
+                className="w-10 h-10 rounded-full flex items-center justify-center" 
+                style={{ background: "rgba(212, 255, 63, 0.1)" }}
+              >
+                <span className="text-xl">🧩</span>
+              </motion.div>
+              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>DSA Stats</h3>
             </div>
-          </Reveal>
+            
+            <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+              <CountUp end={stats.leetcode.total} suffix="+" />
+            </div>
+
+            <p className="text-sm mb-4 relative z-10" style={{ color: "var(--muted)" }}>Consistency & problem solving</p>
+
+            <p className="text-base font-semibold mb-5 relative z-10" style={{ color: "var(--fg)" }}>
+              "I don't count the days. I make the days count."
+            </p>
+
+            {/* Topics Covered */}
+            <div className="flex flex-wrap gap-2 relative z-10">
+              {["Trees", "Graphs", "DP", "Sliding Window", "Backtracking", "Binary Search", "Stacks", "Tries"].map((topic, i) => (
+                <motion.span
+                  key={topic}
+                  whileHover={{ scale: 1.1, backgroundColor: "rgba(212,255,63,0.15)" }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  viewport={{ once: true }}
+                  className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border cursor-default"
+                  style={{
+                    color: "var(--accent)",
+                    borderColor: "rgba(212,255,63,0.2)",
+                    background: "rgba(212,255,63,0.05)",
+                  }}
+                >
+                  {topic}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
 
           {/* GitHub */}
-          <Reveal delay={0.2}>
-            <div className="border rounded-3xl p-8 group hover:border-[var(--accent)] transition-all duration-300" style={{ borderColor: "var(--line)" }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
-                  <span className="text-xl">🐙</span>
-                </div>
-                <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>GitHub</h3>
-              </div>
-              
-              <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors" style={{ color: "var(--fg)" }}>
-                <CountUp end={stats.github.contributions} />
-              </div>
+          <motion.div 
+            variants={cardVariants}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="border rounded-3xl p-8 group hover:border-white transition-all duration-300 relative overflow-hidden" 
+            style={{ borderColor: "var(--line)" }}
+          >
+            <div className="flex items-center gap-3 mb-4 relative z-10">
+              <motion.div 
+                whileHover={{ rotate: 180 }}
+                transition={{ duration: 0.5 }}
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                </svg>
+              </motion.div>
+              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Open Source</h3>
+            </div>
+            
+            <div className="font-display text-5xl mb-2 group-hover:text-white transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+              <CountUp end={stats.github.contributions} suffix="+" />
+            </div>
+            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>Contributions</p>
 
-              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Total contributions this year</p>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>🟢</span>
-                  <span>{stats.github.repos}+ Public repositories</span>
+            <div className="grid grid-cols-2 gap-4 relative z-10">
+              <div className="border rounded-2xl p-4 bg-white/5 border-white/10">
+                <div className="font-display text-2xl" style={{ color: "var(--fg)" }}>
+                  <CountUp end={stats.github.repos} />
                 </div>
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>⭐</span>
-                  <span>Active open source contributor</span>
+                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Repositories</div>
+              </div>
+              <div className="border rounded-2xl p-4 bg-white/5 border-white/10">
+                <div className="font-display text-2xl" style={{ color: "var(--fg)" }}>
+                  <CountUp end={28} />
                 </div>
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>🔥</span>
-                  <span>Daily commit streak</span>
-                </div>
+                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Stars Earned</div>
               </div>
             </div>
-          </Reveal>
+          </motion.div>
 
-          {/* Streak */}
-          <Reveal delay={0.3}>
-            <div className="border rounded-3xl p-8 group hover:border-[var(--accent)] transition-all duration-300" style={{ borderColor: "var(--line)" }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
-                  <span className="text-xl">🔥</span>
-                </div>
-                <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Streak</h3>
+          {/* Activity Streak */}
+          <motion.div 
+            variants={cardVariants}
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="border rounded-3xl p-8 group hover:border-[#ff9900] transition-all duration-300 relative overflow-hidden" 
+            style={{ borderColor: "var(--line)" }}
+          >
+            <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
+              <span className="text-[150px]">🔥</span>
+            </div>
+
+            <div className="flex items-center gap-3 mb-4 relative z-10">
+              <motion.div 
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-[#ff9900]/10"
+              >
+                <span className="text-xl">🔥</span>
+              </motion.div>
+              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Consistency</h3>
+            </div>
+            
+            <div className="font-display text-5xl mb-2 group-hover:text-[#ff9900] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+              <CountUp end={stats.streak.current} suffix=" Days" />
+            </div>
+            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>Current Streak</p>
+
+            <div className="space-y-4 relative z-10">
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
+                <span className="text-sm" style={{ color: "var(--muted)" }}>Longest Streak</span>
+                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>42 Days</span>
               </div>
-              
-              <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors" style={{ color: "var(--fg)" }}>
-                <CountUp end={stats.streak.current} />
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
+                <span className="text-sm" style={{ color: "var(--muted)" }}>Active Days</span>
+                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>
+                  <CountUp end={285} />
+                </span>
               </div>
-
-              <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>Days coding consistently</p>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>📅</span>
-                  <span>Daily problem solving</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>💪</span>
-                  <span>Consistent practice</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs" style={{ color: "var(--muted)" }}>
-                  <span>🎯</span>
-                  <span>Never skip a day</span>
-                </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm" style={{ color: "var(--muted)" }}>Commitment</span>
+                <span className="text-xs px-2 py-1 rounded border border-[#ff9900]/30 text-[#ff9900] bg-[#ff9900]/10">Unstoppable</span>
               </div>
             </div>
-          </Reveal>
-        </div>
+          </motion.div>
+
+          </motion.div>
         </AsciiBox>
 
         {/* GitHub Heatmap */}
-        <div className="mt-8">
+        <Reveal delay={0.4}>
           <GitHubHeatmap totalContributions={stats.github.contributions} />
-        </div>
+        </Reveal>
 
         {/* Optional: Profile Links */}
         <Reveal delay={0.4}>
-          <div className="mt-12 flex flex-wrap gap-4 justify-center">
-            <a
+          <div className="flex justify-center gap-4 mt-8">
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="https://leetcode.com/aayush2724"
               target="_blank"
               rel="noopener noreferrer"
@@ -234,8 +297,10 @@ export default function CodingStatsBold() {
               style={{ borderColor: "var(--line)", color: "var(--muted)" }}
             >
               View LeetCode Profile →
-            </a>
-            <a
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="https://github.com/aayush2724"
               target="_blank"
               rel="noopener noreferrer"
@@ -243,9 +308,10 @@ export default function CodingStatsBold() {
               style={{ borderColor: "var(--line)", color: "var(--muted)" }}
             >
               View GitHub Profile →
-            </a>
+            </motion.a>
           </div>
         </Reveal>
+
       </div>
     </section>
   )

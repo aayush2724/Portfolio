@@ -1,46 +1,54 @@
+import React, { forwardRef, useRef } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
 
 /**
- * Button gently pulled toward the cursor.
- *   <MagneticButton onClick={...}>Get in touch</MagneticButton>
+ * Component gently pulled toward the cursor.
+ * Wraps any motion element and applies magnetic spring physics.
  */
-export default function MagneticButton({
+const MagneticButton = forwardRef(({
   children,
   className = "",
-  strength = 0.4,
+  strength = 0.3,
+  as: Component = motion.button,
   ...props
-}) {
+}, ref) => {
   const reduced = usePrefersReducedMotion()
-  const x = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 })
-  const y = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 })
+  const fallbackRef = useRef(null)
+  const activeRef = ref || fallbackRef
 
-  const handleMove = (e) => {
-    if (reduced) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    x.set((e.clientX - (rect.left + rect.width / 2)) * strength)
-    y.set((e.clientY - (rect.top + rect.height / 2)) * strength)
+  const x = useSpring(useMotionValue(0), { stiffness: 150, damping: 15, mass: 0.1 })
+  const y = useSpring(useMotionValue(0), { stiffness: 150, damping: 15, mass: 0.1 })
+
+  const handleMouseMove = (e) => {
+    if (reduced || !activeRef.current) return
+    const rect = activeRef.current.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    x.set((e.clientX - centerX) * strength)
+    y.set((e.clientY - centerY) * strength)
   }
 
-  const reset = () => {
+  const handleMouseLeave = () => {
     x.set(0)
     y.set(0)
   }
 
   return (
-    <motion.button
-      style={{ x, y }}
-      onMouseMove={handleMove}
-      onMouseLeave={reset}
-      whileTap={{ scale: 0.96 }}
-      className={
-        "px-6 py-3 rounded-full font-medium text-white " +
-        "bg-violet-600 hover:bg-violet-500 transition-colors " +
-        className
-      }
+    <Component
+      ref={activeRef}
+      style={{ x, y, ...props.style }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileTap={!reduced ? { scale: 0.96 } : undefined}
+      className={className}
       {...props}
     >
       {children}
-    </motion.button>
+    </Component>
   )
-}
+})
+
+MagneticButton.displayName = "MagneticButton"
+
+export default MagneticButton

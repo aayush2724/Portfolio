@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
+import AnimatedHeading from "./AnimatedHeading"
 
 const SKILLS = [
   "React", "TypeScript", "Next.js", "Node.js", "Express", "FastAPI",
@@ -79,9 +80,11 @@ export default function SkillsMarquee() {
           <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
             Tech Stack
           </p>
-          <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
-            Skills
-          </h2>
+          <AnimatedHeading
+            text="Skills"
+            as="h2"
+            className="font-display text-5xl md:text-7xl uppercase leading-none"
+          />
         </div>
       </div>
 

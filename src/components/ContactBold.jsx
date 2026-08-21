@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import DownloadResumeButton from "./DownloadResumeButton"
 import CommandLabel from "./CommandLabel"
+import AnimatedHeading from "./AnimatedHeading"
 
 export default function ContactBold() {
   const [time, setTime] = useState("")
@@ -73,42 +74,33 @@ export default function ContactBold() {
         {/* Social Links */}
         <Reveal delay={0.2}>
           <div className="flex flex-wrap justify-center gap-8 mb-20">
-            <a
-              href="https://github.com/aayush2724"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-xl uppercase transition-colors link-underline"
-              style={{ color: "var(--muted)" }}
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/aayush2724"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-xl uppercase transition-colors link-underline"
-              style={{ color: "var(--muted)" }}
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://leetcode.com/aayush2724"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-xl uppercase transition-colors link-underline"
-              style={{ color: "var(--muted)" }}
-            >
-              LeetCode
-            </a>
-            <a
-              href="https://instagram.com/aayussh.27"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-xl uppercase transition-colors link-underline"
-              style={{ color: "var(--muted)" }}
-            >
-              Instagram
-            </a>
+            {[
+              { name: "GitHub", url: "https://github.com/aayush2724" },
+              { name: "LinkedIn", url: "https://linkedin.com/in/aayush2724" },
+              { name: "LeetCode", url: "https://leetcode.com/aayush2724" },
+              { name: "Instagram", url: "https://instagram.com/aayussh.27" }
+            ].map((link, i) => (
+              <motion.a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-display text-xl uppercase transition-colors link-underline px-4 py-2 rounded-xl relative overflow-hidden group"
+                style={{ color: "var(--muted)" }}
+                whileHover={{ scale: 1.1, color: "var(--fg)" }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-xl"
+                  layoutId={`hover-bg-${link.name}`}
+                />
+                {link.name}
+              </motion.a>
+            ))}
           </div>
         </Reveal>
 

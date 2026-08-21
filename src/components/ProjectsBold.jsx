@@ -5,6 +5,7 @@ import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
 import LazyDevPage from "./LazyDevPage"
 import { getCaseStudyByName } from "../data/caseStudies"
+import AnimatedHeading from "./AnimatedHeading"
 
 const PROJECTS = [
   {
@@ -432,9 +433,11 @@ export default function ProjectsBold() {
              </div>
 
              <CommandLabel className="mb-6 opacity-30">ls ~/projects</CommandLabel>
-             <h2 className="font-display text-8xl md:text-[12rem] uppercase leading-none text-center mb-12 tracking-tighter text-white/90">
-                Projects
-             </h2>
+             <AnimatedHeading
+               text="Projects"
+               as="h2"
+               className="font-display text-8xl md:text-[12rem] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
+             />
              
              <AnimatePresence>
                 {filterSkill && (

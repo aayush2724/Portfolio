@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
+import AnimatedHeading from "./AnimatedHeading"
 
 export default function BeyondCodeBento() {
   return (
@@ -12,9 +13,11 @@ export default function BeyondCodeBento() {
             <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
               More Than Code
             </p>
-            <h2 className="font-display text-5xl md:text-7xl uppercase leading-none">
-              Beyond Code
-            </h2>
+            <AnimatedHeading
+              text="Beyond Code"
+              as="h2"
+              className="font-display text-5xl md:text-7xl uppercase leading-none"
+            />
           </div>
         </Reveal>
 

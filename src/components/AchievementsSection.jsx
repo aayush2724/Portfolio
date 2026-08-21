@@ -1,6 +1,7 @@
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
 import { achievements } from "../data/storyData"
+import AnimatedHeading from "./AnimatedHeading"
 
 export default function AchievementsSection() {
   return (
@@ -16,9 +17,11 @@ export default function AchievementsSection() {
               <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
                 Resume Highlights
               </p>
-              <h2 className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none">
-                Achievements
-              </h2>
+              <AnimatedHeading
+                text="Achievements"
+                as="h2"
+                className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none"
+              />
             </div>
             <p className="max-w-xl text-sm md:text-base leading-relaxed" style={{ color: "var(--muted)" }}>
               A compact snapshot of the milestones I care about most: competitive results, problem-solving depth, and shipped work.

@@ -21,7 +21,7 @@ export default function AnimatedHeading({ text, className = "", as = "h2" }) {
       style={{ perspective: 600 }}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ staggerChildren: 0.08 }}
     >
       {words.map((word, i) => (
