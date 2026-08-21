@@ -1,5 +1,121 @@
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+
+function CoverflowCard({ p, i, index, onProjectClick, drag, setIndex, n }) {
+  const offset = i - index
+  const abs = Math.abs(offset)
+  const isCenter = offset === 0
+
+  const mx = useMotionValue(0.5)
+  const my = useMotionValue(0.5)
+
+  const tiltX = useSpring(useTransform(my, [0, 1], [10, -10]), { stiffness: 200, damping: 20 })
+  const tiltY = useSpring(useTransform(mx, [0, 1], [-10, 10]), { stiffness: 200, damping: 20 })
+
+  const handleMove = (e) => {
+    if (!isCenter) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - rect.left) / rect.width)
+    my.set((e.clientY - rect.top) / rect.height)
+  }
+
+  const reset = () => {
+    mx.set(0.5)
+    my.set(0.5)
+  }
+
+  return (
+    <motion.article
+      className="coverflow-card absolute h-[65%] w-[290px] md:w-[380px] cursor-pointer rounded-3xl"
+      style={{ transformStyle: "preserve-3d", zIndex: 100 - abs }}
+      animate={{
+        x: offset * 230,
+        z: -abs * 210,
+        rotateY: offset * -33,
+        scale: 1 - abs * 0.11,
+        opacity: abs <= 3 ? 1 - abs * 0.16 : 0,
+        filter: `brightness(${Math.max(0.45, 1 - abs * 0.22)})`,
+        boxShadow: isCenter
+          ? "0 40px 90px -25px var(--accent)"
+          : "0 25px 60px -35px #000",
+      }}
+      transition={{ type: "spring", stiffness: 260, damping: 32 }}
+      whileHover={isCenter ? { y: -10 } : {}}
+      onClick={() => {
+        if (drag.current.moved) { drag.current.moved = false; return }
+        if (isCenter) {
+          if (onProjectClick) {
+            onProjectClick(p.title)
+          } else if (p.link) {
+            window.open(p.link, "_blank")
+          }
+        }
+        else setIndex(i)
+      }}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+    >
+      <motion.div
+        className="relative h-full w-full border rounded-3xl overflow-hidden"
+        style={{ 
+          borderColor: isCenter ? "var(--accent)" : "var(--line)",
+          rotateX: isCenter ? tiltX : 0,
+          rotateY: isCenter ? tiltY : 0,
+          transformStyle: "preserve-3d",
+          transformPerspective: 1000,
+        }}
+      >
+        {/* media */}
+        {p.image ? (
+          <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover" />
+        ) : (
+          <div className="absolute inset-0"
+            style={{ background: "linear-gradient(150deg, #15151a, #0a0a0b)" }} />
+        )}
+        {/* number watermark */}
+        <span className="absolute right-3 top-3 font-display text-6xl leading-none opacity-[0.06]">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        {/* gradient scrim */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none" />
+        {/* content */}
+        <div 
+          className="absolute inset-0 flex flex-col justify-end p-7 md:p-8 pointer-events-none"
+          style={{ transform: "translateZ(40px)" }}
+        >
+          {/* Tags */}
+          <div className="mb-4 flex flex-wrap gap-2">
+            {(p.tags ?? []).slice(0, 2).map((t) => (
+              <span 
+                key={t} 
+                className="rounded-full border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white/80"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          
+          {/* Title */}
+          <h3 className="font-display text-2xl md:text-3xl uppercase leading-tight text-white mb-3">
+            {p.title}
+          </h3>
+          
+          {/* Description */}
+          <p className="text-sm leading-relaxed text-white/70 line-clamp-2 mb-5">
+            {p.description}
+          </p>
+          
+          {/* CTA button */}
+          {isCenter && (
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--accent-ink)] shadow-lg pointer-events-auto">
+              {onProjectClick ? "View case study →" : "View project →"}
+            </span>
+          )}
+        </div>
+      </motion.div>
+    </motion.article>
+  )
+}
 
 export default function Coverflow3D({ projects = [], onProjectClick }) {
   const [index, setIndex] = useState(0)
@@ -66,94 +182,18 @@ export default function Coverflow3D({ projects = [], onProjectClick }) {
       onPointerLeave={endDrag}
     >
       <div className="absolute inset-0 flex items-center justify-center [transform-style:preserve-3d]">
-        {projects.map((p, i) => {
-          const offset = i - index
-          const abs = Math.abs(offset)
-          const isCenter = offset === 0
-          return (
-            <motion.article
-              key={p.id ?? i}
-              className="coverflow-card absolute h-[65%] w-[290px] md:w-[380px] cursor-pointer overflow-hidden rounded-3xl"
-              style={{ transformStyle: "preserve-3d", zIndex: 100 - abs }}
-              animate={{
-                x: offset * 230,
-                z: -abs * 210,
-                rotateY: offset * -33,
-                scale: 1 - abs * 0.11,
-                opacity: abs <= 3 ? 1 - abs * 0.16 : 0,
-                filter: `brightness(${Math.max(0.45, 1 - abs * 0.22)})`,
-                boxShadow: isCenter
-                  ? "0 40px 90px -25px var(--accent)"
-                  : "0 25px 60px -35px #000",
-              }}
-              transition={{ type: "spring", stiffness: 260, damping: 32 }}
-              whileHover={isCenter ? { y: -10 } : {}}
-              onClick={() => {
-                if (drag.current.moved) { drag.current.moved = false; return }
-                if (isCenter) {
-                  // If onProjectClick callback exists, use it (for case study modal)
-                  if (onProjectClick) {
-                    onProjectClick(p.title)
-                  } else if (p.link) {
-                    // Otherwise fall back to opening link
-                    window.open(p.link, "_blank")
-                  }
-                }
-                else setIndex(i)
-              }}
-            >
-              <div
-                className="relative h-full w-full border"
-                style={{ borderColor: isCenter ? "var(--accent)" : "var(--line)" }}
-              >
-                {/* media */}
-                {p.image ? (
-                  <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover" />
-                ) : (
-                  <div className="absolute inset-0"
-                    style={{ background: "linear-gradient(150deg, #15151a, #0a0a0b)" }} />
-                )}
-                {/* number watermark - smaller and more subtle */}
-                <span className="absolute right-3 top-3 font-display text-6xl leading-none opacity-[0.06]">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {/* gradient scrim - stronger for better readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
-                {/* content - more spacious layout */}
-                <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-8">
-                  {/* Tags - only show 2 most important */}
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {(p.tags ?? []).slice(0, 2).map((t) => (
-                      <span 
-                        key={t} 
-                        className="rounded-full border border-white/20 bg-black/30 backdrop-blur-sm px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-white/80"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {/* Title - more spacing */}
-                  <h3 className="font-display text-2xl md:text-3xl uppercase leading-tight text-white mb-3">
-                    {p.title}
-                  </h3>
-                  
-                  {/* Description - better line height and spacing */}
-                  <p className="text-sm leading-relaxed text-white/70 line-clamp-2 mb-5">
-                    {p.description}
-                  </p>
-                  
-                  {/* CTA button - only show on center card */}
-                  {isCenter && (
-                    <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--accent-ink)] shadow-lg">
-                      {onProjectClick ? "View case study →" : "View project →"}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </motion.article>
-          )
-        })}
+        {projects.map((p, i) => (
+          <CoverflowCard 
+            key={p.id ?? i} 
+            p={p} 
+            i={i} 
+            index={index} 
+            onProjectClick={onProjectClick} 
+            drag={drag} 
+            setIndex={setIndex}
+            n={n}
+          />
+        ))}
       </div>
 
       {/* controls */}

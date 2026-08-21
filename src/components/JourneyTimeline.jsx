@@ -47,6 +47,12 @@ const MILESTONES = [
   },
   {
     year: 2026,
+    title: "OWASP Club President",
+    description: "Appointed as the President of the OWASP student chapter at NIE. Leading cybersecurity initiatives, organizing workshops, and fostering a community of security enthusiasts.",
+    icon: "👑",
+  },
+  {
+    year: 2026,
     title: "Auralis & AI Audio Work",
     description: "Launched Auralis to explore AI-powered audio intelligence and deepen hands-on work with Python, ML workflows, and data pipelines.",
     icon: "🎧",

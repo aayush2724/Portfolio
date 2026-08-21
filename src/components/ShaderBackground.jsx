@@ -15,43 +15,8 @@ const fragmentShader = `
   uniform float uTime;
   uniform vec2 uResolution;
   uniform vec2 uMouse;
+  uniform float uMouseVelocity;
   varying vec2 vUv;
-
-  vec3 palette(float t) {
-    vec3 a = vec3(0.04, 0.04, 0.04);
-    vec3 b = vec3(0.0, 0.0, 0.0);
-    vec3 c = vec3(1.0, 1.0, 1.0);
-    vec3 d = vec3(0.83, 1.0, 0.25);
-    return a + b * cos(6.28318 * (c * t + d));
-  }
-
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-  }
-
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-    float a = hash(i);
-    float b = hash(i + vec2(1.0, 0.0));
-    float c = hash(i + vec2(0.0, 1.0));
-    float d = hash(i + vec2(1.0, 1.0));
-    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-  }
-
-  float fbm(vec2 p) {
-    float v = 0.0;
-    float a = 0.5;
-    vec2 shift = vec2(100.0);
-    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
-    for (int i = 0; i < 5; i++) {
-      v += a * noise(p);
-      p = rot * p * 2.0 + shift;
-      a *= 0.5;
-    }
-    return v;
-  }
 
   void main() {
     vec2 uv = vUv;
@@ -62,28 +27,37 @@ const fragmentShader = `
     vec2 mouse = uMouse;
     mouse.x *= aspect;
 
-    float t = uTime * 0.15;
+    // Distance to mouse
+    float dist = length(p - mouse);
+    
+    // Warp effect based on mouse distance and velocity
+    float warpForce = smoothstep(0.4, 0.0, dist) * uMouseVelocity * 0.3;
+    vec2 warpDir = normalize(p - mouse);
+    vec2 warpedUv = p - warpDir * warpForce; // Pull towards cursor
 
-    vec2 q = vec2(0.0);
-    q.x = fbm(p + vec2(0.0, 0.0) + t * 0.3);
-    q.y = fbm(p + vec2(5.2, 1.3) + t * 0.2);
-
-    vec2 r = vec2(0.0);
-    r.x = fbm(p + 4.0 * q + vec2(1.7, 9.2) + t * 0.15);
-    r.y = fbm(p + 4.0 * q + vec2(8.3, 2.8) + t * 0.126);
-
-    float f = fbm(p + 4.0 * r);
-
-    vec3 col = palette(f * 0.8);
-
-    float vignette = 1.0 - smoothstep(0.4, 1.4, length((uv - 0.5) * vec2(aspect, 1.0)));
-    col *= vignette;
-
-    float mouseDist = length(uv - mouse);
-    float mouseInfluence = smoothstep(0.3, 0.0, mouseDist);
-    col += vec3(0.83, 1.0, 0.25) * mouseInfluence * 0.08;
-
-    col = pow(col, vec3(0.85));
+    // Create grid
+    float gridSize = 20.0;
+    vec2 grid = fract(warpedUv * gridSize - vec2(uTime * 0.5, uTime * 0.2));
+    
+    // Grid lines thickness
+    float lineThickness = 0.03;
+    float linesX = smoothstep(lineThickness, 0.0, grid.x) + smoothstep(1.0 - lineThickness, 1.0, grid.x);
+    float linesY = smoothstep(lineThickness, 0.0, grid.y) + smoothstep(1.0 - lineThickness, 1.0, grid.y);
+    float lines = max(linesX, linesY);
+    
+    // Neon lime glow effect based on velocity and proximity
+    vec3 glowColor = vec3(0.64, 0.9, 0.15); // Neon lime #A3E635
+    vec3 baseGridColor = vec3(0.15, 0.15, 0.18);
+    vec3 bg = vec3(0.02, 0.02, 0.02);
+    
+    float glowIntensity = smoothstep(0.6, 0.0, dist) * clamp(uMouseVelocity * 1.5, 0.0, 2.0);
+    
+    vec3 gridColor = mix(baseGridColor, glowColor, glowIntensity + 0.1);
+    
+    vec3 col = mix(bg, gridColor, lines);
+    
+    // Add soft glow around cursor
+    col += glowColor * smoothstep(0.3, 0.0, dist) * (0.1 + uMouseVelocity * 0.2);
 
     gl_FragColor = vec4(col, 1.0);
   }
@@ -92,12 +66,16 @@ const fragmentShader = `
 function ShaderMesh() {
   const meshRef = useRef()
   const mouseRef = useRef(new THREE.Vector2(0.5, 0.5))
+  const velocityTarget = useRef(0)
+  const lastMousePos = useRef(new THREE.Vector2(0.5, 0.5))
+  const lastTime = useRef(0)
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
       uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uMouseVelocity: { value: 0 },
     }),
     []
   )
@@ -105,6 +83,8 @@ function ShaderMesh() {
   useFrame(({ clock }) => {
     if (meshRef.current) {
       meshRef.current.material.uniforms.uTime.value = clock.getElapsedTime()
+      uniforms.uMouseVelocity.value += (velocityTarget.current - uniforms.uMouseVelocity.value) * 0.1
+      velocityTarget.current *= 0.95 // decay
     }
   })
 
@@ -113,7 +93,22 @@ function ShaderMesh() {
       uniforms.uResolution.value.set(window.innerWidth, window.innerHeight)
     }
     const handleMouseMove = (e) => {
-      mouseRef.current.set(e.clientX / window.innerWidth, 1.0 - e.clientY / window.innerHeight)
+      const x = e.clientX / window.innerWidth
+      const y = 1.0 - e.clientY / window.innerHeight
+      
+      const now = performance.now()
+      const dt = now - lastTime.current
+      
+      if (dt > 0 && lastTime.current > 0) {
+        const dx = x - lastMousePos.current.x
+        const dy = y - lastMousePos.current.y
+        const dist = Math.sqrt(dx*dx + dy*dy)
+        velocityTarget.current = Math.min(dist / dt * 500, 3.0) // Normalize velocity
+      }
+      
+      lastMousePos.current.set(x, y)
+      lastTime.current = now
+      mouseRef.current.set(x, y)
       uniforms.uMouse.value.copy(mouseRef.current)
     }
     window.addEventListener("resize", handleResize)

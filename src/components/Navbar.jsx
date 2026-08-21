@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 
 const links = [
   { label: "About", href: "#about" },
@@ -10,6 +10,56 @@ const links = [
   { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
+
+function MagneticNavLink({ children, href, active, onClick }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    x.set((clientX - centerX) * 0.2); 
+    y.set((clientY - centerY) * 0.2);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: springX, y: springY }}
+      className="relative text-sm transition-colors hover:text-[var(--fg)] px-2 py-1"
+      animate={{
+        color: active ? "var(--fg)" : "var(--muted)",
+      }}
+    >
+      {children}
+      {active && (
+        <motion.div
+          layoutId="nav-indicator"
+          className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full"
+          style={{ background: "var(--accent)" }}
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+        />
+      )}
+    </motion.a>
+  );
+}
 
 export default function Navbar({ onCmd }) {
   const [scrolled, setScrolled] = useState(false);
@@ -73,24 +123,13 @@ export default function Navbar({ onCmd }) {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {links.map((l) => (
-              <a
+              <MagneticNavLink
                 key={l.label}
                 href={l.href}
-                className="relative text-sm transition-colors hover:text-[var(--fg)]"
-                style={{
-                  color: activeSection === l.href ? "var(--fg)" : "var(--muted)",
-                }}
+                active={activeSection === l.href}
               >
                 {l.label}
-                {activeSection === l.href && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full"
-                    style={{ background: "var(--accent)" }}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </a>
+              </MagneticNavLink>
             ))}
           </div>
 

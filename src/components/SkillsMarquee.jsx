@@ -1,14 +1,15 @@
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
 
 const SKILLS = [
-  "React", "TypeScript", "Node.js", "Express", "MongoDB", "PostgreSQL",
-  "Python", "FastAPI", "Next.js", "Tailwind CSS", "Three.js", "Framer Motion",
-  "Git", "Docker", "AWS", "Firebase", "REST APIs", "GraphQL",
-  "Redux", "Socket.io", "JWT", "OAuth", "WebRTC", "Prisma",
-  "HTML", "CSS", "JavaScript", "SQL", "NoSQL", "Linux"
+  "React", "TypeScript", "Next.js", "Node.js", "Express", "FastAPI",
+  "Python", "C++", "MongoDB", "PostgreSQL", "Redis", "Prisma",
+  "Framer Motion", "Three.js", "WebSockets", "Socket.io", "JWT", "OAuth",
+  "Docker", "Git", "Vercel", "Firebase", "REST APIs", "DSA",
+  "Tailwind CSS", "LangChain", "OpenCV", "Bun", "SQL", "Linux"
 ]
 
-function MarqueeRow({ skills, direction = "left", duration = 40 }) {
+function MarqueeRow({ skills, direction = "left", duration = 40, activeFilter }) {
   // Duplicate items for seamless loop
   const duplicated = [...skills, ...skills]
   
@@ -25,18 +26,30 @@ function MarqueeRow({ skills, direction = "left", duration = 40 }) {
           ease: "linear",
         }}
       >
-        {duplicated.map((skill, i) => (
-          <div
-            key={i}
-            className="inline-flex items-center px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-ink)] hover:scale-105 cursor-default"
-            style={{
-              borderColor: "var(--line)",
-              color: "var(--muted)",
-            }}
-          >
-            {skill}
-          </div>
-        ))}
+        {duplicated.map((skill, i) => {
+          const isActive = activeFilter && activeFilter.toLowerCase() === skill.toLowerCase()
+          return (
+            <div
+              key={i}
+              onClick={() => {
+                if (isActive) {
+                  window.dispatchEvent(new CustomEvent('clear-filter'))
+                } else {
+                  window.dispatchEvent(new CustomEvent('filter-projects', { detail: { skill } }))
+                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+                }
+              }}
+              className="inline-flex items-center px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
+              style={{
+                borderColor: isActive ? "var(--accent)" : "var(--line)",
+                backgroundColor: isActive ? "var(--accent)" : "transparent",
+                color: isActive ? "var(--accent-ink)" : "var(--muted)",
+              }}
+            >
+              {skill}
+            </div>
+          )
+        })}
       </motion.div>
     </div>
   )
@@ -45,6 +58,19 @@ function MarqueeRow({ skills, direction = "left", duration = 40 }) {
 export default function SkillsMarquee() {
   const row1 = SKILLS.slice(0, 15)
   const row2 = SKILLS.slice(15)
+  
+  const [activeFilter, setActiveFilter] = useState(null)
+
+  useEffect(() => {
+    const handleFilter = (e) => setActiveFilter(e.detail.skill)
+    const handleClear = () => setActiveFilter(null)
+    window.addEventListener('filter-projects', handleFilter)
+    window.addEventListener('clear-filter', handleClear)
+    return () => {
+      window.removeEventListener('filter-projects', handleFilter)
+      window.removeEventListener('clear-filter', handleClear)
+    }
+  }, [])
 
   return (
     <section id="skills" className="relative py-32 overflow-hidden">
@@ -60,10 +86,10 @@ export default function SkillsMarquee() {
       </div>
 
       {/* Row 1 - Left */}
-      <MarqueeRow skills={row1} direction="left" duration={35} />
+      <MarqueeRow skills={row1} direction="left" duration={35} activeFilter={activeFilter} />
       
       {/* Row 2 - Right */}
-      <MarqueeRow skills={row2} direction="right" duration={30} />
+      <MarqueeRow skills={row2} direction="right" duration={30} activeFilter={activeFilter} />
     </section>
   )
 }

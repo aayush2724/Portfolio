@@ -176,27 +176,33 @@ export const challenges = {
 // Achievements
 export const achievements = [
   {
-    id: "firstChallenge",
-    title: "First Step",
-    description: "Complete your first challenge",
-    icon: "🎯",
+    id: "hackathonPodium",
+    title: "Hackathon Podium",
+    description: "Secured 3rd place at ThinkRoot × Vortex'26 (NIT Trichy) by building LeadForge in 24 hours.",
+    icon: "🏆",
+  },
+  {
+    id: "hackathonFinalist",
+    title: "National Hackathon Finalist",
+    description: "Qualified for the final round as a top 200 team among 8,700 teams in a national-level hackathon.",
+    icon: "🚀",
   },
   {
     id: "dsa",
-    title: "Algorithm Master",
-    description: "Complete DSA challenges",
+    title: "DSA Milestone",
+    description: "Solved 500+ data structures and algorithms problems across platforms.",
     icon: "🧠",
   },
   {
-    id: "fullStack",
-    title: "Full Stack Developer",
-    description: "Complete frontend and backend challenges",
+    id: "openSource",
+    title: "Open Source Contributor",
+    description: "Active contributor to GitHub, maintaining production-grade full-stack and ML applications.",
     icon: "🔗",
   },
   {
-    id: "allChallenges",
-    title: "Challenge Completed",
-    description: "Complete all challenges",
+    id: "fullStack",
+    title: "Full Stack Builder",
+    description: "Built end-to-end products spanning frontend, backend, databases, and deployment workflows.",
     icon: "👑",
   },
 ];

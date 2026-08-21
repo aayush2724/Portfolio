@@ -26,7 +26,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4 }}
               className="md:col-span-2 rounded-3xl border p-8 flex flex-col justify-center group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <p className="font-display text-3xl md:text-4xl leading-tight mb-6" style={{ color: "var(--fg)" }}>
                 "Music is the space between the notes"
@@ -42,7 +47,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4, rotateZ: 2 }}
               className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <div className="text-5xl mb-4">🎸</div>
               <div>
@@ -61,7 +71,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4, rotateZ: -2 }}
               className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <div className="text-5xl mb-4">📚</div>
               <div>
@@ -80,7 +95,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4 }}
               className="md:col-span-2 rounded-3xl border p-8 flex items-center gap-6 group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <div className="w-24 h-24 rounded-2xl flex items-center justify-center flex-shrink-0 text-4xl" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
                 🎵
@@ -110,7 +130,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4 }}
               className="md:col-span-2 rounded-3xl border p-8 flex flex-col justify-center group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <div className="text-4xl mb-4">💭</div>
               <p className="text-lg leading-relaxed" style={{ color: "var(--fg)" }}>
@@ -127,7 +152,12 @@ export default function BeyondCodeBento() {
             <motion.div
               whileHover={{ y: -4, rotateZ: 2 }}
               className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+              style={{
+                borderColor: "rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)"
+              }}
             >
               <div className="text-5xl mb-4">⚡</div>
               <div>

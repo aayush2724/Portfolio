@@ -36,8 +36,10 @@ function TestimonialCard({ testimonial, isActive }) {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="rounded-3xl border p-8 md:p-10 transition-all duration-300"
       style={{
-        borderColor: isActive ? "rgba(212, 255, 63, 0.2)" : "var(--line)",
-        background: isActive ? "rgba(212, 255, 63, 0.03)" : "var(--surface)",
+        borderColor: isActive ? "rgba(212, 255, 63, 0.2)" : "rgba(255,255,255,0.08)",
+        background: isActive ? "rgba(212, 255, 63, 0.05)" : "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
       }}
     >
       {/* Quote mark */}

@@ -26,7 +26,7 @@ export default function HeroBold() {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mb-6 text-xs md:text-sm tracking-[0.35em] text-[var(--accent)]"
           >
-            CS STUDENT · FULL-STACK DEVELOPER · GUITARIST
+            CS STUDENT · FULL-STACK DEVELOPER · OWASP PRESIDENT
           </motion.p>
 
           {/* Name with clip-path reveals */}
@@ -56,9 +56,9 @@ export default function HeroBold() {
             transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-sm md:text-base text-[var(--muted)]"
           >
-            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> Dsa Questions Solved</span>
+            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> DSA Problems Solved</span>
             <span><b className="text-[var(--fg)]">{projectsShipped}</b> Projects Shipped</span>
-            <span><b className="text-[var(--fg)]">{currentStreak}</b> Current Streak</span>
+            <span><b className="text-[var(--fg)]">3×</b> Hackathon Finalist</span>
           </motion.div>
 
           {/* Terminal */}
@@ -73,12 +73,12 @@ export default function HeroBold() {
               title="aayush@portfolio — zsh"
               path="~"
               steps={[
-                { cmd: "whoami", out: "Aayush Kumar — CS student & full-stack dev" },
-                { cmd: "cat skills.txt", out: "React · Node · Python · C++ · DSA" },
-                { cmd: "ls projects/", out: "portfolio  chess-app  leetcode-tracker  discord-bot" },
-                { cmd: "cat contact.txt", out: "aayush2615@gmail.com" },
-                { cmd: "echo $STATUS", out: "open to work & collaboration" },
-                { cmd: "./launch --status", out: "🚀 available for opportunities" },
+                { cmd: "whoami", out: "Aayush Kumar — CS student, full-stack dev & OWASP President" },
+                { cmd: "cat skills.txt", out: "React · Next.js · Node · Python · C++ · LangChain · OpenCV" },
+                { cmd: "ls projects/", out: "auralis  deskguard  mindflow  leadforge  beatzy  civicresolve" },
+                { cmd: "cat achievements.txt", out: "🏆 3rd @ NIT Trichy · GS Hackathon · Samsung ennovateX" },
+                { cmd: "echo $ROLE", out: "President — OWASP Student Chapter, NIE Mysore" },
+                { cmd: "./launch --status", out: "🚀 open to internships & collaboration" },
               ]}
             />
           </motion.div>

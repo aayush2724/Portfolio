@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react"
 export default function AccentCursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
+  const textRef = useRef(null)
   const [isTouch, setIsTouch] = useState(false)
+  const [text, setText] = useState("")
   
   const mouse = useRef({ x: 0, y: 0 })
   const ring = useRef({ x: 0, y: 0 })
@@ -23,6 +25,13 @@ export default function AccentCursor() {
     const onMouseOver = (e) => {
       const interactive = e.target.closest('a, button, [role="button"], .coverflow-card')
       isHovering.current = !!interactive
+
+      const textTarget = e.target.closest('[data-cursor]')
+      if (textTarget) {
+        setText(textTarget.getAttribute('data-cursor'))
+      } else {
+        setText("")
+      }
     }
 
     const animate = () => {
@@ -36,8 +45,12 @@ export default function AccentCursor() {
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15
 
       if (ringRef.current) {
-        const size = isHovering.current ? 48 : 32
+        const size = isHovering.current || text ? 64 : 32
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${size / 32})`
+      }
+
+      if (textRef.current) {
+        textRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`
       }
 
       requestAnimationFrame(animate)
@@ -52,7 +65,7 @@ export default function AccentCursor() {
       window.removeEventListener('mouseover', onMouseOver)
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [text])
 
   if (isTouch) return null
 
@@ -69,13 +82,13 @@ export default function AccentCursor() {
           marginTop: '-4px',
         }}
       >
-        <div className="w-full h-full rounded-full bg-[var(--accent)]" />
+        <div className={`w-full h-full rounded-full bg-[var(--accent)] transition-opacity duration-200 ${text ? 'opacity-0' : 'opacity-100'}`} />
       </div>
 
       {/* Ring */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[10000] transition-transform duration-300 ease-out"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] transition-transform duration-300 ease-out flex items-center justify-center"
         style={{
           width: '32px',
           height: '32px',
@@ -84,12 +97,29 @@ export default function AccentCursor() {
         }}
       >
         <div 
-          className="w-full h-full rounded-full border-2"
+          className={`w-full h-full rounded-full transition-all duration-300 ${text ? 'bg-[var(--accent)] border-none' : 'border-2 bg-transparent'}`}
           style={{
-            borderColor: 'var(--accent)',
-            opacity: 0.2,
+            borderColor: text ? 'transparent' : 'var(--accent)',
+            opacity: text ? 0.9 : 0.2,
           }}
         />
+      </div>
+
+      {/* Text */}
+      <div
+        ref={textRef}
+        className="pointer-events-none fixed top-0 left-0 z-[10000] flex items-center justify-center transition-opacity duration-300"
+        style={{
+          width: '64px',
+          height: '64px',
+          marginLeft: '-32px',
+          marginTop: '-32px',
+          opacity: text ? 1 : 0,
+        }}
+      >
+        <span className="text-[9px] font-bold text-[var(--bg)] tracking-wider uppercase text-center leading-tight px-1">
+          {text}
+        </span>
       </div>
     </>
   )

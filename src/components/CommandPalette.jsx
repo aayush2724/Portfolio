@@ -55,6 +55,16 @@ const cmds = [
         ?.scrollIntoView({ behavior: "smooth" }),
   },
   {
+    id: "achievements",
+    label: "View Achievements",
+    icon: "🏆",
+    cat: "Navigate",
+    fn: () =>
+      document
+        .querySelector("#achievements")
+        ?.scrollIntoView({ behavior: "smooth" }),
+  },
+  {
     id: "contact",
     label: "Contact Me",
     icon: "✉️",

@@ -29,11 +29,12 @@ export default function AnimatedHeading({ text, className = "", as = "h2" }) {
           key={i}
           className="inline-block mr-[0.25em]"
           variants={{
-            hidden: { opacity: 0, y: "0.6em", rotateX: -40 },
+            hidden: { opacity: 0, y: "0.6em", rotateX: -40, filter: "blur(10px)" },
             visible: {
               opacity: 1,
               y: "0em",
               rotateX: 0,
+              filter: "blur(0px)",
               transition: { duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] },
             },
           }}

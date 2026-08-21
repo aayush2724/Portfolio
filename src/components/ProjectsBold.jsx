@@ -14,8 +14,8 @@ const PROJECTS = [
     tags: ["Python", "AI/ML", "Audio"],
     link: "https://github.com/aayush2724/Auralis",
     demo: "https://auralis-client-five.vercel.app",
-    image: "",
-    badge: "Latest",
+    image: "/auralis.png",
+    badge: "Sound Intelligence",
     earthy: "from-[#1a2a3f] to-[#0b1017]"
   },
   {
@@ -25,41 +25,9 @@ const PROJECTS = [
     tags: ["JavaScript", "Node.js", "OpenCV"],
     link: "https://github.com/aayush2724/DeskGuard",
     demo: "https://deskguard-jade.vercel.app",
-    image: "", // Add if available
-    badge: "New",
-    earthy: "from-[#2d3436] to-[#000000]" // Onyx
-  },
-  {
-    id: 3,
-    title: "AlgoVision",
-    description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
-    tags: ["React", "Framer Motion", "Algorithms"],
-    link: "https://github.com/aayush2724/AlgoVision",
-    image: "", // Add if available
-    badge: "Education",
-    earthy: "from-[#2c3e50] to-[#000000]" // Midnight
-  },
-  {
-    id: 4,
-    title: "LeadForge",
-    description: "AI-powered lead generation and management tool for sales teams.",
-    tags: ["Python", "AI", "FastAPI"],
-    link: "https://github.com/aayush2724/LeadForge",
-    demo: "https://lead-forge-rust.vercel.app",
-    image: "/leadforge-hackathon-proof.svg",
-    badge: "Hackathon",
-    earthy: "from-[#3a3530] to-[#1f1c18]"
-  },
-  {
-    id: 14,
-    title: "MindFlow",
-    description: "AI-powered student burnout detection platform with real-time wellness telemetry, counselor dashboards, and intervention alerts for educational institutions.",
-    tags: ["React", "Node.js", "Firebase"],
-    link: "https://github.com/aayush2724/MindFlow",
-    demo: "https://mind-flow-psi.vercel.app",
-    image: "",
-    badge: "EdTech",
-    earthy: "from-[#0d1f2d] to-[#00dbe722]" // Cyber Cyan
+    image: "/deskguard.png",
+    badge: "Computer Vision",
+    earthy: "from-[#2d3436] to-[#000000]"
   },
   {
     id: 5,
@@ -69,8 +37,8 @@ const PROJECTS = [
     link: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
     image: "/Beatzy.png",
-    badge: "Music Tech",
-    earthy: "from-[#3e4a3d] to-[#242b23]" // Olive
+    badge: "Live Collab",
+    earthy: "from-[#3e4a3d] to-[#242b23]"
   },
   {
     id: 6,
@@ -79,29 +47,41 @@ const PROJECTS = [
     tags: ["React", "Node.js", "MongoDB"],
     link: "https://github.com/aayush2724/Citizen-Resolver-System",
     demo: "https://civicresolve-jet.vercel.app",
-    image: "/citizen-resolver-cover.svg",
-    badge: "Government",
-    earthy: "from-[#4a3728] to-[#2c1e14]" // Espresso
+    image: "/civicresolve.jpg",
+    badge: "Civic Tech",
+    earthy: "from-[#4a3728] to-[#2c1e14]"
   },
   {
-    id: 7,
-    title: "Checkmate",
-    description: "Advanced chess platform with real-time matchmaking and AI analysis capabilities.",
-    tags: ["Socket.io", "React", "Node.js"],
-    link: "https://github.com/aayush2724",
+    id: 3,
+    title: "AlgoVision",
+    description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
+    tags: ["React", "Framer Motion", "Algorithms"],
+    link: "https://github.com/aayush2724/AlgoVision",
     image: "",
-    badge: "Strategy",
-    earthy: "from-[#6b4423] to-[#3d2b1f]" // Clay
+    badge: "DSA Visualizer",
+    earthy: "from-[#2c3e50] to-[#000000]"
   },
   {
-    id: 8,
-    title: "Disaster Relief System",
-    description: "Emergency resource coordination platform for disaster management and relief operations.",
-    tags: ["React", "Express", "Real-time"],
-    link: "https://github.com/aayush2724/Disaster-relief-system",
-    image: "/disaster-relief-cover.svg",
-    badge: "Critical",
-    earthy: "from-[#5a4a3a] to-[#352b21]" // Stone
+    id: 4,
+    title: "LeadForge",
+    description: "AI-powered lead generation and management tool for sales teams.",
+    tags: ["Python", "AI", "FastAPI"],
+    link: "https://github.com/aayush2724/LeadForge",
+    demo: "https://lead-forge-rust.vercel.app",
+    image: "/leadforge-hackathon-proof.svg",
+    badge: "🏆 3rd Place NIT",
+    earthy: "from-[#3a3530] to-[#1f1c18]"
+  },
+  {
+    id: 14,
+    title: "MindFlow",
+    description: "AI-powered student burnout detection platform with real-time wellness telemetry, counselor dashboards, and intervention alerts for educational institutions.",
+    tags: ["React", "Node.js", "Firebase"],
+    link: "https://github.com/aayush2724/MindFlow",
+    demo: "https://mind-flow-psi.vercel.app",
+    image: "/mindflow.png",
+    badge: "Burnout Predictor",
+    earthy: "from-[#0d1f2d] to-[#00dbe722]"
   },
   {
     id: 9,
@@ -110,8 +90,8 @@ const PROJECTS = [
     tags: ["TypeScript", "Next.js", "Prisma"],
     link: "https://github.com/aayush2724/Job-Portal",
     image: "/job-portal-cover.svg",
-    badge: "Product",
-    earthy: "from-[#7a6a4a] to-[#4a3a2a]" // Ochre
+    badge: "Career Platform",
+    earthy: "from-[#7a6a4a] to-[#4a3a2a]"
   },
   {
     id: 10,
@@ -120,40 +100,22 @@ const PROJECTS = [
     tags: ["Python", "ML", "Audio"],
     link: "https://github.com/aayush2724/Chord-Detector",
     image: "/chord-detector-cover.svg",
-    badge: "AI/ML",
-    earthy: "from-[#4a5a6a] to-[#2a3a4a]" // Slate
+    badge: "Guitar × ML",
+    earthy: "from-[#4a5a6a] to-[#2a3a4a]"
   },
   {
     id: 11,
     title: "Visitor Management",
-    description: "Secure check-in system for tracking and managing building visitors with QR codes.",
+    description: "Biometric-secured check-in system for tracking and managing building visitors with QR codes and real-time dashboards.",
     tags: ["HTML", "PHP", "MySQL"],
     link: "https://github.com/aayush2724/Visitor-Management-System",
-    image: "/visitor-management-cover.svg",
-    badge: "SaaS",
-    earthy: "from-[#5d4037] to-[#3e2723]" // Deep Clay
-  },
-  {
-    id: 12,
-    title: "SkillNest",
-    description: "Learning platform connecting students with skill-based courses and mentorship.",
-    tags: ["React", "Node", "WebRTC"],
-    link: "https://github.com/aayush2724/Skillnest",
-    image: "/skillnest-cover.svg",
-    badge: "Education",
-    earthy: "from-[#4b4e53] to-[#2c2e31]" // Charcoal
-  },
-  {
-    id: 13,
-    title: "ChatRoom",
-    description: "Real-time messaging application with rooms, authentication, and presence indicators.",
-    tags: ["Socket.io", "Node", "Express"],
-    link: "https://github.com/aayush2724/chatRoom",
-    image: "/chatroom-cover.svg",
-    badge: "Social",
-    earthy: "from-[#3e2723] to-[#1a1110]" // Dark Earth
+    image: "/vms.png",
+    badge: "QR Check-in",
+    earthy: "from-[#0a1a12] to-[#001a0d]"
   },
 ]
+
+
 
 function extractGradientColors(earthy) {
   const colors = earthy?.match(/#(?:[0-9a-fA-F]{3}){1,2}/g) || []
@@ -206,22 +168,29 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
       {/* Animated gradient mesh background */}
       <div className="absolute inset-0 overflow-hidden">
         {hasImage ? (
-          <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-105">
+          <motion.div 
+            className="absolute -inset-4 transition-transform duration-1000 group-hover:scale-[1.08]"
+            animate={{ 
+              x: isHovered ? rotate.y * -20 : 0, 
+              y: isHovered ? rotate.x * -20 : 0 
+            }}
+            transition={{ type: "spring", stiffness: 100, damping: 30 }}
+          >
             <img
               src={project.image}
               alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover opacity-40 transition-opacity duration-700 group-hover:opacity-50"
+              className="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity duration-700 group-hover:opacity-100"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/60" />
             <div
               className="absolute inset-0 opacity-40 mix-blend-overlay group-hover:opacity-60 transition-opacity duration-700"
               style={{
                 background: `linear-gradient(135deg, ${primary} 0%, transparent 100%)`
               }}
             />
-          </div>
+          </motion.div>
         ) : (
           <div
             className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-700"
@@ -296,8 +265,8 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 z-50 flex flex-col justify-between p-8 rounded-3xl"
             style={{
-              background: "linear-gradient(160deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.95) 100%)",
-              backdropFilter: "blur(20px)",
+              background: "linear-gradient(160deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%)",
+              backdropFilter: "blur(8px)",
               transform: "translateZ(50px)",
             }}
           >
@@ -400,10 +369,23 @@ export default function ProjectsBold() {
   const [modalOpen, setModalOpen] = useState(false)
   const [lazyDevOpen, setLazyDevOpen] = useState(false)
   const [lazyDevProject, setLazyDevProject] = useState(null)
+  const [filterSkill, setFilterSkill] = useState(null)
   const scrollRef = useRef(null)
   
   const { scrollXProgress } = useScroll({ container: scrollRef })
   const scaleX = useSpring(scrollXProgress, { stiffness: 100, damping: 30 })
+
+  useEffect(() => {
+    const handleFilter = (e) => {
+      setFilterSkill(e.detail.skill)
+      // Scroll to start of container when filter changes
+      if (scrollRef.current) {
+        scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+      }
+    }
+    window.addEventListener('filter-projects', handleFilter)
+    return () => window.removeEventListener('filter-projects', handleFilter)
+  }, [])
 
   const handleViewDescription = (project) => {
     const caseStudy = getCaseStudyByName(project.title)
@@ -436,6 +418,10 @@ export default function ProjectsBold() {
     }
   }
 
+  const filteredProjects = filterSkill 
+    ? PROJECTS.filter(p => p.tags.some(t => t.toLowerCase() === filterSkill.toLowerCase()))
+    : PROJECTS
+
   return (
     <section id="projects" className="relative bg-[#080808] py-24 overflow-hidden">
       <ContainerScroll
@@ -450,6 +436,31 @@ export default function ProjectsBold() {
                 Projects
              </h2>
              
+             <AnimatePresence>
+                {filterSkill && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mb-8 flex items-center gap-3"
+                  >
+                    <span className="text-white/60">Filtered by:</span>
+                    <span className="px-4 py-1.5 rounded-full bg-[var(--accent)] text-[var(--accent-ink)] font-bold text-sm tracking-wider uppercase">
+                      {filterSkill}
+                    </span>
+                    <button 
+                      onClick={() => {
+                        setFilterSkill(null)
+                        window.dispatchEvent(new CustomEvent('clear-filter'))
+                      }}
+                      className="ml-2 text-white/40 hover:text-white transition-colors underline text-xs"
+                    >
+                      Clear Filter
+                    </button>
+                  </motion.div>
+                )}
+             </AnimatePresence>
+
              <div className="flex items-center gap-10">
                 <button 
                   onClick={() => scroll('left')}
@@ -476,15 +487,46 @@ export default function ProjectsBold() {
           ref={scrollRef}
           className="flex h-full w-full items-center gap-8 overflow-x-auto px-12 py-10 md:px-24 scrollbar-hide snap-x snap-mandatory"
         >
-          {PROJECTS.map((project, index) => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-              index={index}
-              onViewDescription={handleViewDescription}
-              onViewDemo={handleViewDemo}
-            />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.4 }}
+                  className="snap-center h-full flex items-center shrink-0"
+                >
+                  <ProjectCard 
+                    project={project} 
+                    index={index}
+                    onViewDescription={handleViewDescription}
+                    onViewDemo={handleViewDemo}
+                  />
+                </motion.div>
+              ))
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="w-full h-full flex flex-col items-center justify-center text-center text-white/50 space-y-4"
+              >
+                <div className="text-4xl">🔍</div>
+                <p>No projects found matching "{filterSkill}"</p>
+                <button 
+                  onClick={() => {
+                    setFilterSkill(null)
+                    window.dispatchEvent(new CustomEvent('clear-filter'))
+                  }}
+                  className="px-4 py-2 mt-4 border border-white/10 rounded-full hover:bg-white/5 hover:text-white transition-all"
+                >
+                  View All Projects
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
           
           <div className="min-w-[100px] flex-shrink-0" />
         </div>

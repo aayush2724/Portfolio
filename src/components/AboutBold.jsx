@@ -26,20 +26,23 @@ export default function AboutBold() {
           <Reveal delay={0.2}>
             <div className="space-y-6">
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-                Hey! I'm Aayush, a Computer Science student passionate about full-stack development and solving complex problems. I transform ideas into scalable applications that make a difference.
+                Hey! I'm Aayush, a Computer Science student at NIE Mysore, passionate about full-stack development, AI integration, and systems that matter. I ship end-to-end — from React UIs to Python backends to real-time infrastructure.
               </p>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-                From building a{" "}
-                <span style={{ color: "var(--fg)" }}>citizen complaint resolution platform</span>{" "}
-                to creating an{" "}
-                <span style={{ color: "var(--fg)" }}>ML-powered chord detector</span>{" "}
-                for guitarists, I love projects that blend technology with purpose.
+                I've built{" "}
+                <span style={{ color: "var(--fg)" }}>AI-powered platforms</span>{" "}
+                like Auralis and MindFlow, won{" "}
+                <span style={{ color: "var(--fg)" }}>3rd place at NIT Trichy's hackathon</span>{" "}
+                with LeadForge, and competed in Goldman Sachs and Samsung's national-level hackathons. I also serve as{" "}
+                <span style={{ color: "var(--fg)" }}>President of the OWASP student chapter</span>{" "}
+                at my college, leading cybersecurity initiatives.
               </p>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-                When I'm not coding, you'll find me playing{" "}
+                Beyond code, you'll find me playing{" "}
                 <span style={{ color: "var(--fg)" }}>Stairway to Heaven</span>{" "}
                 on my guitar or grinding{" "}
-                <span style={{ color: "var(--fg)" }}>LeetCode problems</span>.
+                <span style={{ color: "var(--fg)" }}>637+ LeetCode problems</span>{" "}
+                in C++.
               </p>
             </div>
           </Reveal>

@@ -57,10 +57,11 @@ function searchPortfolio(query) {
   }
 
   // 4. Hackathons
-  if (/hackathon|win|won|competition|thinkroot|vortex|goldman|samsung|ennovatex|panic|deadline|trophy|prize/.test(q)) {
+  if (/hackathon|win|won|competition|thinkroot|vortex|goldman|samsung|ennovatex|panic|deadline|trophy|prize|final round|finalist|top 200|8700/.test(q)) {
     return "I compete in hackathons with my teammate **Kaki Harshita** under our team **Panic-At-The-Deadline** 🏆\n\n" +
       "**Highlights:**\n" +
       "• 🥉 **3rd Place** at ThinkRoot x Vortex'26 (NIT Trichy) — built [LeadForge](https://github.com/aayush2724/LeadForge), an AI B2B lead generation pipeline\n" +
+      "• 🚀 **Final-round qualifier** in a national-level hackathon — ranked among the **top 200 teams out of 8,700**\n" +
       "• 🚀 **Goldman Sachs India Hackathon 2026** — multi-agent drone routing optimization in C++\n" +
       "• 📱 **Samsung ennovateX AX Hackathon** — *Phantom Memory*, a 3-tier adaptive memory pipeline for mobile agents\n\n" +
       "We work well under pressure — hence the team name 😄";
@@ -120,8 +121,9 @@ function searchPortfolio(query) {
   }
 
   // 10. About / Bio / College
-  if (/about|who|yourself|bio|profile|college|nie|mysore|bengaluru|bangalore|student|age|year|where/.test(q)) {
+  if (/about|who|yourself|bio|profile|college|nie|mysore|bengaluru|bangalore|student|age|year|where|owasp|president|club/.test(q)) {
     return "I'm **Aayush Kumar** — a 2nd year B.E. CS student at **The National Institute of Engineering (NIE), Mysore**, based in **Bengaluru**.\n\n" +
+      "I'm also the **President of the OWASP student chapter** at my college, where I lead cybersecurity initiatives and build our tech community.\n\n" +
       "I build things end-to-end: REST APIs, React UIs, AI integrations, async job queues — the full stack. " +
       "I've got **23 GitHub repos**, **531+ LeetCode problems**, and **GitHub Pro** with the YOLO and Pull Shark badges 🦈\n\n" +
       "I hack with my teammate **Kaki Harshita** as **Panic-At-The-Deadline** and I'm always looking for the next project to ship.";
