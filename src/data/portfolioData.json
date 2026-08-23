@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-08-23T00:54:10.253Z",
+  "lastUpdated": "2026-08-23T12:24:06.353Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 537547,
+    "ranking": 527734,
     "stats": {
       "totalSolved": 707,
       "easy": 112,
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "LeadForge",
+      "description": "",
+      "url": "https://github.com/aayush2724/LeadForge",
+      "stars": 0,
+      "forks": 1,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-08-23T06:29:32Z"
+    },
+    {
       "name": "Portfolio",
       "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-08-22T12:25:06Z"
+      "updatedAt": "2026-08-23T00:54:30Z"
     },
     {
       "name": "Beatzy",
@@ -54,16 +64,6 @@
       "language": "HTML",
       "topics": [],
       "updatedAt": "2026-07-05T15:52:11Z"
-    },
-    {
-      "name": "LeadForge",
-      "description": "",
-      "url": "https://github.com/aayush2724/LeadForge",
-      "stars": 0,
-      "forks": 1,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-07-05T15:52:09Z"
     },
     {
       "name": "Chord-Detector",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 747
+    "contributions": 754
   }
 }
