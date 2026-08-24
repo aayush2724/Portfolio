@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-08-24T00:52:22.535Z",
+  "lastUpdated": "2026-08-24T12:24:58.620Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 527734,
+    "ranking": 525578,
     "stats": {
       "totalSolved": 708,
       "easy": 112,
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-08-24T00:52:37Z"
+    },
+    {
       "name": "Beatzy",
       "description": "",
       "url": "https://github.com/aayush2724/Beatzy",
@@ -24,16 +34,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-08-23T18:32:19Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-08-23T12:24:11Z"
     },
     {
       "name": "LeadForge",
