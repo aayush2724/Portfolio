@@ -1,29 +1,29 @@
 {
-  "lastUpdated": "2026-08-23T12:24:06.353Z",
+  "lastUpdated": "2026-08-24T00:52:22.535Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 527734,
     "stats": {
-      "totalSolved": 707,
+      "totalSolved": 708,
       "easy": 112,
-      "medium": 153,
+      "medium": 154,
       "hard": 22,
-      "totalSubmissions": 292
+      "totalSubmissions": 293
     },
     "streak": 36,
-    "totalActiveDays": 75
+    "totalActiveDays": 76
   },
   "github": [
     {
-      "name": "LeadForge",
+      "name": "Beatzy",
       "description": "",
-      "url": "https://github.com/aayush2724/LeadForge",
+      "url": "https://github.com/aayush2724/Beatzy",
       "stars": 0,
-      "forks": 1,
-      "language": "Python",
+      "forks": 0,
+      "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-08-23T06:29:32Z"
+      "updatedAt": "2026-08-23T18:32:19Z"
     },
     {
       "name": "Portfolio",
@@ -33,17 +33,17 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-08-23T00:54:30Z"
+      "updatedAt": "2026-08-23T12:24:11Z"
     },
     {
-      "name": "Beatzy",
+      "name": "LeadForge",
       "description": "",
-      "url": "https://github.com/aayush2724/Beatzy",
+      "url": "https://github.com/aayush2724/LeadForge",
       "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
+      "forks": 1,
+      "language": "Python",
       "topics": [],
-      "updatedAt": "2026-07-28T20:49:15Z"
+      "updatedAt": "2026-08-23T06:29:32Z"
     },
     {
       "name": "Citizen-Resolver-System",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 754
+    "contributions": 757
   }
 }
