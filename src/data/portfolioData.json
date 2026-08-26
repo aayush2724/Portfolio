@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-08-26T00:52:58.679Z",
+  "lastUpdated": "2026-08-26T12:36:48.240Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 518511,
+    "ranking": 516484,
     "stats": {
-      "totalSolved": 712,
+      "totalSolved": 714,
       "easy": 113,
-      "medium": 155,
+      "medium": 157,
       "hard": 24,
-      "totalSubmissions": 297
+      "totalSubmissions": 299
     },
     "streak": 36,
-    "totalActiveDays": 78
+    "totalActiveDays": 79
   },
   "github": [
+    {
+      "name": "Translog",
+      "description": "",
+      "url": "https://github.com/aayush2724/Translog",
+      "stars": 0,
+      "forks": 0,
+      "language": null,
+      "topics": [],
+      "updatedAt": "2026-08-26T08:28:27Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-08-25T12:38:54Z"
+      "updatedAt": "2026-08-26T00:53:04Z"
     },
     {
       "name": "Beatzy",
@@ -124,19 +134,9 @@
       "language": "TypeScript",
       "topics": [],
       "updatedAt": "2026-04-29T02:43:45Z"
-    },
-    {
-      "name": "Skillnest",
-      "description": "",
-      "url": "https://github.com/aayush2724/Skillnest",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-04-12T17:39:43Z"
     }
   ],
   "githubStats": {
-    "contributions": 759
+    "contributions": 760
   }
 }
