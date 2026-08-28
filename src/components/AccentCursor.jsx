@@ -10,6 +10,7 @@ export default function AccentCursor() {
   const mouse = useRef({ x: 0, y: 0 })
   const ring = useRef({ x: 0, y: 0 })
   const isHovering = useRef(false)
+  const overText = useRef(false)
 
   useEffect(() => {
     // Detect touch device
@@ -25,6 +26,9 @@ export default function AccentCursor() {
     const onMouseOver = (e) => {
       const interactive = e.target.closest('a, button, [role="button"], .coverflow-card')
       isHovering.current = !!interactive
+      // Over prose the ring shrinks toward the dot so it never obscures reading
+      overText.current = !interactive &&
+        !!e.target.closest('p, h1, h2, h3, h4, h5, h6, li, blockquote')
 
       const textTarget = e.target.closest('[data-cursor]')
       if (textTarget) {
@@ -45,7 +49,7 @@ export default function AccentCursor() {
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15
 
       if (ringRef.current) {
-        const size = isHovering.current || text ? 64 : 32
+        const size = isHovering.current || text ? 64 : overText.current ? 14 : 32
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${size / 32})`
       }
 

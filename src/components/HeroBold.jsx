@@ -1,71 +1,148 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useState } from "react"
 import { TypingTerminal } from "./Terminal"
+import MagneticButton from "./MagneticButton"
+import CountUp from "./CountUp"
+import { usePrefersReducedMotion } from "../context/motion"
 import portfolioData from "../data/portfolioData.json"
 
-export default function HeroBold() {
+const EASE = [0.22, 1, 0.36, 1]
+
+/**
+ * One letter of the kinetic name. The outer span handles the intro rise
+ * (clip reveal), the inner span carries the scroll-linked settle so the
+ * two transforms never fight over the same property.
+ */
+function KineticLetter({ ch, i, scrollY, delay, reduced, introDone }) {
+  const y = useTransform(scrollY, [0, 500], [0, -(18 + i * 12)])
+  const opacity = useTransform(scrollY, [0, 320 + i * 35], [1, 0.1])
+  const skewX = useTransform(scrollY, [0, 500], [0, -(1.5 + i * 0.5)])
+
+  if (reduced) return <span className="inline-block">{ch}</span>
+
+  return (
+    <span className="inline-block overflow-hidden align-bottom">
+      <motion.span
+        className="inline-block will-change-transform"
+        initial={{ y: "110%" }}
+        animate={{ y: introDone ? "0%" : "110%" }}
+        transition={{ duration: 0.7, delay, ease: EASE }}
+      >
+        <motion.span className="inline-block" style={{ y, opacity, skewX }}>
+          {ch}
+        </motion.span>
+      </motion.span>
+    </span>
+  )
+}
+
+function KineticLine({ text, className = "", scrollY, baseDelay, reduced, introDone }) {
+  return (
+    <span className={"block " + className} aria-hidden="true">
+      {text.split("").map((ch, i) => (
+        <KineticLetter
+          key={i}
+          ch={ch}
+          i={i}
+          scrollY={scrollY}
+          delay={baseDelay + i * 0.045}
+          reduced={reduced}
+          introDone={introDone}
+        />
+      ))}
+    </span>
+  )
+}
+
+export default function HeroBold({ introDone = true }) {
+  const reduced = usePrefersReducedMotion()
   const { scrollY } = useScroll()
   const hintOpacity = useTransform(scrollY, [0, 100], [1, 0])
+  // Parallax: text column climbs faster than the portrait, so the layers
+  // separate against the fixed grid/shader background.
+  const textY = useTransform(scrollY, [0, 600], [0, -90])
+  const portraitY = useTransform(scrollY, [0, 600], [0, 50])
   const [imageLoaded, setImageLoaded] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  const leetcodeSolved = (portfolioData.leetcode?.stats?.totalSolved || 400) + "+"
-  const projectsShipped = (portfolioData.github?.length || 12) + "+"
-  const currentStreak = (portfolioData.leetcode?.streak || 25) + "-day"
+  const leetcodeSolved = portfolioData.leetcode?.stats?.totalSolved || 400
+  const projectsShipped = portfolioData.github?.length || 12
+  const showStats = introDone || reduced
+
+  // Intro helper: fade-rise gated on the loader having fully exited.
+  const intro = (delay) =>
+    reduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 20 },
+          animate: introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+          transition: { duration: 0.6, delay, ease: EASE },
+        }
 
   return (
     <section id="hero" className="relative flex min-h-screen items-center px-6 md:px-16 py-20">
       <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        
+
         {/* Left: Text Content */}
-        <div className="flex flex-col justify-center">
+        <motion.div style={reduced ? undefined : { y: textY }} className="flex flex-col justify-center">
           {/* Eyebrow */}
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          <motion.p
+            {...intro(0)}
             className="mb-6 text-xs md:text-sm tracking-[0.35em] text-[var(--accent)]"
           >
             CS STUDENT · FULL-STACK DEVELOPER · OWASP PRESIDENT
           </motion.p>
 
-          {/* Name with clip-path reveals */}
-          <h1 className="font-display uppercase leading-[0.82] text-[16vw] md:text-[8vw] lg:text-[7vw] overflow-hidden">
-            <motion.span
-              initial={{ clipPath: "inset(0 100% 0 0)" }}
-              animate={{ clipPath: "inset(0 0 0 0)" }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="block"
-            >
-              Aayush
-            </motion.span>
-            <motion.span
-              initial={{ clipPath: "inset(0 100% 0 0)" }}
-              animate={{ clipPath: "inset(0 0 0 0)" }}
-              transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="block text-[var(--accent)]"
-            >
-              Kumar
-            </motion.span>
+          {/* Kinetic name: letters rise on intro, un-settle with stagger on scroll */}
+          <h1
+            aria-label="Aayush Kumar"
+            className="font-display uppercase leading-[0.82] text-[16vw] md:text-[8vw] lg:text-[7vw]"
+          >
+            <KineticLine
+              text="Aayush"
+              scrollY={scrollY}
+              baseDelay={0.1}
+              reduced={reduced}
+              introDone={introDone}
+            />
+            <KineticLine
+              text="Kumar"
+              className="text-[var(--accent)]"
+              scrollY={scrollY}
+              baseDelay={0.25}
+              reduced={reduced}
+              introDone={introDone}
+            />
           </h1>
 
           {/* Stats */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          <motion.div
+            {...intro(0.6)}
             className="mt-8 flex flex-wrap gap-x-10 gap-y-2 text-sm md:text-base text-[var(--muted)]"
           >
-            <span><b className="text-[var(--fg)]">{leetcodeSolved}</b> DSA Problems Solved</span>
-            <span><b className="text-[var(--fg)]">{projectsShipped}</b> Projects Shipped</span>
-            <span><b className="text-[var(--fg)]">3×</b> Hackathon Finalist</span>
+            <span>
+              <b className="text-[var(--fg)]">
+                {showStats ? <CountUp end={leetcodeSolved} suffix="+" /> : "0"}
+              </b>{" "}
+              DSA Problems Solved
+            </span>
+            <span>
+              <b className="text-[var(--fg)]">
+                {showStats ? <CountUp end={projectsShipped} duration={1.4} suffix="+" /> : "0"}
+              </b>{" "}
+              Projects Shipped
+            </span>
+            <span>
+              <b className="text-[var(--fg)]">
+                {showStats ? <CountUp end={3} duration={1} suffix="×" /> : "0"}
+              </b>{" "}
+              Hackathon Finalist
+            </span>
           </motion.div>
 
           {/* Terminal */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            {...intro(0.75)}
             className="mt-8 max-w-lg"
           >
             <TypingTerminal
@@ -84,48 +161,54 @@ export default function HeroBold() {
           </motion.div>
 
           {/* CTA */}
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-            href="#projects"
-            className="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 hover:gap-5"
-          >
-            View work →
-          </motion.a>
-        </div>
+          <motion.div {...intro(0.9)} className="mt-10 w-fit">
+            <MagneticButton
+              as={motion.a}
+              href="#projects"
+              data-cursor="View"
+              className="inline-flex w-fit items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 hover:gap-5"
+            >
+              View work →
+            </MagneticButton>
+          </motion.div>
+        </motion.div>
 
         {/* Right: Portrait */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, x: 60 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          style={reduced ? undefined : { y: portraitY }}
+          initial={reduced ? false : { opacity: 0, scale: 0.94, x: 40 }}
+          animate={
+            reduced
+              ? {}
+              : introDone
+                ? { opacity: 1, scale: 1, x: 0 }
+                : { opacity: 0, scale: 0.94, x: 40 }
+          }
+          transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
           className="relative flex justify-center md:justify-end"
         >
           {/* Accent glow background - animated */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
+            animate={{
               opacity: imageLoaded ? [0.1, 0.2, 0.1] : 0,
               scale: [1, 1.1, 1],
             }}
-            transition={{ 
+            transition={{
               opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" },
               scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
             }}
             className="absolute inset-0 blur-[100px]"
-            style={{ 
+            style={{
               background: `radial-gradient(circle at center, var(--accent), transparent 60%)`,
             }}
           />
 
           {/* Portrait container */}
-          <motion.div 
+          <motion.div
             className="relative w-full max-w-md"
-            animate={{ 
-              y: [0, -10, 0],
-            }}
-            transition={{ 
+            animate={reduced ? {} : { y: [0, -10, 0] }}
+            transition={{
               duration: 4,
               repeat: Infinity,
               ease: "easeInOut"
@@ -134,14 +217,12 @@ export default function HeroBold() {
             {/* Animated border */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              animate={{ opacity: introDone ? 1 : 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
               className="absolute -inset-[3px] rounded-3xl"
             >
               <motion.div
-                animate={{ 
-                  rotate: 360,
-                }}
+                animate={reduced ? {} : { rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 rounded-3xl"
                 style={{
@@ -151,12 +232,12 @@ export default function HeroBold() {
             </motion.div>
 
             {/* Image container with tilt on hover */}
-            <motion.div 
+            <motion.div
               className="relative rounded-3xl overflow-hidden"
               style={{ background: "var(--surface)" }}
               onHoverStart={() => setIsHovered(true)}
               onHoverEnd={() => setIsHovered(false)}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
                 rotateY: 5,
                 rotateX: -5,
@@ -168,17 +249,17 @@ export default function HeroBold() {
                 alt="Portrait of Aayush Kumar - Full-stack developer and CS student"
                 loading="eager"
                 className="w-full h-auto object-cover"
-                style={{ 
+                style={{
                   aspectRatio: "3/4",
                 }}
                 initial={{ scale: 1.15, filter: "grayscale(1) brightness(0.7)" }}
-                animate={{ 
+                animate={{
                   scale: isHovered ? 1.05 : 1,
-                  filter: isHovered 
-                    ? "grayscale(0) brightness(1)" 
+                  filter: isHovered
+                    ? "grayscale(0) brightness(1)"
                     : imageLoaded ? "grayscale(1) brightness(0.9)" : "grayscale(1) brightness(0.7)",
                 }}
-                transition={{ 
+                transition={{
                   scale: { duration: 0.3 },
                   filter: { duration: 0.4 }
                 }}
@@ -188,9 +269,9 @@ export default function HeroBold() {
                   e.target.parentElement.style.background = `linear-gradient(135deg, var(--surface), var(--bg))`
                 }}
               />
-              
+
               {/* Overlay gradient */}
-              <div 
+              <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background: `linear-gradient(to top, var(--bg) 0%, transparent 40%)`,
@@ -214,12 +295,12 @@ export default function HeroBold() {
             {/* Floating badge with pulse */}
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
-              animate={{ 
-                opacity: 1, 
-                y: 0,
-                scale: 1,
-              }}
-              transition={{ duration: 0.6, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
+              animate={
+                introDone
+                  ? { opacity: 1, y: 0, scale: 1 }
+                  : { opacity: 0, y: 20, scale: 0.8 }
+              }
+              transition={{ duration: 0.6, delay: 1.1, ease: EASE }}
               whileHover={{ scale: 1.05, y: -2 }}
               className="absolute -bottom-4 -left-4 px-5 py-3 rounded-2xl border backdrop-blur-xl cursor-pointer"
               style={{
@@ -229,7 +310,7 @@ export default function HeroBold() {
             >
               <div className="flex items-center gap-2">
                 <motion.div
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.3, 1],
                     opacity: [1, 0.6, 1],
                   }}
@@ -237,7 +318,7 @@ export default function HeroBold() {
                   className="w-2 h-2 rounded-full"
                   style={{ background: "var(--accent)" }}
                 />
-                <motion.p 
+                <motion.p
                   className="text-xs font-mono tracking-wider"
                   style={{ color: "var(--accent)" }}
                 >
@@ -247,11 +328,11 @@ export default function HeroBold() {
             </motion.div>
 
             {/* Floating particles */}
-            {[...Array(3)].map((_, i) => (
+            {!reduced && [...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 rounded-full"
-                style={{ 
+                style={{
                   background: "var(--accent)",
                   opacity: 0.4,
                   left: `${20 + i * 30}%`,

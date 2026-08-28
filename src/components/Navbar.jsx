@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import MagneticButton from "./MagneticButton";
 
 const links = [
   { label: "About", href: "#about" },
@@ -63,13 +64,21 @@ function MagneticNavLink({ children, href, active, onClick }) {
 
 export default function Navbar({ onCmd }) {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const lastY = useRef(0);
 
-  // Scroll detection for blur background
+  // Scroll detection: blur background + direction-aware hide/show
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", fn);
+    const fn = () => {
+      const y = window.scrollY;
+      setScrolled(y > 80);
+      // Hide when scrolling down past the hero fold, reveal on any scroll up
+      setHidden(y > lastY.current && y > 160);
+      lastY.current = y;
+    };
+    window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
@@ -101,8 +110,8 @@ export default function Navbar({ onCmd }) {
     <>
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ y: hidden && !mobileOpen ? "-110%" : 0, opacity: 1 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300"
         style={{
           background: scrolled ? "rgba(10, 10, 11, 0.7)" : "transparent",
@@ -151,10 +160,12 @@ export default function Navbar({ onCmd }) {
             </button>
 
             {/* Resume Button */}
-            <a
+            <MagneticButton
+              as={motion.a}
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
+              strength={0.35}
               className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:gap-3"
               style={{
                 background: "var(--accent)",
@@ -162,7 +173,7 @@ export default function Navbar({ onCmd }) {
               }}
             >
               Resume
-            </a>
+            </MagneticButton>
 
             {/* Mobile Menu Toggle */}
             <button

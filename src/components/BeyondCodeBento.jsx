@@ -1,12 +1,34 @@
 import { motion } from "framer-motion"
-import Reveal from "./Reveal"
+import Reveal, { Stagger, StaggerItem } from "./Reveal"
+import TiltCard from "./TiltCard"
 import AnimatedHeading from "./AnimatedHeading"
+
+const CARD_STYLE = {
+  borderColor: "rgba(255,255,255,0.08)",
+  background: "rgba(255,255,255,0.03)",
+  backdropFilter: "blur(16px)",
+  WebkitBackdropFilter: "blur(16px)",
+}
+
+/** Bento cell: tilt + glare via TiltCard, shared border/glass styling. */
+function BentoCard({ children, className = "" }) {
+  return (
+    <TiltCard max={8} className="h-full">
+      <div
+        className={`h-full rounded-3xl border p-8 transition-colors duration-300 hover:border-[var(--accent)] ${className}`}
+        style={CARD_STYLE}
+      >
+        {children}
+      </div>
+    </TiltCard>
+  )
+}
 
 export default function BeyondCodeBento() {
   return (
     <section id="life" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl">
-        
+
         {/* Header */}
         <Reveal>
           <div className="mb-16">
@@ -22,41 +44,23 @@ export default function BeyondCodeBento() {
         </Reveal>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[240px]">
-          
+        <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[240px]">
+
           {/* Quote Card - Spans 2 cols */}
-          <Reveal delay={0.1}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="md:col-span-2 rounded-3xl border p-8 flex flex-col justify-center group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem className="md:col-span-2">
+            <BentoCard className="flex flex-col justify-center">
               <p className="font-display text-3xl md:text-4xl leading-tight mb-6" style={{ color: "var(--fg)" }}>
                 "Music is the space between the notes"
               </p>
               <p className="text-sm" style={{ color: "var(--muted)" }}>
                 — Claude Debussy, reminding me that beauty lives in the pauses
               </p>
-            </motion.div>
-          </Reveal>
+            </BentoCard>
+          </StaggerItem>
 
           {/* Guitar Card */}
-          <Reveal delay={0.2}>
-            <motion.div
-              whileHover={{ y: -4, rotateZ: 2 }}
-              className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem>
+            <BentoCard className="flex flex-col justify-between">
               <div className="text-5xl mb-4">🎸</div>
               <div>
                 <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
@@ -66,21 +70,12 @@ export default function BeyondCodeBento() {
                   Stairway to Heaven on repeat
                 </p>
               </div>
-            </motion.div>
-          </Reveal>
+            </BentoCard>
+          </StaggerItem>
 
           {/* Interests Card */}
-          <Reveal delay={0.3}>
-            <motion.div
-              whileHover={{ y: -4, rotateZ: -2 }}
-              className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem>
+            <BentoCard className="flex flex-col justify-between">
               <div className="text-5xl mb-4">📚</div>
               <div>
                 <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
@@ -90,21 +85,12 @@ export default function BeyondCodeBento() {
                   System design, AI/ML, music theory
                 </p>
               </div>
-            </motion.div>
-          </Reveal>
+            </BentoCard>
+          </StaggerItem>
 
           {/* Now Playing Card */}
-          <Reveal delay={0.4}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="md:col-span-2 rounded-3xl border p-8 flex items-center gap-6 group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem className="md:col-span-2">
+            <BentoCard className="flex items-center gap-6">
               <div className="w-24 h-24 rounded-2xl flex items-center justify-center flex-shrink-0 text-4xl" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
                 🎵
               </div>
@@ -125,21 +111,12 @@ export default function BeyondCodeBento() {
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ background: "var(--accent)" }}
               />
-            </motion.div>
-          </Reveal>
+            </BentoCard>
+          </StaggerItem>
 
           {/* Philosophy Card - Spans 2 cols */}
-          <Reveal delay={0.5}>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="md:col-span-2 rounded-3xl border p-8 flex flex-col justify-center group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem className="md:col-span-2">
+            <BentoCard className="flex flex-col justify-center">
               <div className="text-4xl mb-4">💭</div>
               <p className="text-lg leading-relaxed" style={{ color: "var(--fg)" }}>
                 Code is poetry. Every function a verse, every algorithm a rhythm.{" "}
@@ -147,21 +124,12 @@ export default function BeyondCodeBento() {
                   I write software the way I play guitar — with passion, precision, and a bit of improvisation.
                 </span>
               </p>
-            </motion.div>
-          </Reveal>
+            </BentoCard>
+          </StaggerItem>
 
           {/* Fun Fact Card */}
-          <Reveal delay={0.6}>
-            <motion.div
-              whileHover={{ y: -4, rotateZ: 2 }}
-              className="rounded-3xl border p-8 flex flex-col justify-between group transition-all duration-300 hover:border-[var(--accent)]"
-              style={{
-                borderColor: "rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(16px)",
-                WebkitBackdropFilter: "blur(16px)"
-              }}
-            >
+          <StaggerItem>
+            <BentoCard className="flex flex-col justify-between">
               <div className="text-5xl mb-4">⚡</div>
               <div>
                 <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
@@ -171,9 +139,9 @@ export default function BeyondCodeBento() {
                   Built a chord detector that understands my guitar better than I do
                 </p>
               </div>
-            </motion.div>
-          </Reveal>
-        </div>
+            </BentoCard>
+          </StaggerItem>
+        </Stagger>
       </div>
     </section>
   )

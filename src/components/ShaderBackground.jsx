@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -134,6 +134,22 @@ function ShaderMesh() {
 }
 
 export default function ShaderBackground() {
+  const [enabled, setEnabled] = useState(false)
+
+  // The shader is desktop candy: skip the WebGL canvas entirely on touch,
+  // small screens, and reduced motion — InteractiveGrid still paints the bg.
+  useEffect(() => {
+    const mq = window.matchMedia(
+      "(min-width: 768px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
+    )
+    const update = () => setEnabled(mq.matches)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
+
+  if (!enabled) return null
+
   return (
     <div className="fixed inset-0 -z-20" style={{ opacity: 0.6 }}>
       <Canvas

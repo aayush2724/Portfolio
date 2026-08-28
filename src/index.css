@@ -107,6 +107,21 @@ a:focus-visible {
   width: 100%;
 }
 
+/* ── Skills marquee (CSS-driven so hover can pause it) ─────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 /* ── Scroll progress bar ────────────────────────────────────────────────────── */
 .scroll-progress {
   position: fixed;

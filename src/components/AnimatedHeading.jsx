@@ -2,7 +2,8 @@ import { motion } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
 
 /**
- * Word-by-word reveal for headings.
+ * Mask/clip reveal for headings: each word slides up from behind an
+ * overflow-hidden clip with a slight settle-skew, staggered word by word.
  *   <AnimatedHeading text="Hi, I'm Aayush" as="h1" className="text-5xl font-bold" />
  */
 export default function AnimatedHeading({ text, className = "", as = "h2" }) {
@@ -18,29 +19,27 @@ export default function AnimatedHeading({ text, className = "", as = "h2" }) {
   return (
     <MotionTag
       className={className}
-      style={{ perspective: 600 }}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.3 }}
       transition={{ staggerChildren: 0.08 }}
     >
       {words.map((word, i) => (
-        <motion.span
-          key={i}
-          className="inline-block mr-[0.25em]"
-          variants={{
-            hidden: { opacity: 0, y: "0.6em", rotateX: -40, filter: "blur(10px)" },
-            visible: {
-              opacity: 1,
-              y: "0em",
-              rotateX: 0,
-              filter: "blur(0px)",
-              transition: { duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98] },
-            },
-          }}
-        >
-          {word}
-        </motion.span>
+        <span key={i} className="inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom">
+          <motion.span
+            className="inline-block mr-[0.25em] will-change-transform"
+            variants={{
+              hidden: { y: "110%", skewY: 6 },
+              visible: {
+                y: "0%",
+                skewY: 0,
+                transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+              },
+            }}
+          >
+            {word}
+          </motion.span>
+        </span>
       ))}
     </MotionTag>
   )

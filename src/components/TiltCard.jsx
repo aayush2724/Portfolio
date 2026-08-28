@@ -53,12 +53,12 @@ export default function TiltCard({ children, className = "", max = 12 }) {
     mouseY.set(0)
   }
 
+  const cssMouseX = useMotionTemplate`${mouseX}px`
+  const cssMouseY = useMotionTemplate`${mouseY}px`
+
   if (reduced) {
     return <div className={"rounded-2xl " + className}>{children}</div>
   }
-
-  const cssMouseX = useMotionTemplate`${mouseX}px`
-  const cssMouseY = useMotionTemplate`${mouseY}px`
 
   return (
     <motion.div
@@ -81,7 +81,7 @@ export default function TiltCard({ children, className = "", max = 12 }) {
         className="pointer-events-none absolute inset-0 rounded-2xl z-10 transition-opacity duration-300"
       />
       {/* content lifted slightly off the surface for depth */}
-      <div style={{ transform: "translateZ(40px)" }} className="relative">
+      <div style={{ transform: "translateZ(40px)" }} className="relative h-full">
         {children}
       </div>
     </motion.div>

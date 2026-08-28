@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { ContainerScroll } from "./ui/container-scroll-animation"
+import Parallax from "./Parallax"
 import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
 import LazyDevPage from "./LazyDevPage"
@@ -150,6 +151,8 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
   return (
     <motion.div
       ref={cardRef}
+      layoutId={`project-card-${project.id}`}
+      data-cursor="View"
       style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
       animate={{ rotateX: isHovered ? rotate.x * 0.4 : rotate.x, rotateY: isHovered ? rotate.y * 0.4 : rotate.y }}
       onMouseMove={handleMouseMove}
@@ -177,10 +180,11 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
             }}
             transition={{ type: "spring", stiffness: 100, damping: 30 }}
           >
+            {/* base state: dimmed duotone — crossfades to full-color on hover/focus */}
             <img
               src={project.image}
               alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity duration-700 group-hover:opacity-100"
+              className="absolute inset-0 h-full w-full object-cover opacity-60 grayscale contrast-110 transition-all duration-700 group-hover:opacity-100 group-hover:grayscale-0 group-hover:contrast-100 group-focus-within:opacity-100 group-focus-within:grayscale-0"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent" />
@@ -367,6 +371,7 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
 
 export default function ProjectsBold() {
   const [selectedProject, setSelectedProject] = useState(null)
+  const [modalLayoutId, setModalLayoutId] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [lazyDevOpen, setLazyDevOpen] = useState(false)
   const [lazyDevProject, setLazyDevProject] = useState(null)
@@ -389,6 +394,7 @@ export default function ProjectsBold() {
   }, [])
 
   const handleViewDescription = (project) => {
+    setModalLayoutId(`project-card-${project.id}`)
     const caseStudy = getCaseStudyByName(project.title)
     if (caseStudy) {
       setSelectedProject(caseStudy)
@@ -428,9 +434,11 @@ export default function ProjectsBold() {
       <ContainerScroll
         titleComponent={
           <div className="flex flex-col items-center mb-20 relative">
-             <div className="absolute -top-16 font-display text-[12rem] md:text-[20rem] text-white/[0.01] select-none pointer-events-none uppercase tracking-tighter">
-                STUDIO
-             </div>
+             <Parallax speed={0.15} className="absolute -top-16 pointer-events-none">
+               <div className="font-display text-[12rem] md:text-[20rem] text-white/[0.01] select-none uppercase tracking-tighter">
+                  STUDIO
+               </div>
+             </Parallax>
 
              <CommandLabel className="mb-6 opacity-30">ls ~/projects</CommandLabel>
              <AnimatedHeading
@@ -486,8 +494,9 @@ export default function ProjectsBold() {
           </div>
         }
       >
-        <div 
+        <div
           ref={scrollRef}
+          data-cursor="Drag"
           className="flex h-full w-full items-center gap-8 overflow-x-auto px-12 py-10 md:px-24 scrollbar-hide snap-x snap-mandatory"
         >
           <AnimatePresence mode="popLayout">
@@ -535,10 +544,11 @@ export default function ProjectsBold() {
         </div>
       </ContainerScroll>
       
-      <CaseStudyModal 
-        caseStudy={selectedProject} 
-        isOpen={modalOpen} 
-        onClose={() => setModalOpen(false)} 
+      <CaseStudyModal
+        caseStudy={selectedProject}
+        layoutId={modalLayoutId}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
       />
 
       <LazyDevPage

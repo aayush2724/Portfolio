@@ -1,4 +1,3 @@
-import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import AnimatedHeading from "./AnimatedHeading"
 
@@ -10,48 +9,67 @@ const SKILLS = [
   "Tailwind CSS", "LangChain", "OpenCV", "Bun", "SQL", "Linux"
 ]
 
-function MarqueeRow({ skills, direction = "left", duration = 40, activeFilter }) {
-  // Duplicate items for seamless loop
-  const duplicated = [...skills, ...skills]
-  
+function MarqueeChip({ skill, isActive }) {
+  const toggle = () => {
+    if (isActive) {
+      window.dispatchEvent(new CustomEvent('clear-filter'))
+    } else {
+      window.dispatchEvent(new CustomEvent('filter-projects', { detail: { skill } }))
+      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  // Active chip keeps inline accent colors; idle chips use classes so the
+  // hover invert-to-accent can take effect.
   return (
-    <div className="relative overflow-hidden py-4">
-      <motion.div
-        className="flex gap-4 whitespace-nowrap"
-        animate={{
-          x: direction === "left" ? [0, -50 + "%"] : [-50 + "%", 0]
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+    <button
+      type="button"
+      onClick={toggle}
+      data-cursor="Filter"
+      className={
+        "inline-flex items-center px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:scale-110 cursor-pointer " +
+        (isActive
+          ? ""
+          : "border-[var(--line)] text-[var(--muted)] bg-transparent hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-ink)]")
+      }
+      style={
+        isActive
+          ? {
+              borderColor: "var(--accent)",
+              backgroundColor: "var(--accent)",
+              color: "var(--accent-ink)",
+            }
+          : undefined
+      }
+    >
+      {skill}
+    </button>
+  )
+}
+
+function MarqueeRow({ skills, direction = "left", duration = 40, activeFilter }) {
+  // Two identical halves make the -50% keyframe loop seamless
+  const half = (keyPrefix) => (
+    <div className="flex gap-4 pr-4 whitespace-nowrap">
+      {skills.map((skill) => (
+        <MarqueeChip
+          key={`${keyPrefix}-${skill}`}
+          skill={skill}
+          isActive={activeFilter && activeFilter.toLowerCase() === skill.toLowerCase()}
+        />
+      ))}
+    </div>
+  )
+
+  return (
+    <div className="marquee-row relative overflow-hidden py-4">
+      <div
+        className={`marquee-track flex w-max ${direction === "right" ? "marquee-reverse" : ""}`}
+        style={{ "--marquee-duration": `${duration}s` }}
       >
-        {duplicated.map((skill, i) => {
-          const isActive = activeFilter && activeFilter.toLowerCase() === skill.toLowerCase()
-          return (
-            <div
-              key={i}
-              onClick={() => {
-                if (isActive) {
-                  window.dispatchEvent(new CustomEvent('clear-filter'))
-                } else {
-                  window.dispatchEvent(new CustomEvent('filter-projects', { detail: { skill } }))
-                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
-                }
-              }}
-              className="inline-flex items-center px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
-              style={{
-                borderColor: isActive ? "var(--accent)" : "var(--line)",
-                backgroundColor: isActive ? "var(--accent)" : "transparent",
-                color: isActive ? "var(--accent-ink)" : "var(--muted)",
-              }}
-            >
-              {skill}
-            </div>
-          )
-        })}
-      </motion.div>
+        {half("a")}
+        {half("b")}
+      </div>
     </div>
   )
 }

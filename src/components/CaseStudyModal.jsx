@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Terminal, Block } from "./Terminal"
 import AsciiBox from "./AsciiBox"
 
-export default function CaseStudyModal({ caseStudy, isOpen, onClose }) {
+export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId }) {
   const modalRef = useRef(null)
 
   // Handle ESC key
@@ -49,12 +49,15 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose }) {
           {/* Modal */}
           <div className="fixed inset-0 z-[101] overflow-y-auto">
             <div className="min-h-screen px-4 py-8 md:py-16">
+              {/* With a layoutId the panel expands out of (and collapses back into)
+                  the project card that opened it; otherwise fall back to fade/scale. */}
               <motion.div
                 ref={modalRef}
-                initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 30, scale: 0.98 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                layoutId={layoutId || undefined}
+                initial={layoutId ? undefined : { opacity: 0, y: 50, scale: 0.95 }}
+                animate={layoutId ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                exit={layoutId ? undefined : { opacity: 0, y: 30, scale: 0.98 }}
+                transition={{ type: "spring", damping: 28, stiffness: 260 }}
                 className="relative mx-auto max-w-5xl rounded-2xl border border-[var(--line)] bg-[var(--bg)] shadow-2xl"
               >
                 {/* Close button */}

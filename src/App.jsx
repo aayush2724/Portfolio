@@ -55,6 +55,7 @@ function Loader() {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [introDone, setIntroDone] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
 
   // Boot smooth scrolling (Lenis)
@@ -90,12 +91,15 @@ export default function App() {
       {/* Custom accent cursor */}
       <AccentCursor />
 
-      <AnimatePresence mode="wait">{loading && <Loader />}</AnimatePresence>
+      {/* Hero intro is gated on the loader's exit wipe finishing (onExitComplete) */}
+      <AnimatePresence mode="wait" onExitComplete={() => setIntroDone(true)}>
+        {loading && <Loader />}
+      </AnimatePresence>
       {!loading && (
         <>
           <Navbar onCmd={() => setCmdOpen(true)} />
           <main className="relative z-10">
-            <HeroBold />
+            <HeroBold introDone={introDone} />
             <ProjectsBold />
             <Suspense fallback={<div className="min-h-screen" />}>
               <AboutBold />
