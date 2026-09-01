@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-31T18:33:38.557Z",
+  "lastUpdated": "2026-09-01T02:58:07.049Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -16,6 +16,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-08-31T18:43:22Z"
+    },
+    {
       "name": "Translog",
       "description": "",
       "url": "https://github.com/aayush2724/Translog",
@@ -24,16 +34,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-08-31T15:15:27Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-08-31T02:48:31Z"
     },
     {
       "name": "Beatzy",
