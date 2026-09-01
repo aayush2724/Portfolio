@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-09-01T02:58:07.049Z",
+  "lastUpdated": "2026-09-01T15:52:34.798Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 506422,
+    "ranking": 500111,
     "stats": {
       "totalSolved": 720,
       "easy": 113,
@@ -16,16 +16,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-08-31T18:43:22Z"
-    },
-    {
       "name": "Translog",
       "description": "",
       "url": "https://github.com/aayush2724/Translog",
@@ -33,7 +23,17 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-08-31T15:15:27Z"
+      "updatedAt": "2026-09-01T14:37:55Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-09-01T02:58:12Z"
     },
     {
       "name": "Beatzy",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 808
+    "contributions": 810
   }
 }
