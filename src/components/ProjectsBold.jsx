@@ -1,12 +1,19 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, lazy, Suspense } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { ContainerScroll } from "./ui/container-scroll-animation"
 import Parallax from "./Parallax"
 import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
-import LazyDevPage from "./LazyDevPage"
 import { getCaseStudyByName } from "../data/caseStudies"
 import AnimatedHeading from "./AnimatedHeading"
+import { useLowPower } from "../context/motion"
+
+/**
+ * The "lazy dev" easter-egg modal pulls in three.js + drei (~260KB gzip).
+ * Statically importing it kept that in the eager graph, so Vite modulepreloaded
+ * the WebGL bundle on every phone that never opens the modal.
+ */
+const LazyDevPage = lazy(() => import("./LazyDevPage"))
 
 const PROJECTS = [
   {
@@ -16,7 +23,7 @@ const PROJECTS = [
     tags: ["Python", "AI/ML", "Audio"],
     link: "https://github.com/aayush2724/Auralis",
     demo: "https://auralis-client-five.vercel.app",
-    image: "/auralis.png",
+    image: "/auralis-800.jpg",
     badge: "Sound Intelligence",
     earthy: "from-[#1a2a3f] to-[#0b1017]"
   },
@@ -27,7 +34,7 @@ const PROJECTS = [
     tags: ["JavaScript", "Node.js", "OpenCV"],
     link: "https://github.com/aayush2724/DeskGuard",
     demo: "https://deskguard-jade.vercel.app",
-    image: "/deskguard.png",
+    image: "/deskguard-800.jpg",
     badge: "Computer Vision",
     earthy: "from-[#2d3436] to-[#000000]"
   },
@@ -38,7 +45,7 @@ const PROJECTS = [
     tags: ["React", "Firebase", "Web Audio"],
     link: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
-    image: "/Beatzy.png",
+    image: "/Beatzy-800.jpg",
     badge: "Live Collab",
     earthy: "from-[#3e4a3d] to-[#242b23]"
   },
@@ -49,7 +56,7 @@ const PROJECTS = [
     tags: ["React", "Node.js", "MongoDB"],
     link: "https://github.com/aayush2724/Citizen-Resolver-System",
     demo: "https://civicresolve-jet.vercel.app",
-    image: "/civicresolve.jpg",
+    image: "/civicresolve-800.jpg",
     badge: "Civic Tech",
     earthy: "from-[#4a3728] to-[#2c1e14]"
   },
@@ -81,7 +88,7 @@ const PROJECTS = [
     tags: ["React", "Node.js", "Firebase"],
     link: "https://github.com/aayush2724/MindFlow",
     demo: "https://mind-flow-psi.vercel.app",
-    image: "/mindflow.png",
+    image: "/mindflow-800.jpg",
     badge: "Burnout Predictor",
     earthy: "from-[#0d1f2d] to-[#00dbe722]"
   },
@@ -111,13 +118,24 @@ const PROJECTS = [
     description: "Biometric-secured check-in system for tracking and managing building visitors with QR codes and real-time dashboards.",
     tags: ["HTML", "PHP", "MySQL"],
     link: "https://github.com/aayush2724/Visitor-Management-System",
-    image: "/vms.png",
+    image: "/vms-800.jpg",
     badge: "QR Check-in",
     earthy: "from-[#0a1a12] to-[#001a0d]"
   },
 ]
 
 
+
+/**
+ * "/auralis-800.jpg" -> "/auralis-400.webp" for the responsive <source>.
+ * Returns null for covers with no raster variant (the SVGs), so we don't
+ * advertise an SVG as image/webp and hand the browser an undecodable source.
+ */
+function webpSrcSet(src) {
+  if (!/-800\.(jpg|jpeg|png)$/i.test(src)) return null
+  const at = (w) => src.replace(/-800\.(jpg|jpeg|png)$/i, `-${w}.webp`)
+  return `${at(400)} 400w, ${at(800)} 800w`
+}
 
 function extractGradientColors(earthy) {
   const colors = earthy?.match(/#(?:[0-9a-fA-F]{3}){1,2}/g) || []
@@ -133,9 +151,13 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
   const [isHovered, setIsHovered] = useState(false)
   const hasImage = project.image && project.image !== ""
   const cardRef = useRef(null)
+  const lowPower = useLowPower()
   const { primary, secondary } = extractGradientColors(project.earthy)
 
   const handleMouseMove = (e) => {
+    // Pointer tilt sets two pieces of state per event. On touch there is no
+    // hover to drive it, so the re-render storm is pure waste.
+    if (lowPower) return
     const card = e.currentTarget
     const rect = card.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -153,20 +175,28 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
       ref={cardRef}
       layoutId={`project-card-${project.id}`}
       data-cursor="View"
-      style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-      animate={{ rotateX: isHovered ? rotate.x * 0.4 : rotate.x, rotateY: isHovered ? rotate.y * 0.4 : rotate.y }}
+      style={lowPower ? undefined : { transformStyle: "preserve-3d", perspective: "1000px" }}
+      animate={
+        lowPower
+          ? undefined
+          : { rotateX: isHovered ? rotate.x * 0.4 : rotate.x, rotateY: isHovered ? rotate.y * 0.4 : rotate.y }
+      }
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setIsHovered(false); setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) }}
+      onMouseEnter={lowPower ? undefined : () => setIsHovered(true)}
+      onMouseLeave={lowPower ? undefined : () => { setIsHovered(false); setRotate({ x: 0, y: 0 }); setMousePos({ x: 50, y: 50 }) }}
       className="group relative h-[88%] min-w-[320px] md:min-w-[400px] overflow-hidden rounded-3xl border border-white/10 bg-[#0A0A0A] cursor-pointer snap-center flex-shrink-0 transition-all duration-500 shadow-[0_24px_80px_rgba(0,0,0,0.55)] hover:-translate-y-2 hover:border-white/25 hover:shadow-[0_34px_110px_rgba(0,0,0,0.72)]"
     >
       <div className="absolute inset-[1px] rounded-[22px] border border-white/5 pointer-events-none" />
+      {/* Corner glow. Animating scale on a blur-3xl re-rasterizes the gaussian
+          every frame, once per card — 11 of them run forever. Static on phones. */}
       <motion.div
         aria-hidden
         className="absolute -right-10 -top-10 h-32 w-32 rounded-full blur-3xl opacity-30"
         style={{ background: primary }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        animate={lowPower ? undefined : { scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
+        transition={
+          lowPower ? undefined : { duration: 6, repeat: Infinity, ease: "easeInOut" }
+        }
       />
 
       {/* Animated gradient mesh background */}
@@ -174,18 +204,37 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
         {hasImage ? (
           <motion.div 
             className="absolute -inset-4 transition-transform duration-1000 group-hover:scale-[1.08]"
-            animate={{ 
-              x: isHovered ? rotate.y * -20 : 0, 
-              y: isHovered ? rotate.x * -20 : 0 
-            }}
-            transition={{ type: "spring", stiffness: 100, damping: 30 }}
+            animate={
+              lowPower
+                ? undefined
+                : { x: isHovered ? rotate.y * -20 : 0, y: isHovered ? rotate.x * -20 : 0 }
+            }
+            transition={
+              lowPower ? undefined : { type: "spring", stiffness: 100, damping: 30 }
+            }
           >
-            {/* base state: dimmed duotone — crossfades to full-color on hover/focus */}
-            <img
-              src={project.image}
-              alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover opacity-60 grayscale contrast-110 transition-all duration-700 group-hover:opacity-100 group-hover:grayscale-0 group-hover:contrast-100 group-focus-within:opacity-100 group-focus-within:grayscale-0"
-            />
+            {/* base state: dimmed duotone — crossfades to full-color on hover/focus.
+                Phones load the 400px webp and skip the grayscale/contrast filter,
+                which otherwise re-rasterizes the bitmap on every repaint. */}
+            <picture>
+              {webpSrcSet(project.image) && (
+                <source
+                  type="image/webp"
+                  srcSet={webpSrcSet(project.image)}
+                  sizes="(max-width: 768px) 90vw, 400px"
+                />
+              )}
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                decoding="async"
+                className={
+                  "absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:opacity-100 group-hover:grayscale-0 group-hover:contrast-100 group-focus-within:opacity-100 group-focus-within:grayscale-0 " +
+                  (lowPower ? "opacity-70" : "opacity-60 grayscale contrast-110")
+                }
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/40 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/60" />
@@ -208,10 +257,13 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
             }}
           />
         )}
-        {/* Mesh noise overlay for texture */}
-        <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay" style={{
-          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>")`,
-        }} />
+        {/* Mesh noise overlay for texture. feTurbulence with 4 octaves under a
+            blend mode is one of the priciest things to rasterize; skip on phones. */}
+        {!lowPower && (
+          <div className="absolute inset-0 opacity-[0.2] mix-blend-overlay" style={{
+            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>")`,
+          }} />
+        )}
       </div>
 
       {/* Hover glow border */}
@@ -374,6 +426,8 @@ export default function ProjectsBold() {
   const [modalLayoutId, setModalLayoutId] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [lazyDevOpen, setLazyDevOpen] = useState(false)
+  // Latches true on first open so the lazy chunk stays mounted for its exit.
+  const [lazyDevMounted, setLazyDevMounted] = useState(false)
   const [lazyDevProject, setLazyDevProject] = useState(null)
   const [filterSkill, setFilterSkill] = useState(null)
   const scrollRef = useRef(null)
@@ -413,6 +467,7 @@ export default function ProjectsBold() {
     } else {
       // No deployment — show the funny lazy dev page
       setLazyDevProject(project)
+      setLazyDevMounted(true)
       setLazyDevOpen(true)
     }
   }
@@ -551,12 +606,18 @@ export default function ProjectsBold() {
         onClose={() => setModalOpen(false)}
       />
 
-      <LazyDevPage
-        isOpen={lazyDevOpen}
-        onClose={() => setLazyDevOpen(false)}
-        projectTitle={lazyDevProject?.title ?? ""}
-        githubLink={lazyDevProject?.link ?? "https://github.com/aayush2724"}
-      />
+      {/* Mounted on first open and kept mounted afterwards: the component owns
+          its own AnimatePresence, so unmounting on close would cut the exit. */}
+      {lazyDevMounted && (
+        <Suspense fallback={null}>
+          <LazyDevPage
+            isOpen={lazyDevOpen}
+            onClose={() => setLazyDevOpen(false)}
+            projectTitle={lazyDevProject?.title ?? ""}
+            githubLink={lazyDevProject?.link ?? "https://github.com/aayush2724"}
+          />
+        </Suspense>
+      )}
     </section>
   )
 }

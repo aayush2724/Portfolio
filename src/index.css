@@ -149,3 +149,57 @@ a:focus-visible {
     transition: none !important;
   }
 }
+
+/* ── Mobile / low-power rendering budget ────────────────────────────────────── */
+/*
+ * Phones composite on a much weaker GPU than the desktop this design was tuned
+ * on. These rules are a blanket net for the effects that are cheap on a laptop
+ * and ruinous on a handset — they catch every component, including ones without
+ * an explicit JS low-power branch.
+ */
+@media (pointer: coarse), (max-width: 767px) {
+  /* backdrop-filter forces the compositor to re-blur everything behind the
+     element on each frame it moves or the page scrolls under it. */
+  [class*="backdrop-blur"],
+  [style*="backdrop-filter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Blend modes pull the whole stacking context off the fast path. */
+  [class*="mix-blend"] {
+    mix-blend-mode: normal !important;
+  }
+
+  /* will-change promotes a layer permanently; too many exhausts GPU memory and
+     the browser starts thrashing. Let the compositor decide on mobile. */
+  .will-change-transform {
+    will-change: auto;
+  }
+
+  /* Long multi-layer shadows are re-rasterized on every scroll repaint. */
+  .shadow-2xl {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+/*
+ * Skip layout, paint and compositing for offscreen sections. The page is long
+ * and mostly below the fold, so this is the single biggest scroll win on mobile.
+ * contain-intrinsic-size keeps the scrollbar stable by giving the browser a
+ * placeholder height for content it has not rendered yet.
+ */
+@media (pointer: coarse), (max-width: 767px) {
+  main > section:not(#hero),
+  main > div > section:not(#hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
+/* Native momentum scrolling; Lenis is disabled on touch so let the OS drive. */
+@media (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+}

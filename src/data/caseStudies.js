@@ -355,7 +355,7 @@ export const caseStudies = [
     name: "Beatzy",
     tagline: "Real-Time Music Collaboration Platform for Producers",
     badge: null,
-    cover: "/Beatzy.png",
+    cover: "/Beatzy-800.jpg",
 
     problem: {
       title: "Music Producers Lack Collaborative Tools",

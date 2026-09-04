@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import Reveal, { Stagger, StaggerItem } from "./Reveal"
 import TiltCard from "./TiltCard"
 import AnimatedHeading from "./AnimatedHeading"
+import { useLowPower } from "../context/motion"
 
 const CARD_STYLE = {
   borderColor: "rgba(255,255,255,0.08)",
@@ -25,6 +26,8 @@ function BentoCard({ children, className = "" }) {
 }
 
 export default function BeyondCodeBento() {
+  // Decorative pulses/spins run forever; a phone should not pay for them.
+  const lowPower = useLowPower()
   return (
     <section id="life" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl">
@@ -106,8 +109,8 @@ export default function BeyondCodeBento() {
                 </p>
               </div>
               <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                animate={lowPower ? undefined : { scale: [1, 1.1, 1] }}
+                transition={lowPower ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ background: "var(--accent)" }}
               />

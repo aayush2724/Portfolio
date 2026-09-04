@@ -119,7 +119,9 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2 }}
             onClick={() => setCmdOpen(true)}
-            className="fixed bottom-5 left-6 z-40 flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"
+            /* Desktop-only hint: a phone has no ⌘K to press, and at 390px the
+               pill sits directly on top of the hero CTA. */
+            className="fixed bottom-5 left-6 z-40 hidden md:flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"
             style={{
               borderColor: "var(--line)",
               color: "var(--muted)",

@@ -4,8 +4,11 @@ import Reveal from "./Reveal"
 import DownloadResumeButton from "./DownloadResumeButton"
 import CommandLabel from "./CommandLabel"
 import AnimatedHeading from "./AnimatedHeading"
+import { useLowPower } from "../context/motion"
 
 export default function ContactBold() {
+  // Decorative pulses/spins run forever; a phone should not pay for them.
+  const lowPower = useLowPower()
   const [time, setTime] = useState("")
 
   useEffect(() => {
@@ -118,8 +121,8 @@ export default function ContactBold() {
             {/* Center - Live Clock */}
             <div className="flex items-center gap-2 font-mono text-sm" style={{ color: "var(--muted)" }}>
               <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={lowPower ? undefined : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+                transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
                 className="w-2 h-2 rounded-full"
                 style={{ background: "var(--accent)" }}
               />
@@ -135,8 +138,8 @@ export default function ContactBold() {
             >
               Back to Top
               <motion.span
-                animate={{ y: [-3, 0, -3] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                animate={lowPower ? undefined : { y: [-3, 0, -3] }}
+                transition={lowPower ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 ↑
               </motion.span>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import MagneticButton from "./MagneticButton";
+import { useLowPower } from "../context/motion";
 
 const links = [
   { label: "About", href: "#about" },
@@ -68,15 +69,24 @@ export default function Navbar({ onCmd }) {
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastY = useRef(0);
+  const lowPower = useLowPower();
 
-  // Scroll detection: blur background + direction-aware hide/show
+  // Scroll detection: blur background + direction-aware hide/show.
+  // Coalesced into one rAF so a fast flick can't queue a state update per
+  // scroll event and re-render the nav dozens of times a frame.
   useEffect(() => {
+    let ticking = false;
     const fn = () => {
-      const y = window.scrollY;
-      setScrolled(y > 80);
-      // Hide when scrolling down past the hero fold, reveal on any scroll up
-      setHidden(y > lastY.current && y > 160);
-      lastY.current = y;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 80);
+        // Hide when scrolling down past the hero fold, reveal on any scroll up
+        setHidden(y > lastY.current && y > 160);
+        lastY.current = y;
+        ticking = false;
+      });
     };
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
@@ -112,10 +122,16 @@ export default function Navbar({ onCmd }) {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: hidden && !mobileOpen ? "-110%" : 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-colors duration-300"
         style={{
-          background: scrolled ? "rgba(10, 10, 11, 0.7)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
+          // backdrop-filter on a fixed full-width bar makes the phone re-blur
+          // the page behind it on every scroll frame; use an opaque fill there.
+          background: scrolled
+            ? lowPower
+              ? "#0a0a0b"
+              : "rgba(10, 10, 11, 0.7)"
+            : "transparent",
+          backdropFilter: scrolled && !lowPower ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
         }}
       >

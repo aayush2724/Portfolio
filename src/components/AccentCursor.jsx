@@ -4,20 +4,28 @@ export default function AccentCursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
   const textRef = useRef(null)
-  const [isTouch, setIsTouch] = useState(false)
+  // Resolved on first render so the cursor layers are never mounted on a phone.
+  const [isTouch] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+  )
   const [text, setText] = useState("")
+  const textRefValue = useRef("")
   
   const mouse = useRef({ x: 0, y: 0 })
   const ring = useRef({ x: 0, y: 0 })
   const isHovering = useRef(false)
   const overText = useRef(false)
 
+  // Mirror `text` into a ref so the rAF loop can read it without being torn
+  // down and restarted on every change.
   useEffect(() => {
-    // Detect touch device
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-      setIsTouch(true)
-      return
-    }
+    textRefValue.current = text
+  }, [text])
+
+  useEffect(() => {
+    if (isTouch) return
 
     const onMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY }
@@ -38,6 +46,9 @@ export default function AccentCursor() {
       }
     }
 
+    // Track the live frame id: the loop reschedules itself, so cancelling only
+    // the first id leaked a permanent rAF loop on every text change.
+    let rafId = 0
     const animate = () => {
       // Dot follows instantly
       if (dotRef.current) {
@@ -49,7 +60,8 @@ export default function AccentCursor() {
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15
 
       if (ringRef.current) {
-        const size = isHovering.current || text ? 64 : overText.current ? 14 : 32
+        const label = textRefValue.current
+        const size = isHovering.current || label ? 64 : overText.current ? 14 : 32
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${size / 32})`
       }
 
@@ -57,19 +69,19 @@ export default function AccentCursor() {
         textRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`
       }
 
-      requestAnimationFrame(animate)
+      rafId = requestAnimationFrame(animate)
     }
 
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseover', onMouseOver)
-    const raf = requestAnimationFrame(animate)
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('mouseover', onMouseOver, { passive: true })
+    rafId = requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onMouseOver)
-      cancelAnimationFrame(raf)
+      cancelAnimationFrame(rafId)
     }
-  }, [text])
+  }, [isTouch])
 
   if (isTouch) return null
 

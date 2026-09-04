@@ -8,6 +8,7 @@ import AnimatedHeading from "./AnimatedHeading"
 import GitHubHeatmap from "./GitHubHeatmap"
 import { fetchLeetCodeStats } from "../data/leetcodeapi"
 import portfolioData from "../data/portfolioData.json"
+import { useLowPower } from "../context/motion"
 
 async function fetchGitHubContributions(username) {
   try {
@@ -26,6 +27,8 @@ const cardVariants = {
 };
 
 export default function CodingStatsBold() {
+  // Decorative pulses/spins run forever; a phone should not pay for them.
+  const lowPower = useLowPower()
   const [stats, setStats] = useState({
     leetcode: {
       total: portfolioData.leetcode?.stats?.totalSolved || 400,
@@ -101,8 +104,8 @@ export default function CodingStatsBold() {
           >
             <motion.div 
               className="absolute -right-10 -top-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              animate={lowPower ? undefined : { rotate: 360 }}
+              transition={lowPower ? undefined : { duration: 20, repeat: Infinity, ease: "linear" }}
             >
               <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2L2 22h20L12 2z"/>
@@ -210,8 +213,8 @@ export default function CodingStatsBold() {
 
             <div className="flex items-center gap-3 mb-4 relative z-10">
               <motion.div 
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={lowPower ? undefined : { scale: [1, 1.1, 1] }}
+                transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
                 className="w-10 h-10 rounded-full flex items-center justify-center bg-[#ff9900]/10"
               >
                 <span className="text-xl">🔥</span>
