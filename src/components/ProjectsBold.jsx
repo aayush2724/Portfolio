@@ -5,6 +5,7 @@ import Parallax from "./Parallax"
 import CommandLabel from "./CommandLabel"
 import CaseStudyModal from "./CaseStudyModal"
 import { getCaseStudyByName } from "../data/caseStudies"
+import { filterProjectsBySkills } from "../data/featuredProjects"
 import AnimatedHeading from "./AnimatedHeading"
 import { useLowPower } from "../context/motion"
 
@@ -15,114 +16,6 @@ import { useLowPower } from "../context/motion"
  */
 const LazyDevPage = lazy(() => import("./LazyDevPage"))
 
-const PROJECTS = [
-  {
-    id: 1,
-    title: "Auralis",
-    description: "AI-powered audio intelligence project focused on extracting meaning and structure from complex sound inputs.",
-    tags: ["Python", "AI/ML", "Audio"],
-    link: "https://github.com/aayush2724/auralisAI",
-    demo: "https://auralis-client-five.vercel.app",
-    image: "/auralis-800.jpg",
-    badge: "Sound Intelligence",
-    earthy: "from-[#1a2a3f] to-[#0b1017]"
-  },
-  {
-    id: 2,
-    title: "DeskGuard",
-    description: "Workspace security and monitor system that detects unauthorized access using real-time surveillance.",
-    tags: ["JavaScript", "Node.js", "OpenCV"],
-    link: "https://github.com/aayush2724/DeskGuard",
-    demo: "https://deskguard-jade.vercel.app",
-    image: "/deskguard-800.jpg",
-    badge: "Computer Vision",
-    earthy: "from-[#2d3436] to-[#000000]"
-  },
-  {
-    id: 5,
-    title: "Beatzy",
-    description: "Music collaboration platform with real-time beat sharing and social features for producers.",
-    tags: ["React", "Firebase", "Web Audio"],
-    link: "https://github.com/aayush2724/Beatzy",
-    demo: "https://beatzy-zeta.vercel.app",
-    image: "/Beatzy-800.jpg",
-    badge: "Live Collab",
-    earthy: "from-[#3e4a3d] to-[#242b23]"
-  },
-  {
-    id: 6,
-    title: "Citizen Resolver",
-    description: "Public complaint resolution platform connecting citizens with government authorities.",
-    tags: ["React", "Node.js", "MongoDB"],
-    link: "https://github.com/aayush2724/Citizen-Resolver-System",
-    demo: "https://civicresolve-jet.vercel.app",
-    image: "/civicresolve-800.jpg",
-    badge: "Civic Tech",
-    earthy: "from-[#4a3728] to-[#2c1e14]"
-  },
-  {
-    id: 3,
-    title: "AlgoVision",
-    description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
-    tags: ["React", "Framer Motion", "Algorithms"],
-    link: "https://github.com/aayush2724/AlgoVision",
-    image: "",
-    badge: "DSA Visualizer",
-    earthy: "from-[#2c3e50] to-[#000000]"
-  },
-  {
-    id: 4,
-    title: "LeadForge",
-    description: "AI-powered lead generation and management tool for sales teams.",
-    tags: ["Python", "AI", "FastAPI"],
-    link: "https://github.com/aayush2724/LeadForge",
-    demo: "https://lead-forge-rust.vercel.app",
-    image: "/leadforge-hackathon-proof.svg",
-    badge: "🏆 3rd Place NIT",
-    earthy: "from-[#3a3530] to-[#1f1c18]"
-  },
-  {
-    id: 14,
-    title: "MindFlow",
-    description: "AI-powered student burnout detection platform with real-time wellness telemetry, counselor dashboards, and intervention alerts for educational institutions.",
-    tags: ["React", "Node.js", "Firebase"],
-    link: "https://github.com/aayush2724/MindFlow",
-    demo: "https://mind-flow-psi.vercel.app",
-    image: "/mindflow-800.jpg",
-    badge: "Burnout Predictor",
-    earthy: "from-[#0d1f2d] to-[#00dbe722]"
-  },
-  {
-    id: 9,
-    title: "Job Portal",
-    description: "Full-stack job board with application tracking and employer-candidate matching.",
-    tags: ["TypeScript", "Next.js", "Prisma"],
-    link: "https://github.com/aayush2724/Job-Portal",
-    image: "/job-portal-cover.svg",
-    badge: "Career Platform",
-    earthy: "from-[#7a6a4a] to-[#4a3a2a]"
-  },
-  {
-    id: 10,
-    title: "Chord Detector",
-    description: "ML-powered music analysis tool that identifies guitar chords from audio input.",
-    tags: ["Python", "ML", "Audio"],
-    link: "https://github.com/aayush2724/Chord-Detector",
-    image: "/chord-detector-cover.svg",
-    badge: "Guitar × ML",
-    earthy: "from-[#4a5a6a] to-[#2a3a4a]"
-  },
-  {
-    id: 11,
-    title: "Visitor Management",
-    description: "Biometric-secured check-in system for tracking and managing building visitors with QR codes and real-time dashboards.",
-    tags: ["HTML", "PHP", "MySQL"],
-    link: "https://github.com/aayush2724/CheckMate",
-    image: "/vms-800.jpg",
-    badge: "QR Check-in",
-    earthy: "from-[#0a1a12] to-[#001a0d]"
-  },
-]
 
 
 
@@ -428,7 +321,9 @@ export default function ProjectsBold() {
   // Latches true on first open so the lazy chunk stays mounted for its exit.
   const [lazyDevMounted, setLazyDevMounted] = useState(false)
   const [lazyDevProject, setLazyDevProject] = useState(null)
-  const [filterSkill, setFilterSkill] = useState(null)
+  // A stack assembled in the Tech Stack tray, not a single chip: the
+  // section listens for the whole set and shows best-matching projects first.
+  const [filterSkills, setFilterSkills] = useState([])
   const scrollRef = useRef(null)
   
   const { scrollXProgress } = useScroll({ container: scrollRef })
@@ -436,14 +331,22 @@ export default function ProjectsBold() {
 
   useEffect(() => {
     const handleFilter = (e) => {
-      setFilterSkill(e.detail.skill)
+      // `skills` is the current protocol; `skill` is kept for any single-chip
+      // caller that predates the tray.
+      const next = e.detail?.skills ?? (e.detail?.skill ? [e.detail.skill] : [])
+      setFilterSkills(next)
       // Scroll to start of container when filter changes
       if (scrollRef.current) {
         scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
       }
     }
+    const handleClear = () => setFilterSkills([])
     window.addEventListener('filter-projects', handleFilter)
-    return () => window.removeEventListener('filter-projects', handleFilter)
+    window.addEventListener('clear-filter', handleClear)
+    return () => {
+      window.removeEventListener('filter-projects', handleFilter)
+      window.removeEventListener('clear-filter', handleClear)
+    }
   }, [])
 
   const handleViewDescription = (project) => {
@@ -479,9 +382,7 @@ export default function ProjectsBold() {
     }
   }
 
-  const filteredProjects = filterSkill 
-    ? PROJECTS.filter(p => p.tags.some(t => t.toLowerCase() === filterSkill.toLowerCase()))
-    : PROJECTS
+  const filteredProjects = filterProjectsBySkills(filterSkills)
 
   return (
     <section id="projects" className="relative bg-[#080808] py-24 overflow-hidden">
@@ -497,26 +398,35 @@ export default function ProjectsBold() {
              <CommandLabel className="mb-6 opacity-30">ls ~/projects</CommandLabel>
              <AnimatedHeading
                text="Projects"
-               decode
+               letters
                as="h2"
                className="font-display text-8xl md:text-[12rem] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
              />
              
              <AnimatePresence>
-                {filterSkill && (
+                {filterSkills.length > 0 && (
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-8 flex items-center gap-3"
+                    className="mb-8 flex flex-wrap items-center justify-center gap-3"
                   >
                     <span className="text-white/60">Filtered by:</span>
-                    <span className="px-4 py-1.5 rounded-full bg-[var(--accent)] text-[var(--accent-ink)] font-bold text-sm tracking-wider uppercase">
-                      {filterSkill}
-                    </span>
+                    {filterSkills.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        layout
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.85 }}
+                        className="px-4 py-1.5 rounded-full bg-[var(--accent)] text-[var(--accent-ink)] font-bold text-sm tracking-wider uppercase"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
                     <button 
                       onClick={() => {
-                        setFilterSkill(null)
+                        setFilterSkills([])
                         window.dispatchEvent(new CustomEvent('clear-filter'))
                       }}
                       className="ml-2 text-white/40 hover:text-white transition-colors underline text-xs"
@@ -581,10 +491,10 @@ export default function ProjectsBold() {
                 className="w-full h-full flex flex-col items-center justify-center text-center text-white/50 space-y-4"
               >
                 <div className="text-4xl">🔍</div>
-                <p>No projects found matching "{filterSkill}"</p>
+                <p>No projects found matching {filterSkills.map((s) => `"${s}"`).join(" or ")}</p>
                 <button 
                   onClick={() => {
-                    setFilterSkill(null)
+                    setFilterSkills([])
                     window.dispatchEvent(new CustomEvent('clear-filter'))
                   }}
                   className="px-4 py-2 mt-4 border border-white/10 rounded-full hover:bg-white/5 hover:text-white transition-all"

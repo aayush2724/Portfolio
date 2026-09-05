@@ -20,6 +20,12 @@ import { EASE } from "../context/ease"
  * with fade+rise only.
  *
  *   <AnimatedHeading text="Testimonials" cinematic as="h2" className="..." />
+ *
+ * `letters`: per-character mask reveal — every letter rises out of its own
+ * clip on a tight stagger. The word-level variants have nothing to stagger on
+ * a one-word display heading, so this is the register for those.
+ *
+ *   <AnimatedHeading text="Projects" letters as="h2" className="..." />
  */
 
 const SCRAMBLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%$&<>/[]{}"
@@ -87,7 +93,7 @@ function DecodeHeading({ text, className, as: Tag }) {
   )
 }
 
-export default function AnimatedHeading({ text, className = "", as = "h2", decode = false, cinematic = false }) {
+export default function AnimatedHeading({ text, className = "", as = "h2", decode = false, cinematic = false, letters = false }) {
   const reduced = usePrefersReducedMotion()
   const lowPower = useLowPower()
   const words = parseWords(text)
@@ -105,6 +111,49 @@ export default function AnimatedHeading({ text, className = "", as = "h2", decod
           </span>
         ))}
       </Tag>
+    )
+  }
+
+  if (letters) {
+    // Delay is computed per letter across the whole heading, so the stagger
+    // carries over word boundaries instead of restarting on each word.
+    let n = 0
+    const step = lowPower ? 0.025 : 0.045
+    return (
+      <MotionTag
+        className={className}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+        aria-label={plain}
+      >
+        {words.map(({ word, accent }, wi) => (
+          <span
+            key={wi}
+            aria-hidden="true"
+            className={
+              "inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom" +
+              (wi < words.length - 1 ? " mr-[0.25em]" : "")
+            }
+          >
+            {Array.from(word).map((ch, ci) => (
+              <motion.span
+                key={ci}
+                className={"inline-block" + (accent ? " serif-accent" : "")}
+                variants={{
+                  hidden: { y: "115%" },
+                  visible: {
+                    y: "0%",
+                    transition: { duration: 0.85, ease: EASE.ENTER, delay: n++ * step },
+                  },
+                }}
+              >
+                {ch}
+              </motion.span>
+            ))}
+          </span>
+        ))}
+      </MotionTag>
     )
   }
 

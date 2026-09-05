@@ -1,8 +1,18 @@
-import { useState, useEffect } from "react"
-import { motion, useMotionValue, useMotionTemplate, useSpring, useTransform } from "framer-motion"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { createPortal } from "react-dom"
+import {
+  motion,
+  AnimatePresence,
+  LayoutGroup,
+  useMotionValue,
+  useMotionTemplate,
+  useSpring,
+  useTransform,
+} from "framer-motion"
 import AnimatedHeading from "./AnimatedHeading"
 import { EASE } from "../context/ease"
 import { useLowPower, usePrefersReducedMotion } from "../context/motion"
+import { filterProjectsBySkills, countProjectsForSkill } from "../data/featuredProjects"
 
 /**
  * Tech stack as a scattered deck of tilted glass cards — the yaros.me
@@ -12,8 +22,10 @@ import { useLowPower, usePrefersReducedMotion } from "../context/motion"
  *   2. a domain-themed micro-demo that plays on hover — a UI toggle springs
  *      on, an API call types itself, bars sort, an agent pipeline streams,
  *      a deploy sequence goes live,
- *   3. every tool is a button that filters the projects grid (same window
- *      events the old marquee chips used).
+ *   3. click and the card *becomes* the panel — Framer's shared layout
+ *      (`layoutId`) morphs the shell, eyebrow and headline out of the grid
+ *      into a dialog holding every tool and the projects they built.
+ *      Tools filter the projects carousel from in there.
  *
  * On low-power devices the tilt/spotlight are dropped and each demo
  * auto-plays once as its card scrolls into view, so touch users still see
@@ -235,40 +247,23 @@ function DemoDeploy({ active }) {
 
 const DEMOS = { ui: DemoUI, api: DemoApi, sort: DemoSort, agent: DemoAgent, deploy: DemoDeploy }
 
+/** Shared by the real card and the inert twin that holds its grid slot open. */
+const CARD_SHELL = "relative block w-full text-left rounded-3xl p-7 md:p-8 overflow-hidden"
+
 /* ── Cards ──────────────────────────────────────────────────────────────── */
 
-function SkillButton({ skill, isActive }) {
-  const toggle = () => {
-    if (isActive) {
-      window.dispatchEvent(new CustomEvent("clear-filter"))
-    } else {
-      window.dispatchEvent(new CustomEvent("filter-projects", { detail: { skill } }))
-      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={toggle}
-      data-cursor="Filter"
-      className="text-sm transition-colors duration-200 cursor-pointer"
-      style={{ color: isActive ? "var(--accent)" : "var(--muted)" }}
-      onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.color = "var(--fg)" }}
-      onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.color = "var(--muted)" }}
-    >
-      {isActive ? `[ ${skill} ]` : skill}
-    </button>
-  )
-}
-
-function StackCard({ cat, i, activeFilter, lowPower, reduced }) {
+/**
+ * The collapsed card. It is a button: the whole surface opens the panel, so
+ * the tools inside are plain text here and only become filter controls once
+ * expanded — two competing click targets on one card read as a bug.
+ */
+function StackCard({ cat, i, lowPower, reduced, isOpen, onOpen, cardRef }) {
   const [hovered, setHovered] = useState(false)
   const [seen, setSeen] = useState(false)
 
-  // Cursor-follow tilt + spotlight (desktop only). rotate / rotateX /
-  // rotateY are separate transform channels to Framer, so the resting
-  // scatter tilt and the cursor tilt compose instead of fighting.
+  // Cursor-follow tilt + spotlight (desktop only). Framer measures the card's
+  // rotated box when the panel morph starts, so the tilt is released the
+  // moment a card opens — a rotated source box distorts the projection.
   const mx = useMotionValue(0.5)
   const my = useMotionValue(0.5)
   const rotateX = useSpring(useTransform(my, [0, 1], [5, -5]), { stiffness: 220, damping: 22 })
@@ -277,8 +272,10 @@ function StackCard({ cat, i, activeFilter, lowPower, reduced }) {
   const glareY = useTransform(my, [0, 1], ["0%", "100%"])
   const glare = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(190,215,240,0.13), transparent 55%)`
 
+  const flat = lowPower || reduced || isOpen
+
   const handleMove = (e) => {
-    if (lowPower || reduced) return
+    if (flat) return
     const rect = e.currentTarget.getBoundingClientRect()
     mx.set((e.clientX - rect.left) / rect.width)
     my.set((e.clientY - rect.top) / rect.height)
@@ -292,35 +289,22 @@ function StackCard({ cat, i, activeFilter, lowPower, reduced }) {
   // plays once when the card scrolls into view. Reduced motion: end state.
   const demoActive = reduced ? true : lowPower ? seen : hovered
   const Demo = DEMOS[cat.demo]
+  const shown = cat.skills.slice(0, 6)
+  const rest = cat.skills.length - shown.length
 
-  return (
-    <div className={cat.lift}>
-      <motion.div
-        initial={{ opacity: 0, y: 48, rotate: 0 }}
-        whileInView={{ opacity: 1, y: 0, rotate: lowPower ? 0 : cat.rot }}
-        viewport={{ once: true, amount: 0.3 }}
-        onViewportEnter={() => setSeen(true)}
-        transition={{ duration: 0.7, delay: i * 0.08, ease: EASE.ENTER }}
-        whileHover={lowPower ? undefined : { rotate: 0, y: -8 }}
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={() => setHovered(false)}
-        onMouseMove={handleMove}
-        onMouseLeave={resetTilt}
-        style={
-          lowPower || reduced
-            ? {}
-            : { rotateX, rotateY, transformStyle: "preserve-3d", transformPerspective: 900 }
-        }
-        className="relative h-full rounded-3xl p-7 md:p-8 overflow-hidden"
-      >
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 rounded-3xl pointer-events-none"
-          style={{
-            border: "1px solid rgba(255,255,255,0.10)",
-            background: "linear-gradient(165deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
-          }}
-        />
+  /**
+   * `shared` gates the `layoutId`s: the inert twin renders the same markup,
+   * and a second element claiming the same shared id would fight the panel
+   * for the morph.
+   */
+  const renderBody = (shared) => {
+    const Label = shared ? motion.p : "p"
+    const Headline = shared ? motion.h3 : "h3"
+    // Spread rather than `layoutId={shared ? id : undefined}`: React still
+    // warns about the unknown attribute on the plain tags of the twin.
+    const shareId = (id) => (shared ? { layoutId: id } : {})
+    return (
+      <>
         {!lowPower && !reduced && (
           <motion.div
             aria-hidden="true"
@@ -330,80 +314,368 @@ function StackCard({ cat, i, activeFilter, lowPower, reduced }) {
         )}
 
         <div className="relative">
-          <p className="font-mono text-xs tracking-widest mb-3" style={{ color: "var(--muted)" }}>
-            <span style={{ color: "var(--accent)" }}>//</span> {cat.label}
-          </p>
-          <h3 className="serif-accent text-4xl md:text-5xl" style={{ color: "var(--fg)" }}>
-            {cat.headline}
-          </h3>
+          <div className="flex items-start justify-between gap-4">
+            <Label
+              {...shareId(`stack-label-${cat.label}`)}
+              className="font-mono text-xs tracking-widest mb-3"
+              style={{ color: "var(--muted)" }}
+            >
+              <span style={{ color: "var(--accent)" }}>//</span> {cat.label}
+            </Label>
+            <span
+              aria-hidden="true"
+              className="font-mono text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              style={{ color: "var(--accent)" }}
+            >
+              open ↗
+            </span>
+          </div>
 
-          {/* Micro-demo strip */}
+          <Headline
+            {...shareId(`stack-headline-${cat.label}`)}
+            className="serif-accent !text-4xl md:!text-5xl"
+            style={{ color: "var(--fg)" }}
+          >
+            {cat.headline}
+          </Headline>
+
           <div className="h-10 my-6">
             <Demo active={demoActive} />
           </div>
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2.5">
-            {cat.skills.map((skill) => (
-              <SkillButton
-                key={skill}
-                skill={skill}
-                isActive={!!activeFilter && activeFilter.toLowerCase() === skill.toLowerCase()}
-              />
-            ))}
-          </div>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+            {shown.join(" · ")}
+            {rest > 0 && <span style={{ color: "var(--accent)" }}> +{rest}</span>}
+          </p>
         </div>
+      </>
+    )
+  }
+
+  return (
+    <motion.div
+      className={cat.lift}
+      initial={{ opacity: 0, y: 48 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, delay: i * 0.08, ease: EASE.ENTER }}
+    >
+      <motion.div
+        animate={{ rotate: flat ? 0 : cat.rot }}
+        whileHover={flat ? undefined : { rotate: 0, y: -8 }}
+        transition={{ duration: 0.5, ease: EASE.ENTER }}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        onViewportEnter={() => setSeen(true)}
+        onMouseMove={handleMove}
+        onMouseLeave={resetTilt}
+        style={flat ? {} : { rotateX, rotateY, transformStyle: "preserve-3d", transformPerspective: 900 }}
+      >
+        {/* While the panel is open the shared element must exist in exactly
+            one place, or Framer keeps both visible and the morph reads as a
+            copy growing out of a card that never left. Setting `visibility`
+            on the card itself does not work — Framer owns its style
+            attribute — so the grid slot is held open by an inert twin. */}
+        {isOpen ? (
+          <div aria-hidden="true" style={{ visibility: "hidden" }} className={CARD_SHELL}>
+            {renderBody(false)}
+          </div>
+        ) : (
+          <motion.button
+            ref={cardRef}
+            type="button"
+            layoutId={`stack-card-${cat.label}`}
+            onClick={() => onOpen(cat)}
+            aria-expanded={false}
+            aria-haspopup="dialog"
+            data-cursor="Open"
+            style={{
+              border: "1px solid rgba(255,255,255,0.10)",
+              background: "linear-gradient(165deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
+            }}
+            className={`group ${CARD_SHELL} cursor-pointer`}
+          >
+            {renderBody(true)}
+          </motion.button>
+        )}
       </motion.div>
-    </div>
+    </motion.div>
+  )
+}
+
+/* ── Expanded panel ─────────────────────────────────────────────────────── */
+
+const TOOLS_IN = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.028, delayChildren: 0.12 } },
+}
+const TOOL_IN = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE.ENTER } },
+}
+
+/**
+ * The card, grown. Same `layoutId`s as the collapsed card, so Framer morphs
+ * the shell, the eyebrow and the headline from wherever the card sat in the
+ * grid — the panel is not a new element appearing, it is the card itself.
+ *
+ * Portalled to <body>: the section clips its overflow, and a fixed overlay
+ * inside it would be cut off. The portal keeps React context, so the shared
+ * layout still resolves.
+ */
+function ExpandedPanel({ cat, onClose, reduced }) {
+  const panelRef = useRef(null)
+  const closeRef = useRef(null)
+  const Demo = DEMOS[cat.demo]
+  const matches = filterProjectsBySkills(cat.skills)
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        onClose()
+        return
+      }
+      if (e.key !== "Tab") return
+      // Keep Tab inside the dialog — behind it sits the whole page.
+      const focusable = panelRef.current?.querySelectorAll("button, [href], input, [tabindex]:not([tabindex='-1'])")
+      if (!focusable?.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", onKey)
+    // The close button rather than the panel: focusing the container trips
+    // the global :focus-visible ring and outlines the whole dialog in accent.
+    closeRef.current?.focus()
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener("keydown", onKey)
+    }
+  }, [onClose])
+
+  const filterBy = (skills) => {
+    window.dispatchEvent(new CustomEvent("filter-projects", { detail: { skills, skill: skills[0] } }))
+    onClose()
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  return createPortal(
+    <>
+      <motion.div
+        className="fixed inset-0 z-[90] bg-black/75 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={onClose}
+      />
+      <div className="fixed inset-0 z-[91] grid place-items-center p-4 md:p-8 pointer-events-none">
+        <motion.div
+          layoutId={`stack-card-${cat.label}`}
+          ref={panelRef}
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${cat.headline} — ${cat.label}`}
+          style={{
+            border: "1px solid rgba(255,255,255,0.14)",
+            background: "linear-gradient(165deg, rgba(28,28,31,0.98), rgba(14,14,16,0.98))",
+          }}
+          className="pointer-events-auto w-full max-w-3xl max-h-[86vh] overflow-y-auto rounded-3xl p-7 md:p-10 outline-none"
+        >
+          <div className="flex items-start justify-between gap-6">
+            <motion.p layoutId={`stack-label-${cat.label}`} className="font-mono text-xs tracking-widest" style={{ color: "var(--muted)" }}>
+              <span style={{ color: "var(--accent)" }}>//</span> {cat.label}
+            </motion.p>
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              data-cursor="Close"
+              className="shrink-0 h-9 w-9 rounded-full border grid place-items-center transition-colors"
+              style={{ borderColor: "rgba(255,255,255,0.15)", color: "var(--muted)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--fg)" }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "var(--muted)" }}
+            >
+              ✕
+            </button>
+          </div>
+
+          <motion.h3 layoutId={`stack-headline-${cat.label}`} className="serif-accent !text-5xl md:!text-7xl mt-2" style={{ color: "var(--fg)" }}>
+            {cat.headline}
+          </motion.h3>
+
+          <div className="h-12 my-8">
+            <Demo active />
+          </div>
+
+          <motion.div
+            variants={reduced ? undefined : TOOLS_IN}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-wrap gap-2.5"
+          >
+            {cat.skills.map((skill) => {
+              // A tool nothing in the deck is tagged with is shown, but not as
+              // a filter: clicking it would land the visitor on an empty grid.
+              const n = countProjectsForSkill(skill)
+              if (!n) {
+                return (
+                  <motion.span
+                    key={skill}
+                    variants={reduced ? undefined : TOOL_IN}
+                    className="rounded-full border border-dashed px-3.5 py-1.5 font-mono text-xs"
+                    style={{ borderColor: "rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.35)" }}
+                  >
+                    {skill}
+                  </motion.span>
+                )
+              }
+              return (
+                <motion.button
+                  key={skill}
+                  type="button"
+                  variants={reduced ? undefined : TOOL_IN}
+                  onClick={() => filterBy([skill])}
+                  data-cursor="Filter"
+                  title={`${n} project${n === 1 ? "" : "s"} built with ${skill}`}
+                  className="rounded-full border px-3.5 py-1.5 font-mono text-xs transition-colors"
+                  style={{ borderColor: "rgba(255,255,255,0.14)", color: "var(--muted)" }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--accent-ink)"
+                    e.currentTarget.style.background = "var(--accent)"
+                    e.currentTarget.style.borderColor = "var(--accent)"
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--muted)"
+                    e.currentTarget.style.background = "transparent"
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)"
+                  }}
+                >
+                  {skill}
+                  <span className="ml-2" style={{ color: "var(--accent)" }}>{n}</span>
+                </motion.button>
+              )
+            })}
+          </motion.div>
+
+          {matches.length > 0 && (
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.24, duration: 0.4, ease: EASE.ENTER }}
+              className="mt-9 pt-7"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+            >
+              <p className="font-mono text-xs tracking-widest mb-4" style={{ color: "var(--muted)" }}>
+                <span style={{ color: "var(--accent)" }}>//</span> built with this
+              </p>
+              <div className="flex flex-col divide-y" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                {matches.slice(0, 4).map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => filterBy(p.tags)}
+                    data-cursor="View"
+                    className="group flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 py-3 text-left"
+                    style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                  >
+                    <span className="text-lg transition-colors" style={{ color: "var(--fg)" }}>
+                      {p.title}
+                    </span>
+                    <span className="font-mono text-xs sm:text-right" style={{ color: "var(--muted)" }}>
+                      {p.tags.join(" · ")}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => filterBy(cat.skills)}
+                data-cursor="View"
+                className="mt-6 rounded-full px-5 py-2 font-mono text-xs font-bold transition-transform hover:-translate-y-0.5"
+                style={{ background: "var(--accent)", color: "var(--accent-ink)" }}
+              >
+                see all {matches.length} projects →
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </>,
+    document.body
   )
 }
 
 export default function SkillsMarquee() {
   const lowPower = useLowPower()
   const reduced = usePrefersReducedMotion()
-  const [activeFilter, setActiveFilter] = useState(null)
+  const [open, setOpen] = useState(null)
+  const close = useCallback(() => setOpen(null), [])
 
+  // Closing remounts the card as a new DOM node, so focus is handed back here
+  // rather than from a reference the panel captured on open.
+  const cardNodes = useRef({})
+  const lastOpened = useRef(null)
   useEffect(() => {
-    const handleFilter = (e) => setActiveFilter(e.detail.skill)
-    const handleClear = () => setActiveFilter(null)
-    window.addEventListener("filter-projects", handleFilter)
-    window.addEventListener("clear-filter", handleClear)
-    return () => {
-      window.removeEventListener("filter-projects", handleFilter)
-      window.removeEventListener("clear-filter", handleClear)
+    if (open) {
+      lastOpened.current = open.label
+      return
     }
-  }, [])
+    const el = lastOpened.current && cardNodes.current[lastOpened.current]
+    lastOpened.current = null
+    el?.focus()
+  }, [open])
 
   return (
     <section id="skills" className="relative py-32 px-6 md:px-16 overflow-hidden">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-            Tech Stack
-          </p>
-          <AnimatedHeading
-            text="The *stack*"
-            as="h2"
-            cinematic
-            className="font-display text-5xl md:text-7xl uppercase leading-none"
-          />
-          <p className="mt-4 font-mono text-sm" style={{ color: "var(--muted)" }}>
-            <span style={{ color: "var(--accent)" }}>//</span> hover a card · click any tool to filter the projects
-          </p>
+      <LayoutGroup>
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-16">
+            <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
+              Tech Stack
+            </p>
+            <AnimatedHeading
+              text="The *stack*"
+              as="h2"
+              cinematic
+              className="font-display text-5xl md:text-7xl uppercase leading-none"
+            />
+            <p className="mt-4 font-mono text-sm" style={{ color: "var(--muted)" }}>
+              <span style={{ color: "var(--accent)" }}>//</span> open a discipline to see every tool and what it built
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
+            {STACK.map((cat, i) => (
+              <StackCard
+                key={cat.label}
+                cat={cat}
+                i={i}
+                lowPower={lowPower}
+                reduced={reduced}
+                isOpen={open?.label === cat.label}
+                onOpen={setOpen}
+                cardRef={(node) => { cardNodes.current[cat.label] = node }}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
-          {STACK.map((cat, i) => (
-            <StackCard
-              key={cat.label}
-              cat={cat}
-              i={i}
-              activeFilter={activeFilter}
-              lowPower={lowPower}
-              reduced={reduced}
-            />
-          ))}
-        </div>
-      </div>
+        <AnimatePresence>
+          {open && <ExpandedPanel key={open.label} cat={open} onClose={close} reduced={reduced} />}
+        </AnimatePresence>
+      </LayoutGroup>
     </section>
   )
 }
