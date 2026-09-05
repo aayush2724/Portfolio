@@ -118,6 +118,8 @@ export default function Testimonials() {
   }, [paused, reduced, go])
 
   const current = TESTIMONIALS[index]
+  const prev = TESTIMONIALS[(index - 1 + count) % count]
+  const next = TESTIMONIALS[(index + 1) % count]
 
   return (
     <section id="testimonials" className="relative py-32 px-6 md:px-16">
@@ -132,6 +134,7 @@ export default function Testimonials() {
             <AnimatedHeading
               text="Testimonials"
               as="h2"
+              cinematic
               className="font-display text-5xl md:text-7xl uppercase leading-none"
             />
           </div>
@@ -154,8 +157,42 @@ export default function Testimonials() {
             }}
             tabIndex={0}
           >
-            {/* Live region announces the current slide for screen readers */}
-            <div className="relative overflow-hidden" aria-live="polite">
+            {/* Deck: the neighbouring cards peek out from behind the active
+                one, fanned like a held hand of cards. Purely decorative —
+                dimmed, clipped and inert. */}
+            {!reduced && (
+              <>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 overflow-hidden pointer-events-none"
+                  style={{
+                    transform: "rotate(-4deg) scale(0.95) translateY(14px)",
+                    transformOrigin: "50% 100%",
+                    opacity: 0.4,
+                    filter: lowPower ? "none" : "blur(2px)",
+                  }}
+                >
+                  <Card t={prev} />
+                </div>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 overflow-hidden pointer-events-none"
+                  style={{
+                    transform: "rotate(4deg) scale(0.95) translateY(14px)",
+                    transformOrigin: "50% 100%",
+                    opacity: 0.4,
+                    filter: lowPower ? "none" : "blur(2px)",
+                  }}
+                >
+                  <Card t={next} />
+                </div>
+              </>
+            )}
+
+            {/* Live region announces the current slide for screen readers.
+                Solid backing so the deck reads as edges peeking out, not as
+                text bleeding through the translucent card. */}
+            <div className="relative z-10 overflow-hidden rounded-3xl" style={{ background: "var(--bg)" }} aria-live="polite">
               {reduced ? (
                 <Card t={current} />
               ) : (

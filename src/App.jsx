@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import InteractiveGrid from "./components/InteractiveGrid";
 import ShaderBackground from "./components/ShaderBackground";
+import FogAtmosphere from "./components/FogAtmosphere";
 import AccentCursor from "./components/AccentCursor";
 import Navbar from "./components/Navbar";
 import HeroBold from "./components/HeroBold";
@@ -13,6 +14,7 @@ import { useLenis } from "./context/motion";
 // Lazy load below-the-fold components
 const AboutBold = lazy(() => import("./components/AboutBold"));
 const SkillsMarquee = lazy(() => import("./components/SkillsMarquee"));
+const ScrollCinema = lazy(() => import("./components/ScrollCinema"));
 const CodingStatsBold = lazy(() => import("./components/CodingStatsBold"));
 const JourneyTimeline = lazy(() => import("./components/JourneyTimeline"));
 const AchievementsSection = lazy(() => import("./components/AchievementsSection"));
@@ -144,6 +146,9 @@ export default function App() {
       {/* Interactive grid background */}
       <InteractiveGrid />
 
+      {/* Drifting ground fog above the backgrounds, below the content */}
+      <FogAtmosphere />
+
       {/* Scroll progress bar at top */}
       <ScrollProgress />
 
@@ -163,6 +168,7 @@ export default function App() {
             <Suspense fallback={<div className="min-h-screen" />}>
               <AboutBold />
               <SkillsMarquee />
+              <ScrollCinema />
               <CodingStatsBold />
               <JourneyTimeline />
               <AchievementsSection />

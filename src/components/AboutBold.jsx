@@ -1,6 +1,6 @@
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
-import AnimatedHeading from "./AnimatedHeading"
+import ScrollRevealText from "./ScrollRevealText"
 
 export default function AboutBold() {
   return (
@@ -12,12 +12,16 @@ export default function AboutBold() {
           <CommandLabel className="mb-6">cat about.md</CommandLabel>
         </Reveal>
 
-        {/* Manifesto */}
-        <div className="font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 text-white flex flex-wrap">
-          <AnimatedHeading text="Building digital experiences that solve" as="span" />
-          <AnimatedHeading text="real problems," as="span" className="text-[var(--accent)] ml-[0.25em]" />
-          <AnimatedHeading text="one line of code at a time." as="span" className="ml-[0.25em]" />
-        </div>
+        {/* Manifesto — brightens word by word as it scrolls into view */}
+        <ScrollRevealText
+          as="div"
+          className="relative font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 text-white"
+          segments={[
+            { text: "Building digital experiences that solve" },
+            { text: "real problems,", className: "text-[var(--accent)]" },
+            { text: "one line of code at a time." },
+          ]}
+        />
 
         {/* Two Column Layout */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">

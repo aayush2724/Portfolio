@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import MagneticButton from "./MagneticButton";
+import MenuOverlay from "./MenuOverlay";
 import { useLowPower } from "../context/motion";
 
 const links = [
@@ -111,11 +112,6 @@ export default function Navbar({ onCmd }) {
     return () => sections.forEach(section => observer.unobserve(section));
   }, []);
 
-  const handleLinkClick = (href) => {
-    setMobileOpen(false);
-    // Let default anchor behavior work
-  };
-
   return (
     <>
       <motion.nav
@@ -137,10 +133,15 @@ export default function Navbar({ onCmd }) {
       >
         <div className="mx-auto max-w-7xl flex items-center justify-between">
           {/* Logo */}
+          {/* Script signature logo — the yaros.me register. Great Vibes only
+              ships one weight, so the glow does the lifting instead of bold. */}
           <a
             href="#hero"
-            className="font-display font-bold text-xl transition-colors"
-            style={{ color: "var(--fg)" }}
+            className="font-script text-2xl leading-none transition-colors"
+            style={{
+              color: "var(--fg)",
+              textShadow: "0 0 18px rgba(244,244,245,0.45)",
+            }}
           >
             Aayush
           </a>
@@ -191,10 +192,11 @@ export default function Navbar({ onCmd }) {
               Resume
             </MagneticButton>
 
-            {/* Mobile Menu Toggle */}
+            {/* Menu Toggle — the full-screen overlay is the menu on every
+                breakpoint, so the hamburger stays visible on desktop too */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden flex flex-col gap-1.5 w-9 h-9 items-center justify-center"
+              className="flex flex-col gap-1.5 w-9 h-9 items-center justify-center"
               aria-label="Toggle menu"
             >
               <motion.span
@@ -217,82 +219,13 @@ export default function Navbar({ onCmd }) {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] md:hidden flex flex-col items-center justify-center"
-            style={{ background: "var(--bg)" }}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 flex flex-col gap-1.5 w-9 h-9 items-center justify-center"
-              aria-label="Close menu"
-            >
-              <motion.span
-                initial={{ rotate: 0 }}
-                animate={{ rotate: 45, y: 6 }}
-                className="w-5 h-0.5 rounded-full"
-                style={{ background: "var(--fg)" }}
-              />
-              <motion.span
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 0 }}
-                className="w-5 h-0.5 rounded-full"
-                style={{ background: "var(--fg)" }}
-              />
-              <motion.span
-                initial={{ rotate: 0 }}
-                animate={{ rotate: -45, y: -6 }}
-                className="w-5 h-0.5 rounded-full"
-                style={{ background: "var(--fg)" }}
-              />
-            </button>
-
-            {/* Menu Items */}
-            <nav className="flex flex-col items-center gap-8">
-              {links.map((l, i) => (
-                <motion.a
-                  key={l.label}
-                  href={l.href}
-                  onClick={() => handleLinkClick(l.href)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  className="font-display text-4xl uppercase transition-colors"
-                  style={{
-                    color: activeSection === l.href ? "var(--accent)" : "var(--fg)",
-                  }}
-                >
-                  {l.label}
-                </motion.a>
-              ))}
-              
-              {/* Mobile Resume Link */}
-              <motion.a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + links.length * 0.05 }}
-                className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-wider"
-                style={{
-                  background: "var(--accent)",
-                  color: "var(--accent-ink)",
-                }}
-              >
-                Resume →
-              </motion.a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Full-screen menu (all breakpoints) */}
+      <MenuOverlay
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        links={links}
+        activeSection={activeSection}
+      />
     </>
   );
 }

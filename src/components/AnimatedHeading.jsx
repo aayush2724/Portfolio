@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { usePrefersReducedMotion } from "../context/motion"
+import { usePrefersReducedMotion, useLowPower } from "../context/motion"
 import { EASE } from "../context/ease"
 
 /**
@@ -14,9 +14,27 @@ import { EASE } from "../context/ease"
  * used everywhere it stops reading as a signature and starts reading as noise.
  *
  *   <AnimatedHeading text="Projects" decode as="h2" className="..." />
+ *
+ * `cinematic`: words sharpen out of a blur while rising — the film-title
+ * register. Blur is GPU-expensive, so low-power devices get the same timing
+ * with fade+rise only.
+ *
+ *   <AnimatedHeading text="Testimonials" cinematic as="h2" className="..." />
  */
 
 const SCRAMBLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@%$&<>/[]{}"
+
+/**
+ * `*word*` in `text` marks that word as an editorial serif accent — one
+ * italic lowercase serif word set inside the caps around it (the yaros.me
+ * register). Styling lives in `.serif-accent` in index.css.
+ */
+function parseWords(text) {
+  return text.split(" ").map((w) => {
+    const m = w.match(/^\*(.+)\*$/)
+    return m ? { word: m[1], accent: true } : { word: w, accent: false }
+  })
+}
 
 function DecodeHeading({ text, className, as: Tag }) {
   const [display, setDisplay] = useState(text)
@@ -69,18 +87,63 @@ function DecodeHeading({ text, className, as: Tag }) {
   )
 }
 
-export default function AnimatedHeading({ text, className = "", as = "h2", decode = false }) {
+export default function AnimatedHeading({ text, className = "", as = "h2", decode = false, cinematic = false }) {
   const reduced = usePrefersReducedMotion()
-  const words = text.split(" ")
+  const lowPower = useLowPower()
+  const words = parseWords(text)
+  const plain = words.map((w) => w.word).join(" ")
   const MotionTag = motion[as] || motion.h2
 
   if (reduced) {
     const Tag = as
-    return <Tag className={className}>{text}</Tag>
+    return (
+      <Tag className={className}>
+        {words.map((w, i) => (
+          <span key={i} className={w.accent ? "serif-accent" : undefined}>
+            {w.word}
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        ))}
+      </Tag>
+    )
   }
 
   if (decode) {
-    return <DecodeHeading text={text} className={className} as={as} />
+    return <DecodeHeading text={plain} className={className} as={as} />
+  }
+
+  if (cinematic) {
+    return (
+      <MotionTag
+        className={className}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.09 }}
+      >
+        {words.map(({ word, accent }, i) => (
+          <motion.span
+            key={i}
+            className={"inline-block mr-[0.25em]" + (accent ? " serif-accent" : "")}
+            variants={{
+              hidden: {
+                opacity: 0,
+                y: 24,
+                filter: lowPower ? "blur(0px)" : "blur(14px)",
+              },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                transition: { duration: 0.9, ease: EASE.ENTER },
+              },
+            }}
+          >
+            {word}
+          </motion.span>
+        ))}
+      </MotionTag>
+    )
   }
 
   return (
@@ -91,10 +154,10 @@ export default function AnimatedHeading({ text, className = "", as = "h2", decod
       viewport={{ once: true, amount: 0.3 }}
       transition={{ staggerChildren: 0.08 }}
     >
-      {words.map((word, i) => (
+      {words.map(({ word, accent }, i) => (
         <span key={i} className="inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom">
           <motion.span
-            className="inline-block mr-[0.25em]"
+            className={"inline-block mr-[0.25em]" + (accent ? " serif-accent" : "")}
             variants={{
               hidden: { y: "110%", skewY: 6 },
               visible: {

@@ -107,19 +107,67 @@ a:focus-visible {
   width: 100%;
 }
 
-/* ── Skills marquee (CSS-driven so hover can pause it) ─────────────────────── */
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* ── Glow pill (primary CTA) ────────────────────────────────────────────────
+   A slow breathing halo behind the pill. box-shadow on its own animation
+   avoids touching layout; disabled on touch devices where the repaint cost
+   outweighs the flourish. */
+@keyframes glow-breathe {
+  0%, 100% { box-shadow: 0 0 24px 0 rgba(212, 255, 63, 0.25); }
+  50%      { box-shadow: 0 0 44px 6px rgba(212, 255, 63, 0.45); }
 }
-.marquee-track {
-  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+@media (pointer: fine) {
+  .glow-pill {
+    animation: glow-breathe 3.2s ease-in-out infinite;
+  }
 }
-.marquee-reverse {
-  animation-direction: reverse;
+
+/* ── Editorial serif accent (yaros.me register) ─────────────────────────────
+   One italic serif word set inside an uppercase sans heading. text-transform
+   is reset so the accent reads lowercase against the caps around it. */
+.serif-accent {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 1.06em; /* serif renders optically smaller than Clash at equal size */
 }
-.marquee-row:hover .marquee-track {
-  animation-play-state: paused;
+
+/* ── Fog atmosphere ─────────────────────────────────────────────────────────
+   Ground fog that drifts under every section. The blur is baked into the
+   radial gradients (no filter, no backdrop-filter) and the drift is
+   transform-only, so the layers live entirely on the compositor. */
+.fog-layer {
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 62vh;
+  bottom: -12vh;
+}
+.fog-a {
+  background: radial-gradient(
+    60% 85% at 50% 100%,
+    rgba(165, 195, 225, 0.28),
+    rgba(165, 195, 225, 0.10) 45%,
+    transparent 72%
+  );
+}
+.fog-b {
+  background: radial-gradient(
+    48% 70% at 28% 100%,
+    rgba(205, 225, 245, 0.16),
+    transparent 65%
+  );
+}
+@keyframes fog-drift {
+  from { transform: translate3d(-3.5%, 0, 0); }
+  to   { transform: translate3d(3.5%, 0, 0); }
+}
+.fog-drift {
+  animation: fog-drift 90s ease-in-out infinite alternate;
+}
+.fog-drift-slow {
+  animation: fog-drift 130s ease-in-out infinite alternate-reverse;
 }
 
 /* ── Scroll progress bar ────────────────────────────────────────────────────── */

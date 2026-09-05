@@ -50,7 +50,7 @@ export default function DownloadResumeButton({ className = "", variant = "primar
   return (
     <MagneticButton
       onClick={handleDownload}
-      className={`inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] shadow-lg shadow-[var(--accent)]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[var(--accent)]/30 ${className}`}
+      className={`glow-pill inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 ${className}`}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>

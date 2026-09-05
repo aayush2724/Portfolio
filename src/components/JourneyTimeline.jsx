@@ -61,6 +61,12 @@ const MILESTONES = [
   },
   {
     year: 2026,
+    title: "First Internship — AI Engineer",
+    description: "Stepped into industry as an AI engineer intern — building LLM-powered features, RAG pipelines, and agentic workflows, and shipping them to production.",
+    icon: "💼",
+  },
+  {
+    year: 2026,
     title: "Current Focus & Goals",
     description: "Building smarter full-stack products that combine strong UX, reliable systems, and practical AI features for real-world impact.",
     icon: "🎯",
