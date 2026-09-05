@@ -67,10 +67,13 @@ export function useLenis() {
     if (coarsePointer() || reducedMotion()) return
 
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.08,
       smoothWheel: true,
       wheelMultiplier: 1,
       syncTouch: false,
+      // Route #anchor clicks through Lenis so in-page nav glides instead of
+      // the native jump fighting the rAF loop mid-flight.
+      anchors: true,
     })
 
     window.__lenis = lenis

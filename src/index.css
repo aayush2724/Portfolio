@@ -26,6 +26,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* While Lenis drives the scroll (desktop), native CSS smooth scrolling must be
+   off — otherwise anchor jumps are animated twice (browser + Lenis) and stutter.
+   Lenis stamps these classes on <html> only when it is active, so mobile keeps
+   the native smooth behavior above. */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   background: var(--bg);
   color: var(--fg);
@@ -245,9 +256,10 @@ a:focus-visible {
   }
 }
 
-/* Native momentum scrolling; Lenis is disabled on touch so let the OS drive. */
-@media (pointer: coarse) {
-  html {
-    scroll-behavior: auto;
-  }
-}
+/*
+ * Touch devices run without Lenis (the OS drives momentum scrolling), so
+ * scroll-behavior: smooth from the html rule above stays in effect there —
+ * it only affects anchor/programmatic scrolls, which the browser animates on
+ * the compositor. That keeps nav-link jumps on mobile as smooth as the Lenis
+ * glide on desktop, at zero main-thread cost.
+ */

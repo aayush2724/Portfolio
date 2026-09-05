@@ -8,7 +8,6 @@ export default {
         body: ['Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
-        script: ['"Great Vibes"', 'cursive'],
       },
       colors: {
         bg: 'var(--bg)',

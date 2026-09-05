@@ -132,18 +132,14 @@ export default function Navbar({ onCmd }) {
         }}
       >
         <div className="mx-auto max-w-7xl flex items-center justify-between">
-          {/* Logo */}
-          {/* Script signature logo — the yaros.me register. Great Vibes only
-              ships one weight, so the glow does the lifting instead of bold. */}
+          {/* Logo — Clash Display wordmark matching the section headings;
+              the accent period carries the signature instead of a script font. */}
           <a
             href="#hero"
-            className="font-script text-2xl leading-none transition-colors"
-            style={{
-              color: "var(--fg)",
-              textShadow: "0 0 18px rgba(244,244,245,0.45)",
-            }}
+            className="font-display font-bold text-2xl leading-none tracking-tight transition-colors duration-300 hover:text-[var(--accent)]"
+            style={{ color: "var(--fg)" }}
           >
-            Aayush
+            Aayush<span style={{ color: "var(--accent)" }}>.</span>
           </a>
 
           {/* Desktop Nav */}
