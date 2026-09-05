@@ -1,31 +1,39 @@
 import { motion } from "framer-motion"
-import { usePrefersReducedMotion } from "../context/motion"
+import { usePrefersReducedMotion, useLowPower } from "../context/motion"
+import { EASE, DUR } from "../context/ease"
 
 /**
- * Standard scroll-reveal wrapper: fade + rise, triggered once at 30% visibility.
- * Use `Stagger` + `StaggerItem` when several children should cascade in.
+ * Scroll reveal: fade + short rise, triggered once when 20% of the block is in
+ * view.
+ *
+ * (An earlier version used a clip-path wipe. It looked sharp but proved
+ * unreliable — lazy-mounted sections could miss their whileInView trigger and
+ * stay clipped to nothing, leaving whole blocks invisible. A fade never hides
+ * content that way, so reliability wins here.)
+ *
+ * `direction` and `fade` are accepted for call-site compatibility but no longer
+ * change the mechanism.
  */
 export default function Reveal({
   children,
   delay = 0,
-  duration = 0.6,
-  y = 30,
-  className = ""
+  duration = DUR.enter,
+  direction = "up",
+  fade = false,
+  y = 28,
+  className = "",
 }) {
   const reduced = usePrefersReducedMotion()
+  const lowPower = useLowPower()
 
   if (reduced) return <div className={className}>{children}</div>
 
   return (
     <motion.div
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: 0, y: lowPower ? 12 : y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.22, 1, 0.36, 1]
-      }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration, delay, ease: EASE.ENTER }}
       className={className}
     >
       {children}
@@ -52,15 +60,17 @@ export function Stagger({ children, className = "", stagger = 0.08 }) {
   )
 }
 
-export function StaggerItem({ children, className = "", y = 30 }) {
+export function StaggerItem({ children, className = "", y = 28 }) {
+  const lowPower = useLowPower()
+
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y },
+        hidden: { opacity: 0, y: lowPower ? 12 : y },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: DUR.enter, ease: EASE.ENTER },
         },
       }}
       className={className}

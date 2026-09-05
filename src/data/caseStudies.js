@@ -776,7 +776,7 @@ export const caseStudies = [
     ],
 
     links: {
-      github: "https://github.com/aayush2724/Visitor-Management-System",
+      github: "https://github.com/aayush2724/CheckMate",
       demo: null,
       demo_note: "Local deployment demo available"
     },

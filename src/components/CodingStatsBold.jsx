@@ -78,6 +78,7 @@ export default function CodingStatsBold() {
             <CommandLabel className="mb-3">cat ~/stats.json</CommandLabel>
             <AnimatedHeading
               text="Coding Stats"
+              decode
               as="h2"
               className="font-display text-5xl md:text-7xl uppercase leading-none"
             />

@@ -6,7 +6,7 @@ import AccentCursor from "./components/AccentCursor";
 import Navbar from "./components/Navbar";
 import HeroBold from "./components/HeroBold";
 import ProjectsBold from "./components/ProjectsBold";
-import CommandPalette from "./components/CommandPalette";
+import Shell from "./components/Shell";
 import ScrollProgress from "./components/ScrollProgress";
 import { useLenis } from "./context/motion";
 
@@ -20,6 +20,27 @@ const Testimonials = lazy(() => import("./components/Testimonials"));
 const BeyondCodeBento = lazy(() => import("./components/BeyondCodeBento"));
 const ContactBold = lazy(() => import("./components/ContactBold"));
 const PortfolioBot = lazy(() => import("./components/PortfolioBot"));
+const CaseStudyPage = lazy(() => import("./components/CaseStudyPage"));
+
+/**
+ * Hash route: "#/work/deskguard" → { name: "work", id: "deskguard" }.
+ * Hash-based so it works on any static host with zero rewrite config, and so
+ * plain anchor links (#projects etc.) keep behaving as before.
+ */
+function parseHash() {
+  const m = window.location.hash.match(/^#\/work\/([\w-]+)/);
+  return m ? { name: "work", id: m[1] } : { name: "home" };
+}
+
+function useHashRoute() {
+  const [route, setRoute] = useState(parseHash);
+  useEffect(() => {
+    const fn = () => setRoute(parseHash());
+    window.addEventListener("hashchange", fn);
+    return () => window.removeEventListener("hashchange", fn);
+  }, []);
+  return route;
+}
 
 function Loader() {
   return (
@@ -53,18 +74,36 @@ function Loader() {
   );
 }
 
+/**
+ * The intro wipe plays once per session, and never when someone lands directly
+ * on a case-study URL — making a shared link wait behind a splash screen would
+ * waste the whole point of shareable links.
+ */
+function shouldPlayIntro() {
+  if (parseHash().name !== "home") return false;
+  try {
+    if (sessionStorage.getItem("introSeen")) return false;
+    sessionStorage.setItem("introSeen", "1");
+  } catch {
+    // storage unavailable (private mode) — treat as first visit
+  }
+  return true;
+}
+
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [introDone, setIntroDone] = useState(false);
+  const [loading, setLoading] = useState(shouldPlayIntro);
+  const [introDone, setIntroDone] = useState(() => !loading);
   const [cmdOpen, setCmdOpen] = useState(false);
+  const route = useHashRoute();
 
   // Boot smooth scrolling (Lenis)
   useLenis();
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 2000);
+    if (!loading) return;
+    const t = setTimeout(() => setLoading(false), 1600);
     return () => clearTimeout(t);
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     const fn = (e) => {
@@ -77,6 +116,26 @@ export default function App() {
     return () => window.removeEventListener("keydown", fn);
   }, []);
 
+  // ── Case study route ──────────────────────────────────────────────
+  if (route.name === "work") {
+    return (
+      <>
+        <InteractiveGrid />
+        <ScrollProgress />
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <CaseStudyPage
+            id={route.id}
+            onBack={() => {
+              window.location.hash = "#projects";
+            }}
+          />
+        </Suspense>
+        <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
+      </>
+    );
+  }
+
+  // ── Home ──────────────────────────────────────────────────────────
   return (
     <>
       {/* Shader background */}
@@ -113,11 +172,11 @@ export default function App() {
               <ContactBold />
             </Suspense>
           </main>
-          <CommandPalette isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
+          <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
           <motion.button
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2 }}
+            transition={{ delay: 1.6 }}
             onClick={() => setCmdOpen(true)}
             /* Desktop-only hint: a phone has no ⌘K to press, and at 390px the
                pill sits directly on top of the hero CTA. */
@@ -126,14 +185,16 @@ export default function App() {
               borderColor: "var(--line)",
               color: "var(--muted)",
               background: "rgba(10, 10, 11, 0.8)",
-              backdropFilter: "blur(8px)"
+              backdropFilter: "blur(8px)",
             }}
           >
-            Press{" "}
-            <kbd className="border rounded px-1.5 py-0.5" style={{ borderColor: "var(--line)", color: "var(--muted)" }}>
+            <span className="text-[var(--accent)]">➜</span> shell
+            <kbd
+              className="border rounded px-1.5 py-0.5"
+              style={{ borderColor: "var(--line)", color: "var(--muted)" }}
+            >
               ⌘K
-            </kbd>{" "}
-            to navigate
+            </kbd>
           </motion.button>
         </>
       )}

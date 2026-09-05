@@ -17,6 +17,9 @@ export default function AccentCursor() {
   const ring = useRef({ x: 0, y: 0 })
   const isHovering = useRef(false)
   const overText = useRef(false)
+  // Inside #projects the overlay hides entirely — the cards are busy enough
+  // that the ring reads as clutter, so that section gets the native cursor.
+  const suppressed = useRef(false)
 
   // Mirror `text` into a ref so the rAF loop can read it without being torn
   // down and restarted on every change.
@@ -32,6 +35,7 @@ export default function AccentCursor() {
     }
 
     const onMouseOver = (e) => {
+      suppressed.current = !!e.target.closest('#projects')
       const interactive = e.target.closest('a, button, [role="button"], .coverflow-card')
       isHovering.current = !!interactive
       // Over prose the ring shrinks toward the dot so it never obscures reading
@@ -50,9 +54,11 @@ export default function AccentCursor() {
     // the first id leaked a permanent rAF loop on every text change.
     let rafId = 0
     const animate = () => {
+      const hide = suppressed.current
       // Dot follows instantly
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px)`
+        dotRef.current.style.opacity = hide ? "0" : "1"
       }
 
       // Ring lags with lerp
@@ -63,10 +69,12 @@ export default function AccentCursor() {
         const label = textRefValue.current
         const size = isHovering.current || label ? 64 : overText.current ? 14 : 32
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${size / 32})`
+        ringRef.current.style.opacity = hide ? "0" : "1"
       }
 
       if (textRef.current) {
         textRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`
+        textRef.current.style.opacity = hide ? "0" : (text ? "1" : "0")
       }
 
       rafId = requestAnimationFrame(animate)

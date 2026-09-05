@@ -191,7 +191,6 @@ export default function HeroBold({ introDone = true }) {
             <MagneticButton
               as={motion.a}
               href="#projects"
-              data-cursor="View"
               className="inline-flex w-fit items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 hover:gap-5"
             >
               View work →

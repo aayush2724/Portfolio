@@ -21,7 +21,7 @@ const PROJECTS = [
     title: "Auralis",
     description: "AI-powered audio intelligence project focused on extracting meaning and structure from complex sound inputs.",
     tags: ["Python", "AI/ML", "Audio"],
-    link: "https://github.com/aayush2724/Auralis",
+    link: "https://github.com/aayush2724/auralisAI",
     demo: "https://auralis-client-five.vercel.app",
     image: "/auralis-800.jpg",
     badge: "Sound Intelligence",
@@ -117,7 +117,7 @@ const PROJECTS = [
     title: "Visitor Management",
     description: "Biometric-secured check-in system for tracking and managing building visitors with QR codes and real-time dashboards.",
     tags: ["HTML", "PHP", "MySQL"],
-    link: "https://github.com/aayush2724/Visitor-Management-System",
+    link: "https://github.com/aayush2724/CheckMate",
     image: "/vms-800.jpg",
     badge: "QR Check-in",
     earthy: "from-[#0a1a12] to-[#001a0d]"
@@ -174,7 +174,6 @@ function ProjectCard({ project, index, onViewDescription, onViewDemo }) {
     <motion.div
       ref={cardRef}
       layoutId={`project-card-${project.id}`}
-      data-cursor="View"
       style={lowPower ? undefined : { transformStyle: "preserve-3d", perspective: "1000px" }}
       animate={
         lowPower
@@ -498,6 +497,7 @@ export default function ProjectsBold() {
              <CommandLabel className="mb-6 opacity-30">ls ~/projects</CommandLabel>
              <AnimatedHeading
                text="Projects"
+               decode
                as="h2"
                className="font-display text-8xl md:text-[12rem] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
              />
