@@ -32,12 +32,12 @@ export const FEATURED_PROJECTS = [
   {
     id: 5,
     title: "Beatzy",
-    description: "Music collaboration platform with real-time beat sharing and social features for producers.",
-    tags: ["React", "Firebase", "Web Audio"],
+    description: "Music intelligence engine that fingerprints any track and returns BPM, key, mood, chords and genre vectors as API-ready data in seconds.",
+    tags: ["React", "Web Audio", "ACRCloud"],
     link: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
     image: "/Beatzy-800.jpg",
-    badge: "Live Collab",
+    badge: "Audio Fingerprinting",
     earthy: "from-[#3e4a3d] to-[#242b23]"
   },
   {

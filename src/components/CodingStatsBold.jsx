@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { LEETCODE_SOLVED, REPO_COUNT, CONTRIBUTIONS, LEETCODE_STREAK } from "../data/stats"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import CountUp from "./CountUp"
@@ -31,14 +32,14 @@ export default function CodingStatsBold() {
   const lowPower = useLowPower()
   const [stats, setStats] = useState({
     leetcode: {
-      total: portfolioData.leetcode?.stats?.totalSolved || 400,
+      total: LEETCODE_SOLVED,
     },
     github: {
-      contributions: portfolioData.githubStats?.contributions || 223,
-      repos: portfolioData.github?.length || 12,
+      contributions: CONTRIBUTIONS,
+      repos: REPO_COUNT,
     },
     streak: {
-      current: portfolioData.leetcode?.streak || 25,
+      current: LEETCODE_STREAK,
     }
   })
 
@@ -53,7 +54,7 @@ export default function CodingStatsBold() {
         setStats(prev => ({
           ...prev,
           leetcode: {
-            total: Math.max(lc.stats.totalSolved, 400),
+            total: Math.max(lc.stats.totalSolved, LEETCODE_SOLVED),
           },
           streak: {
             current: lc.streak,

@@ -1,3 +1,4 @@
+import { LEETCODE_SOLVED } from "../data/stats"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
 import ScrollRevealText from "./ScrollRevealText"
@@ -45,7 +46,7 @@ export default function AboutBold() {
                 Beyond code, you'll find me playing{" "}
                 <span style={{ color: "var(--fg)" }}>Stairway to Heaven</span>{" "}
                 on my guitar or grinding{" "}
-                <span style={{ color: "var(--fg)" }}>637+ LeetCode problems</span>{" "}
+                <span style={{ color: "var(--fg)" }}>{LEETCODE_SOLVED}+ LeetCode problems</span>{" "}
                 in C++.
               </p>
             </div>

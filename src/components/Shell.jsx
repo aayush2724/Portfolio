@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
+import { LEETCODE_SOLVED, REPO_COUNT, HACKATHONS } from "../data/stats"
 import { motion, AnimatePresence } from "framer-motion"
 import { caseStudies } from "../data/caseStudies"
 import portfolioData from "../data/portfolioData.json"
@@ -118,7 +119,7 @@ function makeCommands({ close }) {
     whoami: () => [
       "Aayush Kumar",
       "CS student · full-stack developer · OWASP chapter president, NIE Mysore",
-      `${portfolioData.leetcode?.stats?.totalSolved || "700+"} DSA problems · ${portfolioData.github?.length || 12}+ projects shipped · 3× hackathon finalist`,
+      `${LEETCODE_SOLVED}+ DSA problems · ${REPO_COUNT} projects shipped · ${HACKATHONS}× hackathon finalist`,
     ],
     stats: () => {
       const lc = portfolioData.leetcode?.stats

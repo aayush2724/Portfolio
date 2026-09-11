@@ -181,6 +181,22 @@ a:focus-visible {
   animation: fog-drift 130s ease-in-out infinite alternate-reverse;
 }
 
+/* ── Tech wave drift ────────────────────────────────────────────────────────
+   The track holds two identical copies of the icon list side by side, so
+   translating it exactly -50% lands copy two precisely where copy one began —
+   a seamless loop at any list length, with no pixel maths in JS. Transform-only,
+   so it lives on the compositor, and it can be paused by toggling
+   animation-play-state without the browser recalculating anything. */
+@keyframes tech-wave-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes tech-plate-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Scroll progress bar ────────────────────────────────────────────────────── */
 .scroll-progress {
   position: fixed;

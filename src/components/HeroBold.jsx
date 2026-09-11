@@ -1,4 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion"
+import { LEETCODE_SOLVED, REPO_COUNT, HACKATHONS } from "../data/stats"
 import { useState } from "react"
 import { TypingTerminal } from "./Terminal"
 import MagneticButton from "./MagneticButton"
@@ -88,8 +89,8 @@ export default function HeroBold({ introDone = true }) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  const leetcodeSolved = portfolioData.leetcode?.stats?.totalSolved || 400
-  const projectsShipped = portfolioData.github?.length || 12
+  const leetcodeSolved = LEETCODE_SOLVED
+  const projectsShipped = REPO_COUNT
   const showStats = introDone || reduced
   const heavy = !reduced && !lowPower
 
@@ -160,7 +161,7 @@ export default function HeroBold({ introDone = true }) {
             </span>
             <span>
               <b className="text-[var(--fg)]">
-                {showStats ? <CountUp end={3} duration={1} suffix="×" /> : "0"}
+                {showStats ? <CountUp end={HACKATHONS} duration={1} suffix="×" /> : "0"}
               </b>{" "}
               Hackathon Finalist
             </span>

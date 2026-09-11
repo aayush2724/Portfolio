@@ -2,6 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 
 const DATA_PATH = path.resolve("./src/data/portfolioData.json");
+const SOLVED_OFFSET = 420; // manual addition to the LeetCode total — see below
+const RECENT_REPO_LIMIT = 12; // repos kept for the GitHub strip
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 
 async function readStatic() {
@@ -35,6 +37,9 @@ async function fetchGitHubRepos(username) {
   const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`GitHub HTTP ${res.status}`);
   const repos = await res.json();
+  // Returns every own repo; the caller records the true count and only then
+  // caps the list for display. Slicing here is what made `github.length` read
+  // as a repo count when it was really a display cap.
   return repos
     .filter((r) => !r.fork)
     .map((r) => ({
@@ -46,8 +51,7 @@ async function fetchGitHubRepos(username) {
       language: r.language,
       topics: r.topics || [],
       updatedAt: new Date(r.updated_at).toISOString(),
-    }))
-    .slice(0, 12);
+    }));
 }
 
 async function fetchLiveLeetCode(username) {
@@ -95,7 +99,12 @@ async function fetchLiveLeetCode(username) {
     avatar: u.profile?.userAvatar,
     realName: u.profile?.realName || username,
     stats: {
-      totalSolved: 420 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
+      // acSubmissionNum[0] is LeetCode's "All" bucket — already the true total
+      // (and equal to easy + medium + hard below). SOLVED_OFFSET is a manual
+      // addition on top of it, NOT anything the API reports. Set it to 0 to
+      // publish the raw account number.
+      totalSolved:
+        SOLVED_OFFSET + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:
         u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
           ?.count || 0,
@@ -173,7 +182,11 @@ async function main() {
       fetchGitHubRepos(ghUser),
       fetchGitHubContributions(ghUser)
     ]);
-    if (repos && repos.length) github = repos;
+    if (repos && repos.length) {
+      // Real total first, display list second — see src/data/stats.js.
+      githubStats.publicRepos = repos.length;
+      github = repos.slice(0, RECENT_REPO_LIMIT);
+    }
     githubStats.contributions = contributions || githubStats.contributions;
     console.log(`Fetched ${github.length} repos and ${contributions} contributions for ${ghUser}`);
   } catch (err) {

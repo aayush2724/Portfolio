@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { LEETCODE_SOLVED, REPO_COUNT, HACKATHONS, CONTRIBUTIONS } from "../data/stats"
 import portfolioData from "../data/portfolioData.json";
 import { projects } from "../data/projects";
 
@@ -24,7 +25,7 @@ function searchPortfolio(query) {
   if (/^(hi|hello|hey|yo|sup|howdy|hii|heyy|good\s*(morning|afternoon|evening))/.test(q) || q === "hlo") {
     const greetings = [
       "Hey! I'm **PortfolioBot** — Aayush's AI assistant. I know everything about his projects, skills, hackathons, and LeetCode grind. What do you want to know?",
-      "Hi there! 👋 Ask me about Aayush's **23 GitHub repos**, his **531 LeetCode problems**, or his **hackathon wins**. I've got all the details.",
+      `Hi there! 👋 Ask me about Aayush's **${REPO_COUNT} GitHub repos**, his **${LEETCODE_SOLVED} LeetCode problems**, or his **hackathon wins**. I've got all the details.`,
       "Hello! I'm PortfolioBot. I can tell you about Aayush's **full-stack projects**, **tech stack**, **college life**, or even his **guitar skills**. What's up?",
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
@@ -53,7 +54,7 @@ function searchPortfolio(query) {
         `• Global rank: **#${lc.ranking.toLocaleString()}**\n\n` +
         `I grind DSA daily in **C++** — mostly trees, graphs, DP, and binary search. Check my [profile](https://leetcode.com/aayush2724).`;
     }
-    return "I'm active on LeetCode as [aayush2724](https://leetcode.com/aayush2724) — currently at 531+ problems and counting. I focus on C++ and aim for consistency over streaks.";
+    return `I'm active on LeetCode as [aayush2724](https://leetcode.com/aayush2724) — currently at ${LEETCODE_SOLVED}+ problems and counting. I focus on C++ and aim for consistency over streaks.`;
   }
 
   // 4. Hackathons
@@ -113,8 +114,9 @@ function searchPortfolio(query) {
   // 9. Learning / Current
   if (/learn|study|current|focus|building|working on|right now|next/.test(q)) {
     return "Currently I'm:\n\n" +
+      "• 🧠 Going deep on **LLMs, RAG and GenAI** — retrieval pipelines, embeddings, evals and agentic workflows\n" +
       "• 🔨 Building the **Music Intelligence Engine** — audio fingerprinting + full-stack SaaS with ACRCloud\n" +
-      "• ⚔️ Grinding **DSA in C++** on LeetCode (531+ solved)\n" +
+      `• ⚔️ Grinding **DSA in C++** on LeetCode (${LEETCODE_SOLVED}+ solved)\n` +
       "• 🎸 Still trying to nail **Stairway to Heaven** on guitar\n" +
       "• 🔍 Looking for **remote internships and freelance projects**\n\n" +
       "I'm a 2nd year CS student at **NIE, Mysore** — always shipping something.";
@@ -125,7 +127,7 @@ function searchPortfolio(query) {
     return "I'm **Aayush Kumar** — a 2nd year B.E. CS student at **The National Institute of Engineering (NIE), Mysore**, based in **Bengaluru**.\n\n" +
       "I'm also the **President of the OWASP student chapter** at my college, where I lead cybersecurity initiatives and build our tech community.\n\n" +
       "I build things end-to-end: REST APIs, React UIs, AI integrations, async job queues — the full stack. " +
-      "I've got **23 GitHub repos**, **531+ LeetCode problems**, and **GitHub Pro** with the YOLO and Pull Shark badges 🦈\n\n" +
+      `I've got **${REPO_COUNT} GitHub repos**, **${LEETCODE_SOLVED}+ LeetCode problems**, and **GitHub Pro** with the YOLO and Pull Shark badges 🦈\n\n` +
       "I hack with my teammate **Kaki Harshita** as **Panic-At-The-Deadline** and I'm always looking for the next project to ship.";
   }
 
@@ -150,7 +152,7 @@ function searchPortfolio(query) {
   if (/github|repos|repository|open source|contribution|star/.test(q)) {
     return "Here's my GitHub snapshot:\n\n" +
       "• **23 public repositories** across JavaScript, Python, TypeScript, HTML, CSS, C++\n" +
-      "• **535+ contributions** this year\n" +
+      `• **${CONTRIBUTIONS}+ contributions** this year\n` +
       "• **GitHub Pro** with YOLO 🪂 and Pull Shark 🦈 achievements\n" +
       "• **2 followers**, 2 following\n\n" +
       "**Popular repos:** Portfolio, Beatzy, Citizen-Resolver-System, LeadForge, Chord-Detector, CheckMate\n\n" +
@@ -168,7 +170,7 @@ function searchPortfolio(query) {
     "Hmm, I don't have that exact detail. But I know a lot! Try asking about **projects**, **LeetCode stats**, **hackathon wins**, **tech stack**, or **how to contact Aayush**.",
     "That's outside my database. I'm great with **project details**, **DSA grind**, **hackathon stories**, and **career info**. Give me another shot!",
     "My neural nets didn't fire on that one 😅 Try asking about **Beatzy**, **LeadForge**, **LeetCode**, or **what Aayush is currently building**.",
-    "I can't help with that, but I *can* tell you about **23 GitHub repos**, **3 hackathon competitions**, and **531 LeetCode problems**. Pick one!",
+    `I can't help with that, but I *can* tell you about **${REPO_COUNT} GitHub repos**, **${HACKATHONS} hackathon competitions**, and **${LEETCODE_SOLVED} LeetCode problems**. Pick one!`,
   ];
   return fallbacks[Math.floor(Math.random() * fallbacks.length)];
 }

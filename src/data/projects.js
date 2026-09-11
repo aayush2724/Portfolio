@@ -67,12 +67,12 @@ export const projects = [
   },
   {
     name: "Beatzy",
-    desc: "Music collaboration platform with real-time beat sharing and social features for producers and artists.",
-    tags: ["JavaScript", "React", "WebAudio API", "Firebase"],
+    desc: "Music intelligence engine that identifies and fingerprints a track, then surfaces BPM, key, mood, chords and genre vectors as API-ready audio data.",
+    tags: ["JavaScript", "React", "WebAudio API", "ACRCloud"],
     gh: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
     badge: null,
-    highlight: "Interactive waveform visualization and collaborative playlist management for music creators.",
+    highlight: "Sub-second fingerprint matching with a confidence score, plus an AI audio map covering key detection, danceability and energy.",
     updatedAt: "2026-06-02T19:16:27Z",
     updated: "Jun 2, 2026"
   },

@@ -67,8 +67,8 @@ const MILESTONES = [
   },
   {
     year: 2026,
-    title: "Current Focus & Goals",
-    description: "Building smarter full-stack products that combine strong UX, reliable systems, and practical AI features for real-world impact.",
+    title: "Current Focus — AI, RAG & GenAI",
+    description: "Going deep on LLMs and generative AI: retrieval-augmented pipelines, embeddings and vector search, evals, and agentic workflows — and folding them into full-stack products where they actually earn their place.",
     icon: "🎯",
   },
 ]

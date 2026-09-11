@@ -82,10 +82,10 @@ export default function BeyondCodeBento() {
               <div className="text-5xl mb-4">📚</div>
               <div>
                 <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
-                  Learning
+                  Currently Learning
                 </h3>
                 <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  System design, AI/ML, music theory
+                  LLMs, RAG pipelines &amp; GenAI — plus system design and music theory
                 </p>
               </div>
             </BentoCard>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import TechWave from "./TechWave"
 import { createPortal } from "react-dom"
 import {
   motion,
@@ -72,9 +73,10 @@ const STACK = [
     headline: "Intelligence",
     demo: "agent",
     skills: [
-      "LangChain", "LangGraph", "RAG", "Agentic AI", "Fine-tuning",
-      "Quantization", "PyTorch", "Hugging Face", "Vector DBs",
-      "Prompt Engineering", "OpenCV", "LLM Evals",
+      "LLMs", "RAG", "GenAI", "LangChain", "LangGraph", "Agentic AI",
+      "Embeddings", "Vector DBs", "Prompt Engineering", "Fine-tuning",
+      "Quantization", "PyTorch", "Hugging Face", "Transformers",
+      "LLM Evals", "OpenCV",
     ],
     rot: 2.2,
     lift: "lg:translate-y-6 lg:translate-x-6",
@@ -654,6 +656,12 @@ export default function SkillsMarquee() {
             <p className="mt-4 font-mono text-sm" style={{ color: "var(--muted)" }}>
               <span style={{ color: "var(--accent)" }}>//</span> open a discipline to see every tool and what it built
             </p>
+          </div>
+
+          {/* Full-bleed: the wave should run edge to edge, but the section pads
+              its content, so it cancels that padding with negative margins. */}
+          <div className="-mx-6 mb-16 md:-mx-16">
+            <TechWave />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
