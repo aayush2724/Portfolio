@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-09-11T02:24:10.639Z",
+  "lastUpdated": "2026-09-11T15:39:18.140Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 478743,
+    "ranking": 474527,
     "stats": {
-      "totalSolved": 731,
-      "easy": 117,
+      "totalSolved": 732,
+      "easy": 118,
       "medium": 167,
       "hard": 27,
-      "totalSubmissions": 316
+      "totalSubmissions": 317
     },
     "streak": 36,
-    "totalActiveDays": 94
+    "totalActiveDays": 95
   },
   "github": [
+    {
+      "name": "AlgoVision",
+      "description": "",
+      "url": "https://github.com/aayush2724/AlgoVision",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-09-11T14:11:28Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-09-10T15:43:26Z"
+      "updatedAt": "2026-09-11T02:24:14Z"
     },
     {
       "name": "Beatzy",
@@ -116,16 +126,6 @@
       "updatedAt": "2026-06-24T08:54:04Z"
     },
     {
-      "name": "AlgoVision",
-      "description": "",
-      "url": "https://github.com/aayush2724/AlgoVision",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-06-12T10:04:04Z"
-    },
-    {
       "name": "Disaster-relief-system",
       "description": "",
       "url": "https://github.com/aayush2724/Disaster-relief-system",
@@ -137,6 +137,6 @@
     }
   ],
   "githubStats": {
-    "contributions": 1120
+    "contributions": 1129
   }
 }
