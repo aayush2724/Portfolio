@@ -261,17 +261,6 @@ export default function CodingStatsBold() {
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href="https://leetcode.com/aayush2724"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
-              style={{ borderColor: "var(--line)", color: "var(--muted)" }}
-            >
-              View LeetCode Profile →
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               href="https://github.com/aayush2724"
               target="_blank"
               rel="noopener noreferrer"

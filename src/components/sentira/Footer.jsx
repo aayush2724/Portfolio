@@ -1,4 +1,4 @@
-import { Github, Linkedin, Instagram, Code2 } from "lucide-react"
+import { Github, Linkedin, Instagram } from "lucide-react"
 
 /**
  * Four link columns over a thin legal bar. Column headings are set in the body
@@ -40,7 +40,6 @@ const COLUMNS = [
     links: [
       { label: "GitHub", href: "https://github.com/aayush2724", icon: Github, external: true },
       { label: "LinkedIn", href: "https://linkedin.com/in/aayush2724", icon: Linkedin, external: true },
-      { label: "LeetCode", href: "https://leetcode.com/aayush2724", icon: Code2, external: true },
       { label: "Instagram", href: "https://instagram.com/aayussh.27", icon: Instagram, external: true },
     ],
   },

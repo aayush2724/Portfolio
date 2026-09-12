@@ -31,7 +31,6 @@ const SECTIONS = [
 const SOCIALS = {
   github: "https://github.com/aayush2724",
   linkedin: "https://linkedin.com/in/aayush2724",
-  leetcode: "https://leetcode.com/aayush2724",
   resume: "/resume.pdf",
 }
 
@@ -88,7 +87,7 @@ function makeCommands({ close }) {
       "  open <project>     open a case study (try: open " + caseStudies[0].id + ")",
       "  whoami             who is this guy",
       "  stats              live LeetCode / GitHub numbers",
-      "  socials            github · linkedin · leetcode · resume",
+      "  socials            github · linkedin · resume",
       "  sudo hire-me       the important one",
       "  history            your commands this session",
       "  clear              clear the screen",

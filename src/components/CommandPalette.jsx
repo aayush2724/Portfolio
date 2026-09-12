@@ -89,13 +89,6 @@ const cmds = [
     fn: () => window.open("https://linkedin.com/in/aayush2724", "_blank"),
   },
   {
-    id: "lc",
-    label: "LeetCode → aayush2724",
-    icon: "🧩",
-    cat: "Social",
-    fn: () => window.open("https://leetcode.com/aayush2724", "_blank"),
-  },
-  {
     id: "ig",
     label: "Instagram → aayussh.27",
     icon: "📸",

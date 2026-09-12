@@ -52,9 +52,9 @@ function searchPortfolio(query) {
         `• **${lc.streak}**-day current streak\n` +
         `• **${lc.totalActiveDays}** active days\n` +
         `• Global rank: **#${lc.ranking.toLocaleString()}**\n\n` +
-        `I grind DSA daily in **C++** — mostly trees, graphs, DP, and binary search. Check my [profile](https://leetcode.com/aayush2724).`;
+        `I grind DSA daily in **C++** — mostly trees, graphs, DP, and binary search.`;
     }
-    return `I'm active on LeetCode as [aayush2724](https://leetcode.com/aayush2724) — currently at ${LEETCODE_SOLVED}+ problems and counting. I focus on C++ and aim for consistency over streaks.`;
+    return `I'm active on LeetCode — currently at ${LEETCODE_SOLVED}+ problems and counting. I focus on C++ and aim for consistency over streaks.`;
   }
 
   // 4. Hackathons
@@ -86,8 +86,7 @@ function searchPortfolio(query) {
       "• 📧 **Email:** [aayush2615@gmail.com](mailto:aayush2615@gmail.com)\n" +
       "• 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)\n" +
       "• 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724) (23 repos)\n" +
-      "• 📸 **Instagram:** [@aayussh.27](https://instagram.com/aayussh.27)\n" +
-      "• 🧩 **LeetCode:** [aayush2724](https://leetcode.com/aayush2724)\n\n" +
+      "• 📸 **Instagram:** [@aayussh.27](https://instagram.com/aayussh.27)\n\n" +
       "Currently **open to remote internships and freelance projects**. Drop me an email!";
   }
 

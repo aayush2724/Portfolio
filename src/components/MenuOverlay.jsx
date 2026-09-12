@@ -6,7 +6,6 @@ import { EASE, DUR } from "../context/ease"
 const SOCIALS = [
   { label: "GitHub", url: "https://github.com/aayush2724" },
   { label: "LinkedIn", url: "https://linkedin.com/in/aayush2724" },
-  { label: "LeetCode", url: "https://leetcode.com/aayush2724" },
   { label: "Instagram", url: "https://instagram.com/aayussh.27" },
 ]
 

@@ -28,7 +28,6 @@ export const LEETCODE_SPLIT = {
 
 export const LEETCODE_STREAK = lc.streak ?? 0
 export const LEETCODE_ACTIVE_DAYS = lc.totalActiveDays ?? 0
-export const LEETCODE_URL = `https://leetcode.com/${lc.username ?? "aayush2724"}`
 
 /**
  * Own (non-fork) public repositories.

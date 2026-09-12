@@ -139,7 +139,6 @@ export default function ContactBold() {
                 {[
                   { name: "GitHub", url: "https://github.com/aayush2724" },
                   { name: "LinkedIn", url: "https://linkedin.com/in/aayush2724" },
-                  { name: "LeetCode", url: "https://leetcode.com/aayush2724" },
                   { name: "Instagram", url: "https://instagram.com/aayussh.27" }
                 ].map((link, i) => (
                   <motion.a
