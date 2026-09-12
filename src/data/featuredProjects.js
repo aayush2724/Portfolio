@@ -57,7 +57,7 @@ export const FEATURED_PROJECTS = [
     description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
     tags: ["React", "Framer Motion", "Algorithms"],
     link: "https://github.com/aayush2724/AlgoVision",
-    image: "",
+    image: "/algovision-800.jpg",
     badge: "DSA Visualizer",
     earthy: "from-[#2c3e50] to-[#000000]"
   },
