@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-09-14T02:47:01.310Z",
+  "lastUpdated": "2026-09-14T17:21:57.011Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 466275,
+    "ranking": 464444,
     "stats": {
-      "totalSolved": 737,
-      "easy": 119,
+      "totalSolved": 738,
+      "easy": 120,
       "medium": 170,
       "hard": 28,
-      "totalSubmissions": 322
+      "totalSubmissions": 323
     },
     "streak": 36,
-    "totalActiveDays": 97
+    "totalActiveDays": 98
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-09-14T02:47:05Z"
+    },
     {
       "name": "Translog",
       "description": "",
@@ -24,16 +34,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-09-13T20:20:32Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-09-13T15:25:19Z"
     },
     {
       "name": "AlgoVision",
