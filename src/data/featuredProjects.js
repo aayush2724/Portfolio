@@ -57,6 +57,7 @@ export const FEATURED_PROJECTS = [
     description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
     tags: ["React", "Framer Motion", "Algorithms"],
     link: "https://github.com/aayush2724/AlgoVision",
+    demo: "https://algo-vision-vert.vercel.app/",
     image: "/algovision-800.jpg",
     badge: "DSA Visualizer",
     earthy: "from-[#2c3e50] to-[#000000]"
@@ -67,7 +68,7 @@ export const FEATURED_PROJECTS = [
     description: "AI-powered lead generation and management tool for sales teams.",
     tags: ["Python", "AI", "FastAPI"],
     link: "https://github.com/aayush2724/LeadForge",
-    demo: "https://lead-forge-rust.vercel.app",
+    demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
     image: "/leadforge-hackathon-proof.svg",
     badge: "🏆 3rd Place NIT",
     earthy: "from-[#3a3530] to-[#1f1c18]"

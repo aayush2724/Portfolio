@@ -163,8 +163,8 @@ export const caseStudies = [
 
     links: {
       github: "https://github.com/aayush2724/AlgoVision",
-      demo: null,
-      demo_note: "Live demo coming soon"
+      demo: "https://algo-vision-vert.vercel.app/",
+      demo_note: null
     },
 
     tags: ["JavaScript", "React", "Framer Motion", "Algorithms", "Education"],
@@ -342,8 +342,8 @@ export const caseStudies = [
     // Links
     links: {
       github: "https://github.com/aayush2724/LeadForge",
-      demo: null,
-      demo_note: "Private demo available for recruiters"
+      demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
+      demo_note: null
     },
 
     tags: ["Python", "FastAPI", "AI/ML", "LangChain", "OpenAI", "Web Scraping"],

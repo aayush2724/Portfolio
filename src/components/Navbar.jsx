@@ -160,7 +160,7 @@ export default function Navbar({ onCmd }) {
             {/* Command Palette Button */}
             <button
               onClick={onCmd}
-              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-lg border transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg border transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
               style={{
                 borderColor: "var(--line)",
                 color: "var(--muted)",

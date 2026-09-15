@@ -173,7 +173,7 @@ export default function HeroBold({ introDone = true }) {
             className="mt-8 max-w-lg"
           >
             <TypingTerminal
-              className="h-[380px] sm:h-[320px]"
+              className="h-[320px] sm:h-[380px]"
               title="aayush@portfolio — zsh"
               path="~"
               steps={[
