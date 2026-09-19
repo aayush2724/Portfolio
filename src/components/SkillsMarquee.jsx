@@ -642,7 +642,7 @@ export default function SkillsMarquee() {
   return (
     <section id="skills" className="relative py-32 px-6 md:px-16 overflow-hidden">
       <LayoutGroup>
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
           <div className="mb-16">
             <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
               Tech Stack

@@ -39,7 +39,7 @@ export const Header = ({ translate, titleComponent, lowPower }) => {
   return (
     <motion.div
       style={lowPower ? undefined : { translateY: translate }}
-      className="div max-w-5xl mx-auto text-center"
+      className="div max-w-5xl 2xl:max-w-[72rem] mx-auto text-center"
     >
       {titleComponent}
     </motion.div>
@@ -68,7 +68,7 @@ export const Card = ({
             }
       }
       className={
-        "max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C]/50 p-2 md:p-6 rounded-[30px] shadow-2xl " +
+        "max-w-5xl 2xl:max-w-[80rem] -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C]/50 p-2 md:p-6 rounded-[30px] shadow-2xl " +
         (lowPower ? "bg-[#1a1a1d]" : "bg-white/5 dark:bg-[#222222]/30 backdrop-blur-xl")
       }
     >

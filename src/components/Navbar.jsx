@@ -131,7 +131,7 @@ export default function Navbar({ onCmd }) {
           borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
         }}
       >
-        <div className="mx-auto max-w-7xl flex items-center justify-between">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[88vw] flex items-center justify-between">
           {/* Logo — Clash Display wordmark matching the section headings;
               the accent period carries the signature instead of a script font. */}
           <a
@@ -142,8 +142,9 @@ export default function Navbar({ onCmd }) {
             Aayush<span style={{ color: "var(--accent)" }}>.</span>
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav — inline links need ~1024px to fit all seven without
+              overflowing; below that the hamburger overlay is the menu. */}
+          <div className="hidden lg:flex items-center gap-8">
             {links.map((l) => (
               <MagneticNavLink
                 key={l.label}

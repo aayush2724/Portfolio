@@ -30,7 +30,7 @@ export default function BeyondCodeBento() {
   const lowPower = useLowPower()
   return (
     <section id="life" className="relative py-32 px-6 md:px-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
 
         {/* Header */}
         <Reveal>

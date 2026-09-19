@@ -70,7 +70,7 @@ export default function ContactBold() {
 
   return (
     <section id="contact" className="relative py-32 px-6 md:px-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         
         {/* Command Label */}
         <Reveal>

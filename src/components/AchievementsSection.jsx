@@ -7,7 +7,7 @@ import AnimatedHeading from "./AnimatedHeading"
 export default function AchievementsSection() {
   return (
     <section id="achievements" className="relative py-32 px-6 md:px-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         <Reveal>
           <CommandLabel className="mb-6">cat achievements.md</CommandLabel>
         </Reveal>

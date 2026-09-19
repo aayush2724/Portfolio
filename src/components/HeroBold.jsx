@@ -106,7 +106,7 @@ export default function HeroBold({ introDone = true }) {
 
   return (
     <section id="hero" className="relative flex min-h-screen items-center px-6 md:px-16 py-20">
-      <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="w-full max-w-7xl 2xl:max-w-[88vw] mx-auto grid md:grid-cols-2 gap-12 items-center">
 
         {/* Left: Text Content */}
         <motion.div style={heavy ? { y: textY } : undefined} className="flex flex-col justify-center">

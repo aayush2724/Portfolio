@@ -137,7 +137,7 @@ function HorizontalTimeline() {
       style={{ height: scrollRange ? `calc(100vh + ${scrollRange}px)` : "auto" }}
     >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden px-6 md:px-16">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-6xl 2xl:max-w-[88vw]">
           <SectionHeader />
         </div>
 
@@ -238,7 +238,7 @@ function VerticalTimeline() {
 
   return (
     <section id="journey" className="relative py-32 px-6 md:px-16">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         <SectionHeader />
 
         {/* Timeline */}
