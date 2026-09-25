@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { LEETCODE_SOLVED, REPO_COUNT, CONTRIBUTIONS, LEETCODE_STREAK } from "../data/stats"
+import { LEETCODE_SOLVED, REPO_COUNT, CONTRIBUTIONS, CONTRIBUTION_CALENDAR, LEETCODE_STREAK } from "../data/stats"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import CountUp from "./CountUp"
@@ -11,12 +11,18 @@ import { fetchLeetCodeStats } from "../data/leetcodeapi"
 import portfolioData from "../data/portfolioData.json"
 import { useLowPower } from "../context/motion"
 
+/**
+ * Live contribution calendar for the last 365 days. The synced JSON already
+ * renders a real grid on first paint; this refreshes it with today's activity.
+ */
 async function fetchGitHubContributions(username) {
   try {
-    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`)
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
     if (!res.ok) return null
     const data = await res.json()
-    return data.total?.['2026'] || data.total?.['2025'] || null
+    const total = data.total?.lastYear || null
+    const days = Array.isArray(data.contributions) ? data.contributions : null
+    return total || days ? { total, days } : null
   } catch {
     return null
   }
@@ -36,6 +42,7 @@ export default function CodingStatsBold() {
     },
     github: {
       contributions: CONTRIBUTIONS,
+      calendar: CONTRIBUTION_CALENDAR,
       repos: REPO_COUNT,
     },
     streak: {
@@ -45,11 +52,13 @@ export default function CodingStatsBold() {
 
   useEffect(() => {
     const getStats = async () => {
-      const [lc, ghContribs] = await Promise.all([
+      const [lc, gh] = await Promise.all([
         fetchLeetCodeStats("aayush2724"),
         fetchGitHubContributions("aayush2724")
       ])
 
+      // Each source applies on its own, so a LeetCode outage no longer
+      // discards a successful GitHub fetch (or vice versa).
       if (lc && lc.stats) {
         setStats(prev => ({
           ...prev,
@@ -59,10 +68,16 @@ export default function CodingStatsBold() {
           streak: {
             current: lc.streak,
           },
+        }))
+      }
+      if (gh) {
+        setStats(prev => ({
+          ...prev,
           github: {
             ...prev.github,
-            contributions: ghContribs || prev.github.contributions
-          }
+            contributions: gh.total || prev.github.contributions,
+            calendar: gh.days || prev.github.calendar,
+          },
         }))
       }
     }
@@ -252,7 +267,10 @@ export default function CodingStatsBold() {
 
         {/* GitHub Heatmap */}
         <Reveal delay={0.4}>
-          <GitHubHeatmap totalContributions={stats.github.contributions} />
+          <GitHubHeatmap
+            calendar={stats.github.calendar}
+            totalContributions={stats.github.contributions}
+          />
         </Reveal>
 
         {/* Optional: Profile Links */}

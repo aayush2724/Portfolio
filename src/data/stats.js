@@ -44,6 +44,14 @@ export const RECENT_REPOS = portfolioData.github ?? []
 
 export const CONTRIBUTIONS = gh.contributions ?? 0
 
+/**
+ * Per-day contribution calendar for the heatmap, in the compact shape the sync
+ * script writes ({ from, to, days }); see src/data/contributions.js. Null until
+ * the first sync that fetched it, in which case the heatmap fills from the
+ * live API or renders an empty year.
+ */
+export const CONTRIBUTION_CALENDAR = gh.calendar ?? null
+
 /** Not synced from anywhere — hand-maintained, so it lives here with the rest. */
 export const HACKATHONS = 3
 

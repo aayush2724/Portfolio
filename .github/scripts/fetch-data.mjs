@@ -5,7 +5,7 @@
  * Runs via GitHub Actions — no CORS issues since it's server-side
  */
 
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -113,8 +113,23 @@ async function fetchGitHub(username) {
   }
 }
 
+/**
+ * Compact calendar for the heatmap: only non-zero days are kept, so a year of
+ * activity is a few KB in the JSON instead of 365 entries of mostly zeros.
+ */
+function compactCalendar(days) {
+  const out = { from: null, to: null, days: {} };
+  for (const { date, count } of days) {
+    if (!date) continue;
+    if (count) out.days[date] = count;
+    if (!out.from || date < out.from) out.from = date;
+    if (!out.to || date > out.to) out.to = date;
+  }
+  return out.from ? out : null;
+}
+
 async function fetchGitHubContributions(username) {
-  // 1. Try GraphQL API (requires token)
+  // 1. GraphQL (requires token — GITHUB_TOKEN is always present in Actions)
   if (GITHUB_TOKEN) {
     const query = `
       query($username:String!) {
@@ -122,6 +137,12 @@ async function fetchGitHubContributions(username) {
           contributionsCollection {
             contributionCalendar {
               totalContributions
+              weeks {
+                contributionDays {
+                  date
+                  contributionCount
+                }
+              }
             }
           }
         }
@@ -138,51 +159,74 @@ async function fetchGitHubContributions(username) {
         body: JSON.stringify({ query, variables: { username } }),
       });
       const data = await res.json();
-      const count = data?.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions;
-      if (count !== undefined) return count;
+      const cal = data?.data?.user?.contributionsCollection?.contributionCalendar;
+      if (cal?.totalContributions !== undefined) {
+        const days = (cal.weeks || []).flatMap(w =>
+          w.contributionDays.map(d => ({ date: d.date, count: d.contributionCount }))
+        );
+        return { contributions: cal.totalContributions, calendar: compactCalendar(days) };
+      }
     } catch (err) {
       console.error('❌ GitHub GraphQL contributions fetch failed:', err.message);
     }
   }
 
-  // 2. Fallback: Try a public contributions API (no token needed)
+  // 2. Fallback: public contributions API (no token needed), last 365 days
   try {
-    const res = await fetch(`https://github-contributions.vercel.app/api/v1/${username}`);
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
     const data = await res.json();
-    const currentYear = new Date().getFullYear().toString();
-    const yearData = data.years?.find(y => y.year === currentYear);
-    return yearData?.total || 0;
+    const days = Array.isArray(data.contributions) ? data.contributions : [];
+    const calendar = compactCalendar(days);
+    const contributions = data.total?.lastYear ?? days.reduce((n, d) => n + (d.count || 0), 0);
+    if (contributions || calendar) return { contributions, calendar };
   } catch (err) {
     console.error('❌ GitHub public contributions fetch failed:', err.message);
-    return 0;
   }
+  return null;
 }
 
 // ── Main ───────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('🔄 Fetching portfolio data...');
 
-  const [leetcode, github, githubContributions] = await Promise.all([
-    fetchLeetCode(), 
+  const outPath = resolve(__dirname, '../../src/data/portfolioData.json');
+
+  // A source that fails this run keeps its last synced value — writing null
+  // would blank that section of the live site until the next good run.
+  let previous = {};
+  try {
+    previous = JSON.parse(readFileSync(outPath, 'utf8'));
+  } catch {
+    previous = {};
+  }
+
+  const [leetcode, github, githubActivity] = await Promise.all([
+    fetchLeetCode(),
     fetchGitHub(GITHUB_USERNAME),
     fetchGitHubContributions(GITHUB_USERNAME)
   ]);
 
   const output = {
     lastUpdated: new Date().toISOString(),
-    leetcode,
-    github,
+    leetcode: leetcode ?? previous.leetcode ?? null,
+    github: github ?? previous.github ?? [],
     githubStats: {
-      contributions: githubContributions || 0
+      ...(previous.githubStats || {}),
+      contributions: githubActivity?.contributions ?? previous.githubStats?.contributions ?? 0,
+      calendar: githubActivity?.calendar ?? previous.githubStats?.calendar ?? null,
     }
   };
 
-  const outPath = resolve(__dirname, '../../src/data/portfolioData.json');
   writeFileSync(outPath, JSON.stringify(output, null, 2) + '\n');
 
   console.log(`✅ Data written to ${outPath}`);
   if (leetcode) console.log(`   LeetCode: ${leetcode.stats.totalSolved} solved`);
-  if (github) console.log(`   GitHub: ${github.length} repos fetched, ${githubContributions} contributions`);
+  else console.log('   LeetCode: fetch failed, kept previous values');
+  if (github) console.log(`   GitHub: ${github.length} repos fetched`);
+  if (githubActivity) {
+    const days = Object.keys(githubActivity.calendar?.days || {}).length;
+    console.log(`   GitHub: ${githubActivity.contributions} contributions, ${days} active days in calendar`);
+  } else console.log('   GitHub contributions: fetch failed, kept previous values');
 }
 
 main();
