@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "lastUpdated": "2026-09-25T16:11:09.171Z",
-=======
-  "lastUpdated": "2026-09-25T16:11:27.319Z",
->>>>>>> 1719fab (chore: update github stats and portfolio data)
+  "lastUpdated": "2026-09-25T16:15:23.957Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -21,155 +17,127 @@
   "github": [
     {
       "name": "Portfolio",
-<<<<<<< HEAD
       "description": "",
-=======
-      "description": "No description",
->>>>>>> 1719fab (chore: update github stats and portfolio data)
       "url": "https://github.com/aayush2724/Portfolio",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-<<<<<<< HEAD
-      "updatedAt": "2026-09-25T16:11:01Z"
+      "updatedAt": "2026-09-25T16:15:15Z"
     },
     {
       "name": "Translog",
       "description": "",
-=======
-      "updatedAt": "2026-09-25T16:11:14.000Z"
-    },
-    {
-      "name": "Translog",
-      "description": "No description",
->>>>>>> 1719fab (chore: update github stats and portfolio data)
       "url": "https://github.com/aayush2724/Translog",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "topics": [],
-<<<<<<< HEAD
       "updatedAt": "2026-09-25T11:55:50Z"
     },
     {
       "name": "Beatzy",
       "description": "",
-=======
-      "updatedAt": "2026-09-25T11:55:50.000Z"
-    },
-    {
-      "name": "Beatzy",
-      "description": "No description",
->>>>>>> 1719fab (chore: update github stats and portfolio data)
       "url": "https://github.com/aayush2724/Beatzy",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-<<<<<<< HEAD
       "updatedAt": "2026-09-25T11:53:41Z"
-=======
-      "updatedAt": "2026-09-25T11:53:41.000Z"
->>>>>>> 1719fab (chore: update github stats and portfolio data)
     },
     {
       "name": "AlgoVision",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-09-20T22:01:00.000Z"
-    },
-    {
-      "name": "aayush2724",
-      "description": "No description",
-      "url": "https://github.com/aayush2724/aayush2724",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-09-12T18:50:13.000Z"
+      "updatedAt": "2026-09-20T22:01:00Z"
     },
     {
       "name": "Vetra",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Vetra",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-09-02T17:36:19.000Z"
+      "updatedAt": "2026-09-02T17:36:19Z"
     },
     {
       "name": "MedVerify",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/MedVerify",
       "stars": 0,
       "forks": 1,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-08-29T19:35:56.000Z"
+      "updatedAt": "2026-08-29T19:35:56Z"
     },
     {
       "name": "LeadForge",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/LeadForge",
       "stars": 0,
       "forks": 1,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-08-23T06:29:32.000Z"
+      "updatedAt": "2026-08-23T06:29:32Z"
     },
     {
       "name": "Citizen-Resolver-System",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Citizen-Resolver-System",
       "stars": 0,
       "forks": 1,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-07-10T20:40:28.000Z"
+      "updatedAt": "2026-07-10T20:40:28Z"
     },
     {
       "name": "CheckMate",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/CheckMate",
       "stars": 0,
       "forks": 0,
       "language": "HTML",
       "topics": [],
-      "updatedAt": "2026-07-05T15:52:11.000Z"
+      "updatedAt": "2026-07-05T15:52:11Z"
     },
     {
       "name": "Chord-Detector",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/Chord-Detector",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-07-05T15:52:00.000Z"
+      "updatedAt": "2026-07-05T15:52:00Z"
     },
     {
       "name": "DeskGuard",
-      "description": "No description",
+      "description": "",
       "url": "https://github.com/aayush2724/DeskGuard",
       "stars": 0,
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-06-24T08:54:04.000Z"
+      "updatedAt": "2026-06-24T08:54:04Z"
+    },
+    {
+      "name": "Disaster-relief-system",
+      "description": "",
+      "url": "https://github.com/aayush2724/Disaster-relief-system",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-05-19T04:07:58Z"
     }
   ],
   "githubStats": {
-<<<<<<< HEAD
     "contributions": 1244,
-=======
-    "contributions": 1206,
->>>>>>> 1719fab (chore: update github stats and portfolio data)
     "calendar": {
       "from": "2025-09-21",
       "to": "2026-09-25",
@@ -323,7 +291,6 @@
         "2026-09-24": 4,
         "2026-09-25": 6
       }
-    },
-    "publicRepos": 17
+    }
   }
 }
