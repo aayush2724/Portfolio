@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-25T16:10:46.984Z",
+  "lastUpdated": "2026-09-25T16:11:09.171Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
@@ -15,6 +15,16 @@
     "totalActiveDays": 108
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-09-25T16:11:01Z"
+    },
     {
       "name": "Translog",
       "description": "",
@@ -34,16 +44,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-09-25T11:53:41Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-09-25T02:53:51Z"
     },
     {
       "name": "AlgoVision",
@@ -137,7 +137,7 @@
     }
   ],
   "githubStats": {
-    "contributions": 1243,
+    "contributions": 1244,
     "calendar": {
       "from": "2025-09-21",
       "to": "2026-09-25",
@@ -289,7 +289,7 @@
         "2026-09-22": 8,
         "2026-09-23": 7,
         "2026-09-24": 4,
-        "2026-09-25": 5
+        "2026-09-25": 6
       }
     }
   }
