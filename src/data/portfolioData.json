@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-09-30T03:23:43.852Z",
+  "lastUpdated": "2026-09-30T15:50:26.713Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
-    "ranking": 435234,
+    "ranking": 433538,
     "stats": {
-      "totalSolved": 754,
+      "totalSolved": 755,
       "easy": 123,
-      "medium": 178,
+      "medium": 179,
       "hard": 33,
-      "totalSubmissions": 339
+      "totalSubmissions": 340
     },
-    "streak": 50,
-    "totalActiveDays": 113
+    "streak": 51,
+    "totalActiveDays": 114
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-09-30T15:50:18Z"
+    },
     {
       "name": "AlgoVision",
       "description": "",
@@ -24,16 +34,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-09-29T19:30:05Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-09-29T17:25:31Z"
     },
     {
       "name": "Beatzy",
@@ -137,7 +137,7 @@
     }
   ],
   "githubStats": {
-    "contributions": 1258,
+    "contributions": 1259,
     "calendar": {
       "from": "2025-09-28",
       "to": "2026-09-30",
@@ -292,7 +292,7 @@
         "2026-09-27": 14,
         "2026-09-28": 2,
         "2026-09-29": 1,
-        "2026-09-30": 2
+        "2026-09-30": 3
       }
     }
   }
