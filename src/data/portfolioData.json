@@ -1,20 +1,30 @@
 {
-  "lastUpdated": "2026-09-29T17:25:16.034Z",
+  "lastUpdated": "2026-09-30T03:23:43.852Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 435234,
     "stats": {
-      "totalSolved": 753,
+      "totalSolved": 754,
       "easy": 123,
       "medium": 178,
-      "hard": 32,
-      "totalSubmissions": 338
+      "hard": 33,
+      "totalSubmissions": 339
     },
-    "streak": 49,
-    "totalActiveDays": 112
+    "streak": 50,
+    "totalActiveDays": 113
   },
   "github": [
+    {
+      "name": "AlgoVision",
+      "description": "",
+      "url": "https://github.com/aayush2724/AlgoVision",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-09-29T19:30:05Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -23,7 +33,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-09-29T14:57:47Z"
+      "updatedAt": "2026-09-29T17:25:31Z"
     },
     {
       "name": "Beatzy",
@@ -44,16 +54,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-09-28T03:41:02Z"
-    },
-    {
-      "name": "AlgoVision",
-      "description": "",
-      "url": "https://github.com/aayush2724/AlgoVision",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-09-27T11:50:07Z"
     },
     {
       "name": "Translog",
@@ -137,10 +137,10 @@
     }
   ],
   "githubStats": {
-    "contributions": 1256,
+    "contributions": 1258,
     "calendar": {
       "from": "2025-09-28",
-      "to": "2026-09-29",
+      "to": "2026-09-30",
       "days": {
         "2025-09-28": 6,
         "2025-10-01": 2,
@@ -291,7 +291,8 @@
         "2026-09-26": 1,
         "2026-09-27": 14,
         "2026-09-28": 2,
-        "2026-09-29": 1
+        "2026-09-29": 1,
+        "2026-09-30": 2
       }
     }
   }
