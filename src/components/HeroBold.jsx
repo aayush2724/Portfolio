@@ -1,11 +1,10 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { LEETCODE_SOLVED, REPO_COUNT, HACKATHONS } from "../data/stats"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { TypingTerminal } from "./Terminal"
 import MagneticButton from "./MagneticButton"
 import CountUp from "./CountUp"
 import { usePrefersReducedMotion, useLowPower } from "../context/motion"
-import portfolioData from "../data/portfolioData.json"
 
 const EASE = [0.22, 1, 0.36, 1]
 
@@ -91,6 +90,20 @@ export default function HeroBold({ introDone = true }) {
 
   const leetcodeSolved = LEETCODE_SOLVED
   const projectsShipped = REPO_COUNT
+
+  // Stable identity: TypingTerminal restarts its sequence whenever `steps`
+  // changes, and this component re-renders on every hover and image load.
+  const terminalSteps = useMemo(
+    () => [
+      { cmd: "whoami", out: "Aayush Kumar — CS student, full-stack dev & OWASP President" },
+      { cmd: "cat skills.txt", out: "React · Next.js · Node · Python · C++ · LangChain · OpenCV" },
+      { cmd: "ls projects/", out: "auralis  deskguard  mindflow  leadforge  beatzy  civicresolve" },
+      { cmd: "cat achievements.txt", out: "🏆 3rd @ NIT Trichy · GS Hackathon · Samsung ennovateX" },
+      { cmd: "echo $ROLE", out: "President — OWASP Student Chapter, NIE Mysore" },
+      { cmd: "./launch --status", out: "🚀 open to internships & collaboration" },
+    ],
+    []
+  )
   const showStats = introDone || reduced
   const heavy = !reduced && !lowPower
 
@@ -115,7 +128,7 @@ export default function HeroBold({ introDone = true }) {
             {...intro(0)}
             className="mb-6 text-xs md:text-sm tracking-[0.35em] text-[var(--accent)]"
           >
-            CS STUDENT · FULL-STACK DEVELOPER · OWASP PRESIDENT
+            CS STUDENT · FULL-STACK DEVELOPER · OWASP CHAPTER PRESIDENT
           </motion.p>
 
           {/* Kinetic name: letters rise on intro, un-settle with stagger on scroll */}
@@ -176,14 +189,7 @@ export default function HeroBold({ introDone = true }) {
               className="h-[320px] sm:h-[380px]"
               title="aayush@portfolio — zsh"
               path="~"
-              steps={[
-                { cmd: "whoami", out: "Aayush Kumar — CS student, full-stack dev & OWASP President" },
-                { cmd: "cat skills.txt", out: "React · Next.js · Node · Python · C++ · LangChain · OpenCV" },
-                { cmd: "ls projects/", out: "auralis  deskguard  mindflow  leadforge  beatzy  civicresolve" },
-                { cmd: "cat achievements.txt", out: "🏆 3rd @ NIT Trichy · GS Hackathon · Samsung ennovateX" },
-                { cmd: "echo $ROLE", out: "President — OWASP Student Chapter, NIE Mysore" },
-                { cmd: "./launch --status", out: "🚀 open to internships & collaboration" },
-              ]}
+              steps={terminalSteps}
             />
           </motion.div>
 
@@ -419,6 +425,7 @@ export default function HeroBold({ introDone = true }) {
 
       {/* Scroll hint */}
       <motion.div
+        aria-hidden="true"
         style={heavy ? { opacity: hintOpacity } : undefined}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--accent)] pointer-events-none"
       >

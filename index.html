@@ -2,12 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Aayush Kumar — Full-Stack Developer & CS Student</title>
     <meta name="description" content="Portfolio of Aayush Kumar — CS student, full-stack developer, and hackathon competitor. Building with React, Node.js and Python — and working in LLMs, RAG and generative AI." />
     <meta name="keywords" content="Aayush Kumar, full-stack developer, portfolio, React, Node.js, Python, C++, LLM, RAG, GenAI, generative AI, LangChain, AI engineer, hackathon, LeetCode, CS student" />
     <meta name="author" content="Aayush Kumar" />
     <meta name="theme-color" content="#d4ff3f" />
+    <meta name="color-scheme" content="dark" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -19,12 +20,14 @@
     <meta property="og:image:height" content="1260" />
     <meta property="og:image:alt" content="Aayush Kumar — CS student and full-stack developer" />
     <meta property="og:site_name" content="Aayush Kumar Portfolio" />
+    <meta property="og:locale" content="en_IN" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Aayush Kumar — Full-Stack Developer & CS Student" />
     <meta name="twitter:description" content="Portfolio of Aayush Kumar — CS student, full-stack developer, and hackathon competitor." />
     <meta name="twitter:image" content="https://aayush-2724.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Aayush Kumar — CS student and full-stack developer" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://aayush-2724.vercel.app/" />
@@ -32,25 +35,22 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+
     <!--
-      Fonts load async: as render-blocking <link rel=stylesheet> these three cost
-      ~520ms of blocked first paint on a throttled phone. media=print keeps them
-      out of the critical path, and onload promotes them once fetched. Every URL
-      already carries display=swap, so text paints in the fallback meanwhile.
+      Fonts are self-hosted (see src/index.css), so no request leaves this
+      origin for a font. The display face is preloaded in the two weights the
+      first paint needs — the hero name and the wordmark — so the headline
+      renders in Clash Display instead of swapping in after the fallback.
     -->
-    <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-    <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" />
-    <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" />
-    <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" />
-      <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" />
-    </noscript>
+    <link rel="preload" href="/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ClashDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!--
+      The stylesheet is linked from the HTML rather than imported in main.jsx:
+      the browser discovers it without waiting for the module graph, and the
+      <noscript> fallback below is styled even when scripts are off.
+    -->
+    <link rel="stylesheet" href="/src/index.css" />
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -59,6 +59,7 @@
       "@type": "Person",
       "name": "Aayush Kumar",
       "url": "https://aayush-2724.vercel.app/",
+      "image": "https://aayush-2724.vercel.app/portrait-896.jpg",
       "jobTitle": "CS Student & Full-Stack Developer",
       "sameAs": [
         "https://github.com/aayush2724",
@@ -71,6 +72,25 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main class="min-h-screen bg-bg px-6 py-16 font-body text-fg md:px-16">
+        <div class="mx-auto max-w-2xl">
+          <p class="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">CS student · full-stack developer</p>
+          <h1 class="mb-6 font-display text-5xl uppercase leading-none">Aayush Kumar</h1>
+          <p class="mb-4 leading-relaxed text-muted">
+            This portfolio is an interactive app and needs JavaScript to render its projects, stats and case studies.
+            The essentials are here without it:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 text-muted">
+            <li><a class="text-accent underline" href="/resume.pdf">Download the resume (PDF)</a></li>
+            <li><a class="text-accent underline" href="https://github.com/aayush2724" rel="noopener noreferrer">GitHub — github.com/aayush2724</a></li>
+            <li><a class="text-accent underline" href="https://linkedin.com/in/aayush2724" rel="noopener noreferrer">LinkedIn — linkedin.com/in/aayush2724</a></li>
+            <li><a class="text-accent underline" href="mailto:aayush2615@gmail.com">Email — aayush2615@gmail.com</a></li>
+            <li><a class="text-accent underline" href="/privacy">Privacy policy</a></li>
+          </ul>
+        </div>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

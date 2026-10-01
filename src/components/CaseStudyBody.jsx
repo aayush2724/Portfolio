@@ -25,18 +25,23 @@ function normalize(item) {
   }
 }
 
-export default function CaseStudyBody({ caseStudy }) {
+/**
+ * `headingTag` is "h1" on the standalone /work page (where this is the page
+ * title) and "h2" inside the modal (where the page already has its h1).
+ */
+export default function CaseStudyBody({ caseStudy, headingTag: Heading = "h2" }) {
   if (!caseStudy) return null
   const p = normalize(caseStudy)
+  const Sub = Heading === "h1" ? "h2" : "h3"
 
   return (
     <>
       {/* Header */}
       <div className="mb-8">
         <div className="mb-3 flex flex-wrap items-center gap-3">
-          <h2 className="font-display text-4xl md:text-5xl uppercase leading-tight">
+          <Heading id="case-study-title" className="font-display text-4xl md:text-5xl uppercase leading-tight">
             {p.name}
-          </h2>
+          </Heading>
           {p.badge && (
             <span className="rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-3 py-1 text-xs font-mono text-[var(--accent)]">
               {p.badge}
@@ -102,9 +107,9 @@ export default function CaseStudyBody({ caseStudy }) {
       {/* The repo's own README — the description the code actually backs up */}
       <section>
         <div className="mb-4 flex items-center gap-3">
-          <h3 className="font-display text-2xl uppercase text-[var(--accent)]">
+          <Sub className="font-display text-2xl uppercase text-[var(--accent)]">
             README.md
-          </h3>
+          </Sub>
           <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--muted)]">
             live from GitHub
           </span>

@@ -2,7 +2,10 @@ import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Text, Float, MeshDistortMaterial, Sphere, Box, Torus } from "@react-three/drei"
 import { motion, AnimatePresence } from "framer-motion"
-import * as THREE from "three"
+import useFocusTrap from "../context/useFocusTrap"
+// troika (behind drei's <Text>) reads TTF/OTF/WOFF. Bundling the same Inter the
+// page already ships keeps the 3D text off a third-party font CDN.
+import INTER_BOLD from "@fontsource/inter/files/inter-latin-700-normal.woff?url"
 
 function BouncingText() {
   const meshRef = useRef()
@@ -20,7 +23,7 @@ function BouncingText() {
           color="var(--accent)"
           anchorX="center"
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2"
+          font={INTER_BOLD}
           outlineWidth={0.03}
           outlineColor="var(--accent)"
         >
@@ -32,7 +35,7 @@ function BouncingText() {
           color="var(--accent)"
           anchorX="center"
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2"
+          font={INTER_BOLD}
           outlineWidth={0.03}
           outlineColor="var(--accent)"
         >
@@ -172,6 +175,12 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
   const [excuseIndex, setExcuseIndex] = useState(0)
   const [displayedExcuse, setDisplayedExcuse] = useState("")
   const [isTyping, setIsTyping] = useState(true)
+  const panelRef = useRef(null)
+  const closeRef = useRef(null)
+
+  // Full-screen takeover: trap focus while open, start on the close button,
+  // and return focus to the "Live Demo" button that opened it.
+  useFocusTrap(panelRef, isOpen, { initialFocus: closeRef })
 
   useEffect(() => {
     if (!isOpen) return
@@ -209,11 +218,16 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${projectTitle} is not deployed yet`}
+          tabIndex={-1}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center outline-none"
           style={{ background: "var(--bg)" }}
         >
           <div
@@ -223,7 +237,7 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
             }}
           />
 
-          <div className="absolute inset-0">
+          <div className="absolute inset-0" aria-hidden="true">
             <Canvas camera={{ position: [0, 0, 6], fov: 55 }}>
               <SceneCamera />
               <ambientLight intensity={0.3} />
@@ -271,7 +285,7 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               🚧 &nbsp;Deployment Status: Pending Since Forever
             </motion.div>
 
-            <motion.h1
+            <motion.h2
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -285,7 +299,7 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               }}
             >
               Oops.
-            </motion.h1>
+            </motion.h2>
 
             <motion.p
               initial={{ y: 20, opacity: 0 }}
@@ -409,6 +423,8 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
           </div>
 
           <motion.button
+            ref={closeRef}
+            aria-label="Close"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5 }}

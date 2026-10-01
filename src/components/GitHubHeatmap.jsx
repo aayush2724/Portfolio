@@ -113,8 +113,8 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
           {/* Weekday rail */}
           <div
             aria-hidden="true"
-            className="flex flex-col shrink-0 font-mono text-[9px]"
-            style={{ width: RAIL_W, paddingTop: MONTH_ROW, gap, color: "var(--muted)", opacity: 0.6 }}
+            className="flex flex-col shrink-0 font-mono text-[10px]"
+            style={{ width: RAIL_W, paddingTop: MONTH_ROW, gap, color: "var(--muted)", opacity: 0.95 }}
           >
             {DAY_LABELS.map((label, i) => (
               <span key={i} className="leading-none" style={{ height: cell }}>
@@ -124,7 +124,7 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
           </div>
 
           <div className="relative" style={{ width: gridWidth }}>
-            <div className="relative font-mono text-[9px]" style={{ height: MONTH_ROW, color: "var(--muted)", opacity: 0.6 }}>
+            <div className="relative font-mono text-[10px]" style={{ height: MONTH_ROW, color: "var(--muted)", opacity: 0.95 }}>
               {monthLabels.map((m) => (
                 <span key={m.col} className="absolute top-0 leading-none" style={{ left: m.col * step }}>
                   {m.label}
@@ -137,6 +137,10 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
                 <div key={week.find(Boolean)?.date ?? wi} className="flex flex-col" style={{ gap }}>
                   {week.map((day, di) =>
                     day ? (
+                      /* The whole grid is one role="img" with a text summary;
+                         per-cell tooltips are a pointer-only enhancement, and
+                         365 focusable cells would be unusable by keyboard. */
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                       <div
                         key={day.date}
                         className="transition-transform duration-150 hover:scale-150 hover:z-10 relative"
@@ -179,15 +183,15 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 mt-4">
-        <span className="font-mono text-[9px]" style={{ color: "var(--muted)", opacity: 0.6 }}>
+        <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>
           {truncated ? `last ${visible.length} weeks` : ""}
         </span>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[9px]" style={{ color: "var(--muted)", opacity: 0.6 }}>Less</span>
+          <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>Less</span>
           {LEVELS.map((color, i) => (
             <div key={i} className="rounded-[2px]" style={{ width: legendCell, height: legendCell, background: color }} />
           ))}
-          <span className="font-mono text-[9px]" style={{ color: "var(--muted)", opacity: 0.6 }}>More</span>
+          <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>More</span>
         </div>
       </div>
     </div>

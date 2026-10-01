@@ -115,6 +115,7 @@ export default function Navbar({ onCmd }) {
   return (
     <>
       <motion.nav
+        aria-label="Primary"
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: hidden && !mobileOpen ? "-110%" : 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -136,6 +137,7 @@ export default function Navbar({ onCmd }) {
               the accent period carries the signature instead of a script font. */}
           <a
             href="#hero"
+            aria-label="Aayush Kumar — back to top"
             className="font-display font-bold text-2xl leading-none tracking-tight transition-colors duration-300 hover:text-[var(--accent)]"
             style={{ color: "var(--fg)" }}
           >
@@ -166,21 +168,23 @@ export default function Navbar({ onCmd }) {
                 borderColor: "var(--line)",
                 color: "var(--muted)",
               }}
-              aria-label="Open command palette"
+              aria-label="Open the shell (Ctrl+K)"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
               </svg>
             </button>
 
-            {/* Resume Button */}
+            {/* Resume Button — shown on every breakpoint so a phone keeps a
+                primary action above the fold; the hero CTA sits below the
+                terminal there. */}
             <MagneticButton
               as={motion.a}
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               strength={0.35}
-              className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:gap-3"
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:gap-3"
               style={{
                 background: "var(--accent)",
                 color: "var(--accent-ink)",
@@ -194,7 +198,9 @@ export default function Navbar({ onCmd }) {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="flex flex-col gap-1.5 w-9 h-9 items-center justify-center"
-              aria-label="Toggle menu"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="site-menu"
             >
               <motion.span
                 animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}

@@ -322,7 +322,7 @@ function StackCard({ cat, i, lowPower, reduced, isOpen, onOpen, cardRef }) {
               className="font-mono text-xs tracking-widest mb-3"
               style={{ color: "var(--muted)" }}
             >
-              <span style={{ color: "var(--accent)" }}>//</span> {cat.label}
+              <span style={{ color: "var(--accent)" }}>{"//"}</span> {cat.label}
             </Label>
             <span
               aria-hidden="true"
@@ -495,7 +495,7 @@ function ExpandedPanel({ cat, onClose, reduced }) {
         >
           <div className="flex items-start justify-between gap-6">
             <motion.p layoutId={`stack-label-${cat.label}`} className="font-mono text-xs tracking-widest" style={{ color: "var(--muted)" }}>
-              <span style={{ color: "var(--accent)" }}>//</span> {cat.label}
+              <span style={{ color: "var(--accent)" }}>{"//"}</span> {cat.label}
             </motion.p>
             <button
               ref={closeRef}
@@ -579,7 +579,7 @@ function ExpandedPanel({ cat, onClose, reduced }) {
               style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
             >
               <p className="font-mono text-xs tracking-widest mb-4" style={{ color: "var(--muted)" }}>
-                <span style={{ color: "var(--accent)" }}>//</span> built with this
+                <span style={{ color: "var(--accent)" }}>{"//"}</span> built with this
               </p>
               <div className="flex flex-col divide-y" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                 {matches.slice(0, 4).map((p) => (
@@ -654,7 +654,7 @@ export default function SkillsMarquee() {
               className="font-display text-5xl md:text-7xl uppercase leading-none"
             />
             <p className="mt-4 font-mono text-sm" style={{ color: "var(--muted)" }}>
-              <span style={{ color: "var(--accent)" }}>//</span> open a discipline to see every tool and what it built
+              <span style={{ color: "var(--accent)" }}>{"//"}</span> open a discipline to see every tool and what it built
             </p>
           </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { safeHref, safeImageSrc } from "../lib/safeUrl"
 
 /**
  * Fetches and renders a repo's real README from the GitHub API.
@@ -67,51 +68,89 @@ async function fetchReadme(owner, repo) {
     return val
   }
 
-  // Happy path: raw README, no rate limit.
-  for (const name of README_NAMES) {
-    const r = await fetch(
-      `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${name}`
-    )
-    if (r.ok) {
-      const text = await r.text()
-      if (text.trim()) return store({ kind: "readme", text })
-    }
-  }
+  // One deadline for the whole lookup: a hung CDN must not leave the modal
+  // showing a cursor forever when the fallback copy is already available.
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 20000)
+  const opts = { signal: controller.signal }
 
-  // No README file found — one best-effort API call for the description.
   try {
-    const meta = await fetch(`https://api.github.com/repos/${owner}/${repo}`)
-    if (meta.status === 404) {
-      const err = new Error("repo not found")
-      err.repoGone = true
-      throw err
+    // Happy path: raw README, no rate limit.
+    for (const name of README_NAMES) {
+      const r = await fetch(
+        `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${name}`,
+        opts
+      )
+      if (r.ok) {
+        const text = await r.text()
+        if (text.trim()) return store({ kind: "readme", text })
+      }
     }
-    if (meta.ok) {
-      const data = await meta.json()
-      if (data.description) return store({ kind: "description", text: data.description })
+
+    // No README file found — one best-effort API call for the description.
+    try {
+      const meta = await fetch(`https://api.github.com/repos/${owner}/${repo}`, opts)
+      if (meta.status === 404) {
+        const err = new Error("repo not found")
+        err.repoGone = true
+        throw err
+      }
+      if (meta.ok) {
+        const data = await meta.json()
+        if (data.description) return store({ kind: "description", text: data.description })
+      }
+    } catch (e) {
+      if (e.repoGone) throw e
+      /* API rate-limited or offline — fall through to the generic error */
     }
-  } catch (e) {
-    if (e.repoGone) throw e
-    /* API rate-limited or offline — fall through to the generic error */
+    throw new Error("no readme or description")
+  } finally {
+    clearTimeout(timer)
   }
-  throw new Error("no readme or description")
 }
 
 /* ── markdown → React (safe subset) ─────────────────────────────────── */
 
-/** Resolve README-relative image paths against the repo's raw file host. */
-function resolveUrl(src, owner, repo) {
-  if (/^(https?:)?\/\//.test(src) || src.startsWith("data:")) return src
-  return `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${src.replace(/^\.?\//, "")}`
+/**
+ * Bases for README-relative URLs: images resolve against the raw file host,
+ * links against the repo's file browser. Every URL then passes through the
+ * allow-list in src/lib/safeUrl.js — README content is not authored here, so
+ * a `javascript:` link in it must never reach an href.
+ */
+function bases(owner, repo) {
+  return {
+    raw: `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/`,
+    blob: `https://github.com/${owner}/${repo}/blob/HEAD/`,
+  }
 }
 
-/** Inline markdown: code, images, links, bold, italic, strikethrough. */
+/** Build a sanitised <img> for `![alt](src)`, or the alt text when the URL is not allowed. */
+function imageNode(alt, src, ctx, key) {
+  const safe = safeImageSrc(src, bases(ctx.owner, ctx.repo).raw)
+  if (!safe) return alt || null
+  return (
+    <img
+      key={key}
+      src={safe}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      className="my-2 inline-block max-w-full rounded-lg"
+    />
+  )
+}
+
+/**
+ * Inline markdown: code, linked images (the badge idiom `[![alt](img)](href)`),
+ * images, links, bold, italic, strikethrough.
+ */
 function renderInline(text, ctx, keyBase) {
   const nodes = []
   let rest = text
   let k = 0
   const RX =
-    /(`[^`]+`)|(!\[[^\]]*\]\([^)\s]+\))|(\[[^\]]+\]\([^)\s]+\))|(\*\*[^*]+\*\*|__[^_]+__)|(\*[^*\s][^*]*\*|_[^_\s][^_]*_)|(~~[^~]+~~)/
+    /(`[^`]+`)|(\[!\[[^\]]*\]\([^)\s]+\)\]\([^)\s]+\))|(!\[[^\]]*\]\([^)\s]+\))|(\[[^\]]+\]\([^)\s]+\))|(\*\*[^*]+\*\*|__[^_]+__)|(\*[^*\s][^*]*\*|_[^_\s][^_]*_)|(~~[^~]+~~)/
   while (rest) {
     const m = RX.exec(rest)
     if (!m) {
@@ -128,34 +167,48 @@ function renderInline(text, ctx, keyBase) {
         </code>
       )
     } else if (m[2]) {
-      const im = /!\[([^\]]*)\]\(([^)\s]+)\)/.exec(tok)
-      nodes.push(
-        <img
-          key={key}
-          src={resolveUrl(im[2], ctx.owner, ctx.repo)}
-          alt={im[1]}
-          loading="lazy"
-          className="my-2 inline-block max-w-full rounded-lg"
-        />
-      )
+      const lim = /\[!\[([^\]]*)\]\(([^)\s]+)\)\]\(([^)\s]+)\)/.exec(tok)
+      const img = imageNode(lim[1], lim[2], ctx, `${key}-img`)
+      const href = safeHref(lim[3], bases(ctx.owner, ctx.repo).blob)
+      if (img == null) {
+        /* nothing renderable */
+      } else if (href) {
+        nodes.push(
+          <a key={key} href={href} target="_blank" rel="noopener noreferrer" className="inline-block align-middle">
+            {img}
+          </a>
+        )
+      } else {
+        nodes.push(img)
+      }
     } else if (m[3]) {
-      const lm = /\[([^\]]+)\]\(([^)\s]+)\)/.exec(tok)
-      nodes.push(
-        <a
-          key={key}
-          href={lm[2]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
-        >
-          {renderInline(lm[1], ctx, key)}
-        </a>
-      )
+      const im = /!\[([^\]]*)\]\(([^)\s]+)\)/.exec(tok)
+      const img = imageNode(im[1], im[2], ctx, key)
+      if (img != null) nodes.push(img)
     } else if (m[4]) {
-      nodes.push(<strong key={key} className="text-[var(--fg)]">{tok.slice(2, -2)}</strong>)
+      const lm = /\[([^\]]+)\]\(([^)\s]+)\)/.exec(tok)
+      const href = safeHref(lm[2], bases(ctx.owner, ctx.repo).blob)
+      if (href) {
+        nodes.push(
+          <a
+            key={key}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-2 hover:decoration-[var(--accent)]"
+          >
+            {renderInline(lm[1], ctx, key)}
+          </a>
+        )
+      } else {
+        // Unsafe or unparseable target: keep the label, drop the link.
+        nodes.push(...renderInline(lm[1], ctx, key))
+      }
     } else if (m[5]) {
-      nodes.push(<em key={key}>{tok.slice(1, -1)}</em>)
+      nodes.push(<strong key={key} className="text-[var(--fg)]">{tok.slice(2, -2)}</strong>)
     } else if (m[6]) {
+      nodes.push(<em key={key}>{tok.slice(1, -1)}</em>)
+    } else if (m[7]) {
       nodes.push(<del key={key}>{tok.slice(2, -2)}</del>)
     }
     rest = rest.slice(m.index + tok.length)

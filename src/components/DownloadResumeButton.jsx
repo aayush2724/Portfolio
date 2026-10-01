@@ -1,62 +1,62 @@
 import { motion } from "framer-motion"
 import MagneticButton from "./MagneticButton"
 
-export default function DownloadResumeButton({ className = "", variant = "primary" }) {
-  const handleDownload = () => {
-    // Create a temporary anchor element to trigger download
-    const link = document.createElement('a')
-    link.href = '/resume.pdf'
-    link.download = 'Aayush_Kumar_Resume.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+/**
+ * The resume is a file, so every variant is a real <a download> — it works
+ * without JavaScript, shows the destination on hover/long-press, and reads to
+ * assistive tech as a link rather than a button that happens to navigate.
+ */
+const HREF = "/resume.pdf"
+const FILENAME = "Aayush_Kumar_Resume.pdf"
 
+function Icon({ size = 16, strokeWidth = 2 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+  )
+}
+
+export default function DownloadResumeButton({ className = "", variant = "primary" }) {
   if (variant === "minimal") {
     return (
-      <button
-        onClick={handleDownload}
+      <a
+        href={HREF}
+        download={FILENAME}
         className={`inline-flex items-center gap-2 font-mono text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)] ${className}`}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
+        <Icon />
         <span>Resume</span>
-      </button>
+      </a>
     )
   }
 
   if (variant === "outline") {
     return (
-      <motion.button
-        onClick={handleDownload}
+      <motion.a
+        href={HREF}
+        download={FILENAME}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)]/50 px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)] ${className}`}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
+        <Icon />
         <span>Download Resume</span>
-      </motion.button>
+      </motion.a>
     )
   }
 
   // Primary variant (default)
   return (
     <MagneticButton
-      onClick={handleDownload}
+      as={motion.a}
+      href={HREF}
+      download={FILENAME}
       className={`glow-pill inline-flex items-center gap-3 rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-all duration-300 ${className}`}
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-      </svg>
+      <Icon size={18} strokeWidth={2.5} />
       <span>Download Resume</span>
     </MagneticButton>
   )

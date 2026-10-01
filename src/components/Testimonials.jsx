@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Reveal from "./Reveal"
 import CommandLabel from "./CommandLabel"
@@ -6,6 +6,13 @@ import AnimatedHeading from "./AnimatedHeading"
 import { usePrefersReducedMotion, useLowPower } from "../context/motion"
 import { EASE, DUR } from "../context/ease"
 
+/**
+ * `verified: true` means the quote is attributed to a named person in a
+ * stated role. Entries without a named source are kept here for the owner to
+ * attribute properly, but are NOT rendered — an anonymous "faculty member" or
+ * "open source contributor" quote cannot be checked by a visitor and reads as
+ * fabricated even when it isn't. Add a real name and role, flip the flag.
+ */
 const TESTIMONIALS = [
   {
     id: 1,
@@ -13,6 +20,7 @@ const TESTIMONIALS = [
     role: "Hackathon Teammate · Panic-At-The-Deadline",
     text: "Aayush is the kind of teammate who turns chaos into shipped products. During ThinkRoot x Vortex'26, he built the entire LeadForge backend in under 8 hours while I handled the frontend. His ability to stay calm under pressure is unmatched.",
     avatar: "KH",
+    verified: true,
   },
   {
     id: 2,
@@ -20,6 +28,7 @@ const TESTIMONIALS = [
     role: "The National Institute of Engineering, Mysore",
     text: "Aayush consistently demonstrates strong problem-solving skills and a genuine passion for building impactful software. His work on the Citizen Resolver System showed real-world application of full-stack development for civic tech.",
     avatar: "NF",
+    verified: false,
   },
   {
     id: 3,
@@ -27,8 +36,12 @@ const TESTIMONIALS = [
     role: "GitHub Community",
     text: "I've reviewed several of Aayush's repositories. His code is clean, well-documented, and follows best practices. The AlgoVision project in particular is a great educational resource that makes algorithms accessible.",
     avatar: "OC",
+    verified: false,
   },
 ]
+
+/** Only attributable testimonials are rendered. */
+const ITEMS = TESTIMONIALS.filter((t) => t.verified)
 
 const AUTOPLAY_MS = 6500
 
@@ -99,7 +112,8 @@ export default function Testimonials() {
   const [paused, setPaused] = useState(false)
   const reduced = usePrefersReducedMotion()
   const lowPower = useLowPower()
-  const count = TESTIMONIALS.length
+  const count = ITEMS.length
+  const multi = count > 1
 
   const go = useCallback(
     (dir) => setState(([i]) => [(i + dir + count) % count, dir]),
@@ -112,14 +126,16 @@ export default function Testimonials() {
 
   // Autoplay — pauses on hover/focus, and never runs under reduced motion.
   useEffect(() => {
-    if (paused || reduced) return
+    if (paused || reduced || !multi) return
     const t = setInterval(() => go(1), AUTOPLAY_MS)
     return () => clearInterval(t)
-  }, [paused, reduced, go])
+  }, [paused, reduced, multi, go])
 
-  const current = TESTIMONIALS[index]
-  const prev = TESTIMONIALS[(index - 1 + count) % count]
-  const next = TESTIMONIALS[(index + 1) % count]
+  if (!count) return null
+
+  const current = ITEMS[index]
+  const prev = ITEMS[(index - 1 + count) % count]
+  const next = ITEMS[(index + 1) % count]
 
   return (
     <section id="testimonials" className="relative py-32 px-6 md:px-16">
@@ -142,7 +158,10 @@ export default function Testimonials() {
 
         {/* Carousel */}
         <Reveal delay={0.1} fade>
-          <div
+          {/* Focusable region so arrow keys page the deck (WAI-ARIA carousel
+              pattern); the arrows and tabs below are real buttons too. */}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
+          <div tabIndex={0}
             className="relative"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
@@ -155,12 +174,11 @@ export default function Testimonials() {
               if (e.key === "ArrowLeft") go(-1)
               if (e.key === "ArrowRight") go(1)
             }}
-            tabIndex={0}
           >
             {/* Deck: the neighbouring cards peek out from behind the active
                 one, fanned like a held hand of cards. Purely decorative —
                 dimmed, clipped and inert. */}
-            {!reduced && (
+            {!reduced && multi && (
               <>
                 <div
                   aria-hidden="true"
@@ -205,7 +223,7 @@ export default function Testimonials() {
                     animate="center"
                     exit="exit"
                     transition={{ duration: DUR.enter, ease: EASE.ENTER }}
-                    drag={lowPower ? "x" : false}
+                    drag={lowPower && multi ? "x" : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.2}
                     onDragEnd={(e, info) => {
@@ -219,12 +237,13 @@ export default function Testimonials() {
               )}
             </div>
 
-            {/* Controls */}
+            {/* Controls — nothing to page through with a single card */}
+            {multi && (
             <div className="mt-8 flex items-center justify-between">
               <Arrow dir={-1} onClick={() => go(-1)} />
 
               <div className="flex items-center gap-3" role="tablist" aria-label="Choose testimonial">
-                {TESTIMONIALS.map((t, i) => (
+                {ITEMS.map((t, i) => (
                   <button
                     key={t.id}
                     role="tab"
@@ -242,6 +261,7 @@ export default function Testimonials() {
 
               <Arrow dir={1} onClick={() => go(1)} />
             </div>
+            )}
           </div>
         </Reveal>
       </div>

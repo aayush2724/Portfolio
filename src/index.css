@@ -1,3 +1,21 @@
+/* ── Self-hosted fonts ──────────────────────────────────────────────────────
+   Inter, JetBrains Mono and Instrument Serif come from the @fontsource packages
+   (SIL Open Font License, latin subset only — the site is English) and are
+   bundled by Vite; Clash Display (Indian Type
+   Foundry, Fontshare free licence) is served from /public/fonts. No request
+   leaves this origin for a font — visitor IPs never reach a font CDN and two
+   render-critical third-party connections are gone. */
+@import "@fontsource/inter/latin-300.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+@import "@fontsource/jetbrains-mono/latin-700.css";
+@import "@fontsource/instrument-serif/latin-400.css";
+@import "@fontsource/instrument-serif/latin-400-italic.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +29,38 @@
   --line: rgba(255,255,255,0.10);
   --accent: #d4ff3f;     /* ← change this one line to re-theme the whole site */
   --accent-ink: #0a0a0b; /* text that sits on the accent */
+}
+
+/* ── Clash Display (self-hosted) ────────────────────────────────────────────
+   Weights 400–700 are the ones the site uses; Tailwind's font-extrabold (800)
+   resolves to 700. The two first-paint weights are preloaded from index.html. */
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */
@@ -279,3 +329,33 @@ a:focus-visible {
  * the compositor. That keeps nav-link jumps on mobile as smooth as the Lenis
  * glide on desktop, at zero main-thread cost.
  */
+
+/* ── Skip link ───────────────────────────────────────────────────────────────
+   First tab stop on every page. Parked above the viewport until focused so it
+   costs sighted mouse users nothing. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 0.75rem 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transform: translateY(-120%);
+  transition: transform 150ms ease;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-offset: -4px;
+}
+
+/* ── PortfolioBot typing indicator ─────────────────────────────────────────
+   Lives here rather than in an inline <style> so the strict style-src CSP in
+   vercel.json holds. */
+@keyframes bot-typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-5px); }
+}

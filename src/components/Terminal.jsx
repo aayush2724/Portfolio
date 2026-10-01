@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 /* traffic-light dots */
 function Dots() {
   return (
-    <div className="flex gap-1.5">
+    <div className="flex gap-1.5" aria-hidden="true">
       <span className="h-3 w-3 rounded-full bg-[#ff5f56]" />
       <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
       <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
@@ -82,6 +82,11 @@ export function TypingTerminal({
       setDone(steps)
       return
     }
+    // A fresh `steps` array restarts the sequence; the committed lines from
+    // the previous run must go too, or every restart appends a duplicate set.
+    setDone([])
+    setCurCmd("")
+    setCurOut(null)
     let cancelled = false
     const wait = (ms) =>
       new Promise((res) => timers.current.push(setTimeout(res, ms)))

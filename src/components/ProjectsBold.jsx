@@ -102,12 +102,16 @@ export default function ProjectsBold() {
         titleComponent={
           <div className="flex flex-col items-center mb-20 relative">
              <Parallax speed={0.15} className="absolute -top-16 pointer-events-none">
-               <div className="font-display text-[12rem] md:text-[20rem] text-white/[0.01] select-none uppercase tracking-tighter">
-                  STUDIO
-               </div>
+               {/* Watermark drawn from a pseudo-element: at 1% opacity it is
+                   decoration, not text, and must not be read or contrast-checked. */}
+               <div
+                 aria-hidden="true"
+                 data-text="STUDIO"
+                 className="font-display text-[12rem] md:text-[20rem] text-white/[0.01] select-none uppercase tracking-tighter before:content-[attr(data-text)]"
+               />
              </Parallax>
 
-             <CommandLabel className="mb-6 opacity-30">ls ~/projects</CommandLabel>
+             <CommandLabel className="mb-6 opacity-70">ls ~/projects</CommandLabel>
              <AnimatedHeading
                text="Projects"
                letters
@@ -141,7 +145,7 @@ export default function ProjectsBold() {
                         setFilterSkills([])
                         window.dispatchEvent(new CustomEvent('clear-filter'))
                       }}
-                      className="ml-2 text-white/40 hover:text-white transition-colors underline text-xs"
+                      className="ml-2 text-white/70 hover:text-white transition-colors underline text-xs"
                     >
                       Clear Filter
                     </button>
@@ -155,7 +159,7 @@ export default function ProjectsBold() {
                   aria-label="Previous project"
                   className="group h-12 w-12 rounded-full border border-white/5 flex items-center justify-center hover:border-white/20 transition-all bg-white/[0.02]"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/20 group-hover:text-white transition-colors"><path d="m15 18-6-6 6-6"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/60 group-hover:text-white transition-colors"><path d="m15 18-6-6 6-6"/></svg>
                 </button>
 
                 {/* Discrete segments rather than a continuous bar: the deck now
@@ -178,7 +182,7 @@ export default function ProjectsBold() {
                   aria-label="Next project"
                   className="group h-12 w-12 rounded-full border border-white/5 flex items-center justify-center hover:border-white/20 transition-all bg-white/[0.02]"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/20 group-hover:text-white transition-colors"><path d="m9 18 6-6-6-6"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/60 group-hover:text-white transition-colors"><path d="m9 18 6-6-6-6"/></svg>
                 </button>
              </div>
           </div>

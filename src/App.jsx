@@ -48,6 +48,8 @@ function Loader() {
   return (
     <motion.div
       key="loader"
+      role="status"
+      aria-label="Loading"
       initial={{ y: 0 }}
       exit={{ y: "-100%" }}
       transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
@@ -92,6 +94,28 @@ function shouldPlayIntro() {
   return true;
 }
 
+/**
+ * First tab stop on the page. Lenis owns in-page anchor clicks on desktop, so
+ * the handler moves focus itself instead of relying on the fragment jump.
+ */
+function SkipLink() {
+  return (
+    <a
+      href="#main"
+      className="skip-link"
+      onClick={(e) => {
+        const main = document.getElementById("main");
+        if (!main) return;
+        e.preventDefault();
+        main.focus({ preventScroll: true });
+        main.scrollIntoView();
+      }}
+    >
+      Skip to content
+    </a>
+  );
+}
+
 export default function App() {
   const [loading, setLoading] = useState(shouldPlayIntro);
   const [introDone, setIntroDone] = useState(() => !loading);
@@ -122,6 +146,7 @@ export default function App() {
   if (route.name === "work") {
     return (
       <>
+        <SkipLink />
         <InteractiveGrid />
         <ScrollProgress />
         <Suspense fallback={<div className="min-h-screen" />}>
@@ -140,6 +165,8 @@ export default function App() {
   // ── Home ──────────────────────────────────────────────────────────
   return (
     <>
+      <SkipLink />
+
       {/* Shader background */}
       <ShaderBackground />
 
@@ -162,7 +189,7 @@ export default function App() {
       {!loading && (
         <>
           <Navbar onCmd={() => setCmdOpen(true)} />
-          <main className="relative z-10">
+          <main id="main" tabIndex={-1} className="relative z-10 outline-none">
             <HeroBold introDone={introDone} />
             <ProjectsBold />
             <Suspense fallback={<div className="min-h-screen" />}>
@@ -184,6 +211,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6 }}
             onClick={() => setCmdOpen(true)}
+            title="Open the shell (Ctrl+K)"
             /* Desktop-only hint: a phone has no ⌘K to press, and at 390px the
                pill sits directly on top of the hero CTA. */
             className="fixed bottom-5 left-6 z-40 hidden md:flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"

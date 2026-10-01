@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LEETCODE_SOLVED, REPO_COUNT, HACKATHONS, CONTRIBUTIONS } from "../data/stats"
 import portfolioData from "../data/portfolioData.json";
 import { projects } from "../data/projects";
@@ -24,8 +24,8 @@ function searchPortfolio(query) {
   // 1. Greetings — varied, natural
   if (/^(hi|hello|hey|yo|sup|howdy|hii|heyy|good\s*(morning|afternoon|evening))/.test(q) || q === "hlo") {
     const greetings = [
-      "Hey! I'm **PortfolioBot** — Aayush's AI assistant. I know everything about his projects, skills, hackathons, and LeetCode grind. What do you want to know?",
-      `Hi there! 👋 Ask me about Aayush's **${REPO_COUNT} GitHub repos**, his **${LEETCODE_SOLVED} LeetCode problems**, or his **hackathon wins**. I've got all the details.`,
+      "Hey! I'm **PortfolioBot** — a scripted guide to Aayush's portfolio. Ask me about his projects, skills, hackathons, or LeetCode progress.",
+      `Hi there! 👋 Ask me about Aayush's **${REPO_COUNT} GitHub repos**, his **${LEETCODE_SOLVED} LeetCode problems**, or his **hackathon results**. I've got the details.`,
       "Hello! I'm PortfolioBot. I can tell you about Aayush's **full-stack projects**, **tech stack**, **college life**, or even his **guitar skills**. What's up?",
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
@@ -85,7 +85,7 @@ function searchPortfolio(query) {
     return "Let's connect!\n\n" +
       "• 📧 **Email:** [aayush2615@gmail.com](mailto:aayush2615@gmail.com)\n" +
       "• 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)\n" +
-      "• 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724) (23 repos)\n" +
+      `• 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724) (${REPO_COUNT} repos)\n` +
       "• 📸 **Instagram:** [@aayussh.27](https://instagram.com/aayussh.27)\n\n" +
       "Currently **open to remote internships and freelance projects**. Drop me an email!";
   }
@@ -101,12 +101,12 @@ function searchPortfolio(query) {
   if (/project|shipped|recent|built|work|repo|portfolio|made/.test(q)) {
     const sorted = [...projects].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     const latest = sorted[0];
-    return `I've shipped **23 repos** spanning AI, full-stack, civic tech, and music tech.\n\n` +
+    return `I've shipped **${REPO_COUNT} public repos** spanning AI, full-stack, civic tech, and music tech.\n\n` +
       `**Recent work:**\n` +
       `• **${latest.name}** — ${latest.desc}\n` +
       `• **DeskGuard** — workspace security with real-time surveillance\n` +
       `• **AlgoVision** — interactive algorithm visualizer\n\n` +
-      `**Proudest:** LeadForge (hackathon winner), Beatzy, Citizen Resolver System\n\n` +
+      `**Proudest:** LeadForge (3rd place at ThinkRoot x Vortex'26), Beatzy, Citizen Resolver System\n\n` +
       `Ask me about any specific project for details!`;
   }
 
@@ -150,10 +150,9 @@ function searchPortfolio(query) {
   // 13. GitHub specifics
   if (/github|repos|repository|open source|contribution|star/.test(q)) {
     return "Here's my GitHub snapshot:\n\n" +
-      "• **23 public repositories** across JavaScript, Python, TypeScript, HTML, CSS, C++\n" +
+      `• **${REPO_COUNT} public repositories** across JavaScript, Python, TypeScript, HTML, CSS, C++\n` +
       `• **${CONTRIBUTIONS}+ contributions** this year\n` +
-      "• **GitHub Pro** with YOLO 🪂 and Pull Shark 🦈 achievements\n" +
-      "• **2 followers**, 2 following\n\n" +
+      "• **GitHub Pro** with YOLO 🪂 and Pull Shark 🦈 achievements\n\n" +
       "**Popular repos:** Portfolio, Beatzy, Citizen-Resolver-System, LeadForge, Chord-Detector, CheckMate\n\n" +
       "Check it out: [github.com/aayush2724](https://github.com/aayush2724)";
   }
@@ -166,9 +165,9 @@ function searchPortfolio(query) {
 
   // 15. Default fallbacks — specific, not generic
   const fallbacks = [
-    "Hmm, I don't have that exact detail. But I know a lot! Try asking about **projects**, **LeetCode stats**, **hackathon wins**, **tech stack**, or **how to contact Aayush**.",
+    "Hmm, I don't have that exact detail. But I know a lot! Try asking about **projects**, **LeetCode stats**, **hackathon results**, **tech stack**, or **how to contact Aayush**.",
     "That's outside my database. I'm great with **project details**, **DSA grind**, **hackathon stories**, and **career info**. Give me another shot!",
-    "My neural nets didn't fire on that one 😅 Try asking about **Beatzy**, **LeadForge**, **LeetCode**, or **what Aayush is currently building**.",
+    "That one's not in my script 😅 Try asking about **Beatzy**, **LeadForge**, **LeetCode**, or **what Aayush is currently building**.",
     `I can't help with that, but I *can* tell you about **${REPO_COUNT} GitHub repos**, **${HACKATHONS} hackathon competitions**, and **${LEETCODE_SOLVED} LeetCode problems**. Pick one!`,
   ];
   return fallbacks[Math.floor(Math.random() * fallbacks.length)];
@@ -217,6 +216,19 @@ export default function PortfolioBot() {
   const [showSuggestions, setShowSuggestions] = useState(true);
   const endRef = useRef(null);
   const inputRef = useRef(null);
+  const toggleRef = useRef(null);
+  const wasOpen = useRef(false);
+
+  // Hand focus back to the launcher when the panel closes, so a keyboard user
+  // is not dropped at the top of the document.
+  useEffect(() => {
+    if (open) {
+      wasOpen.current = true;
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
+      toggleRef.current?.focus();
+    }
+  }, [open]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -248,9 +260,18 @@ export default function PortfolioBot() {
   return (
     <div>
       <button
+        ref={toggleRef}
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
-        style={{ background: "var(--accent)", color: "var(--accent-ink)", boxShadow: "0 0 20px rgba(212, 255, 63, 0.2)" }}
+        aria-expanded={open}
+        aria-controls="portfolio-bot"
+        className="fixed right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
+        style={{
+          background: "var(--accent)",
+          color: "var(--accent-ink)",
+          boxShadow: "0 0 20px rgba(212, 255, 63, 0.2)",
+          // Clear the home indicator on phones with a bottom safe area.
+          bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
+        }}
       >
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full rounded-full bg-black/40 opacity-75 animate-ping" />
@@ -260,26 +281,32 @@ export default function PortfolioBot() {
       </button>
 
       {open && (
-        <div className="fixed right-5 bottom-20 w-[400px] max-w-[92vw] z-50 rounded-2xl border border-white/8 bg-[var(--bg)] shadow-2xl shadow-black/60 overflow-hidden flex flex-col" style={{ maxHeight: "min(580px, 80vh)" }}>
+        <div
+          id="portfolio-bot"
+          role="dialog"
+          aria-label="PortfolioBot"
+          className="fixed right-5 w-[400px] max-w-[92vw] z-50 rounded-2xl border border-white/8 bg-[var(--bg)] shadow-2xl shadow-black/60 overflow-hidden flex flex-col"
+          style={{ maxHeight: "min(580px, 80vh)", bottom: "calc(5rem + env(safe-area-inset-bottom))" }}
+        >
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/6 bg-white/[0.02] flex-shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "var(--accent)" }}>
-                <span className="text-[10px] font-bold" style={{ color: "var(--accent-ink)" }}>AI</span>
+                <span className="text-[10px] font-bold" style={{ color: "var(--accent-ink)" }}>{">_"}</span>
               </div>
               <div>
                 <div className="font-display text-sm font-semibold" style={{ color: "var(--fg)" }}>PortfolioBot</div>
                 <div className="font-mono text-[9px] flex items-center gap-1" style={{ color: "var(--muted)" }}>
                   <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
-                  Aayush's assistant
+                  scripted guide · not a live AI
                 </div>
               </div>
             </div>
-            <button onClick={() => { setMessages([]); setShowSuggestions(true); setInput(""); }} className="font-mono text-[10px] hover:opacity-70 transition-opacity px-2 py-1 rounded border border-white/6" style={{ color: "var(--muted)" }}>
+            <button aria-label="Clear conversation" onClick={() => { setMessages([]); setShowSuggestions(true); setInput(""); }} className="font-mono text-[10px] hover:opacity-70 transition-opacity px-2 py-1 rounded border border-white/6" style={{ color: "var(--muted)" }}>
               clear
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 font-body" style={{ scrollbarWidth: "none" }}>
+          <div role="log" aria-live="polite" className="flex-1 overflow-y-auto p-4 space-y-3 font-body" style={{ scrollbarWidth: "none" }}>
             {messages.length === 0 && (
               <div className="text-center py-6">
                 <div className="text-3xl mb-3">👋</div>
@@ -290,7 +317,7 @@ export default function PortfolioBot() {
             {messages.map((m) => (
               <div key={m.id} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
                 {m.from === "bot" && (
-                  <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold mr-2 flex-shrink-0 mt-0.5" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }}>AI</div>
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold mr-2 flex-shrink-0 mt-0.5" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
                 )}
                 <div className={`max-w-[82%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   m.from === "user" ? "rounded-br-sm" : "rounded-bl-sm"
@@ -305,10 +332,10 @@ export default function PortfolioBot() {
             ))}
             {loading && (
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold flex-shrink-0" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }}>AI</div>
+                <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold flex-shrink-0" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
                 <div className="rounded-xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
                   {[0, 0.15, 0.3].map((d, i) => (
-                    <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--muted)", animation: `bounce 1s ${d}s infinite` }} />
+                    <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--muted)", animation: `bot-typing 1s ${d}s infinite` }} />
                   ))}
                 </div>
               </div>
@@ -330,8 +357,8 @@ export default function PortfolioBot() {
 
           <div className="px-3 pb-3 flex-shrink-0 border-t pt-3" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
             <div className="flex gap-2 items-center rounded-xl px-3 py-2 transition-all" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }} placeholder="Ask something…" disabled={loading} className="flex-1 bg-transparent font-body text-sm outline-none placeholder:opacity-30 disabled:opacity-50" style={{ color: "var(--fg)" }} />
-              <button onClick={() => send(input)} disabled={loading || !input.trim()} className="flex-shrink-0 w-7 h-7 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center" style={{ background: "rgba(255,255,255,0.1)" }}>
+              <input ref={inputRef} aria-label="Ask PortfolioBot a question" autoComplete="off" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }} placeholder="Ask something…" disabled={loading} className="flex-1 bg-transparent font-body text-sm outline-none placeholder:opacity-60 disabled:opacity-50" style={{ color: "var(--fg)" }} />
+              <button aria-label="Send message" onClick={() => send(input)} disabled={loading || !input.trim()} className="flex-shrink-0 w-7 h-7 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center" style={{ background: "rgba(255,255,255,0.1)" }}>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6L11 6M6 1L11 6L6 11" stroke="currentColor" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
             </div>
@@ -339,7 +366,6 @@ export default function PortfolioBot() {
         </div>
       )}
 
-      <style>{`@keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }`}</style>
     </div>
   );
 }

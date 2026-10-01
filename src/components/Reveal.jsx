@@ -18,8 +18,8 @@ export default function Reveal({
   children,
   delay = 0,
   duration = DUR.enter,
-  direction = "up",
-  fade = false,
+  direction: _direction = "up",
+  fade: _fade = false,
   y = 28,
   className = "",
 }) {

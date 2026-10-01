@@ -69,8 +69,13 @@ export default function ProjectStage({
   // having to tab to a control first.
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "ArrowLeft") onStep(-1)
-      else if (e.key === "ArrowRight") onStep(1)
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return
+      // Leave the keys alone while someone is typing (the shell, the bot) or a
+      // dialog is open above the stage — moving the caret must not page the deck.
+      const t = e.target
+      if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
+      if (document.querySelector('[aria-modal="true"]')) return
+      onStep(e.key === "ArrowLeft" ? -1 : 1)
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
@@ -148,7 +153,7 @@ export default function ProjectStage({
                 )}
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={`${project.title} — project preview`}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
@@ -209,6 +214,7 @@ export default function ProjectStage({
         <div className="flex w-full max-w-[720px] shrink-0 gap-3">
           <button
             onClick={() => onViewDescription(project)}
+            aria-label={`Read the description of ${project.title}`}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -218,6 +224,7 @@ export default function ProjectStage({
           </button>
           <button
             onClick={() => onViewDemo(project)}
+            aria-label={`Open the live demo of ${project.title}`}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 hover:-translate-y-0.5"
             style={{
               background: "linear-gradient(135deg, rgba(212,255,63,0.18), rgba(150,255,63,0.08))",

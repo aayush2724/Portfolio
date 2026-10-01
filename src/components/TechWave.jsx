@@ -47,13 +47,16 @@ function Mark({ tech, index, active, onActivate, onClear }) {
   const y = AMP * Math.sin((2 * Math.PI * WAVES * index) / N)
 
   return (
+    /* Tap is the touch equivalent of hover — without it the name plates are
+       unreachable on a phone. This is not a control: every name is already
+       exposed to assistive tech through the svg's aria-label below, and 34
+       extra tab stops in a decorative marquee would hurt keyboard users. */
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       className="relative flex shrink-0 items-center justify-center"
       style={{ width: ITEM, transform: `translateY(${y.toFixed(2)}px)` }}
       onMouseEnter={onActivate}
       onMouseLeave={onClear}
-      /* Tap is the touch equivalent of hover — without it the names, which are
-         most of this component's content, are unreachable on a phone. */
       onClick={onActivate}
     >
       {/*

@@ -1,6 +1,7 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
+import useFocusTrap from "../context/useFocusTrap"
 import { EASE, DUR } from "../context/ease"
 
 const SOCIALS = [
@@ -19,6 +20,11 @@ const SOCIALS = [
  */
 export default function MenuOverlay({ open, onClose, links, activeSection }) {
   const reduced = usePrefersReducedMotion()
+  const panelRef = useRef(null)
+
+  // Focus moves into the panel on open, cycles inside it, and returns to the
+  // hamburger on close.
+  useFocusTrap(panelRef, open)
 
   // Escape closes; scroll locks while open.
   useEffect(() => {
@@ -39,11 +45,14 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
     <AnimatePresence>
       {open && (
         <motion.div
+          ref={panelRef}
+          id="site-menu"
+          tabIndex={-1}
           initial={reduced ? { opacity: 0 } : { y: "-100%" }}
           animate={reduced ? { opacity: 1 } : { y: 0 }}
           exit={reduced ? { opacity: 0 } : { y: "-100%" }}
           transition={{ duration: DUR.wipe, ease: EASE.WIPE }}
-          className="fixed inset-0 z-[70] flex flex-col"
+          className="fixed inset-0 z-[70] flex flex-col outline-none"
           style={{ background: "var(--bg)" }}
           role="dialog"
           aria-modal="true"

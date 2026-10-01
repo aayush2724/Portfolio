@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { caseStudies } from "../data/caseStudies"
 import portfolioData from "../data/portfolioData.json"
 import { EASE, DUR } from "../context/ease"
+import useFocusTrap from "../context/useFocusTrap"
 
 /**
  * The shell — the site's signature interface.
@@ -156,16 +157,14 @@ export default function Shell({ isOpen, onClose }) {
   const [histIdx, setHistIdx] = useState(-1)
   const inputRef = useRef(null)
   const bodyRef = useRef(null)
+  const panelRef = useRef(null)
 
   const commands = useMemo(() => makeCommands({ close: onClose }), [onClose])
 
-  // Focus on open, refocus on any click inside the window.
-  useEffect(() => {
-    if (isOpen) {
-      const t = setTimeout(() => inputRef.current?.focus(), 60)
-      return () => clearTimeout(t)
-    }
-  }, [isOpen])
+  // Focus lands on the prompt on open, stays inside the window while it is
+  // up (the prompt's own Tab handler does completion first), and goes back to
+  // whatever opened the shell on close. Clicks inside refocus the prompt.
+  useFocusTrap(panelRef, isOpen, { initialFocus: inputRef })
 
   // Pin scroll to the latest output.
   useEffect(() => {
@@ -283,13 +282,18 @@ export default function Shell({ isOpen, onClose }) {
                 transition: { duration: DUR.exit, ease: EASE.EXIT },
               }}
               transition={{ duration: DUR.enter, ease: EASE.ENTER }}
-              className="pointer-events-auto flex h-[min(480px,70vh)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] font-mono text-sm shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]"
+              ref={panelRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Portfolio shell"
+              tabIndex={-1}
+              className="pointer-events-auto flex h-[min(480px,70vh)] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] font-mono text-sm shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] outline-none"
               onClick={() => inputRef.current?.focus()}
             >
               {/* Title bar */}
               <div className="flex flex-shrink-0 items-center justify-between border-b border-[var(--line)] bg-white/[0.02] px-4 py-2.5">
                 <div className="flex items-center gap-3">
-                  <div className="flex gap-1.5">
+                  <div className="flex gap-1.5" aria-hidden="true">
                     <span className="h-3 w-3 rounded-full bg-[#ff5f56]" />
                     <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
                     <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
@@ -300,7 +304,7 @@ export default function Shell({ isOpen, onClose }) {
               </div>
 
               {/* Scrollback */}
-              <div ref={bodyRef} data-lenis-prevent className="flex-grow overflow-y-auto p-4 leading-relaxed">
+              <div ref={bodyRef} data-lenis-prevent aria-live="polite" className="flex-grow overflow-y-auto p-4 leading-relaxed">
                 {lines.map((l, i) =>
                   l.type === "cmd" ? (
                     <div key={i} className="flex flex-wrap items-center gap-2">
@@ -330,7 +334,7 @@ export default function Shell({ isOpen, onClose }) {
                   autoComplete="off"
                   aria-label="Shell command input"
                   placeholder="help"
-                  className="min-w-0 flex-grow bg-transparent text-[var(--fg)] caret-[var(--accent)] outline-none placeholder:text-[var(--muted)]/40"
+                  className="min-w-0 flex-grow bg-transparent text-[var(--fg)] caret-[var(--accent)] outline-none placeholder:text-[var(--muted)]/70"
                 />
               </div>
             </motion.div>

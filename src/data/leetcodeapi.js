@@ -2,18 +2,13 @@
  * Portfolio data utilities
  *
  * Priority order:
- * 1. portfolioData.json — updated daily by GitHub Actions (no CORS issues)
- * 2. Live API call — as a real-time refresh on top
+ * 1. portfolioData.json — refreshed twice a day by GitHub Actions
+ * 2. Live GitHub API call — as a real-time refresh on top, where CORS allows it
  */
 
 import staticData from "./portfolioData.json";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
-
-function parseStatic() {
-  if (!staticData?.leetcode) return null;
-  return staticData.leetcode;
-}
 
 function parseStaticGitHub() {
   if (!staticData?.github) return [];
@@ -30,80 +25,12 @@ function parseStaticGitHub() {
 }
 
 // ── LeetCode ───────────────────────────────────────────────────────────────────
-
-export const fetchLeetCodeStats = async (username) => {
-  const cached = parseStatic();
-  try {
-    const live = await tryLiveLeetCode(username);
-    return { ...live, __live: true };
-  } catch {
-    return cached ? { ...cached, __live: false } : null;
-  }
-};
-
-async function tryLiveLeetCode(username) {
-  const query = `
-    query getUserProfile($username: String!) {
-      matchedUser(username: $username) {
-        username
-        profile { userAvatar realName }
-        submitStatsGlobal {
-          acSubmissionNum { difficulty count submissions }
-          totalSubmissionNum { difficulty count submissions }
-        }
-        userCalendar { streak totalActiveDays submissionCalendar }
-      }
-    }
-  `;
-
-  const response = await fetch("https://leetcode.com/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { username } }),
-  });
-
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const data = await response.json();
-  if (data.errors) throw new Error(data.errors[0].message);
-  const u = data.data.matchedUser;
-  if (!u) throw new Error("User not found");
-
-  let calendar = {};
-  try {
-    const parsed = JSON.parse(u.userCalendar?.submissionCalendar || "{}");
-    calendar = Object.fromEntries(
-      Object.entries(parsed).map(([ts, count]) => {
-        const date = new Date(Number(ts) * 1000).toISOString().slice(0, 10);
-        return [date, Number(count) || 0];
-      }),
-    );
-  } catch {
-    calendar = {};
-  }
-
-  return {
-    username: u.username,
-    avatar: u.profile?.userAvatar,
-    realName: u.profile?.realName || username,
-    stats: {
-      totalSolved: 420 + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
-      easy:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
-          ?.count || 0,
-      medium:
-        u.submitStatsGlobal.acSubmissionNum.find(
-          (s) => s.difficulty === "Medium",
-        )?.count || 0,
-      hard:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
-          ?.count || 0,
-      totalSubmissions: 440 + (u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0),
-    },
-    streak: u.userCalendar?.streak || 0,
-    totalActiveDays: u.userCalendar?.totalActiveDays || 0,
-    calendar,
-  };
-}
+//
+// There is deliberately no browser-side LeetCode fetch. leetcode.com/graphql
+// answers the CORS preflight without an Access-Control-Allow-Origin header, so
+// the call can never succeed from a web page; it only ever fell back to the
+// synced JSON while sending every visitor's IP to LeetCode. The GitHub Action
+// (.github/scripts/fetch-data.mjs) refreshes the numbers server-side instead.
 
 // ── GitHub ─────────────────────────────────────────────────────────────────────
 

@@ -1,5 +1,13 @@
-import { useEffect, useState } from "react"
-import { LEETCODE_SOLVED, REPO_COUNT, CONTRIBUTIONS, CONTRIBUTION_CALENDAR, LEETCODE_STREAK } from "../data/stats"
+import { useEffect, useMemo, useState } from "react"
+import {
+  LEETCODE_SOLVED,
+  LEETCODE_SPLIT,
+  LEETCODE_ACTIVE_DAYS,
+  LEETCODE_STREAK,
+  REPO_COUNT,
+  CONTRIBUTIONS,
+  CONTRIBUTION_CALENDAR,
+} from "../data/stats"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import CountUp from "./CountUp"
@@ -7,17 +15,26 @@ import CommandLabel from "./CommandLabel"
 import AsciiBox from "./AsciiBox"
 import AnimatedHeading from "./AnimatedHeading"
 import GitHubHeatmap from "./GitHubHeatmap"
-import { fetchLeetCodeStats } from "../data/leetcodeapi"
-import portfolioData from "../data/portfolioData.json"
+import { normalizeCalendar } from "../data/contributions"
 import { useLowPower } from "../context/motion"
 
 /**
  * Live contribution calendar for the last 365 days. The synced JSON already
  * renders a real grid on first paint; this refreshes it with today's activity.
+ * Times out after 20s so a dead third party never holds a request open for the
+ * life of the page — the synced numbers are already on screen. The budget is
+ * generous on purpose: on a weak GPU the WebGL backdrop can block the main
+ * thread for several seconds right after load, and a response that arrived
+ * during that stall must still be processed rather than aborted.
  */
 async function fetchGitHubContributions(username) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 20000)
   try {
-    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
+    const res = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+      { signal: controller.signal }
+    )
     if (!res.ok) return null
     const data = await res.json()
     const total = data.total?.lastYear || null
@@ -25,6 +42,8 @@ async function fetchGitHubContributions(username) {
     return total || days ? { total, days } : null
   } catch {
     return null
+  } finally {
+    clearTimeout(timer)
   }
 }
 
@@ -36,53 +55,42 @@ const cardVariants = {
 export default function CodingStatsBold() {
   // Decorative pulses/spins run forever; a phone should not pay for them.
   const lowPower = useLowPower()
+  // LeetCode numbers come straight from the synced JSON. They are NOT fetched
+  // from the browser: leetcode.com/graphql sends no CORS headers, so that
+  // request failed on every visit and only ever fell back to the same JSON —
+  // while still sending each visitor's IP to LeetCode for nothing.
   const [stats, setStats] = useState({
-    leetcode: {
-      total: LEETCODE_SOLVED,
-    },
     github: {
       contributions: CONTRIBUTIONS,
       calendar: CONTRIBUTION_CALENDAR,
       repos: REPO_COUNT,
     },
-    streak: {
-      current: LEETCODE_STREAK,
-    }
   })
 
   useEffect(() => {
-    const getStats = async () => {
-      const [lc, gh] = await Promise.all([
-        fetchLeetCodeStats("aayush2724"),
-        fetchGitHubContributions("aayush2724")
-      ])
-
-      // Each source applies on its own, so a LeetCode outage no longer
-      // discards a successful GitHub fetch (or vice versa).
-      if (lc && lc.stats) {
-        setStats(prev => ({
-          ...prev,
-          leetcode: {
-            total: Math.max(lc.stats.totalSolved, LEETCODE_SOLVED),
-          },
-          streak: {
-            current: lc.streak,
-          },
-        }))
-      }
-      if (gh) {
-        setStats(prev => ({
-          ...prev,
-          github: {
-            ...prev.github,
-            contributions: gh.total || prev.github.contributions,
-            calendar: gh.days || prev.github.calendar,
-          },
-        }))
-      }
+    let cancelled = false
+    fetchGitHubContributions("aayush2724").then((gh) => {
+      if (cancelled || !gh) return
+      setStats((prev) => ({
+        ...prev,
+        github: {
+          ...prev.github,
+          contributions: gh.total || prev.github.contributions,
+          calendar: gh.days || prev.github.calendar,
+        },
+      }))
+    })
+    return () => {
+      cancelled = true
     }
-    getStats()
   }, [])
+
+  // Days with at least one contribution in the calendar on screen — a number
+  // the data actually backs, unlike the hand-typed figure it replaces.
+  const githubActiveDays = useMemo(() => {
+    const days = normalizeCalendar(stats.github.calendar)?.days ?? {}
+    return Object.values(days).filter(Boolean).length
+  }, [stats.github.calendar])
 
   return (
     <section id="stats" className="relative py-32 px-6 md:px-16 overflow-hidden">
@@ -142,7 +150,7 @@ export default function CodingStatsBold() {
             </div>
             
             <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
-              <CountUp end={stats.leetcode.total} suffix="+" />
+              <CountUp end={LEETCODE_SOLVED} suffix="+" />
             </div>
 
             <p className="text-sm mb-4 relative z-10" style={{ color: "var(--muted)" }}>Consistency & problem solving</p>
@@ -209,9 +217,9 @@ export default function CodingStatsBold() {
               </div>
               <div className="border rounded-2xl p-4 bg-white/5 border-white/10">
                 <div className="font-display text-2xl" style={{ color: "var(--fg)" }}>
-                  <CountUp end={28} />
+                  <CountUp end={githubActiveDays} />
                 </div>
-                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Stars Earned</div>
+                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Active Days (last year)</div>
               </div>
             </div>
           </motion.div>
@@ -240,19 +248,21 @@ export default function CodingStatsBold() {
             </div>
             
             <div className="font-display text-5xl mb-2 group-hover:text-[#ff9900] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
-              <CountUp end={stats.streak.current} suffix=" Days" />
+              <CountUp end={LEETCODE_STREAK} suffix=" Days" />
             </div>
-            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>Current Streak</p>
+            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>LeetCode Streak</p>
 
             <div className="space-y-4 relative z-10">
               <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
-                <span className="text-sm" style={{ color: "var(--muted)" }}>Longest Streak</span>
-                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>42 Days</span>
-              </div>
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
                 <span className="text-sm" style={{ color: "var(--muted)" }}>Active Days</span>
                 <span className="font-display text-lg" style={{ color: "var(--fg)" }}>
-                  <CountUp end={285} />
+                  <CountUp end={LEETCODE_ACTIVE_DAYS} />
+                </span>
+              </div>
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
+                <span className="text-sm" style={{ color: "var(--muted)" }}>Easy · Medium · Hard</span>
+                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>
+                  {LEETCODE_SPLIT.easy} · {LEETCODE_SPLIT.medium} · {LEETCODE_SPLIT.hard}
                 </span>
               </div>
               <div className="flex items-center justify-between">

@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,jsx}'],
+  // The static 404 and privacy pages use Tailwind classes too, so every root
+  // HTML file is scanned — not just index.html.
+  content: ['./*.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       fontFamily: {

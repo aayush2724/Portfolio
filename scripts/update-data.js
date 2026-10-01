@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+import { LEETCODE_SOLVED_OFFSET as SOLVED_OFFSET } from "../src/data/syncConfig.js";
 
 const DATA_PATH = path.resolve("./src/data/portfolioData.json");
-const SOLVED_OFFSET = 420; // manual addition to the LeetCode total — see below
 const RECENT_REPO_LIMIT = 12; // repos kept for the GitHub strip
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || null;
 
@@ -103,6 +103,8 @@ async function fetchLiveLeetCode(username) {
       // (and equal to easy + medium + hard below). SOLVED_OFFSET is a manual
       // addition on top of it, NOT anything the API reports. Set it to 0 to
       // publish the raw account number.
+      apiSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
+      solvedOffset: SOLVED_OFFSET,
       totalSolved:
         SOLVED_OFFSET + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
       easy:

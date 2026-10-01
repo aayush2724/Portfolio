@@ -7,6 +7,8 @@ export default function AboutBold() {
   return (
     <section id="about" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
+        {/* The manifesto is display copy, not a title — this names the landmark for assistive tech. */}
+        <h2 className="sr-only">About</h2>
         
         {/* Command Label */}
         <Reveal>

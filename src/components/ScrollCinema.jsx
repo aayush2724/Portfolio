@@ -167,10 +167,8 @@ export default function ScrollCinema() {
           <p className="font-mono text-xs tracking-[0.3em] uppercase mb-10" style={{ color: "var(--muted)" }}>
             The approach
           </p>
-          <p
-            className="text-2xl md:text-4xl font-light leading-relaxed text-center max-w-3xl"
-            aria-label={SEGMENTS.map((s) => s.text).join(" ")}
-          >
+          <p className="text-2xl md:text-4xl font-light leading-relaxed text-center max-w-3xl">
+            <span className="sr-only">{SEGMENTS.map((s) => s.text).join(" ")}</span>
             <span aria-hidden="true">
               {words.map((item, i) => {
                 const start = T0 + (i / words.length) * (T1 - T0)

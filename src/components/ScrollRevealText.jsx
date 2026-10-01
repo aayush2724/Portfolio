@@ -68,7 +68,8 @@ export default function ScrollRevealText({
   )
 
   return (
-    <Tag ref={ref} className={className} aria-label={segs.map((s) => s.text).join(" ")}>
+    <Tag ref={ref} className={className}>
+      <span className="sr-only">{segs.map((s) => s.text).join(" ")}</span>
       <span aria-hidden="true">
         {words.map((item, i) => {
           const start = i / words.length

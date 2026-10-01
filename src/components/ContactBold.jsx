@@ -167,13 +167,17 @@ export default function ContactBold() {
 
         {/* Footer */}
         <Reveal delay={0.3}>
-          <div className="border-t pt-12 flex flex-col md:flex-row items-center justify-between gap-6" style={{ borderColor: "var(--line)" }}>
+          <footer className="border-t pt-12 flex flex-col md:flex-row items-center justify-between gap-6" style={{ borderColor: "var(--line)" }}>
             
             {/* Left */}
             <div className="flex flex-col md:flex-row items-center gap-4 text-sm" style={{ color: "var(--muted)" }}>
-              <span>© 2025 Aayush Kumar</span>
+              <span>© {new Date().getFullYear()} Aayush Kumar</span>
               <span className="hidden md:inline">•</span>
               <span>Built with React, Vite, Framer Motion & Three.js</span>
+              <span className="hidden md:inline">•</span>
+              <a href="/privacy" className="link-underline transition-colors hover:text-[var(--fg)]">
+                Privacy
+              </a>
             </div>
 
             {/* Center - Live Clock */}
@@ -202,7 +206,7 @@ export default function ContactBold() {
                 ↑
               </motion.span>
             </button>
-          </div>
+          </footer>
         </Reveal>
       </div>
     </section>

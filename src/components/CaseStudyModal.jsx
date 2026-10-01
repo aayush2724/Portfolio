@@ -2,9 +2,14 @@ import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { EASE, DUR } from "../context/ease"
 import CaseStudyBody from "./CaseStudyBody"
+import useFocusTrap from "../context/useFocusTrap"
 
-export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId }) {
+export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _layoutId }) {
   const modalRef = useRef(null)
+
+  // Keyboard focus stays inside the dialog and returns to the card's button
+  // when it closes.
+  useFocusTrap(modalRef, isOpen)
 
   // Handle ESC key
   useEffect(() => {
@@ -45,6 +50,7 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId })
             exit={{ opacity: 0 }}
             transition={{ duration: DUR.exit, ease: EASE.SHARP }}
             onClick={onClose}
+            aria-hidden="true"
             className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm"
           />
 
@@ -57,10 +63,14 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId })
                   predictable scale reads far better at this size. */}
               <motion.div
                 ref={modalRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="case-study-title"
+                tabIndex={-1}
                 initial={{ opacity: 0, y: 24, scale: 0.97 }}
                 animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: DUR.enter, ease: EASE.ENTER } }}
                 exit={{ opacity: 0, y: 12, scale: 0.98, transition: { duration: DUR.exit, ease: EASE.EXIT } }}
-                className="relative mx-auto max-w-5xl rounded-2xl border border-[var(--line)] bg-[var(--bg)] shadow-2xl"
+                className="relative mx-auto max-w-5xl rounded-2xl border border-[var(--line)] bg-[var(--bg)] shadow-2xl outline-none"
               >
                 {/* Close button */}
                 <button

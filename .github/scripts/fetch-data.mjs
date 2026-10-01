@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { LEETCODE_SOLVED_OFFSET } from '../../src/data/syncConfig.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -62,7 +63,11 @@ async function fetchLeetCode() {
       avatar: u.profile?.userAvatar || '',
       ranking: u.profile?.ranking || 0,
       stats: {
-        totalSolved: 420 + (solved[0]?.count || 0),
+        // The raw API figure is published next to the displayed total so the
+        // two never silently diverge. The offset is explained in syncConfig.js.
+        apiSolved: solved[0]?.count || 0,
+        solvedOffset: LEETCODE_SOLVED_OFFSET,
+        totalSolved: LEETCODE_SOLVED_OFFSET + (solved[0]?.count || 0),
         easy: solved.find(s => s.difficulty === 'Easy')?.count || 0,
         medium: solved.find(s => s.difficulty === 'Medium')?.count || 0,
         hard: solved.find(s => s.difficulty === 'Hard')?.count || 0,

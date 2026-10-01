@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from "react"
+import { forwardRef, useRef } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
 
