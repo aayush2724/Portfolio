@@ -5,6 +5,5 @@ coverage/
 
 # Local environment files — never commit secrets. (The site itself needs no
 # env vars; the data-sync script reads GITHUB_TOKEN from GitHub Actions.)
-.env
-.env.*
 !.env.example
+config.bat
