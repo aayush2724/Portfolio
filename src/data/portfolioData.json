@@ -1,22 +1,42 @@
 {
-  "lastUpdated": "2026-10-02T17:12:04.080Z",
+  "lastUpdated": "2026-10-03T03:13:53.256Z",
   "leetcode": {
     "username": "aayush2724",
     "avatar": "https://assets.leetcode.com/users/aayush2724/avatar_1781043185.png",
     "ranking": 432034,
     "stats": {
-      "apiSolved": 335,
+      "apiSolved": 336,
       "solvedOffset": 420,
-      "totalSolved": 755,
+      "totalSolved": 756,
       "easy": 123,
       "medium": 179,
-      "hard": 33,
-      "totalSubmissions": 340
+      "hard": 34,
+      "totalSubmissions": 341
     },
-    "streak": 52,
-    "totalActiveDays": 115
+    "streak": 53,
+    "totalActiveDays": 116
   },
   "github": [
+    {
+      "name": "Beatzy",
+      "description": "",
+      "url": "https://github.com/aayush2724/Beatzy",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-02T21:16:11Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-02T17:12:09Z"
+    },
     {
       "name": "Auralis",
       "description": "",
@@ -68,16 +88,6 @@
       "updatedAt": "2026-10-02T11:55:16Z"
     },
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-02T11:55:03Z"
-    },
-    {
       "name": "MedVerify",
       "description": "",
       "url": "https://github.com/aayush2724/MedVerify",
@@ -126,23 +136,13 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-10-02T11:53:50Z"
-    },
-    {
-      "name": "DeskGuard",
-      "description": "",
-      "url": "https://github.com/aayush2724/DeskGuard",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-02T11:53:35Z"
     }
   ],
   "githubStats": {
-    "contributions": 1316,
+    "contributions": 1320,
     "calendar": {
       "from": "2025-09-28",
-      "to": "2026-10-02",
+      "to": "2026-10-03",
       "days": {
         "2025-09-28": 8,
         "2025-10-01": 3,
@@ -296,7 +296,8 @@
         "2026-09-29": 1,
         "2026-09-30": 11,
         "2026-10-01": 6,
-        "2026-10-02": 13
+        "2026-10-02": 13,
+        "2026-10-03": 4
       }
     }
   }
