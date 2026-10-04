@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { LEETCODE_SOLVED_OFFSET as SOLVED_OFFSET } from "../src/data/syncConfig.js";
+import { syncLeetCode, parseUsernames } from "../src/data/leetcodeSync.js";
 
 const DATA_PATH = path.resolve("./src/data/portfolioData.json");
 const RECENT_REPO_LIMIT = 12; // repos kept for the GitHub strip
@@ -52,76 +52,6 @@ async function fetchGitHubRepos(username) {
       topics: r.topics || [],
       updatedAt: new Date(r.updated_at).toISOString(),
     }));
-}
-
-async function fetchLiveLeetCode(username) {
-  if (!username) return null;
-  const query = `
-    query getUserProfile($username: String!) {
-      matchedUser(username: $username) {
-        username
-        profile { userAvatar realName }
-        submitStatsGlobal {
-          acSubmissionNum { difficulty count submissions }
-          totalSubmissionNum { difficulty count submissions }
-        }
-        userCalendar { streak totalActiveDays submissionCalendar }
-      }
-    }
-  `;
-
-  const res = await fetch("https://leetcode.com/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { username } }),
-  });
-  if (!res.ok) throw new Error(`LeetCode HTTP ${res.status}`);
-  const data = await res.json();
-  if (data.errors) throw new Error(data.errors[0].message);
-  const u = data.data.matchedUser;
-  if (!u) throw new Error("LeetCode user not found");
-
-  let calendar = {};
-  try {
-    const parsed = JSON.parse(u.userCalendar?.submissionCalendar || "{}");
-    calendar = Object.fromEntries(
-      Object.entries(parsed).map(([ts, count]) => {
-        const date = new Date(Number(ts) * 1000).toISOString().slice(0, 10);
-        return [date, Number(count) || 0];
-      }),
-    );
-  } catch {
-    calendar = {};
-  }
-
-  return {
-    username: u.username,
-    avatar: u.profile?.userAvatar,
-    realName: u.profile?.realName || username,
-    stats: {
-      // acSubmissionNum[0] is LeetCode's "All" bucket — already the true total
-      // (and equal to easy + medium + hard below). SOLVED_OFFSET is a manual
-      // addition on top of it, NOT anything the API reports. Set it to 0 to
-      // publish the raw account number.
-      apiSolved: u.submitStatsGlobal.acSubmissionNum[0]?.count || 0,
-      solvedOffset: SOLVED_OFFSET,
-      totalSolved:
-        SOLVED_OFFSET + (u.submitStatsGlobal.acSubmissionNum[0]?.count || 0),
-      easy:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Easy")
-          ?.count || 0,
-      medium:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Medium")
-          ?.count || 0,
-      hard:
-        u.submitStatsGlobal.acSubmissionNum.find((s) => s.difficulty === "Hard")
-          ?.count || 0,
-      totalSubmissions: u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
-    },
-    streak: u.userCalendar?.streak || 0,
-    totalActiveDays: u.userCalendar?.totalActiveDays || 0,
-    calendar,
-  };
 }
 
 async function fetchGitHubContributions(username) {
@@ -195,25 +125,10 @@ async function main() {
     console.warn("GitHub sync failed, keeping static list:", err.message);
   }
 
-  // LeetCode
-  const lcUser = staticData?.leetcode?.username || process.env.LEETCODE_USER || "aayush2724";
-  let leetcode = staticData.leetcode || null;
-  try {
-    const liveLc = await fetchLiveLeetCode(lcUser);
-    if (liveLc) {
-      leetcode = {
-        ...leetcode,
-        username: liveLc.username,
-        avatar: liveLc.avatar || leetcode?.avatar || null,
-        stats: liveLc.stats,
-        streak: liveLc.streak,
-        totalActiveDays: liveLc.totalActiveDays,
-      };
-    }
-    console.log(`Fetched LeetCode stats for ${lcUser}`);
-  } catch (err) {
-    console.warn("LeetCode sync failed, keeping static values:", err.message);
-  }
+  // LeetCode — every account combined; a failed fetch keeps the static values.
+  const lcUsers = parseUsernames(process.env.LEETCODE_USERNAMES);
+  const leetcode = (await syncLeetCode(lcUsers)) ?? staticData.leetcode ?? null;
+  console.log(`LeetCode: ${leetcode?.stats?.totalSolved ?? "—"} solved across ${lcUsers.length} accounts`);
 
   const out = {
     ...staticData,

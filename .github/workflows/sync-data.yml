@@ -27,7 +27,7 @@ jobs:
         run: node .github/scripts/fetch-data.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LEETCODE_USERNAME: aayush2724
+          LEETCODE_USERNAMES: ${{ secrets.LEETCODE_USERNAMES }}
           GITHUB_USERNAME: aayush2724
 
       - name: Check for changes

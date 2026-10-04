@@ -1,6 +1,6 @@
 /**
  * Portfolio Data Sync Script
- * Fetches LeetCode stats (via unofficial API) and GitHub repos
+ * Fetches LeetCode stats (via unofficial API, all accounts combined) and GitHub repos
  * Writes to src/data/portfolioData.json for use by the portfolio site
  * Runs via GitHub Actions — no CORS issues since it's server-side
  */
@@ -8,79 +8,14 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { LEETCODE_SOLVED_OFFSET } from '../../src/data/syncConfig.js';
+import { syncLeetCode, parseUsernames } from '../../src/data/leetcodeSync.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const LEETCODE_USERNAME = process.env.LEETCODE_USERNAME || 'aayush2724';
+// Comma-separated, from a repo secret; every account's activity is combined (see leetcodeSync.js).
+const LEETCODE_USERNAMES = parseUsernames(process.env.LEETCODE_USERNAMES);
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'aayush2724';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-
-// ── LeetCode ──────────────────────────────────────────────────────────────────
-async function fetchLeetCode() {
-  const query = `
-    query getUserProfile($username: String!) {
-      matchedUser(username: $username) {
-        username
-        profile {
-          userAvatar
-          realName
-          ranking
-        }
-        submitStatsGlobal {
-          acSubmissionNum {
-            difficulty
-            count
-            submissions
-          }
-          totalSubmissionNum {
-            difficulty
-            count
-            submissions
-          }
-        }
-        userCalendar {
-          streak
-          totalActiveDays
-        }
-      }
-    }
-  `;
-
-  try {
-    const res = await fetch('https://leetcode.com/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Referer': 'https://leetcode.com' },
-      body: JSON.stringify({ query, variables: { username: LEETCODE_USERNAME } }),
-    });
-    const data = await res.json();
-    const u = data?.data?.matchedUser;
-    if (!u) throw new Error('User not found');
-
-    const solved = u.submitStatsGlobal.acSubmissionNum;
-    return {
-      username: u.username,
-      avatar: u.profile?.userAvatar || '',
-      ranking: u.profile?.ranking || 0,
-      stats: {
-        // The raw API figure is published next to the displayed total so the
-        // two never silently diverge. The offset is explained in syncConfig.js.
-        apiSolved: solved[0]?.count || 0,
-        solvedOffset: LEETCODE_SOLVED_OFFSET,
-        totalSolved: LEETCODE_SOLVED_OFFSET + (solved[0]?.count || 0),
-        easy: solved.find(s => s.difficulty === 'Easy')?.count || 0,
-        medium: solved.find(s => s.difficulty === 'Medium')?.count || 0,
-        hard: solved.find(s => s.difficulty === 'Hard')?.count || 0,
-        totalSubmissions: u.submitStatsGlobal.totalSubmissionNum[0]?.count || 0,
-      },
-      streak: u.userCalendar?.streak || 0,
-      totalActiveDays: u.userCalendar?.totalActiveDays || 0,
-    };
-  } catch (err) {
-    console.error('❌ LeetCode fetch failed:', err.message);
-    return null;
-  }
-}
 
 // ── GitHub ─────────────────────────────────────────────────────────────────────
 async function fetchGitHub(username) {
@@ -206,7 +141,7 @@ async function main() {
   }
 
   const [leetcode, github, githubActivity] = await Promise.all([
-    fetchLeetCode(),
+    syncLeetCode(LEETCODE_USERNAMES),
     fetchGitHub(GITHUB_USERNAME),
     fetchGitHubContributions(GITHUB_USERNAME)
   ]);
@@ -225,7 +160,7 @@ async function main() {
   writeFileSync(outPath, JSON.stringify(output, null, 2) + '\n');
 
   console.log(`✅ Data written to ${outPath}`);
-  if (leetcode) console.log(`   LeetCode: ${leetcode.stats.totalSolved} solved`);
+  if (leetcode) console.log(`   LeetCode: ${leetcode.stats.totalSolved} solved across ${LEETCODE_USERNAMES.length} accounts`);
   else console.log('   LeetCode: fetch failed, kept previous values');
   if (github) console.log(`   GitHub: ${github.length} repos fetched`);
   if (githubActivity) {

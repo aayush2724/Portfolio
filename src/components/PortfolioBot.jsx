@@ -49,9 +49,9 @@ function searchPortfolio(query) {
     if (lc?.stats) {
       return `Here's my LeetCode breakdown:\n\n` +
         `• **${lc.stats.totalSolved}** problems solved (${lc.stats.easy} easy, ${lc.stats.medium} medium, ${lc.stats.hard} hard)\n` +
-        `• **${lc.streak}**-day current streak\n` +
-        `• **${lc.totalActiveDays}** active days\n` +
-        `• Global rank: **#${lc.ranking.toLocaleString()}**\n\n` +
+        `• **${lc.streak}**-day longest streak this year\n` +
+        `• **${lc.totalActiveDays}** active days in the last year\n` +
+        `• Counted across both of my accounts\n\n` +
         `I grind DSA daily in **C++** — mostly trees, graphs, DP, and binary search.`;
     }
     return `I'm active on LeetCode — currently at ${LEETCODE_SOLVED}+ problems and counting. I focus on C++ and aim for consistency over streaks.`;

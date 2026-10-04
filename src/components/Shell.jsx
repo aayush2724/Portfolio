@@ -124,7 +124,7 @@ function makeCommands({ close }) {
     stats: () => {
       const lc = portfolioData.leetcode?.stats
       return [
-        `leetcode   ${lc?.totalSolved ?? "—"} solved  (E:${lc?.easySolved ?? "—"} M:${lc?.mediumSolved ?? "—"} H:${lc?.hardSolved ?? "—"})`,
+        `leetcode   ${lc?.totalSolved ?? "—"} solved  (E:${lc?.easy ?? "—"} M:${lc?.medium ?? "—"} H:${lc?.hard ?? "—"})`,
         `github     ${portfolioData.github?.length ?? "—"} public repos`,
         "→ cd stats for the full dashboard",
       ]

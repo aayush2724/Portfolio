@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { buildGrid } from "../data/contributions"
 
-const LEVELS = [
+/** Five-step scale from an "r,g,b" triple; level 0 is the shared empty cell. */
+const levelsFor = (rgb) => [
   "rgba(255,255,255,0.03)",
-  "rgba(212,255,63,0.15)",
-  "rgba(212,255,63,0.35)",
-  "rgba(212,255,63,0.6)",
-  "rgba(212,255,63,0.9)",
+  `rgba(${rgb},0.15)`,
+  `rgba(${rgb},0.35)`,
+  `rgba(${rgb},0.6)`,
+  `rgba(${rgb},0.9)`,
 ]
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -27,20 +28,32 @@ const formatDate = (iso) =>
   })
 
 /**
- * Real GitHub contribution calendar. `calendar` is the synced or live per-day
- * data (see src/data/contributions.js); `totalContributions` only backs the
- * header when no calendar has arrived yet.
+ * Year-long activity calendar — the GitHub contributions and the combined
+ * LeetCode submissions both render through it. `calendar` is the synced or
+ * live per-day data (see src/data/contributions.js); `fallbackTotal` only
+ * backs the header when no calendar has arrived yet. `unit` is the singular
+ * noun for one count ("contribution", "submission").
  *
  * The grid fits its card instead of scrolling. On a wide screen the cells and
  * gaps grow so the year spans the row (centred once they hit their cap); on a
  * phone the oldest weeks are dropped so the most recent activity is what shows.
  */
-export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
+export default function ActivityHeatmap({
+  title,
+  icon,
+  unit,
+  color = "212,255,63",
+  note,
+  calendar,
+  fallbackTotal = 0,
+}) {
   const [hovered, setHovered] = useState(null)
   const [width, setWidth] = useState(0)
   const measureRef = useRef(null)
 
   const { weeks, total, hasData } = useMemo(() => buildGrid(calendar), [calendar])
+  const levels = useMemo(() => levelsFor(color), [color])
+  const plural = (n) => (n === 1 ? unit : `${unit}s`)
 
   useEffect(() => {
     const el = measureRef.current
@@ -86,7 +99,7 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
   const step = cell + gap
   const radius = Math.max(2, Math.round(cell / 6))
   const gridWidth = visible.length * step - gap
-  const headline = hasData ? total : totalContributions
+  const headline = hasData ? total : fallbackTotal
   const truncated = visible.length < weeks.length
   const legendCell = Math.min(cell, 14)
 
@@ -97,18 +110,18 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
     >
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 mb-5">
         <div className="flex items-center gap-3">
-          <span className="text-xl" aria-hidden="true">🟩</span>
+          <span className="text-xl" aria-hidden="true">{icon}</span>
           <span className="font-display text-sm uppercase tracking-wider" style={{ color: "var(--fg)" }}>
-            GitHub Contributions
+            {title}
           </span>
         </div>
         <span className="font-mono text-xs" style={{ color: "var(--muted)" }}>
-          {headline.toLocaleString()} contributions in the last year
+          {headline.toLocaleString()} {plural(headline)} in the last year
         </span>
       </div>
 
       {/* Measured at full width; the block inside centres once cells hit their cap */}
-      <div ref={measureRef} role="img" aria-label={`${headline} GitHub contributions in the last year`}>
+      <div ref={measureRef} role="img" aria-label={`${title}: ${headline} ${plural(headline)} in the last year`}>
         <div className="mx-auto flex" style={{ width: RAIL_W + gridWidth }} onMouseLeave={() => setHovered(null)}>
           {/* Weekday rail */}
           <div
@@ -144,7 +157,7 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
                       <div
                         key={day.date}
                         className="transition-transform duration-150 hover:scale-150 hover:z-10 relative"
-                        style={{ width: cell, height: cell, borderRadius: radius, background: LEVELS[day.level] }}
+                        style={{ width: cell, height: cell, borderRadius: radius, background: levels[day.level] }}
                         onMouseEnter={() => setHovered({ w: wi, d: di, day })}
                         onClick={() =>
                           setHovered((h) => (h && h.day.date === day.date ? null : { w: wi, d: di, day }))
@@ -174,8 +187,8 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
                       : { left: hovered.w * step + cell / 2, transform: "translate(-50%, -100%)" }),
                 }}
               >
-                <span style={{ color: "var(--accent)" }}>{hovered.day.count}</span>
-                {hovered.day.count === 1 ? " contribution" : " contributions"} on {formatDate(hovered.day.date)}
+                <span style={{ color: `rgb(${color})` }}>{hovered.day.count}</span>
+                {` ${plural(hovered.day.count)}`} on {formatDate(hovered.day.date)}
               </div>
             )}
           </div>
@@ -184,12 +197,12 @@ export default function GitHubHeatmap({ calendar, totalContributions = 0 }) {
 
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 mt-4">
         <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>
-          {truncated ? `last ${visible.length} weeks` : ""}
+          {[note, truncated && `last ${visible.length} weeks`].filter(Boolean).join(" · ")}
         </span>
         <div className="flex items-center gap-2">
           <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>Less</span>
-          {LEVELS.map((color, i) => (
-            <div key={i} className="rounded-[2px]" style={{ width: legendCell, height: legendCell, background: color }} />
+          {levels.map((bg, i) => (
+            <div key={i} className="rounded-[2px]" style={{ width: legendCell, height: legendCell, background: bg }} />
           ))}
           <span className="font-mono text-[10px]" style={{ color: "var(--muted)", opacity: 0.95 }}>More</span>
         </div>

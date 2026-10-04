@@ -16,18 +16,25 @@ import portfolioData from "./portfolioData.json"
 const lc = portfolioData.leetcode ?? {}
 const gh = portfolioData.githubStats ?? {}
 
-/** Problems solved on LeetCode. */
+/** Problems solved on LeetCode — every synced account summed (src/data/leetcodeSync.js). */
 export const LEETCODE_SOLVED = lc.stats?.totalSolved ?? 700
 
-/** Difficulty split. Note this is the raw per-difficulty count from the API. */
+/** Difficulty split, summed across both accounts. */
 export const LEETCODE_SPLIT = {
   easy: lc.stats?.easy ?? 0,
   medium: lc.stats?.medium ?? 0,
   hard: lc.stats?.hard ?? 0,
 }
 
+/** Longest run of consecutive active days in the last year, both accounts combined. */
 export const LEETCODE_STREAK = lc.streak ?? 0
 export const LEETCODE_ACTIVE_DAYS = lc.totalActiveDays ?? 0
+
+/**
+ * Per-day submissions over the last year, both accounts merged
+ * (src/data/leetcodeSync.js), in the heatmap's compact { from, to, days } shape.
+ */
+export const LEETCODE_CALENDAR = lc.calendar ?? null
 
 /**
  * Own (non-fork) public repositories.

@@ -7,6 +7,7 @@ import {
   REPO_COUNT,
   CONTRIBUTIONS,
   CONTRIBUTION_CALENDAR,
+  LEETCODE_CALENDAR,
 } from "../data/stats"
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
@@ -14,7 +15,7 @@ import CountUp from "./CountUp"
 import CommandLabel from "./CommandLabel"
 import AsciiBox from "./AsciiBox"
 import AnimatedHeading from "./AnimatedHeading"
-import GitHubHeatmap from "./GitHubHeatmap"
+import ActivityHeatmap from "./ActivityHeatmap"
 import { normalizeCalendar } from "../data/contributions"
 import { useLowPower } from "../context/motion"
 
@@ -275,13 +276,28 @@ export default function CodingStatsBold() {
           </motion.div>
         </AsciiBox>
 
-        {/* GitHub Heatmap */}
-        <Reveal delay={0.4}>
-          <GitHubHeatmap
-            calendar={stats.github.calendar}
-            totalContributions={stats.github.contributions}
-          />
-        </Reveal>
+        {/* Activity heatmaps */}
+        <div className="space-y-8">
+          <Reveal delay={0.4}>
+            <ActivityHeatmap
+              title="GitHub Contributions"
+              icon="🟩"
+              unit="contribution"
+              calendar={stats.github.calendar}
+              fallbackTotal={stats.github.contributions}
+            />
+          </Reveal>
+          <Reveal delay={0.4}>
+            <ActivityHeatmap
+              title="LeetCode Submissions"
+              icon="🧩"
+              unit="submission"
+              color="255,153,0"
+              note="2 accounts combined"
+              calendar={LEETCODE_CALENDAR}
+            />
+          </Reveal>
+        </div>
 
         {/* Optional: Profile Links */}
         <Reveal delay={0.4}>
