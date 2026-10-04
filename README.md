@@ -93,5 +93,4 @@ scripts/og/                            # source pages for the share image + icon
 ## Links
 
 - 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724)
-- 🧩 **LeetCode:** [leetcode.com/aayush2724](https://leetcode.com/aayush2724)
 - 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)
