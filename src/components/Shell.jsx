@@ -25,7 +25,7 @@ const SECTIONS = [
   { id: "skills", file: "skills.txt" },
   { id: "stats", file: "stats" },
   { id: "journey", file: "journey.log" },
-  { id: "testimonials", file: "testimonials" },
+  { id: "play", file: "play" },
   { id: "contact", file: "contact" },
 ]
 

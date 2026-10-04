@@ -18,7 +18,7 @@ const ScrollCinema = lazy(() => import("./components/ScrollCinema"));
 const CodingStatsBold = lazy(() => import("./components/CodingStatsBold"));
 const JourneyTimeline = lazy(() => import("./components/JourneyTimeline"));
 const AchievementsSection = lazy(() => import("./components/AchievementsSection"));
-const Testimonials = lazy(() => import("./components/Testimonials"));
+const Stack2048 = lazy(() => import("./components/Stack2048"));
 const BeyondCodeBento = lazy(() => import("./components/BeyondCodeBento"));
 const ContactBold = lazy(() => import("./components/ContactBold"));
 const PortfolioBot = lazy(() => import("./components/PortfolioBot"));
@@ -199,7 +199,7 @@ export default function App() {
               <CodingStatsBold />
               <JourneyTimeline />
               <AchievementsSection />
-              <Testimonials />
+              <Stack2048 />
               <BeyondCodeBento />
               <PortfolioBot />
               <ContactBold />
