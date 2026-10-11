@@ -16,15 +16,15 @@ const STYLE = [
   null,
   { bg: "rgba(255,255,255,0.06)", fg: "var(--fg)" },
   { bg: "rgba(255,255,255,0.11)", fg: "var(--fg)" },
-  { bg: "rgba(212,255,63,0.12)", fg: "var(--fg)" },
-  { bg: "rgba(212,255,63,0.2)", fg: "var(--fg)" },
-  { bg: "rgba(212,255,63,0.3)", fg: "var(--fg)" },
-  { bg: "rgba(212,255,63,0.42)", fg: "var(--fg)" },
-  { bg: "rgba(212,255,63,0.58)", fg: "var(--accent-ink)" },
-  { bg: "rgba(212,255,63,0.72)", fg: "var(--accent-ink)" },
-  { bg: "rgba(212,255,63,0.86)", fg: "var(--accent-ink)" },
-  { bg: "var(--accent)", fg: "var(--accent-ink)", glow: "0 0 24px rgba(212,255,63,0.45)" },
-  { bg: "linear-gradient(135deg, #ff9900, #d4ff3f)", fg: "var(--accent-ink)", glow: "0 0 32px rgba(255,153,0,0.55)" },
+  { bg: "rgb(var(--accent-rgb) / 0.12)", fg: "var(--fg)" },
+  { bg: "rgb(var(--accent-rgb) / 0.2)", fg: "var(--fg)" },
+  { bg: "rgb(var(--accent-rgb) / 0.3)", fg: "var(--fg)" },
+  { bg: "rgb(var(--accent-rgb) / 0.42)", fg: "var(--fg)" },
+  { bg: "rgb(var(--accent-rgb) / 0.58)", fg: "var(--accent-ink)" },
+  { bg: "rgb(var(--accent-rgb) / 0.72)", fg: "var(--accent-ink)" },
+  { bg: "rgb(var(--accent-rgb) / 0.86)", fg: "var(--accent-ink)" },
+  { bg: "var(--accent)", fg: "var(--accent-ink)", glow: "0 0 24px rgb(var(--accent-rgb) / 0.45)" },
+  { bg: "linear-gradient(135deg, var(--ember), var(--accent))", fg: "var(--accent-ink)", glow: "0 0 32px rgb(var(--ember-rgb) / 0.55)" },
 ]
 
 const KEYS = {
@@ -355,7 +355,7 @@ export default function Stack2048() {
                       key={step.name}
                       className="flex items-center gap-2.5 rounded-xl border px-3 py-2.5 font-mono text-xs transition-colors"
                       style={{
-                        borderColor: isNext ? "rgba(212,255,63,0.4)" : "var(--line)",
+                        borderColor: isNext ? "rgb(var(--accent-rgb) / 0.4)" : "var(--line)",
                         borderStyle: isNext ? "dashed" : "solid",
                         color: unlocked ? "var(--fg)" : "var(--muted)",
                       }}

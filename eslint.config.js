@@ -32,7 +32,7 @@ export default [
   {
     // react-three-fiber elements take three.js constructor props that are not
     // DOM attributes; the unknown-property rule has no way to know that.
-    files: ["src/components/LazyDevPage.jsx", "src/components/ShaderScene.jsx", "src/components/sentira/ParticleWave.jsx"],
+    files: ["src/components/LazyDevPage.jsx", "src/components/CinemaStage.jsx", "src/three/**/*.jsx", "src/components/sentira/ParticleWave.jsx"],
     rules: { "react/no-unknown-property": "off" },
   },
 ]

@@ -279,7 +279,7 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
               style={{
                 borderColor: "var(--accent)",
                 color: "var(--accent)",
-                background: "rgba(212, 255, 63, 0.08)",
+                background: "rgb(var(--accent-rgb) / 0.08)",
               }}
             >
               🚧 &nbsp;Deployment Status: Pending Since Forever
@@ -366,7 +366,7 @@ export default function LazyDevPage({ isOpen, onClose, projectTitle, githubLink 
                   e.currentTarget.style.background = "var(--accent)"
                   e.currentTarget.style.borderColor = "var(--accent)"
                   e.currentTarget.style.transform = "translateY(-3px) scale(1.02)"
-                  e.currentTarget.style.boxShadow = "0 20px 60px rgba(212, 255, 63, 0.2)"
+                  e.currentTarget.style.boxShadow = "0 20px 60px rgb(var(--accent-rgb) / 0.2)"
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = "var(--accent)"

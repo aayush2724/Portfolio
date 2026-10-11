@@ -20,16 +20,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Design tokens ──────────────────────────────────────────────────────────── */
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Acid lime on near-black, with surfaces lifted a step off the page so cards,
+   the terminal and the nav read as planes instead of outlines. Every colour on
+   the site derives from these. The *-rgb twins are the same colour as
+   space-separated channels so components (and Tailwind's /opacity modifiers)
+   can tint a token at any alpha — rgb(var(--accent-rgb) / 0.15). Keep each
+   pair in sync. */
 :root {
-  --bg: #0a0a0b;
-  --surface: #101014;
-  --fg: #f4f4f5;
-  --muted: #8b8b93;
-  --line: rgba(255,255,255,0.10);
-  --accent: #d4ff3f;     /* ← change this one line to re-theme the whole site */
-  --accent-ink: #0a0a0b; /* text that sits on the accent */
+  --bg: #09090b;
+  --bg-rgb: 9 9 11;
+  --surface: #131316;
+  --fg: #f3f3f5;
+  --fg-rgb: 243 243 245;
+  --muted: #92929c;
+  --line: rgb(243 243 245 / 0.10);
+  --accent: #d4ff3f;           /* acid lime */
+  --accent-rgb: 212 255 63;
+  --accent-ink: #09090b;       /* text that sits on the accent */
+  --ember: #ff9900;            /* hot secondary: streak card, LeetCode heatmap, 2048 top tile */
+  --ember-rgb: 255 153 0;
+  --ok: #52d273;               /* status dots only ("available", "live") — never decoration */
 }
+/* Alternates tried and parked (swap the eight paired values above):
+   amber   --bg #0c0b09 · --surface #151310 · --fg #f3efe7 · --muted #9b958a · --accent #ffb224 (255 178 36) · --ember #ff6a3d
+   cyan    --bg #07090d · --surface #0e1218 · --fg #eef2f7 · --muted #8a94a3 · --accent #3de0ff (61 224 255)  · --ember #ff7059 */
 
 /* ── Clash Display (self-hosted) ────────────────────────────────────────────
    Weights 400–700 are the ones the site uses; Tailwind's font-extrabold (800)
@@ -173,8 +188,8 @@ a:focus-visible {
    avoids touching layout; disabled on touch devices where the repaint cost
    outweighs the flourish. */
 @keyframes glow-breathe {
-  0%, 100% { box-shadow: 0 0 24px 0 rgba(212, 255, 63, 0.25); }
-  50%      { box-shadow: 0 0 44px 6px rgba(212, 255, 63, 0.45); }
+  0%, 100% { box-shadow: 0 0 24px 0 rgb(var(--accent-rgb) / 0.25); }
+  50%      { box-shadow: 0 0 44px 6px rgb(var(--accent-rgb) / 0.45); }
 }
 @media (pointer: fine) {
   .glow-pill {
@@ -208,15 +223,15 @@ a:focus-visible {
 .fog-a {
   background: radial-gradient(
     60% 85% at 50% 100%,
-    rgba(165, 195, 225, 0.28),
-    rgba(165, 195, 225, 0.10) 45%,
+    rgba(165, 195, 225, 0.26),
+    rgba(165, 195, 225, 0.09) 45%,
     transparent 72%
   );
 }
 .fog-b {
   background: radial-gradient(
     48% 70% at 28% 100%,
-    rgba(205, 225, 245, 0.16),
+    rgba(205, 225, 245, 0.15),
     transparent 65%
   );
 }
@@ -358,4 +373,22 @@ a:focus-visible {
 @keyframes bot-typing {
   0%, 60%, 100% { transform: translateY(0); }
   30%           { transform: translateY(-5px); }
+}
+
+/* ── Custom cursor ──────────────────────────────────────────────────────────
+   AccentCursor stamps html.cursor-custom once it is running on a fine-pointer,
+   motion-OK device; only then is the native pointer hidden, so a script
+   failure never leaves the visitor without a cursor. Fields keep the native
+   I-beam (the overlay fades out over them). */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.cursor-custom,
+  html.cursor-custom * {
+    cursor: none !important;
+  }
+  html.cursor-custom input,
+  html.cursor-custom textarea,
+  html.cursor-custom select,
+  html.cursor-custom [contenteditable="true"] {
+    cursor: auto !important;
+  }
 }

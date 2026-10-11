@@ -1,147 +1,177 @@
 import { useEffect, useRef, useState } from "react"
 
+/**
+ * Desktop cursor, inverting-blob technique.
+ *
+ * - A small lime dot is the precise pointer; it stretches along its velocity.
+ * - Over a link or button a white disc grows under the pointer with
+ *   `mix-blend-mode: difference`, so whatever sits beneath it inverts — text
+ *   flips dark, pills flip — instead of anything being outlined.
+ * - `[data-cursor="Label"]` targets (and a `cursor-label` window event, which
+ *   the 3D room uses) show a lime disc carrying a word instead.
+ * - The native pointer is hidden by index.css only once this stamps
+ *   `html.cursor-custom`, so a script failure never leaves the visitor without
+ *   a cursor. Form fields keep the native I-beam and the overlay fades out.
+ * - Two fixed nodes, one rAF loop, transform-only.
+ */
+const BLOB = 52
+const LABEL = 64
+
+const lerp = (a, b, t) => a + (b - a) * t
+
 export default function AccentCursor() {
   const dotRef = useRef(null)
-  const ringRef = useRef(null)
+  const blobRef = useRef(null)
   const textRef = useRef(null)
-  // Resolved on first render so the cursor layers are never mounted on a phone.
-  const [isTouch] = useState(
+  // Resolved on first render so the cursor layers are never mounted on a phone
+  // or for visitors who asked for reduced motion.
+  const [enabled] = useState(
     () =>
       typeof window !== "undefined" &&
-      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      !("ontouchstart" in window || navigator.maxTouchPoints > 0) &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
   )
   const [text, setText] = useState("")
-  const textRefValue = useRef("")
-  
-  const mouse = useRef({ x: 0, y: 0 })
-  const ring = useRef({ x: 0, y: 0 })
-  const isHovering = useRef(false)
-  const overText = useRef(false)
-  // Inside #projects the overlay hides entirely — the cards are busy enough
-  // that the ring reads as clutter, so that section gets the native cursor.
-  const suppressed = useRef(false)
-
   // Mirror `text` into a ref so the rAF loop can read it without being torn
   // down and restarted on every change.
+  const label = useRef("")
   useEffect(() => {
-    textRefValue.current = text
+    label.current = text
   }, [text])
 
   useEffect(() => {
-    if (isTouch) return
+    if (!enabled) return
+    const root = document.documentElement
+    root.classList.add("cursor-custom")
+
+    const mouse = { x: -100, y: -100 }
+    const vel = { x: 0, y: 0 }
+    const blob = { x: -100, y: -100, size: 0 }
+    const st = { seen: false, inside: true, pressed: false, native: false, hover: false, external: "" }
 
     const onMove = (e) => {
-      mouse.current = { x: e.clientX, y: e.clientY }
+      mouse.x = e.clientX
+      mouse.y = e.clientY
+      st.seen = true
+      st.inside = true
     }
-
-    const onMouseOver = (e) => {
-      suppressed.current = !!e.target.closest('#projects')
-      const interactive = e.target.closest('a, button, [role="button"], .coverflow-card')
-      isHovering.current = !!interactive
-      // Over prose the ring shrinks toward the dot so it never obscures reading
-      overText.current = !interactive &&
-        !!e.target.closest('p, h1, h2, h3, h4, h5, h6, li, blockquote')
-
-      const textTarget = e.target.closest('[data-cursor]')
-      if (textTarget) {
-        setText(textTarget.getAttribute('data-cursor'))
-      } else {
-        setText("")
-      }
+    const onOver = (e) => {
+      const t = e.target
+      st.native = !!t.closest('input, textarea, select, [contenteditable="true"], iframe')
+      const labelEl = t.closest("[data-cursor]")
+      st.hover = !labelEl && !!t.closest('a, button, [role="button"], .coverflow-card')
+      const next = labelEl ? labelEl.getAttribute("data-cursor") || "" : st.external
+      setText(next)
     }
+    // The 3D room (and anything else without DOM targets) can ask for a word.
+    const onExternal = (e) => {
+      st.external = (e.detail && String(e.detail)) || ""
+      setText(st.external)
+    }
+    const onDown = () => { st.pressed = true }
+    const onUp = () => { st.pressed = false }
+    const onLeave = () => { st.inside = false }
+    const onEnter = () => { st.inside = true }
 
     // Track the live frame id: the loop reschedules itself, so cancelling only
-    // the first id leaked a permanent rAF loop on every text change.
-    let rafId = 0
-    const animate = () => {
-      const hide = suppressed.current
-      // Dot follows instantly
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px)`
-        dotRef.current.style.opacity = hide ? "0" : "1"
+    // the first id would leak a permanent rAF loop.
+    let raf = 0
+    let prevX = mouse.x
+    let prevY = mouse.y
+    const frame = () => {
+      vel.x = lerp(vel.x, mouse.x - prevX, 0.35)
+      vel.y = lerp(vel.y, mouse.y - prevY, 0.35)
+      prevX = mouse.x
+      prevY = mouse.y
+      const speed = Math.hypot(vel.x, vel.y)
+      const stretch = 1 + Math.min(speed / 28, 1.4)
+      const angle = Math.atan2(vel.y, vel.x)
+
+      const visible = st.seen && st.inside && !st.native
+      const press = st.pressed ? 0.82 : 1
+      const hasLabel = !!label.current
+      const target = hasLabel ? LABEL : st.hover ? BLOB : 0
+
+      blob.x = lerp(blob.x, mouse.x, 0.2)
+      blob.y = lerp(blob.y, mouse.y, 0.2)
+      blob.size = lerp(blob.size, target, 0.18)
+
+      const dot = dotRef.current
+      if (dot) {
+        dot.style.transform =
+          `translate(${mouse.x}px, ${mouse.y}px) rotate(${angle}rad) ` +
+          `scale(${stretch * press}, ${press / Math.sqrt(stretch)})`
+        dot.style.opacity = visible && !hasLabel ? "1" : "0"
       }
-
-      // Ring lags with lerp
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.15
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.15
-
-      if (ringRef.current) {
-        const label = textRefValue.current
-        const size = isHovering.current || label ? 64 : overText.current ? 14 : 32
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${size / 32})`
-        ringRef.current.style.opacity = hide ? "0" : "1"
+      const el = blobRef.current
+      if (el) {
+        const s = Math.max(0, blob.size) * press
+        el.style.transform = `translate(${blob.x - s / 2}px, ${blob.y - s / 2}px)`
+        el.style.width = `${s}px`
+        el.style.height = `${s}px`
+        el.style.opacity = visible && s > 1 ? "1" : "0"
       }
-
-      if (textRef.current) {
-        textRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`
-        textRef.current.style.opacity = hide ? "0" : (text ? "1" : "0")
+      const tEl = textRef.current
+      if (tEl) {
+        tEl.style.transform = `translate(${blob.x}px, ${blob.y}px) scale(${press})`
+        tEl.style.opacity = visible && hasLabel ? "1" : "0"
       }
-
-      rafId = requestAnimationFrame(animate)
+      raf = requestAnimationFrame(frame)
     }
 
-    window.addEventListener('mousemove', onMove, { passive: true })
-    window.addEventListener('mouseover', onMouseOver, { passive: true })
-    rafId = requestAnimationFrame(animate)
+    window.addEventListener("mousemove", onMove, { passive: true })
+    window.addEventListener("mouseover", onOver, { passive: true })
+    window.addEventListener("mousedown", onDown, { passive: true })
+    window.addEventListener("mouseup", onUp, { passive: true })
+    window.addEventListener("cursor-label", onExternal)
+    document.addEventListener("mouseleave", onLeave)
+    document.addEventListener("mouseenter", onEnter)
+    raf = requestAnimationFrame(frame)
 
     return () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseover', onMouseOver)
-      cancelAnimationFrame(rafId)
+      root.classList.remove("cursor-custom")
+      window.removeEventListener("mousemove", onMove)
+      window.removeEventListener("mouseover", onOver)
+      window.removeEventListener("mousedown", onDown)
+      window.removeEventListener("mouseup", onUp)
+      window.removeEventListener("cursor-label", onExternal)
+      document.removeEventListener("mouseleave", onLeave)
+      document.removeEventListener("mouseenter", onEnter)
+      cancelAnimationFrame(raf)
     }
-  }, [isTouch])
+  }, [enabled])
 
-  if (isTouch) return null
+  if (!enabled) return null
 
   return (
     <>
-      {/* Dot */}
+      {/* Dot — the precise pointer; rotates and stretches with velocity */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[10000] mix-blend-difference"
-        style={{
-          width: '8px',
-          height: '8px',
-          marginLeft: '-4px',
-          marginTop: '-4px',
-        }}
-      >
-        <div className={`w-full h-full rounded-full bg-[var(--accent)] transition-opacity duration-200 ${text ? 'opacity-0' : 'opacity-100'}`} />
-      </div>
+        aria-hidden="true"
+        className="pointer-events-none fixed top-0 left-0 z-[10000] mix-blend-difference rounded-full bg-[var(--accent)] transition-opacity duration-150"
+        style={{ width: "8px", height: "8px", marginLeft: "-4px", marginTop: "-4px", opacity: 0 }}
+      />
 
-      {/* Ring */}
+      {/* Blob — grows under the pointer over interactive targets and inverts
+          what is beneath it; carries a lime fill while a label is showing */}
       <div
-        ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] transition-transform duration-300 ease-out flex items-center justify-center"
-        style={{
-          width: '32px',
-          height: '32px',
-          marginLeft: '-16px',
-          marginTop: '-16px',
-        }}
-      >
-        <div 
-          className={`w-full h-full rounded-full transition-all duration-300 ${text ? 'bg-[var(--accent)] border-none' : 'border-2 bg-transparent'}`}
-          style={{
-            borderColor: text ? 'transparent' : 'var(--accent)',
-            opacity: text ? 0.9 : 0.2,
-          }}
-        />
-      </div>
+        ref={blobRef}
+        aria-hidden="true"
+        className={`pointer-events-none fixed top-0 left-0 z-[9999] rounded-full transition-[opacity,background-color] duration-200 ${
+          text ? "bg-[var(--accent)]" : "bg-white mix-blend-difference"
+        }`}
+        style={{ width: 0, height: 0, opacity: 0 }}
+      />
 
-      {/* Text */}
+      {/* Label — rides on the blob when a [data-cursor] target is hovered */}
       <div
         ref={textRef}
-        className="pointer-events-none fixed top-0 left-0 z-[10000] flex items-center justify-center transition-opacity duration-300"
-        style={{
-          width: '64px',
-          height: '64px',
-          marginLeft: '-32px',
-          marginTop: '-32px',
-          opacity: text ? 1 : 0,
-        }}
+        aria-hidden="true"
+        className="pointer-events-none fixed top-0 left-0 z-[10000] flex items-center justify-center transition-opacity duration-200"
+        style={{ width: `${LABEL}px`, height: `${LABEL}px`, marginLeft: `${-LABEL / 2}px`, marginTop: `${-LABEL / 2}px`, opacity: 0 }}
       >
-        <span className="text-[9px] font-bold text-[var(--bg)] tracking-wider uppercase text-center leading-tight px-1">
+        <span className="text-[9px] font-bold text-[var(--accent-ink)] tracking-wider uppercase text-center leading-tight px-1">
           {text}
         </span>
       </div>

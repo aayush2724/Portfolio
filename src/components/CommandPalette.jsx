@@ -268,7 +268,7 @@ export default function CommandPalette({ isOpen, onClose }) {
                           onMouseEnter={() => setSel(gi)}
                           className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors"
                           style={{
-                            background: isS ? "rgba(212, 255, 63, 0.08)" : "transparent",
+                            background: isS ? "rgb(var(--accent-rgb) / 0.08)" : "transparent",
                           }}
                         >
                           <span className="text-lg w-7 text-center flex-shrink-0">

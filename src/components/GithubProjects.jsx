@@ -112,7 +112,7 @@ const GitHubProjects = () => {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <p className="font-mono text-xs text-amber-500 tracking-widest uppercase mb-3">
+          <p className="font-mono text-xs text-accent tracking-widest uppercase mb-3">
             Chapter 03.5 — GitHub
           </p>
           <AnimatedHeading 
@@ -156,18 +156,18 @@ const GitHubProjects = () => {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group gc rounded-2xl border border-white/7 hover:border-amber-500/20 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-amber-500/5 block bg-black/20"
+              className="group gc rounded-2xl border border-white/7 hover:border-accent/20 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-accent/5 block bg-black/20"
             >
               <div className="p-6 h-full flex flex-col relative z-10">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-display font-bold text-white text-base group-hover:text-amber-400 transition-colors">
+                  <h3 className="font-display font-bold text-white text-base group-hover:text-accent transition-colors">
                     {project.name}
                   </h3>
                   <motion.div
                     whileHover={{ rotate: 15, scale: 1.1 }}
                   >
-                    <Github className="w-5 h-5 text-white/20 group-hover:text-amber-400/60 transition-colors" />
+                    <Github className="w-5 h-5 text-white/20 group-hover:text-accent/60 transition-colors" />
                   </motion.div>
                 </div>
 
@@ -180,7 +180,7 @@ const GitHubProjects = () => {
                 {(project.language || project.topics.length > 0) && (
                   <div className="mb-4 flex flex-wrap gap-2">
                     {project.language && (
-                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-full border border-amber-500/20 text-amber-400/70 bg-amber-500/5">
+                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-full border border-accent/20 text-accent/70 bg-accent/5">
                         {project.language}
                       </span>
                     )}
@@ -197,7 +197,7 @@ const GitHubProjects = () => {
 
                 {/* Footer Stats */}
                 <div className="flex items-center justify-between pt-4 border-t border-white/6 mt-auto">
-                  <div className="flex items-center gap-1 text-white/25 font-mono text-xs group-hover:text-amber-400/50 transition-colors">
+                  <div className="flex items-center gap-1 text-white/25 font-mono text-xs group-hover:text-accent/50 transition-colors">
                     <Star className="w-3.5 h-3.5" />
                     <span>{project.stars}</span>
                   </div>
@@ -209,7 +209,7 @@ const GitHubProjects = () => {
               
               {/* Animated background glow on hover */}
               <motion.div 
-                className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/5 transition-colors duration-500 rounded-2xl pointer-events-none"
+                className="absolute inset-0 bg-accent/0 group-hover:bg-accent/5 transition-colors duration-500 rounded-2xl pointer-events-none"
               />
             </motion.a>
           ))}

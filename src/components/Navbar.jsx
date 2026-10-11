@@ -5,6 +5,7 @@ import MenuOverlay from "./MenuOverlay";
 import { useLowPower } from "../context/motion";
 
 const links = [
+  { label: "HQ", href: "#hq" },
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
@@ -125,8 +126,8 @@ export default function Navbar({ onCmd }) {
           // the page behind it on every scroll frame; use an opaque fill there.
           background: scrolled
             ? lowPower
-              ? "#0a0a0b"
-              : "rgba(10, 10, 11, 0.7)"
+              ? "var(--bg)"
+              : "rgb(var(--bg-rgb) / 0.7)"
             : "transparent",
           backdropFilter: scrolled && !lowPower ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
@@ -144,9 +145,9 @@ export default function Navbar({ onCmd }) {
             Aayush<span style={{ color: "var(--accent)" }}>.</span>
           </a>
 
-          {/* Desktop Nav — inline links need ~1024px to fit all seven without
-              overflowing; below that the hamburger overlay is the menu. */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Nav — eight inline links fit from 1024px with the tighter
+              gap; below that the hamburger overlay is the menu. */}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {links.map((l) => (
               <MagneticNavLink
                 key={l.label}

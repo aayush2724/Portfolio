@@ -64,7 +64,7 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 60% 40% at 85% 0%, rgba(212, 255, 63, 0.07), transparent 70%)",
+                "radial-gradient(ellipse 60% 40% at 85% 0%, rgb(var(--accent-rgb) / 0.07), transparent 70%)",
             }}
           />
 

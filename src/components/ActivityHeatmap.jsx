@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { buildGrid } from "../data/contributions"
 
-/** Five-step scale from an "r,g,b" triple; level 0 is the shared empty cell. */
+/** Five-step scale from space-separated "r g b" channels (or a var() holding
+ *  them); level 0 is the shared empty cell. */
 const levelsFor = (rgb) => [
-  "rgba(255,255,255,0.03)",
-  `rgba(${rgb},0.15)`,
-  `rgba(${rgb},0.35)`,
-  `rgba(${rgb},0.6)`,
-  `rgba(${rgb},0.9)`,
+  "rgb(var(--fg-rgb) / 0.03)",
+  `rgb(${rgb} / 0.15)`,
+  `rgb(${rgb} / 0.35)`,
+  `rgb(${rgb} / 0.6)`,
+  `rgb(${rgb} / 0.9)`,
 ]
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -42,7 +43,7 @@ export default function ActivityHeatmap({
   title,
   icon,
   unit,
-  color = "212,255,63",
+  color = "var(--accent-rgb)",
   note,
   calendar,
   fallbackTotal = 0,

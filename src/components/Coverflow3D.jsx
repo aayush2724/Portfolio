@@ -70,7 +70,7 @@ function CoverflowCard({ p, i, index, onProjectClick, drag, setIndex, n }) {
           <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           <div className="absolute inset-0"
-            style={{ background: "linear-gradient(150deg, #15151a, #0a0a0b)" }} />
+            style={{ background: "linear-gradient(150deg, var(--surface), var(--bg))" }} />
         )}
         {/* number watermark */}
         <span className="absolute right-3 top-3 font-display text-6xl leading-none opacity-[0.06]">

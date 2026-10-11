@@ -1,11 +1,12 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import InteractiveGrid from "./components/InteractiveGrid";
-import ShaderBackground from "./components/ShaderBackground";
+import CinemaBackground from "./components/CinemaBackground";
 import FogAtmosphere from "./components/FogAtmosphere";
 import AccentCursor from "./components/AccentCursor";
 import Navbar from "./components/Navbar";
 import HeroBold from "./components/HeroBold";
+import CabinMap from "./components/CabinMap";
 import ProjectsBold from "./components/ProjectsBold";
 import Shell from "./components/Shell";
 import ScrollProgress from "./components/ScrollProgress";
@@ -167,11 +168,11 @@ export default function App() {
     <>
       <SkipLink />
 
-      {/* Shader background */}
-      <ShaderBackground />
-
-      {/* Interactive grid background */}
+      {/* Flat grid + page colour, the floor everything else sits on */}
       <InteractiveGrid />
+
+      {/* HQ: the 3D room the page walks through (desktop only, z-[1]) */}
+      <CinemaBackground />
 
       {/* Drifting ground fog above the backgrounds, below the content */}
       <FogAtmosphere />
@@ -191,6 +192,7 @@ export default function App() {
           <Navbar onCmd={() => setCmdOpen(true)} />
           <main id="main" tabIndex={-1} className="relative z-10 outline-none">
             <HeroBold introDone={introDone} />
+            <CabinMap />
             <ProjectsBold />
             <Suspense fallback={<div className="min-h-screen" />}>
               <AboutBold />

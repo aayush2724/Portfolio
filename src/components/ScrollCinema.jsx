@@ -64,7 +64,7 @@ export default function ScrollCinema() {
     // Sticky scrub + a dozen live motion values is desktop-budget work; the
     // fallback is one static glow behind the same statement.
     return (
-      <section className="relative py-32 px-6 md:px-16 overflow-hidden">
+      <section id="approach" className="relative py-32 px-6 md:px-16 overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
@@ -97,7 +97,7 @@ export default function ScrollCinema() {
   const T1 = 0.9
 
   return (
-    <section ref={ref} className="relative h-[260vh]">
+    <section id="approach" ref={ref} className="relative h-[260vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Floor glow */}
         <motion.div

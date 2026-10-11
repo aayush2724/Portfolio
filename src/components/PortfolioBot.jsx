@@ -268,7 +268,7 @@ export default function PortfolioBot() {
         style={{
           background: "var(--accent)",
           color: "var(--accent-ink)",
-          boxShadow: "0 0 20px rgba(212, 255, 63, 0.2)",
+          boxShadow: "0 0 20px rgb(var(--accent-rgb) / 0.2)",
           // Clear the home indicator on phones with a bottom safe area.
           bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
         }}
@@ -296,7 +296,7 @@ export default function PortfolioBot() {
               <div>
                 <div className="font-display text-sm font-semibold" style={{ color: "var(--fg)" }}>PortfolioBot</div>
                 <div className="font-mono text-[9px] flex items-center gap-1" style={{ color: "var(--muted)" }}>
-                  <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
+                  <span className="w-1 h-1 rounded-full animate-pulse" style={{ background: "var(--ok)" }} />
                   scripted guide · not a live AI
                 </div>
               </div>
@@ -317,7 +317,7 @@ export default function PortfolioBot() {
             {messages.map((m) => (
               <div key={m.id} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
                 {m.from === "bot" && (
-                  <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold mr-2 flex-shrink-0 mt-0.5" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold mr-2 flex-shrink-0 mt-0.5" style={{ background: "rgb(var(--accent-rgb) / 0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
                 )}
                 <div className={`max-w-[82%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
                   m.from === "user" ? "rounded-br-sm" : "rounded-bl-sm"
@@ -332,7 +332,7 @@ export default function PortfolioBot() {
             ))}
             {loading && (
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold flex-shrink-0" style={{ background: "rgba(212,255,63,0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
+                <div className="w-6 h-6 rounded-md flex items-center justify-center text-[9px] font-bold flex-shrink-0" style={{ background: "rgb(var(--accent-rgb) / 0.1)", color: "var(--accent)" }} aria-hidden="true">{">_"}</div>
                 <div className="rounded-xl rounded-bl-sm px-4 py-3 flex items-center gap-1.5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
                   {[0, 0.15, 0.3].map((d, i) => (
                     <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--muted)", animation: `bot-typing 1s ${d}s infinite` }} />

@@ -97,7 +97,7 @@ export default function ProjectsBold() {
   const safeIndex = total ? Math.min(index, total - 1) : 0
 
   return (
-    <section id="projects" className="relative bg-[#080808] py-24 overflow-hidden">
+    <section id="projects" className="relative bg-[#060608]/80 py-24 overflow-hidden">
       <ContainerScroll
         titleComponent={
           <div className="flex flex-col items-center mb-20 relative">

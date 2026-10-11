@@ -106,12 +106,12 @@ function DemoUI({ active }) {
         className="relative w-10 h-6 rounded-full border shrink-0 transition-colors duration-300"
         style={{
           borderColor: "rgba(255,255,255,0.15)",
-          background: active ? "rgba(212,255,63,0.15)" : "rgba(255,255,255,0.04)",
+          background: active ? "rgb(var(--accent-rgb) / 0.15)" : "rgba(255,255,255,0.04)",
         }}
       >
         <motion.div
           className="absolute top-1 left-1 w-4 h-4 rounded-full transition-colors duration-300"
-          style={{ background: active ? "var(--accent)" : "#6b6b73" }}
+          style={{ background: active ? "var(--accent)" : "var(--muted)" }}
           animate={{ x: active ? 16 : 0 }}
           transition={{ type: "spring", stiffness: 500, damping: 26 }}
         />

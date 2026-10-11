@@ -35,7 +35,7 @@ export default defineConfig({
       },
     },
     // three.js/drei are reached only through dynamic imports (the desktop-only
-    // ShaderScene and the LazyDevPage modal), so Rollup's default splitting
+    // CinemaStage and the LazyDevPage modal), so Rollup's default splitting
     // already keeps them out of the entry chunk.
     //
     // An explicit manualChunks rule was worse here: it swept Vite's

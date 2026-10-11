@@ -345,7 +345,7 @@ export default function HeroBold({ introDone = true }) {
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    background: `linear-gradient(110deg, transparent 40%, rgba(212, 255, 63, 0.1) 50%, transparent 60%)`,
+                    background: `linear-gradient(110deg, transparent 40%, rgb(var(--accent-rgb) / 0.1) 50%, transparent 60%)`,
                     backgroundSize: "200% 100%",
                   }}
                   initial={{ backgroundPosition: "-200% 0" }}
@@ -383,7 +383,7 @@ export default function HeroBold({ introDone = true }) {
                       : undefined
                   }
                   className="w-2 h-2 rounded-full"
-                  style={{ background: "var(--accent)" }}
+                  style={{ background: "var(--ok)" }}
                 />
                 <p
                   className="text-xs font-mono tracking-wider"

@@ -186,7 +186,7 @@ export default function ContactBold() {
                 animate={lowPower ? undefined : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
                 transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
                 className="w-2 h-2 rounded-full"
-                style={{ background: "var(--accent)" }}
+                style={{ background: "var(--ok)" }}
               />
               <span>India</span>
               <span style={{ color: "var(--accent)" }}>{time}</span>

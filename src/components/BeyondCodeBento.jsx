@@ -94,7 +94,7 @@ export default function BeyondCodeBento() {
           {/* Now Playing Card */}
           <StaggerItem className="md:col-span-2">
             <BentoCard className="flex items-center gap-6">
-              <div className="w-24 h-24 rounded-2xl flex items-center justify-center flex-shrink-0 text-4xl" style={{ background: "rgba(212, 255, 63, 0.1)" }}>
+              <div className="w-24 h-24 rounded-2xl flex items-center justify-center flex-shrink-0 text-4xl" style={{ background: "rgb(var(--accent-rgb) / 0.1)" }}>
                 🎵
               </div>
               <div className="flex-1">

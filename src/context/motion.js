@@ -10,8 +10,11 @@ const coarsePointer = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(pointer: coarse)").matches
 
+// Read the media query rather than innerWidth: when the viewport changes, the
+// query's change event can fire before innerWidth reflects the new size, and
+// a hook that re-reads innerWidth there sticks on the stale answer.
 const smallScreen = () =>
-  typeof window !== "undefined" && window.innerWidth < 768
+  typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
 
 const reducedMotion = () =>
   typeof window !== "undefined" &&

@@ -11,14 +11,17 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
+      // The *-rgb tokens let the /opacity modifier work (bg-accent/10).
       colors: {
-        bg: 'var(--bg)',
+        bg: 'rgb(var(--bg-rgb) / <alpha-value>)',
         surface: 'var(--surface)',
-        fg: 'var(--fg)',
+        fg: 'rgb(var(--fg-rgb) / <alpha-value>)',
         muted: 'var(--muted)',
         line: 'var(--line)',
-        accent: 'var(--accent)',
+        accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
         'accent-ink': 'var(--accent-ink)',
+        ember: 'rgb(var(--ember-rgb) / <alpha-value>)',
+        ok: 'var(--ok)',
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out',

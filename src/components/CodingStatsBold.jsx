@@ -143,7 +143,7 @@ export default function CodingStatsBold() {
                 whileHover={{ rotate: 180 }}
                 transition={{ duration: 0.5 }}
                 className="w-10 h-10 rounded-full flex items-center justify-center" 
-                style={{ background: "rgba(212, 255, 63, 0.1)" }}
+                style={{ background: "rgb(var(--accent-rgb) / 0.1)" }}
               >
                 <span className="text-xl">🧩</span>
               </motion.div>
@@ -165,17 +165,13 @@ export default function CodingStatsBold() {
               {["Trees", "Graphs", "DP", "Sliding Window", "Backtracking", "Binary Search", "Stacks", "Tries"].map((topic, i) => (
                 <motion.span
                   key={topic}
-                  whileHover={{ scale: 1.1, backgroundColor: "rgba(212,255,63,0.15)" }}
+                  whileHover={{ scale: 1.1 }}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.05 }}
                   viewport={{ once: true }}
-                  className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border cursor-default"
-                  style={{
-                    color: "var(--accent)",
-                    borderColor: "rgba(212,255,63,0.2)",
-                    background: "rgba(212,255,63,0.05)",
-                  }}
+                  className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-accent/20 bg-accent/5 hover:bg-accent/15 transition-colors cursor-default"
+                  style={{ color: "var(--accent)" }}
                 >
                   {topic}
                 </motion.span>
@@ -230,7 +226,7 @@ export default function CodingStatsBold() {
             variants={cardVariants}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="border rounded-3xl p-8 group hover:border-[#ff9900] transition-all duration-300 relative overflow-hidden" 
+            className="border rounded-3xl p-8 group hover:border-ember transition-all duration-300 relative overflow-hidden" 
             style={{ borderColor: "var(--line)" }}
           >
             <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -241,14 +237,14 @@ export default function CodingStatsBold() {
               <motion.div 
                 animate={lowPower ? undefined : { scale: [1, 1.1, 1] }}
                 transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-[#ff9900]/10"
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-ember/10"
               >
                 <span className="text-xl">🔥</span>
               </motion.div>
               <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Consistency</h3>
             </div>
             
-            <div className="font-display text-5xl mb-2 group-hover:text-[#ff9900] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+            <div className="font-display text-5xl mb-2 group-hover:text-ember transition-colors relative z-10" style={{ color: "var(--fg)" }}>
               <CountUp end={LEETCODE_STREAK} suffix=" Days" />
             </div>
             <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>LeetCode Streak</p>
@@ -268,7 +264,7 @@ export default function CodingStatsBold() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm" style={{ color: "var(--muted)" }}>Commitment</span>
-                <span className="text-xs px-2 py-1 rounded border border-[#ff9900]/30 text-[#ff9900] bg-[#ff9900]/10">Unstoppable</span>
+                <span className="text-xs px-2 py-1 rounded border border-ember/30 text-ember bg-ember/10">Unstoppable</span>
               </div>
             </div>
           </motion.div>
@@ -292,7 +288,7 @@ export default function CodingStatsBold() {
               title="LeetCode Submissions"
               icon="🧩"
               unit="submission"
-              color="255,153,0"
+              color="var(--ember-rgb)"
               note="2 accounts combined"
               calendar={LEETCODE_CALENDAR}
             />

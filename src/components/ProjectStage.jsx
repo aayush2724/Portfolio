@@ -110,7 +110,7 @@ export default function ProjectStage({
           }
         />
       </AnimatePresence>
-      <div className="absolute inset-0 bg-[#080808]/55" />
+      <div className="absolute inset-0 bg-[#060608]/55" />
 
       <Peek n={label(index - 1)} side="left" />
       <Peek n={label(index + 1)} side="right" />
@@ -227,9 +227,9 @@ export default function ProjectStage({
             aria-label={`Open the live demo of ${project.title}`}
             className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 hover:-translate-y-0.5"
             style={{
-              background: "linear-gradient(135deg, rgba(212,255,63,0.18), rgba(150,255,63,0.08))",
-              border: "1px solid rgba(212,255,63,0.4)",
-              color: "rgba(212,255,63,0.95)",
+              background: "linear-gradient(135deg, rgb(var(--accent-rgb) / 0.18), rgb(var(--accent-rgb) / 0.06))",
+              border: "1px solid rgb(var(--accent-rgb) / 0.4)",
+              color: "rgb(var(--accent-rgb) / 0.95)",
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
