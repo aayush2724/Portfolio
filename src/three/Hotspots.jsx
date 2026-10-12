@@ -19,7 +19,7 @@ export default function Hotspots({ portal, active, hoverRef, hoverId, onGo }) {
         onPointerDown={(e) => e.stopPropagation()}
         onFocus={() => (hoverRef.current = h.id)}
         onBlur={() => (hoverRef.current = null)}
-        className="group flex items-center gap-2 whitespace-nowrap rounded-full border py-1 pl-1 pr-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-200 hover:border-accent focus-visible:border-accent"
+        className="hq-marker group flex items-center gap-2 whitespace-nowrap rounded-full border py-1 pl-1 pr-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-200 hover:border-accent focus-visible:border-accent"
         style={{
           pointerEvents: active ? "auto" : "none",
           borderColor: hoverId === h.id ? "var(--accent)" : "var(--line)",

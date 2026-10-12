@@ -8,10 +8,20 @@
  *
  *   pos   camera position      look  what it faces
  *   dim   stage brightness while the page content sits over it (0–1)
+ *   lens  base vertical field of view (default 50°; narrow screens widen it)
+ *   fov   fixed field of view, no aspect correction at all
+ *   turn  a drag turns the head instead of orbiting the look point
  */
 export const STATIONS = {
   hero:         { pos: [1.1, 1.9, 3.0],   look: [2.8, 1.2, -2.6],   dim: 0.05 },  // at the door, looking toward the window; desk side stays out of frame behind the headline
-  hq:           { pos: [-0.65, 2.5, 8.6], look: [-0.55, 1.15, -0.8], dim: 1 },  // dollhouse: outside the (single-sided) front wall
+  // The map: just outside the (single-sided) front wall, close enough that
+  // the room fills the frame top to bottom on a 16:9 screen with every door
+  // in view; a slightly wider lens keeps the near corners (corkboard, arcade)
+  // in frame. Whatever the screen shape leaves over, the vestibule covers.
+  hq:           { pos: [0.1, 2.2, 7.6],   look: [-0.1, 1.4, -0.8],  dim: 1, lens: 56 },
+  // Portrait screens can't fit a wide room: stand just inside the doorway,
+  // look down the room, and let a sideways drag pan to either wall.
+  hq_portrait:  { pos: [-0.3, 1.9, 3.3],  look: [-1.0, 1.45, -1.5], dim: 1, fov: 74, turn: true },
   projects:     { pos: [-0.9, 1.7, 1.2],   look: [-1.8, 1.3, -2.9],  dim: 0.12 },
   about:        { pos: [-1.2, 1.7, 0.2],   look: [-4.8, 1.5, -1.2],  dim: 0.12 },
   skills:       { pos: [1.0, 1.6, 0.4],    look: [4.5, 1.3, -2.5],   dim: 0.12 },

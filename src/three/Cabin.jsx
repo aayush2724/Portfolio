@@ -14,12 +14,20 @@ import { HOTSPOTS } from "./stations"
  *   back wall  z=-3.5  desk + five-monitor array (left), window (right)
  *   left wall  x=-5    bookshelf (back), corkboard (front)
  *   right wall x=5     twin racks (back), six-screen status wall, guitar, arcade (front)
- *   front wall z=3.5   the door
+ *   front wall z=3.5   the door; the shell runs on behind it (VESTIBULE)
  */
 
 const W = 10
 const D = 7
 const H = 4
+/**
+ * The shell continues this far past the (single-sided) front wall. The HQ
+ * dollhouse camera stands in that stretch, so whatever the screen's shape
+ * and wherever a drag swings the camera, floor, ceiling and side walls run
+ * to every edge of the frame — never the page behind the room. From inside
+ * the room the front wall hides it. Rig keeps the camera within it.
+ */
+export const VESTIBULE = 8
 const PI = Math.PI
 
 function canvasTexture(w, h, draw, nearest = false) {
@@ -642,6 +650,25 @@ export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
       <Strip position={[0, 0.03, -D / 2 + 0.05]} size={[W - 0.2, 0.02, 0.03]} accent={accent} />
       <Strip position={[W / 2 - 0.05, 0.03, 0]} size={[0.03, 0.02, D - 0.2]} accent={accent} />
       <Strip position={[-W / 2 + 0.05, 0.03, 0]} size={[0.03, 0.02, D - 0.2]} accent={accent} />
+      {/* ── vestibule: floor, ceiling and side walls past the front wall ── */}
+      <mesh rotation={[-PI / 2, 0, 0]} position={[0, 0, D / 2 + VESTIBULE / 2]}>
+        <planeGeometry args={[W, VESTIBULE]} />
+        <meshPhongMaterial color="#17171b" shininess={12} specular="#1e1e22" />
+      </mesh>
+      <mesh rotation={[PI / 2, 0, 0]} position={[0, H, D / 2 + VESTIBULE / 2]}>
+        <planeGeometry args={[W, VESTIBULE]} />
+        <meshPhongMaterial color="#07070a" shininess={4} specular="#0c0c0e" />
+      </mesh>
+      <mesh position={[-W / 2, H / 2, D / 2 + VESTIBULE / 2]} rotation={[0, PI / 2, 0]}>
+        <planeGeometry args={[VESTIBULE, H]} />
+        {wall}
+      </mesh>
+      <mesh position={[W / 2, H / 2, D / 2 + VESTIBULE / 2]} rotation={[0, -PI / 2, 0]}>
+        <planeGeometry args={[VESTIBULE, H]} />
+        {wall}
+      </mesh>
+      <Strip position={[W / 2 - 0.05, 0.03, D / 2 + VESTIBULE / 2]} size={[0.03, 0.02, VESTIBULE]} accent={accent} />
+      <Strip position={[-W / 2 + 0.05, 0.03, D / 2 + VESTIBULE / 2]} size={[0.03, 0.02, VESTIBULE]} accent={accent} />
 
       {/* ── window + moon (back wall, right) ──────────────────────────── */}
       <mesh position={[2.4, 2.3, -3.46]}>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 import { STATIONS, DEFAULT_STATION } from "./stations"
+import { VESTIBULE } from "./Cabin"
 import { tokenColor } from "./tokens"
 
 /**
@@ -19,7 +20,27 @@ const tmpB = new THREE.Vector3()
 const tmpC = new THREE.Vector3()
 const Y_AXIS = new THREE.Vector3(0, 1, 0)
 
-export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady }) {
+/**
+ * On-demand frame driver. In "demand" frameloop a frame only renders when
+ * something calls invalidate(); while the stage is awake each frame asks
+ * for the next, so damped motion can settle, then rendering stops.
+ */
+export function Pulse({ wakeUntil, invalidateRef }) {
+  const invalidate = useThree((s) => s.invalidate)
+  useEffect(() => {
+    invalidateRef.current = invalidate
+    return () => {
+      invalidateRef.current = null
+    }
+  }, [invalidate, invalidateRef])
+  useFrame(() => {
+    if (performance.now() < wakeUntil.current) invalidate()
+  })
+  return null
+}
+
+export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady, mode = "walk" }) {
+  const room = mode === "room"
   const { gl, scene, camera, size } = useThree()
   const look = useRef(new THREE.Vector3(0, 1.45, -3))
   const dim = useRef(0)
@@ -50,21 +71,26 @@ export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady }) {
     const d = Math.min(dt, 0.05)
     // A cut in progress flies straight to one station regardless of scroll,
     // and keeps the room lit until the page has landed.
+    // Stations are framed for a 16:10 screen. Portrait viewports get their
+    // own framing of the map; other narrow ones widen the lens (up to 80°)
+    // and pull the camera back along its line of sight for whatever the lens
+    // cap does not cover. Interior stations stay inside the walls.
+    const aspect = size.width / Math.max(1, size.height)
+    const portrait = aspect < 1
+    const station = (id) => (id === "hq" && portrait ? STATIONS.hq_portrait : STATIONS[id])
+
     const flying = fly.current && STATIONS[fly.current.id]
     const i = Math.floor(s.track)
-    const f = flying ? 0 : s.track - i
-    const a = flying ? STATIONS[fly.current.id] : STATIONS[s.ids[i]] || DEFAULT_STATION
-    const b = flying ? a : STATIONS[s.ids[i + 1]] || a
+    const f = flying || room ? 0 : s.track - i
+    // Room mode never leaves the map station; the cut's fly still applies.
+    const a = flying ? station(fly.current.id) : room ? station("hq") : station(s.ids[i]) || DEFAULT_STATION
+    const b = flying || room ? a : station(s.ids[i + 1]) || a
     const k = flying ? 5 : 7
 
-    // Stations are framed for a 16:10 screen. On a narrower viewport the
-    // horizontal field of view shrinks, so widen the lens (up to 80°) and
-    // pull the camera back along its line of sight for whatever the lens
-    // cap does not cover; interior stations stay inside the walls.
-    const aspect = size.width / Math.max(1, size.height)
     const squeeze = Math.max(1, 1.6 / aspect)
-    const fov = Math.min(80, 50 * squeeze)
-    const pull = squeeze / (fov / 50)
+    const lens = a.lens || 50
+    const fov = a.fov ? a.fov : Math.min(80, lens * squeeze)
+    const pull = a.fov || portrait ? 1 : squeeze / (fov / lens)
     if (Math.abs(camera.fov - fov) > 0.01) {
       camera.fov = fov
       camera.updateProjectionMatrix()
@@ -90,24 +116,43 @@ export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady }) {
     spin.current.pitch = THREE.MathUtils.damp(spin.current.pitch, wantPitch, 6, d)
     tmpC.fromArray(a.look).lerp(tmpB.fromArray(b.look), f)
     if (Math.abs(spin.current.yaw) > 1e-4 || Math.abs(spin.current.pitch) > 1e-4) {
-      tmpA.sub(tmpC).applyAxisAngle(Y_AXIS, spin.current.yaw)
-      tmpA.y += spin.current.pitch * tmpA.length()
-      tmpA.add(tmpC)
+      if (a.turn) {
+        // Head turn: swing the aim around the camera, which stays put. The
+        // sign is flipped so the scene follows the finger (drag left, the
+        // room slides left and the right wall comes into view), as a
+        // panorama does on touch.
+        tmpC.sub(tmpA).applyAxisAngle(Y_AXIS, -spin.current.yaw)
+        tmpC.y += spin.current.pitch * tmpC.length()
+        tmpC.add(tmpA)
+      } else {
+        // Orbit: swing the camera around the point it looks at.
+        tmpA.sub(tmpC).applyAxisAngle(Y_AXIS, spin.current.yaw)
+        tmpA.y += spin.current.pitch * tmpA.length()
+        tmpA.add(tmpC)
+      }
     }
+
+    // The shell is 10 wide and 4 high, from the back wall through the
+    // vestibule behind the front wall. The camera never leaves it, so the
+    // frame holds room on every side — a drag that would swing it through a
+    // wall or the ceiling stops at the wall instead.
+    tmpA.x = THREE.MathUtils.clamp(tmpA.x, -4.6, 4.6)
+    tmpA.y = THREE.MathUtils.clamp(tmpA.y, 0.5, 3.6)
+    tmpA.z = THREE.MathUtils.clamp(tmpA.z, -3.1, 3.5 + VESTIBULE - 0.6)
 
     camera.position.x = THREE.MathUtils.damp(camera.position.x, tmpA.x, k, d)
     camera.position.y = THREE.MathUtils.damp(camera.position.y, tmpA.y, k, d)
     camera.position.z = THREE.MathUtils.damp(camera.position.z, tmpA.z, k, d)
 
     // Mouse-look: a few degrees everywhere, a wider sweep on the map.
-    const sway = o.active ? 0.55 : 0.3
+    const sway = 0.3
     const l = look.current
     l.x = THREE.MathUtils.damp(l.x, tmpC.x + mouse.current.x * sway, k, d)
     l.y = THREE.MathUtils.damp(l.y, tmpC.y - mouse.current.y * sway * 0.6, k, d)
     l.z = THREE.MathUtils.damp(l.z, tmpC.z, k, d)
     camera.lookAt(l)
 
-    const target = flying && fly.current.lit ? 1 : THREE.MathUtils.lerp(a.dim, b.dim, f)
+    const target = (flying && fly.current.lit) || room ? 1 : THREE.MathUtils.lerp(a.dim, b.dim, f)
     dim.current = THREE.MathUtils.damp(dim.current, target, k, d)
     if (dimEl.current) dimEl.current.style.opacity = dim.current.toFixed(3)
 

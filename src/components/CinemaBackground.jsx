@@ -45,5 +45,5 @@ export default function CinemaBackground() {
   }, [enabled, lowPower, Stage])
 
   if (!enabled || lowPower || !Stage) return null
-  return <Stage />
+  return <Stage mode="walk" />
 }

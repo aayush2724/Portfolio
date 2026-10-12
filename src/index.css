@@ -392,3 +392,17 @@ a:focus-visible {
     cursor: auto !important;
   }
 }
+
+/* ── HQ room on touch devices ───────────────────────────────────────────────
+   The canvas lets vertical pans through to the page and keeps sideways drags
+   for looking around (react-three-fiber would otherwise set touch-action:
+   none). Markers grow into comfortable tap targets. */
+.hq-room canvas {
+  touch-action: pan-y !important;
+}
+@media (pointer: coarse) {
+  .hq-marker {
+    padding: 8px 14px 8px 8px;
+    font-size: 11px;
+  }
+}

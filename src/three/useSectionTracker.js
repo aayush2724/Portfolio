@@ -22,11 +22,12 @@ const smoothstep = (a, b, x) => {
   return t * t * (3 - 2 * t)
 }
 
-export function useSectionTracker() {
+export function useSectionTracker(enabled = true) {
   const store = useRef({ ids: ["hero"], id: "hero", index: 0, count: 1, track: 0, progress: 0, pageProgress: 0, settled: true })
   const [scene, setScene] = useState({ id: "hero", index: 0, count: 1, settled: true })
 
   useEffect(() => {
+    if (!enabled) return
     let sections = []
     let raf = 0
     const rescan = () => {
@@ -89,7 +90,7 @@ export function useSectionTracker() {
       window.removeEventListener("resize", schedule)
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [enabled])
 
   return { store, scene }
 }
