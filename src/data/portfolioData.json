@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-15T02:40:37.941Z",
+  "lastUpdated": "2026-10-15T16:04:46.545Z",
   "leetcode": {
     "stats": {
       "totalSolved": 765,
@@ -306,6 +306,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-15T02:40:43Z"
+    },
+    {
       "name": "AlgoVision",
       "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
@@ -314,16 +324,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-10-14T21:55:29Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-14T16:17:20Z"
     },
     {
       "name": "Vetra",
@@ -427,7 +427,7 @@
     }
   ],
   "githubStats": {
-    "contributions": 1342,
+    "contributions": 1343,
     "calendar": {
       "from": "2025-10-12",
       "to": "2026-10-15",
@@ -589,7 +589,7 @@
         "2026-10-12": 2,
         "2026-10-13": 1,
         "2026-10-14": 2,
-        "2026-10-15": 1
+        "2026-10-15": 2
       }
     }
   }
