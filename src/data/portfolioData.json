@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-18T02:28:48.028Z",
+  "lastUpdated": "2026-10-18T15:11:21.652Z",
   "leetcode": {
     "stats": {
       "totalSolved": 768,
@@ -309,16 +309,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-17T14:46:06Z"
-    },
-    {
       "name": "AlgoVision",
       "description": "",
       "url": "https://github.com/aayush2724/AlgoVision",
@@ -326,7 +316,17 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-10-17T12:50:08Z"
+      "updatedAt": "2026-10-18T06:25:58Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-18T02:28:52Z"
     },
     {
       "name": "Translog",
@@ -430,7 +430,7 @@
     }
   ],
   "githubStats": {
-    "contributions": 1377,
+    "contributions": 1378,
     "calendar": {
       "from": "2025-10-19",
       "to": "2026-10-18",
@@ -594,7 +594,8 @@
         "2026-10-14": 2,
         "2026-10-15": 4,
         "2026-10-16": 9,
-        "2026-10-17": 23
+        "2026-10-17": 23,
+        "2026-10-18": 1
       }
     }
   }
