@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-10-17T14:46:01.551Z",
+  "lastUpdated": "2026-10-18T02:28:48.028Z",
   "leetcode": {
     "stats": {
-      "totalSolved": 767,
+      "totalSolved": 768,
       "easy": 317,
-      "medium": 389,
+      "medium": 390,
       "hard": 61,
-      "totalSubmissions": 796
+      "totalSubmissions": 797
     },
     "streak": 55,
-    "totalActiveDays": 289,
+    "totalActiveDays": 290,
     "calendar": {
-      "from": "2025-10-18",
-      "to": "2026-10-17",
+      "from": "2025-10-19",
+      "to": "2026-10-18",
       "days": {
         "2025-10-23": 2,
         "2025-10-25": 3,
@@ -302,11 +302,22 @@
         "2026-10-13": 1,
         "2026-10-14": 1,
         "2026-10-15": 1,
-        "2026-10-16": 1
+        "2026-10-16": 1,
+        "2026-10-17": 1
       }
     }
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-17T14:46:06Z"
+    },
     {
       "name": "AlgoVision",
       "description": "",
@@ -326,16 +337,6 @@
       "language": "Python",
       "topics": [],
       "updatedAt": "2026-10-17T11:22:00Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-17T02:28:23Z"
     },
     {
       "name": "Vetra",
@@ -431,8 +432,8 @@
   "githubStats": {
     "contributions": 1377,
     "calendar": {
-      "from": "2025-10-12",
-      "to": "2026-10-17",
+      "from": "2025-10-19",
+      "to": "2026-10-18",
       "days": {
         "2025-10-27": 6,
         "2025-10-28": 1,
