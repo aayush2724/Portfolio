@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-21T02:48:44.258Z",
+  "lastUpdated": "2026-10-21T05:54:37.975Z",
   "leetcode": {
     "stats": {
       "totalSolved": 769,
@@ -311,6 +311,16 @@
   },
   "github": [
     {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-21T05:54:28Z"
+    },
+    {
       "name": "UrjaSetu",
       "description": "",
       "url": "https://github.com/aayush2724/UrjaSetu",
@@ -319,16 +329,6 @@
       "language": null,
       "topics": [],
       "updatedAt": "2026-10-20T18:22:07Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-20T16:08:25Z"
     },
     {
       "name": "AlgoVision",
@@ -432,7 +432,7 @@
     }
   ],
   "githubStats": {
-    "contributions": 1401,
+    "contributions": 1402,
     "calendar": {
       "from": "2025-10-19",
       "to": "2026-10-21",
@@ -599,7 +599,8 @@
         "2026-10-17": 23,
         "2026-10-18": 2,
         "2026-10-19": 21,
-        "2026-10-20": 1
+        "2026-10-20": 1,
+        "2026-10-21": 1
       }
     }
   }
