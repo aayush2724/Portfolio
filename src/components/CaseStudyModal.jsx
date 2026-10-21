@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { EASE, DUR } from "../context/ease"
 import CaseStudyBody from "./CaseStudyBody"
 import useFocusTrap from "../context/useFocusTrap"
+import { useOverlay } from "../context/overlay"
 
 export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _layoutId }) {
   const modalRef = useRef(null)
@@ -10,6 +11,8 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _
   // Keyboard focus stays inside the dialog and returns to the card's button
   // when it closes.
   useFocusTrap(modalRef, isOpen)
+  // Pauses the room behind the page while this covers it.
+  useOverlay(isOpen)
 
   // Handle ESC key
   useEffect(() => {
@@ -43,7 +46,9 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop. No backdrop-blur: re-blurring the whole viewport on
+              every scroll frame was the bulk of the modal's jank, and at this
+              opacity the blur was barely visible anyway. */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -51,7 +56,7 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _
             transition={{ duration: DUR.exit, ease: EASE.SHARP }}
             onClick={onClose}
             aria-hidden="true"
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] bg-black/85"
           />
 
           {/* Modal */}
@@ -83,7 +88,7 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _
                   </svg>
                 </button>
 
-                <div data-lenis-prevent className="max-h-[85vh] overflow-y-auto p-6 md:p-10">
+                <div data-lenis-prevent className="max-h-[85vh] overflow-y-auto overscroll-contain p-6 md:p-10">
                   <CaseStudyBody caseStudy={caseStudy} />
                 </div>
 

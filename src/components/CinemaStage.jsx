@@ -7,6 +7,7 @@ import Rig, { Pulse } from "../three/Rig"
 import { tokenColor } from "../three/tokens"
 import { useSectionTracker } from "../three/useSectionTracker"
 import { SCENE_LABELS, HOTSPOTS } from "../three/stations"
+import { useOverlayOpen } from "../context/overlay"
 
 /**
  * The room, in one of two modes.
@@ -69,6 +70,8 @@ export default function CinemaStage({ mode = "walk" }) {
   const [veil, setVeil] = useState(false)
   const [inCut, setInCut] = useState(false)
   const [loop, setLoop] = useState("never")
+  // A modal over the page hides the room: stop rendering it until it closes.
+  const covered = useOverlayOpen()
   const accent = useMemo(() => tokenColor("--accent-rgb", "#d4ff3f"), [])
   const mapActive = room ? !inCut : scene.id === "hq" && scene.settled && !inCut
   orbit.current.active = mapActive
@@ -232,7 +235,7 @@ export default function CinemaStage({ mode = "walk" }) {
           gl={{ antialias: !room, alpha: true, powerPreference: room ? "default" : "high-performance" }}
           dpr={room ? [1, 1.25] : [1, 1.5]}
           camera={{ fov: 50, near: 0.1, far: 40, position: [0, 1.75, 3] }}
-          frameloop={loop}
+          frameloop={covered ? "never" : loop}
           resize={{ scroll: false, debounce: { scroll: 0, resize: 0 } }}
           style={{ width: "100%", height: "100%" }}
         >
