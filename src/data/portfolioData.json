@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-20T16:08:19.620Z",
+  "lastUpdated": "2026-10-21T02:48:44.258Z",
   "leetcode": {
     "stats": {
       "totalSolved": 769,
@@ -11,8 +11,8 @@
     "streak": 55,
     "totalActiveDays": 292,
     "calendar": {
-      "from": "2025-10-21",
-      "to": "2026-10-20",
+      "from": "2025-10-22",
+      "to": "2026-10-21",
       "days": {
         "2025-10-23": 2,
         "2025-10-25": 3,
@@ -311,16 +311,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-20T02:54:29Z"
-    },
-    {
       "name": "UrjaSetu",
       "description": "",
       "url": "https://github.com/aayush2724/UrjaSetu",
@@ -328,7 +318,17 @@
       "forks": 0,
       "language": null,
       "topics": [],
-      "updatedAt": "2026-10-18T19:51:20Z"
+      "updatedAt": "2026-10-20T18:22:07Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-20T16:08:25Z"
     },
     {
       "name": "AlgoVision",
@@ -432,10 +432,10 @@
     }
   ],
   "githubStats": {
-    "contributions": 1400,
+    "contributions": 1401,
     "calendar": {
       "from": "2025-10-19",
-      "to": "2026-10-20",
+      "to": "2026-10-21",
       "days": {
         "2025-10-27": 6,
         "2025-10-28": 1,
@@ -598,7 +598,8 @@
         "2026-10-16": 9,
         "2026-10-17": 23,
         "2026-10-18": 2,
-        "2026-10-19": 21
+        "2026-10-19": 21,
+        "2026-10-20": 1
       }
     }
   }
