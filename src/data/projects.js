@@ -1,36 +1,36 @@
 export const projects = [
   {
     name: "Auralis",
-    desc: "AI-powered audio intelligence project for extracting structure, signals, and insights from complex sound data.",
-    tags: ["Python", "Machine Learning", "Audio Processing"],
+    desc: "AI sales intelligence platform: a LangGraph agent classifies a prospect's objection, persona and sentiment, then answers with RAG-grounded, cited replies.",
+    tags: ["Python", "FastAPI", "LangGraph", "RAG", "FAISS", "PostgreSQL", "Redis", "Docker"],
     gh: "https://github.com/aayush2724/Auralis",
-    demo: null,
+    demo: "https://auralis-client-five.vercel.app",
     badge: "Latest",
-    highlight: "Focused on practical audio ML workflows with clean preprocessing, feature extraction, and model experimentation.",
-    updatedAt: "2026-07-06T18:59:07Z",
-    updated: "Jul 6, 2026"
+    highlight: "7 objection classes, 5 personas and 6 response strategies; JWT-secured FastAPI + WebSocket chat, Prometheus metrics and 220+ tests in CI.",
+    updatedAt: "2026-10-03T00:00:00Z",
+    updated: "Oct 3, 2026"
   },
   {
     name: "DeskGuard",
-    desc: "Workspace security and monitor system that detects unauthorized access using real-time surveillance and movement alerts.",
-    tags: ["JavaScript", "Node.js", "OpenCV", "Pusher"],
+    desc: "Library seat-booking app that kills 'ghost seats': a live desk map, QR check-ins and automatic release of no-show seats.",
+    tags: ["Node.js", "Express", "PostgreSQL", "Redis", "Server-Sent Events", "Docker"],
     gh: "https://github.com/aayush2724/DeskGuard",
     demo: "https://deskguard-jade.vercel.app",
     badge: "New",
-    highlight: "Real-time security monitoring with instant alerts and automated intrusion logging for personal workspaces.",
-    updatedAt: "2026-06-13T18:35:44Z",
-    updated: "Jun 13, 2026"
+    highlight: "PostgreSQL transactions stop double-booking under concurrent requests; availability streams over SSE and Redis TTLs auto-release abandoned seats.",
+    updatedAt: "2026-10-02T00:00:00Z",
+    updated: "Oct 2, 2026"
   },
   {
     name: "AlgoVision",
-    desc: "Interactive algorithm visualizer designed to help students understand complex data structures through real-time step-by-step execution.",
-    tags: ["JavaScript", "React", "Framer Motion", "Algorithms"],
+    desc: "Algorithm learning engine with 474 live tracers: a FastAPI backend steps through the student's own input with scrubbing, operation counters and a compare mode.",
+    tags: ["Python", "FastAPI", "JavaScript", "Three.js", "GSAP", "Pyodide", "Groq", "Docker"],
     gh: "https://github.com/aayush2724/AlgoVision",
     demo: "https://algo-vision-vert.vercel.app/",
     badge: null,
-    highlight: "Visualizing complex graph and sorting algorithms with interactive controls and performance metrics.",
-    updatedAt: "2026-06-12T10:04:04Z",
-    updated: "Jun 12, 2026"
+    highlight: "In-browser Python dry run on Pyodide, a Groq-backed narrator with template fallbacks, 23 offline emulators and 860+ pytest cases.",
+    updatedAt: "2026-10-23T00:00:00Z",
+    updated: "Oct 23, 2026"
   },
   {
     name: "CheckMate",

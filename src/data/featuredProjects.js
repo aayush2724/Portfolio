@@ -10,23 +10,23 @@ export const FEATURED_PROJECTS = [
   {
     id: 1,
     title: "Auralis",
-    description: "AI-powered audio intelligence project focused on extracting meaning and structure from complex sound inputs.",
-    tags: ["Python", "AI/ML", "Audio"],
+    description: "AI sales intelligence platform: a LangGraph agent reads a prospect's objection, persona and sentiment, then replies with RAG-grounded, cited answers over a JWT-secured WebSocket chat.",
+    tags: ["Python", "FastAPI", "LangGraph", "RAG", "Redis"],
     link: "https://github.com/aayush2724/auralisAI",
     demo: "https://auralis-client-five.vercel.app",
     image: "/auralis-800.jpg",
-    badge: "Sound Intelligence",
+    badge: "Sales Intelligence",
     earthy: "from-[#1a2a3f] to-[#0b1017]"
   },
   {
     id: 2,
     title: "DeskGuard",
-    description: "Workspace security and monitor system that detects unauthorized access using real-time surveillance.",
-    tags: ["JavaScript", "Node.js", "OpenCV"],
+    description: "Library seat-booking app that kills ghost seats: a live desk map, QR check-ins, double-booking-safe PostgreSQL transactions and Redis TTLs that auto-release no-show seats.",
+    tags: ["Node.js", "PostgreSQL", "Redis", "SSE"],
     link: "https://github.com/aayush2724/DeskGuard",
     demo: "https://deskguard-jade.vercel.app",
     image: "/deskguard-800.jpg",
-    badge: "Computer Vision",
+    badge: "Real-Time Booking",
     earthy: "from-[#2d3436] to-[#000000]"
   },
   {
@@ -54,12 +54,12 @@ export const FEATURED_PROJECTS = [
   {
     id: 3,
     title: "AlgoVision",
-    description: "Interactive algorithm visualizer for understanding complex data structures and sorting algorithms.",
-    tags: ["React", "Framer Motion", "Algorithms"],
+    description: "Algorithm learning engine with 474 live tracers: a FastAPI engine steps through the student's own input, with scrubbing, operation counters, a compare mode and an in-browser Python dry run on Pyodide.",
+    tags: ["Python", "FastAPI", "Three.js", "Pyodide"],
     link: "https://github.com/aayush2724/AlgoVision",
     demo: "https://algo-vision-vert.vercel.app/",
     image: "/algovision-800.jpg",
-    badge: "DSA Visualizer",
+    badge: "474 Tracers",
     earthy: "from-[#2c3e50] to-[#000000]"
   },
   {

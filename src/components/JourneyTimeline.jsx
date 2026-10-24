@@ -50,19 +50,19 @@ const MILESTONES = [
   {
     year: 2026,
     title: "OWASP Club President",
-    description: "Appointed as the President of the OWASP student chapter at NIE. Leading cybersecurity initiatives, organizing workshops, and fostering a community of security enthusiasts.",
+    description: "Appointed President of the OWASP student chapter at NIE: leading a 29-member core team, running workshops and labs, and building the chapter website on Next.js, Sanity and PostgreSQL.",
     icon: "👑",
   },
   {
     year: 2026,
-    title: "Auralis & AI Audio Work",
-    description: "Launched Auralis to explore AI-powered audio intelligence and deepen hands-on work with Python, ML workflows, and data pipelines.",
-    icon: "🎧",
+    title: "Auralis — AI Sales Intelligence",
+    description: "Co-built Auralis with Kaki Harshita: a LangGraph agent that classifies objections, personas and sentiment, answers with RAG-grounded citations, and ships behind a FastAPI + WebSocket backend with 220+ tests in CI.",
+    icon: "🧭",
   },
   {
     year: 2026,
-    title: "First Internship — AI Engineer",
-    description: "Stepped into industry as an AI engineer intern — building LLM-powered features, RAG pipelines, and agentic workflows, and shipping them to production.",
+    title: "Backend & AI Intern — HSH Technologies",
+    description: "Building Translog, an LLM-assisted air-freight quotation desk live for two client mailboxes: a Redis + RQ job pipeline, Playwright rate automation and a hand-labelled LLM evaluation harness.",
     icon: "💼",
   },
   {

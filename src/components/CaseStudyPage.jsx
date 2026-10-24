@@ -9,7 +9,7 @@ const HOME_TITLE = "Aayush Kumar — Full-Stack Developer & CS Student"
 /**
  * Standalone case-study page, served at #/work/:id.
  *
- * The twelve case studies in caseStudies.js are the strongest writing on the
+ * The case studies in caseStudies.js are the strongest writing on the
  * site; until now they only existed inside a modal — unlinkable, unshareable,
  * invisible to search. This gives each one a URL that can go in an application
  * or a message, while the modal remains the in-page browsing experience.

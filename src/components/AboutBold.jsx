@@ -42,7 +42,7 @@ export default function AboutBold() {
                 <span style={{ color: "var(--fg)" }}>3rd place at NIT Trichy's hackathon</span>{" "}
                 with LeadForge, and competed in Goldman Sachs and Samsung's national-level hackathons. I also serve as{" "}
                 <span style={{ color: "var(--fg)" }}>President of the OWASP student chapter</span>{" "}
-                at my college, leading cybersecurity initiatives.
+                at my college, leading cybersecurity initiatives and building the chapter's website.
               </p>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
                 Beyond code, you'll find me playing{" "}

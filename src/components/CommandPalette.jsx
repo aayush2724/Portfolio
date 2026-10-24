@@ -113,6 +113,20 @@ const cmds = [
     fn: () => window.open("/resume.pdf", "_blank"),
   },
   {
+    id: "owasp",
+    label: "Open OWASP NIE Chapter Website",
+    icon: "🛡️",
+    cat: "Social",
+    fn: () => window.open("https://owasp-website.onrender.com", "_blank"),
+  },
+  {
+    id: "auralis",
+    label: "Open Auralis Live",
+    icon: "🧭",
+    cat: "Project",
+    fn: () => window.open("https://auralis-client-five.vercel.app", "_blank"),
+  },
+  {
     id: "beatzy",
     label: "Open Beatzy Live",
     icon: "🎵",

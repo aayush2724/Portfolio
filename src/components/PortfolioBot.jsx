@@ -4,7 +4,8 @@ import portfolioData from "../data/portfolioData.json";
 import { projects } from "../data/projects";
 
 const projectKeywords = {
-  "DeskGuard": ["deskguard", "desk guard", "security", "surveillance", "monitor"],
+  "Translog": ["translog", "freight", "quotation", "hsh", "internship"],
+  "DeskGuard": ["deskguard", "desk guard", "seat booking", "library seat", "ghost seat"],
   "AlgoVision": ["algovision", "algo vision", "visualizer", "algorithm", "sorting"],
   "CheckMate": ["checkmate", "check mate", "chess"],
   "Disaster Relief System": ["disaster", "relief", "emergency"],
@@ -71,13 +72,13 @@ function searchPortfolio(query) {
   // 5. Tech Stack
   if (/stack|tech|skill|language|framework|tool|python|react|javascript|typescript|c\+\+|node|database|docker|next/.test(q)) {
     return "Here's my full toolkit:\n\n" +
-      "**Languages:** JavaScript, TypeScript, Python, C++\n\n" +
-      "**Frontend:** React, Next.js, Vite, Tailwind CSS, Framer Motion, Three.js\n\n" +
-      "**Backend:** Node.js, Express, Bun, FastAPI, Flask, JWT auth\n\n" +
-      "**AI/ML:** Claude API, ACRCloud (audio fingerprinting), REST APIs\n\n" +
-      "**Databases:** PostgreSQL, MongoDB, MySQL, Redis, SQLAlchemy\n\n" +
-      "**DevOps:** Docker, Git, Vercel, Render\n\n" +
-      "I'm a full-stack dev who can ship across the entire pipeline — frontend to infra.";
+      "**Languages:** Python, Java, C++, JavaScript, TypeScript, SQL\n\n" +
+      "**Backend:** FastAPI, Node.js, Express, REST APIs, WebSockets, Server-Sent Events, JWT, OAuth 2.0\n\n" +
+      "**AI / LLM:** LangChain, LangGraph, RAG, embeddings, FAISS, Hugging Face Transformers, prompt engineering, LLM evaluation harnesses\n\n" +
+      "**Data & Queues:** PostgreSQL, Redis, MongoDB, Firebase, RQ\n\n" +
+      "**Infra & Tools:** Docker, Linux, Git, GitHub Actions, Playwright, Postman, Railway, Render, Vercel\n\n" +
+      "**Frontend:** React, Next.js, TypeScript, Tailwind CSS, Three.js, GSAP\n\n" +
+      "Backend and AI first, but I ship the whole pipeline — UI to infra.";
   }
 
   // 6. Contact / Socials / Hire
@@ -94,7 +95,7 @@ function searchPortfolio(query) {
   if (/guitar|music|stairway|hobb|free\s*time|weekend|play|song|band/.test(q)) {
     return "Outside of code, I'm a **guitarist** 🎸 — been trying to master **Stairway to Heaven** for over a year now. It's humbling.\n\n" +
       "Music also shows up in my work: I built **Chord Detector** (ML-powered guitar chord recognition) and **Beatzy** (a music collaboration platform). " +
-      "I'm currently building a **Music Intelligence Engine** with audio fingerprinting using ACRCloud — it's basically where my two worlds collide.";
+      "It's basically where my two worlds collide.";
   }
 
   // 8. General Projects
@@ -104,9 +105,9 @@ function searchPortfolio(query) {
     return `I've shipped **${REPO_COUNT} public repos** spanning AI, full-stack, civic tech, and music tech.\n\n` +
       `**Recent work:**\n` +
       `• **${latest.name}** — ${latest.desc}\n` +
-      `• **DeskGuard** — workspace security with real-time surveillance\n` +
-      `• **AlgoVision** — interactive algorithm visualizer\n\n` +
-      `**Proudest:** LeadForge (3rd place at ThinkRoot x Vortex'26), Beatzy, Citizen Resolver System\n\n` +
+      `• **Translog** — LLM-assisted air-freight quotation desk, built at HSH Technologies\n` +
+      `• **AlgoVision** — algorithm learning engine with 474 live tracers\n\n` +
+      `**Proudest:** LeadForge (3rd place at ThinkRoot x Vortex'26), Auralis, Translog\n\n` +
       `Ask me about any specific project for details!`;
   }
 
@@ -114,7 +115,7 @@ function searchPortfolio(query) {
   if (/learn|study|current|focus|building|working on|right now|next/.test(q)) {
     return "Currently I'm:\n\n" +
       "• 🧠 Going deep on **LLMs, RAG and GenAI** — retrieval pipelines, embeddings, evals and agentic workflows\n" +
-      "• 🔨 Building the **Music Intelligence Engine** — audio fingerprinting + full-stack SaaS with ACRCloud\n" +
+      "• 🔨 Building **Translog** at HSH Technologies — an LLM-assisted air-freight quotation desk on FastAPI, Redis + RQ and Playwright\n" +
       `• ⚔️ Grinding **DSA in C++** on LeetCode (${LEETCODE_SOLVED}+ solved)\n` +
       "• 🎸 Still trying to nail **Stairway to Heaven** on guitar\n" +
       "• 🔍 Looking for **remote internships and freelance projects**\n\n" +
@@ -124,7 +125,7 @@ function searchPortfolio(query) {
   // 10. About / Bio / College
   if (/about|who|yourself|bio|profile|college|nie|mysore|bengaluru|bangalore|student|age|year|where|owasp|president|club/.test(q)) {
     return "I'm **Aayush Kumar** — a 2nd year B.E. CS student at **The National Institute of Engineering (NIE), Mysore**, based in **Bengaluru**.\n\n" +
-      "I'm also the **President of the OWASP student chapter** at my college, where I lead cybersecurity initiatives and build our tech community.\n\n" +
+      "I'm also the **President of the OWASP student chapter** at my college, where I lead a 29-member core team, run security workshops and built the chapter website.\n\n" +
       "I build things end-to-end: REST APIs, React UIs, AI integrations, async job queues — the full stack. " +
       `I've got **${REPO_COUNT} GitHub repos**, **${LEETCODE_SOLVED}+ LeetCode problems**, and **GitHub Pro** with the YOLO and Pull Shark badges 🦈\n\n` +
       "I hack with my teammate **Kaki Harshita** as **Panic-At-The-Deadline** and I'm always looking for the next project to ship.";
@@ -132,10 +133,10 @@ function searchPortfolio(query) {
 
   // 11. Music Intelligence Engine (specific project focus)
   if (/music intelligence|intelligence engine|audio fingerprint|acrcloud|saas/.test(q)) {
-    return "**Music Intelligence Engine** — my current main project 🎵\n\n" +
+    return "**Music Intelligence Engine** — a side project 🎵\n\n" +
       "It's an audio fingerprinting + full-stack SaaS platform. Think Shazam-like capability but built as a developer tool.\n\n" +
       "**Tech:** Python, ACRCloud API, React, Node.js\n\n" +
-      "This project sits at the intersection of my two biggest interests: **music** and **engineering**. It's still in active development.";
+      "This project sits at the intersection of my two biggest interests: **music** and **engineering**. It's on the back burner while Translog and Auralis get my time.";
   }
 
   // 12. Goldman Sachs / Samsung specifics

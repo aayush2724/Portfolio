@@ -96,10 +96,10 @@ export default function HeroBold({ introDone = true }) {
   const terminalSteps = useMemo(
     () => [
       { cmd: "whoami", out: "Aayush Kumar — CS student, full-stack dev & OWASP President" },
-      { cmd: "cat skills.txt", out: "React · Next.js · Node · Python · C++ · LangChain · OpenCV" },
-      { cmd: "ls projects/", out: "auralis  deskguard  mindflow  leadforge  beatzy  civicresolve" },
+      { cmd: "cat skills.txt", out: "Python · FastAPI · LangGraph · RAG · Node · Redis · React · Docker" },
+      { cmd: "ls projects/", out: "translog  auralis  algovision  deskguard  leadforge  mindflow" },
       { cmd: "cat achievements.txt", out: "🏆 3rd @ NIT Trichy · GS Hackathon · Samsung ennovateX" },
-      { cmd: "echo $ROLE", out: "President — OWASP Student Chapter, NIE Mysore" },
+      { cmd: "echo $ROLE", out: "Backend & AI Intern @ HSH Technologies · OWASP Chapter President" },
       { cmd: "./launch --status", out: "🚀 open to internships & collaboration" },
     ],
     []

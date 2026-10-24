@@ -1,3 +1,5 @@
+import { LEETCODE_SOLVED } from "./stats"
+
 // Story chapters and scenes data
 export const storyChapters = [
   {
@@ -190,7 +192,7 @@ export const achievements = [
   {
     id: "dsa",
     title: "DSA Milestone",
-    description: "Solved 500+ data structures and algorithms problems across platforms.",
+    description: `Solved ${LEETCODE_SOLVED}+ data structures and algorithms problems on LeetCode, counted across two accounts.`,
     icon: "🧠",
   },
   {

@@ -1,163 +1,252 @@
 export const caseStudies = [
   {
-    id: "deskguard",
-    name: "DeskGuard",
-    tagline: "Workspace Security and Monitor System",
-    badge: "New",
-    cover: "/visitor-management-cover.svg", // Placeholder or use same style
-    
+    id: "auralis",
+    name: "Auralis",
+    tagline: "AI Sales Intelligence Platform",
+    badge: "Latest",
+    cover: "/auralis-800.jpg",
+
     problem: {
-      title: "Personal Workspaces are Vulnerable in Shared Environments",
-      description: "Developers working in open offices or shared living spaces often leave their desks unattended. There's no simple way to know if someone accessed their computer or moved their belongings while they were away.",
+      title: "Sales Reps Answer Objections From Memory",
+      description: "A prospect's message carries three signals at once: what they are objecting to, who they are, and how they feel about it. Reps read all three by instinct and answer from memory, and nobody can tell afterwards which playbook was used or whether the facts in the reply were real.",
       painPoints: [
-        "Unauthorized physical access to workspace",
-        "Privacy concerns in shared environments",
-        "No logging of intrusions or movements",
-        "Lack of instant alerts for security breaches"
+        "Pricing, trust and timing objections each need a different playbook",
+        "The same words from a CTO and a founder need different replies",
+        "Generic LLM answers invent product facts with no source",
+        "Angry or legal-blocked prospects must reach a human, not a bot"
       ]
     },
 
     approach: {
-      description: "Built a security monitoring system that uses a laptop's webcam and sensors to detect movement and unauthorized access. The system logs intrusions and sends instant notifications to the owner's mobile device via Pusher.",
+      description: "Built a stateful LangGraph pipeline (classify, retrieve, strategy, generate, handoff). A zero-shot NLI classifier labels each message across 7 objection classes, 5 buyer personas and sentiment; a router sends it to one of 6 response strategies; a RAG step grounds the reply in the knowledge base and injects source citations; a handoff node decides when a human should take over.",
       keyFeatures: [
-        "Motion detection using OpenCV and webcam feed",
-        "Instant push notifications via Pusher for remote alerts",
-        "Automatic photo capture of unauthorized persons",
-        "Intrusion log with timestamps and visual evidence",
-        "Remote arm/disarm functionality",
-        "Stealth mode for discreet monitoring"
+        "7 objection classes, 5 personas and sentiment from one zero-shot NLI pass (bart-large-mnli)",
+        "6 response strategies: price, trust, timing, competitor, fit and buying-signal",
+        "RAG over PDF, CSV and Markdown: recursive chunking, Gemini embeddings, FAISS search, citations in every reply",
+        "3-trigger human handoff: explicit request, low classifier confidence, negative sentiment",
+        "JWT-secured REST and WebSocket chat endpoint, Prometheus metrics at /metrics",
+        "Analytics dashboard: objection distribution, persona breakdown, sentiment trend"
       ]
     },
 
     stack: {
-      frontend: ["React", "Tailwind CSS"],
-      backend: ["Node.js", "Express", "Pusher"],
-      database: ["MongoDB"],
-      infrastructure: [],
-      tools: ["OpenCV (JavaScript)", "Canvas API"]
+      frontend: ["React 18", "TypeScript", "Vite", "Tailwind CSS"],
+      backend: ["Python", "FastAPI", "LangGraph", "LangChain", "WebSockets", "JWT (python-jose)"],
+      database: ["PostgreSQL (Neon)", "Redis (Upstash)", "FAISS"],
+      infrastructure: ["Docker", "GitHub Actions CI", "Render", "Vercel"],
+      tools: ["Hugging Face Transformers", "Gemini 2.5 Flash", "Prometheus", "pytest"]
+    },
+
+    role: {
+      title: "Backend & AI Engineer (pair build)",
+      responsibilities: [
+        "Co-built with Kaki Harshita as team Panic-At-The-Deadline; the split below is by commit history",
+        "Owned most of my share in the FastAPI API layer: auth, chat, analytics and knowledge-base routes",
+        "Built React client screens alongside the API work",
+        "Paired on the LangGraph pipeline, classifier and RAG retrieval, which Harshita led",
+        "Shared Docker, PostgreSQL/Redis wiring and the CI pipeline running 220+ tests"
+      ],
+      teamSize: "Team of 2 — with Kaki Harshita",
+      duration: "Jul – Oct 2026"
+    },
+
+    outcomes: {
+      metrics: [
+        { label: "Objection classes", value: "7", description: "Price, trust, timing, competitor, fit, buying signal, neutral" },
+        { label: "Personas", value: "5", description: "CEO, CTO, developer, PM, founder" },
+        { label: "Strategies", value: "6", description: "One routed per message" },
+        { label: "Tests in CI", value: "220+", description: "pytest with coverage, ruff, black" }
+      ],
+      impact: "Every reply arrives with its classification, confidence and sources attached, so a rep can see why the system answered the way it did, and the three handoff triggers keep the hard conversations with a human."
+    },
+
+    challenges: [
+      {
+        challenge: "Grounding answers on short competitor docs without mixing topics",
+        solution: "Dropped chunk size to 128 tokens with a 24-token overlap so each FAISS hit stays on one topic, and surfaced the chunk as a citation"
+      },
+      {
+        challenge: "Knowing when the bot should stop answering",
+        solution: "A dedicated handoff node checks three triggers in priority order: explicit request, low classifier confidence, negative sentiment above a threshold"
+      },
+      {
+        challenge: "Not tying retrieval to one embeddings vendor",
+        solution: "Embeddings are resolved from config: Gemini embedding-001 in production, Ollama locally, the same FAISS store either way"
+      }
+    ],
+
+    links: {
+      github: "https://github.com/aayush2724/Auralis",
+      demo: "https://auralis-client-five.vercel.app",
+      demo_note: "The API runs on a free tier and may take a minute to wake on first login"
+    },
+
+    tags: ["Python", "FastAPI", "LangGraph", "RAG", "FAISS", "PostgreSQL", "Redis", "Docker"],
+    updatedAt: "2026-10-03T00:00:00Z"
+  },
+
+  {
+    id: "deskguard",
+    name: "DeskGuard",
+    tagline: "Real-Time Library Seat Booking",
+    badge: "New",
+    cover: "/deskguard-800.jpg",
+
+    problem: {
+      title: "Ghost Seats Waste Library Desks",
+      description: "In a busy university library a bag on a desk 'reserves' it for hours while its owner is at lunch or in class. Students walk floor to floor looking for a free desk that is only free on paper, and librarians cannot patrol every seat.",
+      painPoints: [
+        "Belongings hold seats that nobody is using",
+        "No live view of which desks are actually free",
+        "Two people grabbing the last seat at the same moment",
+        "Manual enforcement is intrusive and does not scale"
+      ]
+    },
+
+    approach: {
+      description: "Built a booking backend with a live desk map, QR check-ins at the desk and an automated sweep that frees abandoned seats. Bookings run as PostgreSQL transactions so concurrent requests cannot double-book, every seat state change is written to an audit log, and availability is pushed to clients over Server-Sent Events instead of polling.",
+      keyFeatures: [
+        "Live interactive desk map that updates over Server-Sent Events",
+        "QR check-in and check-out scanned at the physical desk",
+        "Transactional booking: no double-booking under concurrent requests",
+        "Redis TTL expiry auto-releases no-show seats, enforced by a cron sweep",
+        "Librarian dashboard with an audit log of every seat state change",
+        "Dockerised API with helmet hardening and an origin allow-list"
+      ]
+    },
+
+    stack: {
+      frontend: ["React", "React Router", "html5-qrcode"],
+      backend: ["Node.js", "Express", "Server-Sent Events", "node-cron"],
+      database: ["PostgreSQL", "Redis (ioredis)"],
+      infrastructure: ["Docker Compose", "Render", "Vercel"],
+      tools: ["qrcode", "helmet"]
     },
 
     role: {
       title: "Full-Stack Developer",
       responsibilities: [
-        "Implemented motion detection algorithm using frame differencing in OpenCV",
-        "Built real-time notification pipeline with Pusher",
-        "Designed secure dashboard for viewing intrusion logs and photos",
-        "Created remote control API for arming/disarming the system",
-        "Optimized video processing to run efficiently on low-power hardware"
+        "Modelled seats, bookings and the state machine behind check-in, hold and release",
+        "Wrote the transactional booking path and the audit log",
+        "Implemented the SSE availability stream and the live map client",
+        "Built QR generation and the in-browser scanner flow",
+        "Set up Redis TTL holds, the cron sweep and Docker Compose for local runs"
       ],
-      teamSize: "Solo project",
-      duration: "2 weeks"
+      teamSize: "Solo build; UI polish by Kaki Harshita",
+      duration: "Jun – Oct 2026"
     },
 
     outcomes: {
       metrics: [
-        { label: "Alert Latency", value: "<1s", description: "From detection to notification" },
-        { label: "Detection Rate", value: "98%", description: "Accuracy in detecting movement" },
-        { label: "Storage Saved", value: "80%", description: "Using event-based recording" },
-        { label: "Active Users", value: "Beta", description: "Internal testing phase" }
+        { label: "Booking safety", value: "ACID", description: "PostgreSQL transactions, no double-booking" },
+        { label: "Live updates", value: "SSE", description: "Push, not polling" },
+        { label: "No-show release", value: "TTL", description: "Redis expiry + cron sweep" },
+        { label: "Check-in", value: "QR", description: "Scanned at the desk" }
       ],
-      impact: "Successfully detected unauthorized access attempts in a shared lab environment. Owners received alerts within a second of detection, allowing for immediate intervention."
+      impact: "A seat is either in use, held, or free, and the map says which in real time. Librarians get an audit trail instead of a patrol route."
     },
 
     challenges: [
       {
-        challenge: "Distinguishing between shadows and actual movement",
-        solution: "Implemented thresholding and noise reduction filters in OpenCV"
+        challenge: "Two students booking the last desk at the same instant",
+        solution: "The booking path runs inside a PostgreSQL transaction, so the second request fails cleanly instead of creating a duplicate"
       },
       {
-        challenge: "Real-time streaming vs. bandwidth usage",
-        solution: "Used low-res stream for monitoring and high-res capture for alerts"
+        challenge: "Freeing seats whose owner never came back",
+        solution: "Holds carry a Redis TTL; when it expires the cron sweep releases the seat and records the change in the audit log"
       },
       {
-        challenge: "Privacy of the owner while monitoring",
-        solution: "Added facial recognition to automatically disarm when owner is present"
+        challenge: "Keeping the map live without hammering the API",
+        solution: "Clients subscribe to one Server-Sent Events stream and receive updates, replacing per-client polling"
       }
     ],
 
     links: {
       github: "https://github.com/aayush2724/DeskGuard",
       demo: "https://deskguard-jade.vercel.app",
-      demo_note: "Requires local camera setup"
+      demo_note: "The API runs on a free tier and may take ~30 s to wake up"
     },
 
-    tags: ["JavaScript", "Node.js", "OpenCV", "Pusher", "Security"],
-    updatedAt: "2026-06-13T18:35:44Z"
+    tags: ["Node.js", "Express", "PostgreSQL", "Redis", "Server-Sent Events", "Docker"],
+    updatedAt: "2026-10-02T00:00:00Z"
   },
 
   {
     id: "algovision",
     name: "AlgoVision",
-    tagline: "Interactive Algorithm Visualizer for Students",
+    tagline: "Algorithm Learning Engine with 474 Live Tracers",
     badge: null,
-    cover: "/skillnest-cover.svg",
+    cover: "/algovision-800.jpg",
 
     problem: {
-      title: "Abstract Algorithms are Hard to Visualize",
-      description: "Students often struggle to understand how complex data structures and algorithms work just by reading code or looking at static diagrams. They need an interactive way to see the step-by-step execution and state changes.",
+      title: "Canned Animations Teach the Animation, Not the Algorithm",
+      description: "Most visualizers replay one hard-coded example. Students cannot run the algorithm on their own graph or array, cannot step backwards, and never see the real cost of what just happened. The result is intuition about a video, not about the algorithm.",
       painPoints: [
-        "Difficult to grasp recursion and graph traversals",
-        "Static diagrams don't show dynamic state changes",
-        "Stepping through code in a debugger is tedious for learning",
-        "Lack of visual intuition for algorithm performance"
+        "One sample input per algorithm, never the student's own",
+        "No backward stepping and no real operation counts",
+        "Complexity quoted as a formula, never measured on the run",
+        "Syntax-first teaching before the idea has landed"
       ]
     },
 
     approach: {
-      description: "Built a web-based visualization tool that allows users to step through various algorithms (sorting, graph search, pathfinding) with interactive controls. The app visualizes data movements and state changes in real-time with customizable speeds and data sets.",
+      description: "Built a learning engine where a FastAPI backend traces 474 algorithms (graphs, sorting, searching, trees, heaps, strings, greedy, DP, number theory) on the student's own input, frame by frame. The buildless ES-module frontend renders each frame with Three.js, GSAP and SVG, adds a forward/backward scrubber, live operation counters and a compare mode, and wraps every algorithm in a real-world metaphor with an optional LLM narrator.",
       keyFeatures: [
-        "Visualization of 10+ common sorting and graph algorithms",
-        "Step-by-step execution with backward/forward controls",
-        "Custom data input (arrays, graph builders)",
-        "Real-time complexity analysis and performance metrics",
-        "Interactive code view that highlights active lines",
-        "Responsive design for learning on any device"
+        "474 server-side tracers; every frame is computed from the user's input",
+        "Step scrubber: play, pause, speed, forward and backward, drag to any step",
+        "Real counters (relaxations, heap pushes, comparisons, swaps) and a complexity card per algorithm",
+        "Compare mode: race any two graph algorithms or comparison sorts on the same data",
+        "Paste-any-code detection for Python, C, C++, Java and JavaScript",
+        "In-browser Python dry run on Pyodide (WebAssembly) in a web worker",
+        "Groq-backed narrator with beginner, intermediate and advanced tones, plus template fallbacks",
+        "A2Z roadmap: the official 495-item sheet linked to live tracers, with progress export/import",
+        "23 offline emulators so the app still traces your input with no backend"
       ]
     },
 
     stack: {
-      frontend: ["React", "Framer Motion", "Canvas API"],
-      backend: [],
+      frontend: ["Vanilla JavaScript (ES modules)", "Three.js", "GSAP", "SVG", "Pyodide / WebAssembly"],
+      backend: ["Python", "FastAPI (trace engine, code detection, AI proxy)", "FastAPI ML microservice"],
       database: [],
-      infrastructure: [],
-      tools: ["Algorithm Logic (Custom JS)"]
+      infrastructure: ["Docker Compose", "nginx", "Vercel", "Render"],
+      tools: ["Groq API", "pytest", "node:test", "slowapi"]
     },
 
     role: {
-      title: "Frontend Developer",
+      title: "Full-Stack Developer",
       responsibilities: [
-        "Implemented 10+ algorithm visualization logics from scratch",
-        "Designed fluid animations using Framer Motion for data movements",
-        "Built interactive graph builder for pathfinding visualizations",
-        "Created state management system to handle 'stepping' through logic",
-        "Optimized rendering performance for large data sets"
+        "Wrote the tracer engine and the 186 tracer modules behind the 474 algorithms",
+        "Built the frame renderer, scrubber, counters and compare mode in buildless ES modules",
+        "Implemented language-neutral code detection and the Pyodide dry-run worker",
+        "Wired the Groq narrator microservice with template fallbacks",
+        "Defined one CSP and security-header set and tested it across Vercel, nginx and FastAPI"
       ],
       teamSize: "Solo project",
-      duration: "3 weeks"
+      duration: "Jun – Oct 2026"
     },
 
     outcomes: {
       metrics: [
-        { label: "Algorithms", value: "10+", description: "Sorting, Graph, Pathfinding" },
-        { label: "FPS", value: "60", description: "Smooth animation performance" },
-        { label: "Avg Session", value: "8 min", description: "Student engagement" },
-        { label: "User Feedback", value: "Positive", description: "From DSA study groups" }
+        { label: "Algorithms", value: "474", description: "Live, input-driven tracers" },
+        { label: "Offline emulators", value: "23", description: "Trace with no backend" },
+        { label: "Languages detected", value: "5", description: "Python, C, C++, Java, JS" },
+        { label: "Tests", value: "860+", description: "pytest across tracers, API, headers" }
       ],
-      impact: "Used by local study groups to prepare for technical interviews. Students reported 40% faster understanding of complex topics like Dijkstra's and Merge Sort."
+      impact: "A student can bring their own graph, watch Dijkstra and BFS do measurably different work on it, scrub back to the step they missed, and keep their progress across the whole A2Z sheet in their own browser."
     },
 
     challenges: [
       {
-        challenge: "Synchronizing animations with algorithm state",
-        solution: "Built a custom queue-based animation system that decouples logic from rendering"
+        challenge: "The same headers had to hold on Vercel, nginx and the dev server",
+        solution: "One CSP and header set lives in security.py; a test checks vercel.json and the nginx include against it, and inline-script hashes are regenerated by a script"
       },
       {
-        challenge: "Implementing 'undo' or 'step backward' functionality",
-        solution: "Used immutable state snapshots at each algorithmic step"
+        challenge: "Pyodide takes seconds to boot",
+        solution: "A single web worker is started once per session and reused for every dry run, keeping the main thread free"
       },
       {
-        challenge: "Handling large graphs without UI lag",
-        solution: "Offloaded graph calculations to Web Workers and used Canvas for rendering"
+        challenge: "Free-tier backends sleep",
+        solution: "The status pill says so, Run waits out the wake-up for up to 45 s, and 23 emulators plus labelled sample traces keep the app usable meanwhile"
       }
     ],
 
@@ -167,8 +256,8 @@ export const caseStudies = [
       demo_note: null
     },
 
-    tags: ["JavaScript", "React", "Framer Motion", "Algorithms", "Education"],
-    updatedAt: "2026-06-12T10:04:04Z"
+    tags: ["Python", "FastAPI", "JavaScript", "Three.js", "GSAP", "Pyodide", "Groq", "Docker"],
+    updatedAt: "2026-10-23T00:00:00Z"
   },
 
   {
