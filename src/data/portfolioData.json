@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-23T16:13:39.262Z",
+  "lastUpdated": "2026-10-24T02:47:45.805Z",
   "leetcode": {
     "stats": {
       "totalSolved": 772,
@@ -9,10 +9,10 @@
       "totalSubmissions": 801
     },
     "streak": 55,
-    "totalActiveDays": 293,
+    "totalActiveDays": 294,
     "calendar": {
-      "from": "2025-10-24",
-      "to": "2026-10-23",
+      "from": "2025-10-25",
+      "to": "2026-10-24",
       "days": {
         "2025-10-25": 3,
         "2025-10-26": 3,
@@ -306,11 +306,22 @@
         "2026-10-18": 1,
         "2026-10-19": 1,
         "2026-10-21": 4,
-        "2026-10-22": 1
+        "2026-10-22": 1,
+        "2026-10-23": 1
       }
     }
   },
   "github": [
+    {
+      "name": "AlgoVision",
+      "description": "",
+      "url": "https://github.com/aayush2724/AlgoVision",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "topics": [],
+      "updatedAt": "2026-10-23T17:46:15Z"
+    },
     {
       "name": "Portfolio",
       "description": "",
@@ -319,7 +330,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-10-23T02:51:02Z"
+      "updatedAt": "2026-10-23T16:13:44Z"
     },
     {
       "name": "UrjaSetu",
@@ -330,16 +341,6 @@
       "language": null,
       "topics": [],
       "updatedAt": "2026-10-20T18:22:07Z"
-    },
-    {
-      "name": "AlgoVision",
-      "description": "",
-      "url": "https://github.com/aayush2724/AlgoVision",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "topics": [],
-      "updatedAt": "2026-10-18T06:25:58Z"
     },
     {
       "name": "Vetra",
@@ -433,10 +434,10 @@
     }
   ],
   "githubStats": {
-    "contributions": 1406,
+    "contributions": 1408,
     "calendar": {
       "from": "2025-10-19",
-      "to": "2026-10-23",
+      "to": "2026-10-24",
       "days": {
         "2025-10-27": 6,
         "2025-10-28": 1,
@@ -602,7 +603,8 @@
         "2026-10-19": 21,
         "2026-10-20": 1,
         "2026-10-21": 4,
-        "2026-10-22": 1
+        "2026-10-22": 1,
+        "2026-10-23": 2
       }
     }
   }
