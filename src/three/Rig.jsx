@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
-import { STATIONS, DEFAULT_STATION } from "./stations"
+import { STATIONS, DEFAULT_STATION, HOTSPOTS } from "./stations"
 import { VESTIBULE } from "./Cabin"
 import { tokenColor } from "./tokens"
 
@@ -19,6 +19,30 @@ const tmpA = new THREE.Vector3()
 const tmpB = new THREE.Vector3()
 const tmpC = new THREE.Vector3()
 const Y_AXIS = new THREE.Vector3(0, 1, 0)
+const wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a))
+
+/**
+ * The head turn (yaw) at which a `turn` station faces a door, nearest to the
+ * current turn and inside the drag's range; null if no door is within ~70°.
+ * A turn of y swings the aim by -y, so facing heading h from base heading b
+ * means y = b - h.
+ */
+function yawToNearestDoor(st, yaw, span) {
+  const b = Math.atan2(st.look[0] - st.pos[0], st.look[2] - st.pos[2])
+  let best = null
+  let bestD = 1.2
+  for (const h of HOTSPOTS) {
+    const y0 = wrap(b - Math.atan2(h.at[0] - st.pos[0], h.at[2] - st.pos[2]))
+    for (const y of [y0, y0 + 2 * Math.PI, y0 - 2 * Math.PI]) {
+      const d = Math.abs(y - yaw)
+      if (Math.abs(y) <= span && d < bestD) {
+        bestD = d
+        best = y
+      }
+    }
+  }
+  return best
+}
 
 /**
  * On-demand frame driver. In "demand" frameloop a frame only renders when
@@ -110,6 +134,15 @@ export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady, mode =
     // Drag-to-orbit (map only): swing the camera around the point it looks
     // at. Eases back to the station once the reader scrolls on.
     const o = orbit.current
+    // A head turn that has just been let go settles on the nearest door, so
+    // every swipe lands facing something.
+    if (o.snap && !o.dragging) {
+      o.snap = false
+      if (a.turn) {
+        const y = yawToNearestDoor(a, o.yaw, o.span)
+        if (y !== null) o.yaw = y
+      }
+    }
     const wantYaw = o.active ? o.yaw : 0
     const wantPitch = o.active ? o.pitch : 0
     spin.current.yaw = THREE.MathUtils.damp(spin.current.yaw, wantYaw, 6, d)

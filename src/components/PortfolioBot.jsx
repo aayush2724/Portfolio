@@ -257,6 +257,34 @@ export default function PortfolioBot() {
     }
   };
 
+  // Phones: the launcher steps out of the way while the HQ room fills the
+  // screen, so it never sits on the room or its door rail. It stays put
+  // while the chat is open.
+  const [overMap, setOverMap] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    let io = null;
+    const bind = () => {
+      io?.disconnect();
+      io = null;
+      setOverMap(false);
+      const hq = document.getElementById("hq");
+      if (!mq.matches || !hq) return;
+      io = new IntersectionObserver(
+        ([e]) => setOverMap(e.intersectionRatio >= 0.5 || e.intersectionRect.height >= window.innerHeight * 0.6),
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+      io.observe(hq);
+    };
+    bind();
+    mq.addEventListener("change", bind);
+    return () => {
+      mq.removeEventListener("change", bind);
+      io?.disconnect();
+    };
+  }, []);
+  const tucked = overMap && !open;
+
   return (
     <div>
       <button
@@ -264,20 +292,25 @@ export default function PortfolioBot() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls="portfolio-bot"
-        className="fixed right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
+        aria-label={open ? "Close PortfolioBot" : "Ask me"}
+        tabIndex={tucked ? -1 : 0}
+        className="fixed right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 p-3.5 md:px-4 md:py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
         style={{
           background: "var(--accent)",
           color: "var(--accent-ink)",
           boxShadow: "0 0 20px rgb(var(--accent-rgb) / 0.2)",
           // Clear the home indicator on phones with a bottom safe area.
           bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
+          transform: tucked ? "translateY(calc(100% + 2rem))" : undefined,
+          pointerEvents: tucked ? "none" : undefined,
         }}
       >
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full rounded-full bg-black/40 opacity-75 animate-ping" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-black/60" />
         </span>
-        {open ? "Close" : "Ask me"}
+        {/* Phones get the dot alone: a 44px disc instead of a pill over the content */}
+        <span className="hidden md:inline">{open ? "Close" : "Ask me"}</span>
       </button>
 
       {open && (

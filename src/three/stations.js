@@ -19,9 +19,11 @@ export const STATIONS = {
   // in view; a slightly wider lens keeps the near corners (corkboard, arcade)
   // in frame. Whatever the screen shape leaves over, the vestibule covers.
   hq:           { pos: [0.1, 2.2, 7.6],   look: [-0.1, 1.4, -0.8],  dim: 1, lens: 56 },
-  // Portrait screens can't fit a wide room: stand just inside the doorway,
-  // look down the room, and let a sideways drag pan to either wall.
-  hq_portrait:  { pos: [-0.3, 1.9, 3.3],  look: [-1.0, 1.45, -1.5], dim: 1, fov: 74, turn: true },
+  // Portrait screens can't fit a wide room: stand in the middle of it, close
+  // enough that the desk and the shelf above it fill the frame, and let a
+  // sideways drag turn the head to either wall (the door rail under the
+  // room lists what is out of frame).
+  hq_portrait:  { pos: [0.2, 1.75, 2.1],  look: [-0.9, 1.7, -2.4],  dim: 1, fov: 60, turn: true },
   projects:     { pos: [-0.9, 1.7, 1.2],   look: [-1.8, 1.3, -2.9],  dim: 0.12 },
   about:        { pos: [-1.2, 1.7, 0.2],   look: [-4.8, 1.5, -1.2],  dim: 0.12 },
   skills:       { pos: [1.0, 1.6, 0.4],    look: [4.5, 1.3, -2.5],   dim: 0.12 },

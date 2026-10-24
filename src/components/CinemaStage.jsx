@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import Cabin from "../three/Cabin"
 import Hotspots from "../three/Hotspots"
+import Facing from "../three/Facing"
 import Dust from "../three/Dust"
 import Rig, { Pulse } from "../three/Rig"
 import { tokenColor } from "../three/tokens"
@@ -21,7 +22,8 @@ import { useOverlayOpen } from "../context/overlay"
  * "room" (phones, touch tablets, weak desktops): the same room, hosted
  * inside the HQ section only, so scrolling the rest of the page costs
  * nothing. It renders on demand — a frame only while something is moving
- * (a drag, a tap, the cut) — and sits idle otherwise.
+ * (a drag, a tap, the cut) — and sits idle otherwise. The section's door
+ * rail drives it through the ref (`go`) and follows it through `onFacing`.
  */
 function Hud({ scene }) {
   const label = SCENE_LABELS[scene.id] || scene.id
@@ -56,14 +58,14 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 /** Cut timing (ms): fly to the object, dip to dark, hold while the page lands, rise. */
 const CUT = { fly: 650, dip: 300, hold: 260, rise: 420 }
 
-export default function CinemaStage({ mode = "walk" }) {
+const CinemaStage = forwardRef(function CinemaStage({ mode = "walk", onFacing }, ref) {
   const room = mode === "room"
   const { store, scene } = useSectionTracker(!room)
   const mouse = useRef({ x: 0, y: 0 })
   const hover = useRef(null)
   const portal = useRef(null)
   const stage = useRef(null)
-  const orbit = useRef({ active: false, yaw: 0, pitch: 0, dragging: false, moved: 0, lastX: 0, lastY: 0 })
+  const orbit = useRef({ active: false, yaw: 0, pitch: 0, dragging: false, moved: 0, lastX: 0, lastY: 0, snap: false, span: 0.45 })
   const [hoverId, setHoverId] = useState(null)
   const fly = useRef(null)
   const cutting = useRef(false)
@@ -121,20 +123,33 @@ export default function CinemaStage({ mode = "walk" }) {
         lenis?.start()
         cutting.current = false
         setInCut(false)
+        // The door that was lit for the fly goes dark again behind the page.
+        hover.current = null
+        setHoverId(null)
+        wake(600)
       }
     },
     [wake]
   )
 
+  // A marker (its own tap-versus-drag check) or the door rail opens a door.
   const onGo = useCallback(
     (id) => {
-      // A drag that ends over a door is not a click.
-      if (orbit.current.moved > 6) return
       setHoverId(null)
       window.dispatchEvent(new CustomEvent("cursor-label", { detail: "" }))
       cutTo(id, true)
     },
     [cutTo]
+  )
+
+  // A click on the object itself: the press landed on the stage, so a drag
+  // that ends over a door is told apart from a tap by how far it travelled.
+  const onOpen = useCallback(
+    (id) => {
+      if (orbit.current.moved > 6) return
+      onGo(id)
+    },
+    [onGo]
   )
 
   // Walk mode: links back to the map (the nav's "HQ") take the cut instead
@@ -165,6 +180,19 @@ export default function CinemaStage({ mode = "walk" }) {
     [wake]
   )
 
+  // Room mode: a tap on the door rail lights that door and takes the cut
+  // to it, exactly as a tap on its marker would.
+  useImperativeHandle(
+    ref,
+    () => ({
+      go: (id) => {
+        onHover(id)
+        cutTo(id, true)
+      },
+    }),
+    [onHover, cutTo]
+  )
+
   // Drag to look around the map. On touch the wrapper allows vertical pans
   // through to the page (touch-action: pan-y), so only sideways drags orbit.
   const onPointerDown = (e) => {
@@ -187,13 +215,17 @@ export default function CinemaStage({ mode = "walk" }) {
     // Room mode: a head turn with a wide range (the door is behind you);
     // vertical pans belong to the page there, so pitch is walk-mode only.
     const span = room ? 2.6 : 0.45
+    o.span = span
     o.yaw = Math.max(-span, Math.min(span, o.yaw - dx * (room ? 0.006 : 0.0022)))
     o.pitch = room ? 0 : Math.max(-0.12, Math.min(0.22, o.pitch + dy * 0.0012))
     wake(500)
   }
   const onPointerUp = () => {
-    orbit.current.dragging = false
-    wake(900)
+    const o = orbit.current
+    // Room mode: a drag that turned the head settles on the nearest door.
+    if (room && o.dragging && o.moved > 6) o.snap = true
+    o.dragging = false
+    wake(1400)
   }
 
   // Walk mode only: the mouse turns the view a few degrees. Room mode has
@@ -244,9 +276,10 @@ export default function CinemaStage({ mode = "walk" }) {
           <hemisphereLight args={["#2a3040", "#0a0a0b", 1.1]} />
           <Pulse wakeUntil={wakeUntil} invalidateRef={invalidate} />
           <Rig tracker={store} mouse={mouse} orbit={orbit} fly={fly} dimEl={stage} onReady={onReady} mode={mode} />
-          <Cabin hoverRef={hover} accent={accent} onHover={onHover} onOpen={onGo} />
+          <Cabin hoverRef={hover} accent={accent} onHover={onHover} onOpen={onOpen} />
           <Dust tracker={store} accent={accent} />
           <Hotspots portal={portal} active={mapActive} hoverRef={hover} hoverId={hoverId} onGo={onGo} />
+          {room && <Facing onFacing={onFacing} />}
         </Canvas>
         {/* Room mode: markers live inside the stage box */}
         {room && <div ref={portal} className={portalClass} style={{ opacity: mapActive ? 1 : 0 }} />}
@@ -262,4 +295,6 @@ export default function CinemaStage({ mode = "walk" }) {
       {!room && <Hud scene={scene} />}
     </>
   )
-}
+})
+
+export default CinemaStage
