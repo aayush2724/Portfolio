@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-10-28T17:45:08.519Z",
+  "lastUpdated": "2026-10-29T03:49:04.258Z",
   "leetcode": {
     "stats": {
-      "totalSolved": 777,
+      "totalSolved": 778,
       "easy": 320,
-      "medium": 396,
+      "medium": 397,
       "hard": 61,
-      "totalSubmissions": 806
+      "totalSubmissions": 807
     },
     "streak": 55,
     "totalActiveDays": 294,
     "calendar": {
-      "from": "2025-10-29",
-      "to": "2026-10-28",
+      "from": "2025-10-30",
+      "to": "2026-10-29",
       "days": {
         "2025-11-01": 2,
         "2025-11-09": 2,
@@ -307,11 +307,21 @@
         "2026-10-24": 2,
         "2026-10-26": 1,
         "2026-10-27": 4,
-        "2026-10-28": 1
+        "2026-10-28": 3
       }
     }
   },
   "github": [
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-10-28T17:45:13Z"
+    },
     {
       "name": "UrjaSetu",
       "description": "",
@@ -351,16 +361,6 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-10-28T17:16:24Z"
-    },
-    {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-10-28T17:16:20Z"
     },
     {
       "name": "MedVerify",
@@ -437,7 +437,7 @@
     "contributions": 1479,
     "calendar": {
       "from": "2025-10-26",
-      "to": "2026-10-28",
+      "to": "2026-10-29",
       "days": {
         "2025-10-27": 7,
         "2025-10-28": 1,
