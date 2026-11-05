@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-05T04:36:02.436Z",
+  "lastUpdated": "2026-11-05T19:18:26.725Z",
   "leetcode": {
     "stats": {
       "totalSolved": 784,
@@ -318,16 +318,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-11-04T19:11:53Z"
-    },
-    {
       "name": "Vetra",
       "description": "",
       "url": "https://github.com/aayush2724/Vetra",
@@ -335,7 +325,17 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-11-04T18:51:54Z"
+      "updatedAt": "2026-11-05T19:07:20Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-11-05T04:36:07Z"
     },
     {
       "name": "UrjaSetu",
