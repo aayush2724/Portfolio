@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Page not found — Aayush Kumar</title>
-    <meta name="description" content="That page doesn't exist on Aayush Kumar's portfolio. Head back to the home page, the projects, or get in touch." />
+    <meta name="description" content="That page doesn't exist on Aayush Kumar's portfolio. Hunt it down in a tiny terminal, then head back to the home page, the projects, or get in touch." />
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#d4ff3f" />
     <meta name="color-scheme" content="dark" />
@@ -12,6 +12,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="preload" href="/fonts/ClashDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/index.css" />
+    <!-- The hunt game. A bundled module, not inline: vercel.json's CSP has no 'unsafe-inline'. -->
+    <script type="module" src="/src/notfound/main.js"></script>
   </head>
   <body class="bg-bg font-body text-fg antialiased">
     <a href="#content" class="skip-link">Skip to content</a>
@@ -25,18 +27,56 @@
       </nav>
     </header>
 
-    <main id="content" class="flex min-h-[calc(100vh-73px)] flex-col items-center justify-center px-6 py-16 text-center">
-      <p class="mb-6 font-mono text-xs text-muted">
+    <main id="content" class="flex min-h-[calc(100vh-73px)] flex-col items-center justify-center px-4 py-12 text-center md:px-6 md:py-16">
+      <p class="mb-4 font-mono text-xs text-muted">
         <span class="text-accent">$</span> cat this-page.md<br />
         cat: this-page.md: No such file or directory
       </p>
-      <h1 class="font-display text-[28vw] uppercase leading-none tracking-tighter text-fg md:text-[11rem]">404</h1>
-      <p class="mt-6 max-w-md leading-relaxed text-muted">
+      <h1 class="font-display text-[26vw] uppercase leading-none tracking-tighter text-fg md:text-[9rem]">404</h1>
+
+      <!-- 404 Hunt. Hidden until main.js confirms scripts run, so no-JS visitors get the plain page. -->
+      <section id="nf-game" class="mt-6 hidden w-full max-w-2xl text-left" aria-labelledby="nf-title">
+        <div class="rounded-2xl border border-line bg-surface p-3 md:p-4">
+          <div class="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 font-mono text-[11px] uppercase tracking-widest text-muted">
+            <h2 id="nf-title" class="font-mono text-[11px] font-normal uppercase tracking-widest">
+              <span class="text-accent">▮</span> 404 hunt · <span id="nf-cwd" class="normal-case text-fg">~</span>
+            </h2>
+            <p class="whitespace-nowrap">
+              moves <span id="nf-moves" class="text-fg">0</span>
+              <span class="mx-1 text-line">|</span>
+              time <span id="nf-time" class="text-fg">00:00</span>
+              <span class="mx-1 text-line">|</span>
+              best <span id="nf-best" class="text-fg">—</span>
+            </p>
+          </div>
+          <div id="nf-log" class="h-60 overflow-y-auto rounded-xl bg-bg p-3 font-mono text-xs leading-relaxed md:h-72" role="log" aria-live="polite" aria-label="Terminal output"></div>
+          <form id="nf-form" class="mt-2 flex items-center gap-2 rounded-xl border border-line bg-bg px-3 py-2 font-mono text-xs" autocomplete="off">
+            <span class="text-accent" aria-hidden="true">$</span>
+            <span id="nf-prompt" class="text-muted" aria-hidden="true">~</span>
+            <input
+              id="nf-input"
+              type="text"
+              class="min-w-0 flex-1 bg-transparent text-fg outline-none placeholder:text-muted/60"
+              placeholder="type a command — try: help"
+              aria-label="Command"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="go"
+            />
+          </form>
+          <div id="nf-chips" class="mt-2 flex flex-wrap gap-1.5" aria-label="Quick commands"></div>
+          <p id="nf-unlock" class="mt-3 hidden rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 font-mono text-xs text-accent" role="status"></p>
+        </div>
+      </section>
+
+      <p class="mt-8 max-w-md leading-relaxed text-muted">
         That page doesn't exist, or it moved. Everything on this site lives on the home page —
         the projects, the stats, the case studies and the contact details.
       </p>
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-        <a href="/" class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold uppercase tracking-wider text-accent-ink transition-opacity hover:opacity-90">
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a id="nf-cta" href="/" class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold uppercase tracking-wider text-accent-ink transition-opacity hover:opacity-90">
           Go home →
         </a>
         <a href="/#projects" class="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 text-sm font-medium text-muted transition-colors hover:border-accent hover:text-accent">

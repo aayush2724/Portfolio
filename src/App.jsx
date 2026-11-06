@@ -19,11 +19,14 @@ const ScrollCinema = lazy(() => import("./components/ScrollCinema"));
 const CodingStatsBold = lazy(() => import("./components/CodingStatsBold"));
 const JourneyTimeline = lazy(() => import("./components/JourneyTimeline"));
 const AchievementsSection = lazy(() => import("./components/AchievementsSection"));
-const Stack2048 = lazy(() => import("./components/Stack2048"));
+const Fretboard = lazy(() => import("./components/Fretboard"));
 const BeyondCodeBento = lazy(() => import("./components/BeyondCodeBento"));
 const ContactBold = lazy(() => import("./components/ContactBold"));
+const Footer = lazy(() => import("./components/Footer"));
 const PortfolioBot = lazy(() => import("./components/PortfolioBot"));
 const CaseStudyPage = lazy(() => import("./components/CaseStudyPage"));
+const BlogPage = lazy(() => import("./components/BlogPage"));
+const NowSection = lazy(() => import("./components/NowSection"));
 
 /**
  * Hash route: "#/work/deskguard" → { name: "work", id: "deskguard" }.
@@ -31,8 +34,13 @@ const CaseStudyPage = lazy(() => import("./components/CaseStudyPage"));
  * plain anchor links (#projects etc.) keep behaving as before.
  */
 function parseHash() {
-  const m = window.location.hash.match(/^#\/work\/([\w-]+)/);
-  return m ? { name: "work", id: m[1] } : { name: "home" };
+  const h = window.location.hash;
+  let m = h.match(/^#\/work\/([\w-]+)/);
+  if (m) return { name: "work", id: m[1] };
+  // "#/blog" is the index, "#/blog/<slug>" a post.
+  m = h.match(/^#\/blog(?:\/([\w-]+))?\/?$/);
+  if (m) return { name: "blog", id: m[1] || null };
+  return { name: "home" };
 }
 
 function useHashRoute() {
@@ -163,6 +171,26 @@ export default function App() {
     );
   }
 
+  // ── Blog route ───────────────────────────────────────────────────
+  if (route.name === "blog") {
+    return (
+      <>
+        <SkipLink />
+        <InteractiveGrid />
+        <ScrollProgress />
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <BlogPage
+            slug={route.id}
+            onBack={() => {
+              window.location.hash = "#now";
+            }}
+          />
+        </Suspense>
+        <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
+      </>
+    );
+  }
+
   // ── Home ──────────────────────────────────────────────────────────
   return (
     <>
@@ -200,11 +228,14 @@ export default function App() {
               <ScrollCinema />
               <CodingStatsBold />
               <JourneyTimeline />
-              <AchievementsSection />
-              <Stack2048 />
+              <NowSection />
+              <Fretboard />
               <BeyondCodeBento />
               <PortfolioBot />
+              {/* Achievements are the last section before Contact; the footer closes the page. */}
+              <AchievementsSection />
               <ContactBold />
+              <Footer />
             </Suspense>
           </main>
           <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />

@@ -117,16 +117,18 @@ async function fetchReadme(owner, repo) {
  * allow-list in src/lib/safeUrl.js — README content is not authored here, so
  * a `javascript:` link in it must never reach an href.
  */
-function bases(owner, repo) {
+function bases(ctx) {
+  // Site-authored markdown (the blog, now.md) resolves relative URLs against the site itself.
+  if (ctx.base) return { raw: ctx.base, blob: ctx.base }
   return {
-    raw: `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/`,
-    blob: `https://github.com/${owner}/${repo}/blob/HEAD/`,
+    raw: `https://raw.githubusercontent.com/${ctx.owner}/${ctx.repo}/HEAD/`,
+    blob: `https://github.com/${ctx.owner}/${ctx.repo}/blob/HEAD/`,
   }
 }
 
 /** Build a sanitised <img> for `![alt](src)`, or the alt text when the URL is not allowed. */
 function imageNode(alt, src, ctx, key) {
-  const safe = safeImageSrc(src, bases(ctx.owner, ctx.repo).raw)
+  const safe = safeImageSrc(src, bases(ctx).raw)
   if (!safe) return alt || null
   return (
     <img
@@ -169,7 +171,7 @@ function renderInline(text, ctx, keyBase) {
     } else if (m[2]) {
       const lim = /\[!\[([^\]]*)\]\(([^)\s]+)\)\]\(([^)\s]+)\)/.exec(tok)
       const img = imageNode(lim[1], lim[2], ctx, `${key}-img`)
-      const href = safeHref(lim[3], bases(ctx.owner, ctx.repo).blob)
+      const href = safeHref(lim[3], bases(ctx).blob)
       if (img == null) {
         /* nothing renderable */
       } else if (href) {
@@ -187,7 +189,7 @@ function renderInline(text, ctx, keyBase) {
       if (img != null) nodes.push(img)
     } else if (m[4]) {
       const lm = /\[([^\]]+)\]\(([^)\s]+)\)/.exec(tok)
-      const href = safeHref(lm[2], bases(ctx.owner, ctx.repo).blob)
+      const href = safeHref(lm[2], bases(ctx).blob)
       if (href) {
         nodes.push(
           <a
@@ -236,7 +238,8 @@ const H_STYLES = {
   4: "text-base font-semibold mt-4 mb-2 text-[var(--fg)]",
 }
 
-function renderMarkdown(md, ctx) {
+/** Exported for the blog and the Now section, which render markdown the site itself authors. */
+export function renderMarkdown(md, ctx) {
   const lines = stripHtml(md).split("\n")
   const out = []
   let i = 0
@@ -272,7 +275,9 @@ function renderMarkdown(md, ctx) {
     const h = /^(#{1,6})\s+(.*)/.exec(line)
     if (h) {
       const level = Math.min(h[1].length, 4)
-      const Tag = `h${Math.min(h[1].length + 2, 6)}` // demote: README h1 ≠ page h1
+      // READMEs are demoted two levels (their h1 is not the page's h1); the
+      // blog passes headingShift: 0 so its `##` sections are real h2s.
+      const Tag = `h${Math.min(h[1].length + (ctx.headingShift ?? 2), 6)}`
       out.push(
         <Tag key={k++} className={H_STYLES[level]}>
           {renderInline(h[2].trim(), ctx, `h${k}`)}

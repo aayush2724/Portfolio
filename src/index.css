@@ -38,7 +38,7 @@
   --accent: #d4ff3f;           /* acid lime */
   --accent-rgb: 212 255 63;
   --accent-ink: #09090b;       /* text that sits on the accent */
-  --ember: #ff9900;            /* hot secondary: streak card, LeetCode heatmap, 2048 top tile */
+  --ember: #ff9900;            /* hot secondary: streak card, LeetCode heatmap, low signal in Pluck It */
   --ember-rgb: 255 153 0;
   --ok: #52d273;               /* status dots only ("available", "live") — never decoration */
 }
@@ -405,4 +405,33 @@ a:focus-visible {
     padding: 8px 14px 8px 8px;
     font-size: 11px;
   }
+}
+
+/* ── 404 hunt ───────────────────────────────────────────────────────────────
+   The "shortcut home" button pulses once the visitor finds the page. Lives
+   here rather than in a <style> on 404.html because of the strict style-src. */
+@keyframes nf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0.55); }
+  70% { box-shadow: 0 0 0 12px rgb(var(--accent-rgb) / 0); }
+}
+.nf-pulse {
+  animation: nf-pulse 1.6s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-pulse { animation: none; }
+}
+
+/* ── Blog ───────────────────────────────────────────────────────────────────
+   Posts reuse the README renderer, whose paragraphs are sized for a project
+   card. Reading-length prose gets a size and measure of its own. */
+.blog-body p,
+.blog-body li {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.blog-body p {
+  color: rgb(var(--fg-rgb) / 0.86);
+}
+.blog-body > :first-child {
+  margin-top: 0;
 }

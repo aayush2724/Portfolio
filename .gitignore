@@ -3,8 +3,9 @@ dist/
 .vite/
 coverage/
 
-# Local environment files — never commit secrets. (The site itself needs no
-# env vars; the data-sync script reads GITHUB_TOKEN from GitHub Actions.)
+# Local environment files — never commit secrets. The site reads the two
+# optional VITE_LASTFM_* vars in .env.example; the data-sync script reads
+# GITHUB_TOKEN from GitHub Actions.
 .env
 .env.*
 !.env.example

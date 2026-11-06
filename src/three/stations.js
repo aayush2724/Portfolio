@@ -49,6 +49,7 @@ export const SCENE_LABELS = {
   stats: "Coding stats",
   journey: "Journey",
   achievements: "Achievements",
+  now: "Now",
   play: "Play",
   life: "Beyond code",
   contact: "Contact",

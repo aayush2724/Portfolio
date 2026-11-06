@@ -1,73 +1,15 @@
-import { useState, useEffect, useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import DownloadResumeButton from "./DownloadResumeButton"
 import CommandLabel from "./CommandLabel"
 import AnimatedHeading from "./AnimatedHeading"
-import { useLowPower, usePrefersReducedMotion } from "../context/motion"
 
 /**
  * Ghost signature: the name, huge and barely-there, rising and brightening as
  * the page bottoms out — the site signs itself off. Transform + opacity only.
  */
-function SignatureOutro() {
-  const ref = useRef(null)
-  const reduced = usePrefersReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end end"],
-  })
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [0, 1])
-  const y = useTransform(scrollYProgress, [0, 1], [90, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1])
-
-  return (
-    <div ref={ref} aria-hidden="true" className="relative overflow-hidden select-none pointer-events-none -mx-6 md:-mx-16">
-      <motion.div
-        style={reduced ? undefined : { opacity, y, scale }}
-        className="font-display font-extrabold uppercase leading-none text-center whitespace-nowrap text-[14vw] tracking-tighter"
-      >
-        <span
-          style={{
-            background: "linear-gradient(180deg, rgba(244,244,245,0.14), rgba(244,244,245,0.015))",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          Aayush
-        </span>
-      </motion.div>
-    </div>
-  )
-}
 
 export default function ContactBold() {
-  // Decorative pulses/spins run forever; a phone should not pay for them.
-  const lowPower = useLowPower()
-  const [time, setTime] = useState("")
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      const indiaTime = now.toLocaleTimeString("en-IN", {
-        timeZone: "Asia/Calcutta",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      })
-      setTime(indiaTime)
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
     <section id="contact" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
@@ -162,52 +104,6 @@ export default function ContactBold() {
           </div>
         </Reveal>
 
-        {/* Ghost signature sign-off */}
-        <SignatureOutro />
-
-        {/* Footer */}
-        <Reveal delay={0.3}>
-          <footer className="border-t pt-12 flex flex-col md:flex-row items-center justify-between gap-6" style={{ borderColor: "var(--line)" }}>
-            
-            {/* Left */}
-            <div className="flex flex-col md:flex-row items-center gap-4 text-sm" style={{ color: "var(--muted)" }}>
-              <span>© {new Date().getFullYear()} Aayush Kumar</span>
-              <span className="hidden md:inline">•</span>
-              <span>Built with React, Vite, Framer Motion & Three.js</span>
-              <span className="hidden md:inline">•</span>
-              <a href="/privacy" className="link-underline transition-colors hover:text-[var(--fg)]">
-                Privacy
-              </a>
-            </div>
-
-            {/* Center - Live Clock */}
-            <div className="flex items-center gap-2 font-mono text-sm" style={{ color: "var(--muted)" }}>
-              <motion.div
-                animate={lowPower ? undefined : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
-                transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
-                className="w-2 h-2 rounded-full"
-                style={{ background: "var(--ok)" }}
-              />
-              <span>India</span>
-              <span style={{ color: "var(--accent)" }}>{time}</span>
-            </div>
-
-            {/* Right - Back to Top */}
-            <button
-              onClick={scrollToTop}
-              className="flex items-center gap-2 text-sm font-display uppercase transition-all duration-300 hover:gap-3"
-              style={{ color: "var(--muted)" }}
-            >
-              Back to Top
-              <motion.span
-                animate={lowPower ? undefined : { y: [-3, 0, -3] }}
-                transition={lowPower ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                ↑
-              </motion.span>
-            </button>
-          </footer>
-        </Reveal>
       </div>
     </section>
   )

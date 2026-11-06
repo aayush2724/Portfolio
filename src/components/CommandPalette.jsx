@@ -37,6 +37,31 @@ const cmds = [
         ?.scrollIntoView({ behavior: "smooth" }),
   },
   {
+    id: "now",
+    label: "What I'm Doing Now",
+    icon: "🧭",
+    cat: "Navigate",
+    fn: () =>
+      document.querySelector("#now")?.scrollIntoView({ behavior: "smooth" }),
+  },
+  {
+    id: "blog",
+    label: "Read the Blog",
+    icon: "✍️",
+    cat: "Navigate",
+    fn: () => {
+      window.location.hash = "#/blog";
+    },
+  },
+  {
+    id: "play",
+    label: "Play: Pluck It",
+    icon: "🎵",
+    cat: "Navigate",
+    fn: () =>
+      document.querySelector("#play")?.scrollIntoView({ behavior: "smooth" }),
+  },
+  {
     id: "life",
     label: "Beyond Code",
     icon: "🎸",

@@ -25,6 +25,7 @@ const SECTIONS = [
   { id: "skills", file: "skills.txt" },
   { id: "stats", file: "stats" },
   { id: "journey", file: "journey.log" },
+  { id: "now", file: "now.md" },
   { id: "play", file: "play" },
   { id: "contact", file: "contact" },
 ]
@@ -89,6 +90,7 @@ function makeCommands({ close }) {
       "  whoami             who is this guy",
       "  stats              live LeetCode / GitHub numbers",
       "  socials            github · linkedin · resume",
+      "  blog               open the blog (cat now.md for what I'm up to)",
       "  sudo hire-me       the important one",
       "  history            your commands this session",
       "  clear              clear the screen",
@@ -128,6 +130,11 @@ function makeCommands({ close }) {
         `github     ${portfolioData.github?.length ?? "—"} public repos`,
         "→ cd stats for the full dashboard",
       ]
+    },
+    blog: () => {
+      close()
+      window.location.hash = "#/blog"
+      return null
     },
     socials: () => [
       Object.keys(SOCIALS).join("  ·  "),
