@@ -25,8 +25,9 @@ import {
   readSound,
   readSpeed,
   resume,
-  setApproach,
+  applySpeed,
   SPEEDS,
+  SPEED_LABELS,
   start,
   step,
   stringFor,
@@ -197,15 +198,71 @@ describe("play", () => {
     expect(g.score).toBe(0)
   })
 
-  it("lets the speed bar change the approach, before and during a run", () => {
-    const g = start(createGame(), 0, RIFFS[0], SPEEDS[0])
-    expect(g.notes[0].t).toBe(SPEEDS[0])
+  it("offers five presets, slow to fast, with the default in the middle", () => {
+    expect(SPEEDS).toHaveLength(5)
+    expect(SPEED_LABELS).toEqual(SPEEDS.map((s) => s.label))
+    expect(SPEEDS[DEFAULT_SPEED].approach).toBe(APPROACH_MS)
+    for (let i = 1; i < SPEEDS.length; i++) {
+      expect(SPEEDS[i].tempo).toBeGreaterThan(SPEEDS[i - 1].tempo)
+      expect(SPEEDS[i].approach).toBeLessThan(SPEEDS[i - 1].approach)
+    }
+    // Slow really is slow: under two notes a second on the busiest riff.
+    const eighth = 60000 / (RIFFS[0].bpm * SPEEDS[0].tempo) / 2
+    expect(eighth).toBeGreaterThan(500)
+    const d = start(createGame(), 0)
+    expect(d.approach).toBe(APPROACH_MS)
+    expect(d.tempo).toBe(SPEEDS[DEFAULT_SPEED].tempo)
+  })
+
+  it("starts at the chosen preset: tempo spaces the notes, approach places the first", () => {
+    const slow = SPEEDS[0]
+    const g = start(createGame(), 0, RIFFS[0], slow)
+    expect(g.notes[0].t).toBe(slow.approach)
+    expect(g.loopLength).toBeCloseTo(32 * (60000 / (RIFFS[0].bpm * slow.tempo)))
+    expect(g.notes[1].t - g.notes[0].t).toBeCloseTo(60000 / (RIFFS[0].bpm * slow.tempo) / 2)
     expect(visibleNotes(g, 0)[0].progress).toBe(0)
-    setApproach(g, SPEEDS[4])
-    expect(visibleNotes(g, 0)).toEqual([]) // first note is now beyond the shorter window
-    expect(visibleNotes(g, SPEEDS[0] - SPEEDS[4])[0].progress).toBeCloseTo(0)
-    expect(start(createGame(), 0).approach).toBe(APPROACH_MS)
-    expect(SPEEDS[DEFAULT_SPEED]).toBe(APPROACH_MS)
+    // A later start without a preset keeps the game's current speed.
+    start(g, 0, RIFFS[1])
+    expect(g.tempo).toBe(slow.tempo)
+    expect(g.approach).toBe(slow.approach)
+  })
+
+  it("re-spaces pending notes around now when the speed changes mid-run", () => {
+    const slow = SPEEDS[0]
+    const fast = SPEEDS.at(-1)
+    const g = start(createGame(), 0, RIFFS[0], slow)
+    const now = slow.approach / 2
+    const before = g.notes.map((n) => n.t)
+    const endBefore = g.loopStart + g.loopLength
+    applySpeed(g, fast, now)
+    const k = slow.tempo / fast.tempo
+    expect(g.approach).toBe(fast.approach)
+    expect(g.tempo).toBe(fast.tempo)
+    g.notes.forEach((n, i) => expect(n.t).toBeCloseTo(now + (before[i] - now) * k))
+    expect(g.loopStart + g.loopLength).toBeCloseTo(now + (endBefore - now) * k)
+    // The next loop follows straight on at the new tempo.
+    for (const n of g.notes) press(g, n.s, n.t)
+    expect(step(g, g.loopStart + g.loopLength)).toContain("loop")
+    expect(g.loopLength).toBeCloseTo(32 * (60000 / bpmForLoop(RIFFS[0], 1, fast.tempo)))
+    // Same tempo again leaves the chart alone.
+    const t1 = g.notes[1].t
+    applySpeed(g, fast, g.loopStart)
+    expect(g.notes[1].t).toBe(t1)
+  })
+
+  it("re-spaces around the pause point and never turns a late note into a miss", () => {
+    const g = start(createGame(), 0, RIFFS[0], SPEEDS[2])
+    const first = g.notes[0]
+    const second = g.notes[1]
+    const at = first.t + 20 // first note is 20 ms past the fret, still inside the good window
+    const secondBefore = second.t
+    pause(g, at)
+    applySpeed(g, SPEEDS[0], 99999) // `now` is ignored while paused
+    expect(first.t).toBe(APPROACH_MS) // already past: untouched
+    expect(second.t).toBeCloseTo(at + (secondBefore - at) * (SPEEDS[2].tempo / SPEEDS[0].tempo))
+    resume(g, at)
+    expect(press(g, first.s, at)).toBe("perfect")
+    expect(step(g, at + 1)).toEqual([])
   })
 
   it("lists only notes within the approach window with progress toward the fret", () => {

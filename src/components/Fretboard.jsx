@@ -23,7 +23,7 @@ import {
   readSound,
   readSpeed,
   resume,
-  setApproach,
+  applySpeed,
   start,
   step,
   writeBest,
@@ -36,11 +36,10 @@ import {
  * strings into a pocket guitar tuned to a chord (secondary).
  *
  * Riff: notes slide toward a fret line; pluck the right string as each one
- * crosses it. Three original riffs, a speed bar for how fast the notes
- * travel, and a signal bar that misses drain. The engine, renderer and synth
- * live in src/lib and are shared with the 404 page's Echo game. Keys only
- * act while the board is hovered or focused, so D/F/J/K never hijack typing
- * elsewhere on the page.
+ * crosses it. Three original riffs, a speed bar that sets both the tempo and
+ * how long notes take to reach the fret, and a signal bar that misses drain.
+ * The engine, renderer and synth live in src/lib. Space only acts while the
+ * board is hovered or focused, so it never hijacks scrolling elsewhere.
  */
 
 // Strings by physical key (QWERTY positions) and by typed letter, so other
@@ -118,10 +117,11 @@ export default function Fretboard() {
 
   // The speed bar applies at once, even mid-run.
   useEffect(() => {
-    setApproach(gameRef.current, SPEEDS[speed])
+    applySpeed(gameRef.current, SPEEDS[speed], performance.now())
   }, [speed])
 
   const riff = RIFFS[riffIdx]
+  const bpmAt = (r) => Math.round(r.bpm * SPEEDS[speed].tempo)
   const chord = JAM_CHORDS[chordIdx]
 
   /* ── renderer + resize ──────────────────────────────────────────────── */
@@ -174,7 +174,7 @@ export default function Fretboard() {
       if (!r) return
       if (g.status === "running") {
         const events = step(g, now)
-        if (events.includes("loop")) setAnnounce(`Riff complete. Tempo up to ${Math.round(bpmForLoop(g.riff, g.loop))} bpm.`)
+        if (events.includes("loop")) setAnnounce(`Riff complete. Tempo up to ${Math.round(bpmForLoop(g.riff, g.loop, g.tempo))} bpm.`)
         if (events.includes("over")) finish()
       }
       const v = view.current
@@ -413,7 +413,7 @@ export default function Fretboard() {
                 <>
                   <div className="flex flex-wrap gap-2" role="group" aria-label="Riff">
                     {RIFFS.map((r, i) => (
-                      <Pill key={r.id} active={i === riffIdx} onClick={() => switchRiff(i)} title={`${r.blurb} · ${r.bpm} bpm`}>
+                      <Pill key={r.id} active={i === riffIdx} onClick={() => switchRiff(i)} title={`${r.blurb} · ${bpmAt(r)} bpm`}>
                         {r.name}
                       </Pill>
                     ))}
@@ -472,7 +472,7 @@ export default function Fretboard() {
                       ? `${isTouch ? "tap" : "space"} to resume`
                       : summary
                         ? `score ${fmt(summary.score)} · ${summary.acc}% hit · best combo ×${summary.combo}${summary.loops ? ` · ${summary.loops} loop${summary.loops > 1 ? "s" : ""} cleared` : ""} · ${isTouch ? "tap" : "space"} to retry`
-                        : `${riff.blurb} · ${riff.bpm} bpm · ${isTouch ? "tap the board" : "space"} to start`}
+                        : `${riff.blurb} · ${bpmAt(riff)} bpm · ${isTouch ? "tap the board" : "space"} to start`}
                   </p>
                 </div>
               )}

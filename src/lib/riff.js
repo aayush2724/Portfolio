@@ -1,6 +1,6 @@
 /**
- * Riff engine — the rhythm-game logic shared by the 404 page and the Pluck It
- * section. No canvas, DOM or audio in here.
+ * Riff engine — the rhythm-game logic behind the Pluck It section. No canvas,
+ * DOM or audio in here.
  *
  * Four guitar strings run across the canvas. Notes travel toward a fret
  * line; the player plucks the right string as each note crosses it. Every
@@ -12,11 +12,21 @@
  */
 
 export const STRINGS = 4 // 0 = top/thinnest, 3 = bottom/thickest
-export const APPROACH_MS = 2200 // default: a note is visible for this long before the fret line
-// The speed bar picks one of these approach times. Shorter = notes move faster.
-export const SPEEDS = [3200, 2700, 2200, 1800, 1400]
-export const SPEED_LABELS = ["slow", "easy", "normal", "quick", "fast"]
+// The speed bar picks one of these presets. `tempo` scales the riff's bpm, so
+// notes arrive less often as well as travelling slower; `approach` is how long
+// a note is visible before the fret line. Sized so five or six notes share the
+// board at any speed.
+export const SPEEDS = [
+  { label: "slow", tempo: 0.45, approach: 3400 },
+  { label: "easy", tempo: 0.65, approach: 2800 },
+  { label: "normal", tempo: 0.85, approach: 2300 },
+  { label: "quick", tempo: 1.05, approach: 1900 },
+  { label: "fast", tempo: 1.25, approach: 1500 },
+]
+export const SPEED_LABELS = SPEEDS.map((s) => s.label)
 export const DEFAULT_SPEED = 2
+export const APPROACH_MS = SPEEDS[DEFAULT_SPEED].approach // default: a note is visible for this long before the fret line
+export const DEFAULT_TEMPO = SPEEDS[DEFAULT_SPEED].tempo
 export const PERFECT_MS = 50
 export const GOOD_MS = 130
 export const LOOP_SPEEDUP = 1.08
@@ -114,16 +124,17 @@ export function nextRiff(id) {
   return RIFFS[(i + 1) % RIFFS.length]
 }
 
-export function bpmForLoop(riff, loop) {
-  return riff.bpm * Math.pow(LOOP_SPEEDUP, loop)
+/** The riff's bpm at a speed-bar tempo, after `loop` rounds of speed-up. */
+export function bpmForLoop(riff, loop, tempo = 1) {
+  return riff.bpm * tempo * Math.pow(LOOP_SPEEDUP, loop)
 }
 
 /**
  * Notes for one pass of a riff, starting at `startMs`. Each eighth is half a
  * beat; the loop's length in ms is returned so the next one can follow on.
  */
-export function buildLoop(riff, loop, startMs) {
-  const beatMs = 60000 / bpmForLoop(riff, loop)
+export function buildLoop(riff, loop, startMs, tempo = 1) {
+  const beatMs = 60000 / bpmForLoop(riff, loop, tempo)
   const notes = []
   riff.steps.forEach((stepNote, i) => {
     if (!stepNote) return
@@ -149,6 +160,7 @@ export function createGame() {
     status: "idle", // idle | running | paused | over
     riff: RIFFS[0],
     approach: APPROACH_MS,
+    tempo: DEFAULT_TEMPO,
     notes: [],
     loop: 0,
     loopStart: 0,
@@ -165,15 +177,32 @@ export function createGame() {
   }
 }
 
-export function start(game, now, riff = game.riff, approach = game.approach) {
-  Object.assign(game, createGame(), { status: "running", riff, approach })
+export function start(game, now, riff = game.riff, speed = game) {
+  const { approach, tempo } = speed
+  Object.assign(game, createGame(), { status: "running", riff, approach, tempo })
   queueLoop(game, now + approach)
   return game
 }
 
-/** Change how long notes take to reach the fret. Applies at once, even mid-run. */
-export function setApproach(game, ms) {
-  game.approach = ms
+/**
+ * Switch speed preset. Applies at once, even mid-run: notes still to come are
+ * re-spaced around the present moment (the pause point while paused) so the
+ * chart neither bunches up nor skips, and the loop end moves with them. Notes
+ * already past the fret keep their time, so a change never causes a miss.
+ */
+export function applySpeed(game, { approach, tempo }, now) {
+  const prev = game.tempo
+  game.approach = approach
+  game.tempo = tempo
+  const live = game.status === "running" || game.status === "paused"
+  if (!live || prev === tempo) return game
+  const pivot = game.status === "paused" ? game.pausedAt : now
+  const k = prev / tempo
+  for (const n of game.notes) {
+    if (!n.judged && n.t > pivot) n.t = pivot + (n.t - pivot) * k
+  }
+  const end = game.loopStart + game.loopLength
+  if (end > pivot) game.loopLength = pivot + (end - pivot) * k - game.loopStart
   return game
 }
 
@@ -186,7 +215,7 @@ export function abandon(game) {
 }
 
 function queueLoop(game, startMs) {
-  const { notes, lengthMs } = buildLoop(game.riff, game.loop, startMs)
+  const { notes, lengthMs } = buildLoop(game.riff, game.loop, startMs, game.tempo)
   game.notes = notes
   game.loopStart = startMs
   game.loopLength = lengthMs
@@ -286,7 +315,7 @@ export function accuracy(game) {
 
 /* ── persistence ────────────────────────────────────────────────────────────
    Storage can throw (private mode, blocked site data); the game works without it.
-   Bests are per riff and shared between the 404 page and the Pluck It section. */
+   Bests are per riff. */
 export const SOUND_KEY = "riff.sound"
 export const SPEED_KEY = "riff.speed"
 export const bestKey = (riffId) => `riff.best.${riffId}`

@@ -40,7 +40,7 @@ export function useNowPlaying({ active = true } = {}) {
       if (document.hidden) return // visibilitychange restarts the loop
       cache.at = Date.now()
       try {
-        const res = await fetch(url, { signal: controller.signal })
+        const res = await fetch(url, { signal: controller.signal, cache: "no-store" })
         if (res.ok) {
           const next = parseRecentTracks(await res.json())
           if (next) {
