@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useLowPower } from "../context/motion"
+import { openAssistant } from "../lib/assistantEvents"
+import { slugForFeaturedId } from "../data/projectSlugs"
 
 /**
  * One project at a time on a lit stage, instead of a rail of cards.
@@ -211,13 +213,13 @@ export default function ProjectStage({
 
         {/* Actions sit outside the artwork so the shared-element hop into the
             modal isn't carrying two buttons along with it. */}
-        <div className="flex w-full max-w-[720px] shrink-0 gap-3">
+        <div className="flex w-full max-w-[720px] shrink-0 gap-2 sm:gap-3">
           <button
             onClick={() => onViewDescription(project)}
             aria-label={`Read the description of ${project.title}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
             </svg>
             Description
@@ -225,17 +227,27 @@ export default function ProjectStage({
           <button
             onClick={() => onViewDemo(project)}
             aria-label={`Open the live demo of ${project.title}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 hover:-translate-y-0.5"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest transition-all duration-200 hover:-translate-y-0.5"
             style={{
               background: "linear-gradient(135deg, rgb(var(--accent-rgb) / 0.18), rgb(var(--accent-rgb) / 0.06))",
               border: "1px solid rgb(var(--accent-rgb) / 0.4)",
               color: "rgb(var(--accent-rgb) / 0.95)",
             }}
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
             </svg>
             Live Demo
+          </button>
+          <button
+            onClick={() => openAssistant({ projectSlug: slugForFeaturedId(project.id) })}
+            aria-label={`Ask the assistant about ${project.title}`}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
+          >
+            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 15.8l-1.8-4.6L5.5 9.4l4.7-1.8z" /><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z" />
+            </svg>
+            Ask AI
           </button>
         </div>
       </motion.div>

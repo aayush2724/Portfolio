@@ -45,6 +45,8 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.js'],
+    // Node by default (data/lib tests); component tests opt into jsdom per file
+    // with `// @vitest-environment jsdom`.
+    include: ['src/**/*.test.{js,jsx}'],
   },
 })

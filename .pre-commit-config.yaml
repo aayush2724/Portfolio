@@ -1,0 +1,7 @@
+# Optional local hooks: `pipx install pre-commit && pre-commit install`.
+# CI runs the same secret scan, so this only shortens the feedback loop.
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks

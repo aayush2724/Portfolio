@@ -35,7 +35,7 @@
         <span class="text-accent">$</span><span class="text-muted">cat privacy.md</span>
       </p>
       <h1 class="font-display text-5xl uppercase leading-none md:text-7xl">Privacy Policy</h1>
-      <p class="mt-4 font-mono text-xs text-muted">Effective 1 October 2026 · applies to aayush-2724.vercel.app</p>
+      <p class="mt-4 font-mono text-xs text-muted">Effective 1 October 2026 · updated 9 November 2026 (the assistant) · applies to aayush-2724.vercel.app</p>
 
       <div class="mt-12 space-y-12 leading-relaxed text-muted">
         <section aria-labelledby="summary">
@@ -45,7 +45,9 @@
             form, no comments and nothing for sale. The site itself does not set cookies and does not ask
             you for any personal information. The only data processing happens at the hosting layer
             (Vercel) and through a handful of requests your browser makes to load live project data,
-            all described below.
+            all described below. The one exception is the “Ask me” assistant: if you type a question
+            into it, that question is sent to my API and a language model to write the answer — see
+            <a class="text-fg underline underline-offset-2 hover:text-accent" href="#assistant">The assistant (AI chat)</a>.
           </p>
         </section>
 
@@ -56,7 +58,7 @@
             <li>It does not have forms that submit data anywhere. The “Contact” section is a plain email link that opens your own mail app.</li>
             <li>It does not set cookies, and it does not use advertising, tracking pixels, fingerprinting scripts or social-media embeds.</li>
             <li>It does not sell, rent or share any information about visitors.</li>
-            <li>The in-page “PortfolioBot” is a scripted keyword matcher that runs entirely in your browser. Nothing you type into it is sent to a server, and it is cleared when you close the page.</li>
+            <li>It does not store what you type into the “Ask me” assistant. Questions are sent to my API to be answered, and only counts and timings are kept (details in <a class="text-fg underline underline-offset-2 hover:text-accent" href="#assistant">The assistant</a>). When the API is unavailable the assistant falls back to a scripted guide that runs entirely in your browser and sends nothing.</li>
           </ul>
         </section>
 
@@ -90,7 +92,8 @@
           <p>
             Some parts of the page load live data directly from third parties. When your browser makes
             these requests, the service on the other end receives your IP address and browser details,
-            as with any web request. None of them receive anything you typed or clicked on this site.
+            as with any web request. None of them receive anything you typed or clicked on this site;
+            the assistant, which does send your question to my API, is described in its own section below.
           </p>
           <ul class="mt-4 list-disc space-y-3 pl-5">
             <li>
@@ -117,14 +120,43 @@
           </p>
         </section>
 
+        <section aria-labelledby="assistant">
+          <h2 id="assistant" class="mb-4 font-display text-2xl uppercase text-accent">The assistant (AI chat)</h2>
+          <p>
+            The floating “Ask me” panel can answer questions about my projects. In its live mode the text
+            you type, up to the last twelve turns of that conversation, the project you were looking at and an
+            anonymous session id (a random value your browser keeps only for the current tab session) are sent to
+            my backend API, hosted on Render. The backend looks up my project records and asks a language model,
+            via OpenRouter, to write the answer from those records. OpenRouter and the model provider receive the
+            question and the retrieved project text; they do not receive your IP address from me, your name, or
+            an account. The assistant uses a free model tier, and providers of free
+            models may keep or learn from the requests they receive, so please don't type anything personal into it. See the <a class="text-fg underline underline-offset-2 hover:text-accent" href="https://openrouter.ai/privacy" rel="noopener noreferrer">OpenRouter privacy policy</a>.
+          </p>
+          <p class="mt-4">
+            What my backend stores: counts and timings only — when a question was asked, which kind of question
+            it was, which project it concerned, how many tokens the answer took and whether it succeeded. It does
+            <strong class="font-medium text-fg">not</strong> store the text of your messages unless I explicitly turn that on, in
+            which case this page will say so. Your IP address is used only to limit how many questions one network
+            can ask, as a salted hash that changes daily; it is never written to logs or the database in the clear.
+            These records are deleted after 30 days.
+          </p>
+          <p class="mt-4">
+            When the API is unreachable (it runs on a free tier that sleeps when idle) the panel falls back to a
+            scripted guide that runs entirely in your browser and sends nothing anywhere.
+          </p>
+        </section>
+
         <section aria-labelledby="storage">
           <h2 id="storage" class="mb-4 font-display text-2xl uppercase text-accent">Browser storage</h2>
           <p>
             The site uses your browser's <code class="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-xs text-accent">sessionStorage</code>
-            for two purely functional things: a flag so the intro animation plays only once per tab, and a
-            cache of README text so a project you reopen is not downloaded twice. Both live only in your
-            browser, are never sent anywhere, and are deleted automatically when the tab is closed. No
-            cookies and no persistent storage are used.
+            for three purely functional things: a flag so the intro animation plays only once per tab, a
+            cache of README text so a project you reopen is not downloaded twice, and a random session id
+            (<code class="rounded border border-line bg-surface px-1.5 py-0.5 font-mono text-xs text-accent">pia.session</code>)
+            that the assistant sends with your questions so follow-ups keep their context and per-session limits
+            work. The first two never leave your browser; the session id goes only to my assistant API, which
+            stores a one-way hash of it, never the value. All three are deleted automatically when the tab is
+            closed. No cookies and no persistent storage are used.
           </p>
         </section>
 

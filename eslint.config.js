@@ -5,7 +5,7 @@ import reactHooks from "eslint-plugin-react-hooks"
 import jsxA11y from "eslint-plugin-jsx-a11y"
 
 export default [
-  { ignores: ["dist/**", "node_modules/**", "scripts/og/**", ".kiro/**", "coverage/**"] },
+  { ignores: ["dist/**", "node_modules/**", "scripts/og/**", ".kiro/**", "coverage/**", "backend/**"] },
   js.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
@@ -14,7 +14,8 @@ export default [
     files: ["**/*.{js,jsx,mjs}"],
     plugins: { "react-hooks": reactHooks },
     languageOptions: {
-      ecmaVersion: 2023,
+      // "latest" so the parser accepts import attributes (`with { type: "json" }`).
+      ecmaVersion: "latest",
       sourceType: "module",
       globals: { ...globals.browser, ...globals.node, ...globals.es2021 },
       parserOptions: { ecmaFeatures: { jsx: true } },
