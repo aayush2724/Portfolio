@@ -126,8 +126,28 @@ function bases(ctx) {
   }
 }
 
+/**
+ * Links may be limited to an allow-list of hosts (ctx.linkHosts): the assistant
+ * passes the hosts its evidence came from, so an answer can never point away
+ * from the repositories. Fragment links and mailto: stay allowed; anything
+ * else off-list renders as plain text.
+ */
+function allowHref(href, ctx) {
+  if (!href || !ctx?.linkHosts) return href
+  if (href.startsWith("#") || href.startsWith("mailto:")) return href
+  try {
+    const host = new URL(href).hostname
+    return ctx.linkHosts.some((h) => host === h || host.endsWith(`.${h}`)) ? href : null
+  } catch {
+    return null
+  }
+}
+
 /** Build a sanitised <img> for `![alt](src)`, or the alt text when the URL is not allowed. */
 function imageNode(alt, src, ctx, key) {
+  // ctx.images === false: the caller (the assistant) renders no images at all — the
+  // site CSP allows img-src https:, so an image URL would be a tracking channel.
+  if (ctx?.images === false) return alt || null
   const safe = safeImageSrc(src, bases(ctx).raw)
   if (!safe) return alt || null
   return (
@@ -171,7 +191,7 @@ function renderInline(text, ctx, keyBase) {
     } else if (m[2]) {
       const lim = /\[!\[([^\]]*)\]\(([^)\s]+)\)\]\(([^)\s]+)\)/.exec(tok)
       const img = imageNode(lim[1], lim[2], ctx, `${key}-img`)
-      const href = safeHref(lim[3], bases(ctx).blob)
+      const href = allowHref(safeHref(lim[3], bases(ctx).blob), ctx)
       if (img == null) {
         /* nothing renderable */
       } else if (href) {
@@ -189,7 +209,7 @@ function renderInline(text, ctx, keyBase) {
       if (img != null) nodes.push(img)
     } else if (m[4]) {
       const lm = /\[([^\]]+)\]\(([^)\s]+)\)/.exec(tok)
-      const href = safeHref(lm[2], bases(ctx).blob)
+      const href = allowHref(safeHref(lm[2], bases(ctx).blob), ctx)
       if (href) {
         nodes.push(
           <a

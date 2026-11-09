@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "src/data/portfolioData.json"   # the data-sync bot's commits
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend (lint, test, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Seed export matches the site's data
+        # generatedAt changes on every export; ignore that line when comparing.
+        run: node scripts/export-seed.mjs && git diff --exit-code -I '"generatedAt"' --stat -- backend/seeds/projects.seed.json || echo "::warning::backend/seeds/projects.seed.json is stale; run node scripts/export-seed.mjs"
+
+  backend:
+    name: Backend (lint, test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: pia
+          POSTGRES_PASSWORD: pia
+          POSTGRES_DB: pia_test
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U pia -d pia_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+asyncpg://pia:pia@127.0.0.1:5434/pia_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --all-groups --frozen
+      - run: uv run ruff check app tests alembic
+      - run: uv run ruff format --check app tests alembic
+      - run: uv run pytest -q
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

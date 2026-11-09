@@ -5,6 +5,7 @@ import { caseStudies } from "../data/caseStudies"
 import portfolioData from "../data/portfolioData.json"
 import { EASE, DUR } from "../context/ease"
 import useFocusTrap from "../context/useFocusTrap"
+import { openAssistant } from "../lib/assistantEvents"
 
 /**
  * The shell — the site's signature interface.
@@ -91,6 +92,7 @@ function makeCommands({ close }) {
       "  stats              live LeetCode / GitHub numbers",
       "  socials            github · linkedin · resume",
       "  blog               open the blog (cat now.md for what I'm up to)",
+      "  ask <question>     ask the portfolio assistant (try: ask how does auralis work)",
       "  sudo hire-me       the important one",
       "  history            your commands this session",
       "  clear              clear the screen",
@@ -134,6 +136,12 @@ function makeCommands({ close }) {
     blog: () => {
       close()
       window.location.hash = "#/blog"
+      return null
+    },
+    ask: (arg) => {
+      if (!arg) return ["ask: usage: ask <question>", "→ e.g. ask how does auralis work"]
+      close()
+      openAssistant({ prompt: arg })
       return null
     },
     socials: () => [

@@ -42,4 +42,7 @@ jobs:
           git config --local user.name "Portfolio Sync Bot"
           git add src/data/portfolioData.json
           git commit -m "chore: auto-sync LeetCode stats and GitHub repos [skip ci]"
+          # Another commit may have landed on main during this run (a merged agent PR,
+          # a manual push); rebase so the push is not rejected.
+          git pull --rebase origin main
           git push

@@ -165,6 +165,7 @@ export default function App() {
               window.location.hash = "#projects";
             }}
           />
+          <PortfolioBot />
         </Suspense>
         <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
       </>
@@ -185,6 +186,7 @@ export default function App() {
               window.location.hash = "#now";
             }}
           />
+          <PortfolioBot />
         </Suspense>
         <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
       </>

@@ -1,4 +1,6 @@
 import GithubReadme from "./GithubReadme"
+import { openAssistant } from "../lib/assistantEvents"
+import { slugForCaseStudyId, slugForFeaturedId } from "../data/projectSlugs"
 
 /**
  * The project description — factual header plus the repo's real README.
@@ -15,6 +17,7 @@ import GithubReadme from "./GithubReadme"
  */
 function normalize(item) {
   return {
+    slug: typeof item.id === "string" ? slugForCaseStudyId(item.id) : slugForFeaturedId(item.id),
     name: item.name || item.title || "",
     badge: item.badge || null,
     tagline: item.tagline || item.description || "",
@@ -100,6 +103,18 @@ export default function CaseStudyBody({ caseStudy, headingTag: Heading = "h2" })
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)]/50 px-5 py-2.5 text-xs text-[var(--muted)] italic">
               {p.demoNote}
             </span>
+          )}
+          {p.slug && (
+            <button
+              type="button"
+              onClick={() => openAssistant({ projectSlug: p.slug })}
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)] px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 15.8l-1.8-4.6L5.5 9.4l4.7-1.8z" /><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z" />
+              </svg>
+              Ask about this project
+            </button>
           )}
         </div>
       </div>

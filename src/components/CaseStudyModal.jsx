@@ -4,6 +4,7 @@ import { EASE, DUR } from "../context/ease"
 import CaseStudyBody from "./CaseStudyBody"
 import useFocusTrap from "../context/useFocusTrap"
 import { useOverlay } from "../context/overlay"
+import { ASSISTANT_OPEN_EVENT } from "../lib/assistantEvents"
 
 export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _layoutId }) {
   const modalRef = useRef(null)
@@ -13,6 +14,15 @@ export default function CaseStudyModal({ caseStudy, isOpen, onClose, layoutId: _
   useFocusTrap(modalRef, isOpen)
   // Pauses the room behind the page while this covers it.
   useOverlay(isOpen)
+
+  // "Ask about this project" inside the modal opens the assistant; close the modal so its
+  // focus trap and Escape handler do not fight the assistant's input.
+  useEffect(() => {
+    if (!isOpen) return undefined
+    const onAssistant = () => onClose()
+    window.addEventListener(ASSISTANT_OPEN_EVENT, onAssistant)
+    return () => window.removeEventListener(ASSISTANT_OPEN_EVENT, onAssistant)
+  }, [isOpen, onClose])
 
   // Handle ESC key
   useEffect(() => {
