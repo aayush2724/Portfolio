@@ -1,0 +1,2 @@
+# Vercel builds the Vite app at the repo root; the Python backend is deployed separately (Render).
+backend/

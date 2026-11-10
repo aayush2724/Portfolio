@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import Reveal from "./Reveal"
-import CommandLabel from "./CommandLabel"
-import AnimatedHeading from "./AnimatedHeading"
+import SectionHead from "./SectionHead"
 import { useLowPower } from "../context/motion"
 import { createPlucker } from "../lib/pluck"
 import { createRiffRenderer } from "../lib/riffCanvas"
@@ -352,24 +351,13 @@ export default function Fretboard() {
   return (
     <section id="play" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
-        <Reveal>
-          <CommandLabel className="mb-6">npx pluck-it</CommandLabel>
-        </Reveal>
-
-        <Reveal>
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between mb-12">
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-                Mini game
-              </p>
-              <AnimatedHeading text="Pluck It" decode as="h2" className="font-display text-5xl md:text-7xl uppercase leading-none" />
-            </div>
-            <p className="max-w-xl text-sm md:text-base leading-relaxed" style={{ color: "var(--muted)" }}>
-              Four strings and a plucked-string synth. Take on one of my riffs and keep the signal alive as the
-              tempo climbs, or switch to Jam and just play a chord.
-            </p>
-          </div>
-        </Reveal>
+        <SectionHead
+          id="play"
+          path="npx pluck-it"
+          meta="4 strings · original riffs"
+          title="Pluck *it*"
+          aside="Four strings and a plucked-string synth. Take on one of my riffs and keep the signal alive as the tempo climbs, or switch to Jam and just play a chord."
+        />
 
         <Reveal>
           <div className="rounded-3xl border p-4 md:p-6" style={CARD_STYLE}>

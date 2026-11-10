@@ -1,8 +1,7 @@
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import Reveal, { Stagger, StaggerItem } from "./Reveal"
-import TiltCard from "./TiltCard"
-import AnimatedHeading from "./AnimatedHeading"
+import { Stagger, StaggerItem } from "./Reveal"
+import SectionHead from "./SectionHead"
 import { useLowPower } from "../context/motion"
 import { useNowPlaying } from "../context/useNowPlaying"
 import { formatRelative } from "../data/nowPlaying"
@@ -15,17 +14,32 @@ const CARD_STYLE = {
   WebkitBackdropFilter: "blur(16px)",
 }
 
-/** Bento cell: tilt + glare via TiltCard, shared border/glass styling. */
+/** Bento cell: shared border/glass styling. No tilt or glare — the room behind is the depth. */
 function BentoCard({ children, className = "" }) {
   return (
-    <TiltCard max={8} className="h-full">
-      <div
-        className={`h-full rounded-3xl border p-8 transition-colors duration-300 hover:border-[var(--accent)] ${className}`}
-        style={CARD_STYLE}
-      >
-        {children}
-      </div>
-    </TiltCard>
+    <div
+      className={`h-full rounded-3xl border p-8 transition-colors duration-300 hover:border-[rgb(var(--fg-rgb)/0.22)] ${className}`}
+      style={CARD_STYLE}
+    >
+      {children}
+    </div>
+  )
+}
+
+/** A record, drawn — what the art slot shows until a scrobble brings a cover. */
+function Vinyl() {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative block h-[70%] w-[70%] rounded-full"
+      style={{
+        background: "repeating-radial-gradient(circle at center, #0d0d10 0 1.5px, #18181c 1.5px 3px)",
+        boxShadow: "inset 0 0 0 1px var(--line)",
+      }}
+    >
+      <span className="absolute inset-[34%] rounded-full" style={{ background: "var(--accent)" }} />
+      <span className="absolute inset-[46%] rounded-full" style={{ background: "var(--bg)" }} />
+    </span>
   )
 }
 
@@ -101,7 +115,7 @@ function NowPlayingCard({ lowPower }) {
               onError={() => setArtBroken(true)}
             />
           ) : (
-            "🎵"
+            <Vinyl />
           )}
         </div>
         <div className="flex-1 min-w-0">
@@ -152,19 +166,7 @@ export default function BeyondCodeBento() {
     <section id="life" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
 
-        {/* Header */}
-        <Reveal>
-          <div className="mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-              More Than Code
-            </p>
-            <AnimatedHeading
-              text="Beyond Code"
-              as="h2"
-              className="font-display text-5xl md:text-7xl uppercase leading-none"
-            />
-          </div>
-        </Reveal>
+        <SectionHead id="life" path="~/life" meta="off the clock" title="Beyond *code*" />
 
         {/* Bento Grid */}
         <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[240px]">
@@ -181,33 +183,15 @@ export default function BeyondCodeBento() {
             </BentoCard>
           </StaggerItem>
 
-          {/* Guitar Card */}
+          {/* Fun Fact Card */}
           <StaggerItem>
             <BentoCard className="flex flex-col justify-between">
-              <div className="text-5xl mb-4">🎸</div>
-              <div>
-                <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
-                  Guitarist
-                </h3>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  Stairway to Heaven on repeat
-                </p>
-              </div>
-            </BentoCard>
-          </StaggerItem>
-
-          {/* Interests Card */}
-          <StaggerItem>
-            <BentoCard className="flex flex-col justify-between">
-              <div className="text-5xl mb-4">📚</div>
-              <div>
-                <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
-                  Currently Learning
-                </h3>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  LLMs, RAG pipelines &amp; GenAI — plus system design and music theory
-                </p>
-              </div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: "var(--muted)" }}>
+                Fun fact
+              </p>
+              <p className="font-display text-xl md:text-2xl leading-snug" style={{ color: "var(--fg)" }}>
+                Built a chord detector that understands my guitar better than I do
+              </p>
             </BentoCard>
           </StaggerItem>
 
@@ -216,31 +200,16 @@ export default function BeyondCodeBento() {
             <NowPlayingCard lowPower={lowPower} />
           </StaggerItem>
 
-          {/* Philosophy Card - Spans 2 cols */}
-          <StaggerItem className="md:col-span-2">
-            <BentoCard className="flex flex-col justify-center">
-              <div className="text-4xl mb-4">💭</div>
-              <p className="text-lg leading-relaxed" style={{ color: "var(--fg)" }}>
-                Code is poetry. Every function a verse, every algorithm a rhythm.{" "}
-                <span style={{ color: "var(--accent)" }}>
-                  I write software the way I play guitar — with passion, precision, and a bit of improvisation.
-                </span>
-              </p>
-            </BentoCard>
-          </StaggerItem>
-
-          {/* Fun Fact Card */}
+          {/* How I work */}
           <StaggerItem>
             <BentoCard className="flex flex-col justify-between">
-              <div className="text-5xl mb-4">⚡</div>
-              <div>
-                <h3 className="font-display text-xl mb-2" style={{ color: "var(--fg)" }}>
-                  Fun Fact
-                </h3>
-                <p className="text-sm" style={{ color: "var(--muted)" }}>
-                  Built a chord detector that understands my guitar better than I do
-                </p>
-              </div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: "var(--muted)" }}>
+                How I work
+              </p>
+              <p className="text-lg leading-relaxed" style={{ color: "var(--fg)" }}>
+                I write software the way I play guitar —{" "}
+                <span style={{ color: "var(--accent)" }}>with passion, precision, and a bit of improvisation.</span>
+              </p>
             </BentoCard>
           </StaggerItem>
         </Stagger>

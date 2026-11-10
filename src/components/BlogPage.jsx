@@ -3,6 +3,7 @@ import { renderMarkdown } from "./GithubReadme"
 import { MD_CTX, RouteLink } from "./NowSection"
 import { POSTS, getPost } from "../data/posts"
 import { formatDate } from "../data/content"
+import SoundToggle from "./SoundToggle"
 
 const HOME_TITLE = "Aayush Kumar — Full-Stack Developer & CS Student"
 
@@ -39,9 +40,12 @@ export default function BlogPage({ slug, onBack }) {
   const Bar = ({ children }) => (
     <div className="mb-10 flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest">
       {children}
-      <button onClick={onBack} className="transition-colors hover:text-[var(--accent)]" style={{ color: "var(--muted)" }}>
-        ← back to portfolio
-      </button>
+      <span className="flex items-center gap-4">
+        <SoundToggle className="md:hidden" />
+        <button onClick={onBack} className="transition-colors hover:text-[var(--accent)]" style={{ color: "var(--muted)" }}>
+          ← back to portfolio
+        </button>
+      </span>
     </div>
   )
 
@@ -68,11 +72,10 @@ export default function BlogPage({ slug, onBack }) {
     return (
       <main id="main" tabIndex={-1} className="relative z-10 mx-auto min-h-screen max-w-3xl px-6 pb-24 pt-28 outline-none">
         <Bar>
-          <span style={{ color: "var(--accent)" }}>$ ls blog/</span>
+          <span className="normal-case tracking-[0.08em]" style={{ color: "var(--muted)" }}>
+            ~/blog · {POSTS.length} {POSTS.length === 1 ? "post" : "posts"}
+          </span>
         </Bar>
-        <p className="mb-3 text-xs uppercase tracking-[0.3em]" style={{ color: "var(--accent)" }}>
-          Short posts
-        </p>
         <h1 className="font-display text-5xl uppercase leading-none md:text-7xl">Blog</h1>
         <p className="mt-5 max-w-xl text-base leading-relaxed" style={{ color: "var(--muted)" }}>
           Notes on building this site, music, and whatever I'm learning. Short on purpose.

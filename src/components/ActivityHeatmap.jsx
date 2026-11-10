@@ -41,7 +41,6 @@ const formatDate = (iso) =>
  */
 export default function ActivityHeatmap({
   title,
-  icon,
   unit,
   color = "var(--accent-rgb)",
   note,
@@ -111,7 +110,7 @@ export default function ActivityHeatmap({
     >
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 mb-5">
         <div className="flex items-center gap-3">
-          <span className="text-xl" aria-hidden="true">{icon}</span>
+          <span className="h-2.5 w-2.5 rounded-[2px]" aria-hidden="true" style={{ background: `rgb(${color})` }} />
           <span className="font-display text-sm uppercase tracking-wider" style={{ color: "var(--fg)" }}>
             {title}
           </span>

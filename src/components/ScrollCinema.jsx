@@ -2,6 +2,7 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { usePrefersReducedMotion, useLowPower } from "../context/motion"
 import Reveal from "./Reveal"
+import { sceneNumber } from "./SectionHead"
 
 /**
  * Pinned bloom cinema (the yaros.me flower moment). The section pins for
@@ -14,11 +15,10 @@ import Reveal from "./Reveal"
  */
 
 const SEGMENTS = [
-  { text: "I build where solid engineering meets" },
-  { text: "bold design", className: "serif-accent" },
-  { text: "— web experiences that feel" },
-  { text: "cinematic,", className: "serif-accent text-[var(--accent)]" },
-  { text: "run fast, and hold up in production." },
+  { text: "I start with the" },
+  { text: "unglamorous", className: "serif-accent" },
+  { text: "parts — the job queue, the retries, the eval set — so the part you see can afford to be" },
+  { text: "bold.", className: "serif-accent text-[var(--accent)]" },
 ]
 
 function ScrubWord({ progress, range, className, children }) {
@@ -162,12 +162,17 @@ export default function ScrollCinema() {
           </motion.div>
         </div>
 
-        {/* Statement, scrubbed word by word */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
-          <p className="font-mono text-xs tracking-[0.3em] uppercase mb-10" style={{ color: "var(--muted)" }}>
-            The approach
-          </p>
-          <p className="text-2xl md:text-4xl font-light leading-relaxed text-center max-w-3xl">
+        {/* Statement, scrubbed word by word. Set as an editorial block at
+            the lower left, never past the centre line, so the stem and bloom
+            rise beside the words instead of through them. */}
+        <div className="absolute inset-x-0 bottom-[16vh] px-6 md:px-16">
+          <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
+            <p className="mb-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--muted)" }}>
+              <span style={{ color: "var(--accent)" }}>{sceneNumber("approach")}</span>
+              <span aria-hidden="true" className="h-px w-10" style={{ background: "var(--line)" }} />
+              The approach
+            </p>
+          <p className="max-w-[min(40rem,42vw)] text-2xl font-light leading-snug md:text-4xl">
             <span className="sr-only">{SEGMENTS.map((s) => s.text).join(" ")}</span>
             <span aria-hidden="true">
               {words.map((item, i) => {
@@ -181,15 +186,9 @@ export default function ScrollCinema() {
               })}
             </span>
           </p>
+          </div>
         </div>
 
-        {/* Timeline: fills as the sequence plays */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-40 h-px overflow-hidden" style={{ background: "var(--line)" }}>
-          <motion.div
-            className="h-full origin-left"
-            style={{ scaleX: scrollYProgress, background: "var(--accent)" }}
-          />
-        </div>
       </div>
     </section>
   )

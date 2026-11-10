@@ -1,4 +1,7 @@
-export const projects = [
+import { applyOverlay, publishedAdditions } from "./published.js"
+import { slugForProjectName } from "./projectSlugs.js"
+
+const PROJECTS_SOURCE = [
   {
     name: "Auralis",
     desc: "AI sales intelligence platform: a LangGraph agent classifies a prospect's objection, persona and sentiment, then answers with RAG-grounded, cited replies.",
@@ -60,7 +63,7 @@ export const projects = [
     tags: ["Python", "FastAPI", "AI/ML", "LangChain"],
     gh: "https://github.com/aayush2724/LeadForge",
     demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
-    badge: "🥉 3rd Place - ThinkRoot x Vortex'26",
+    badge: "3rd Place - ThinkRoot x Vortex'26",
     highlight: "Won 3rd place at NIT Trichy's hackathon with an intelligent lead scoring system.",
     updatedAt: "2026-04-28T19:22:26Z",
     updated: "Apr 28, 2026"
@@ -113,7 +116,7 @@ export const projects = [
     name: "Visitor Management System",
     desc: "Secure check-in system for tracking and managing building visitors with QR code generation.",
     tags: ["HTML", "PHP", "MySQL", "QR Codes"],
-    gh: "https://github.com/aayush2724/Visitor-Management-System",
+    gh: "https://github.com/aayush2724/CheckMate",
     demo: null,
     badge: null,
     highlight: "Automated visitor logs with SMS notifications and administrative dashboard.",
@@ -143,3 +146,9 @@ export const projects = [
     updated: "Apr 29, 2026"
   }
 ];
+
+// Published overrides and owner-published additions (see src/data/published.js).
+export const projects = [
+  ...applyOverlay(PROJECTS_SOURCE, "projects", (p) => slugForProjectName(p.name)),
+  ...publishedAdditions("projects"),
+]

@@ -1,4 +1,7 @@
-export const caseStudies = [
+import { applyOverlay, publishedAdditions } from "./published.js"
+import { slugForCaseStudyId } from "./projectSlugs.js"
+
+const CASE_STUDIES_SOURCE = [
   {
     id: "auralis",
     name: "Auralis",
@@ -350,7 +353,7 @@ export const caseStudies = [
     id: "leadforge",
     name: "LeadForge",
     tagline: "AI-Powered B2B Lead Generation Pipeline",
-    badge: "🥉 3rd Place - ThinkRoot x Vortex'26",
+    badge: "3rd Place - ThinkRoot x Vortex'26",
     cover: "/leadforge-hackathon-proof.svg",
     
     // Problem Statement
@@ -1135,6 +1138,17 @@ export const caseStudies = [
     updatedAt: "2026-02-23T17:10:54Z"
   }
 ];
+
+/**
+ * Published overrides (approved via the admin dashboard, shipped as a PR to
+ * src/data/published/) are applied here, and owner-published new projects
+ * are appended, so every consumer — the deck modal, #/work/:id, the shell —
+ * sees one list.
+ */
+export const caseStudies = [
+  ...applyOverlay(CASE_STUDIES_SOURCE, "caseStudy", (cs) => slugForCaseStudyId(cs.id)),
+  ...publishedAdditions("caseStudy"),
+]
 
 // Helper to get case study by project ID
 export function getCaseStudyById(id) {

@@ -6,13 +6,16 @@
  * projects the assembled stack matches. Two copies of the tag list would
  * drift the moment a project is added.
  */
-export const FEATURED_PROJECTS = [
+import { applyOverlay } from "./published.js"
+import { slugForFeaturedId } from "./projectSlugs.js"
+
+const FEATURED_SOURCE = [
   {
     id: 1,
     title: "Auralis",
     description: "AI sales intelligence platform: a LangGraph agent reads a prospect's objection, persona and sentiment, then replies with RAG-grounded, cited answers over a JWT-secured WebSocket chat.",
     tags: ["Python", "FastAPI", "LangGraph", "RAG", "Redis"],
-    link: "https://github.com/aayush2724/auralisAI",
+    link: "https://github.com/aayush2724/Auralis",
     demo: "https://auralis-client-five.vercel.app",
     image: "/auralis-800.jpg",
     badge: "Sales Intelligence",
@@ -70,7 +73,7 @@ export const FEATURED_PROJECTS = [
     link: "https://github.com/aayush2724/LeadForge",
     demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
     image: "/leadforge-hackathon-proof.svg",
-    badge: "🏆 3rd Place NIT",
+    badge: "3rd Place NIT",
     earthy: "from-[#3a3530] to-[#1f1c18]"
   },
   {
@@ -115,6 +118,13 @@ export const FEATURED_PROJECTS = [
     earthy: "from-[#0a1a12] to-[#001a0d]"
   },
 ]
+
+/**
+ * Published overrides are applied by slug (src/data/published.js). The deck is
+ * never extended automatically — a new card needs artwork — so only field
+ * overrides apply here. Tag overrides also move the Tech Stack tray counts.
+ */
+export const FEATURED_PROJECTS = applyOverlay(FEATURED_SOURCE, "featured", (p) => slugForFeaturedId(p.id))
 
 /**
  * A stack tool matches a project tag when either side contains the other,

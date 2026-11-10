@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aayush-2724.vercel.app/schemas/projects.published.json",
+  "title": "Published portfolio content overlay",
+  "description": "The only file the Portfolio Intelligence Agent writes to this repository. Approved suggestions become typed field overrides keyed by canonical project slug (src/data/projectSlugs.js) and applied inside the data modules. Only fields that components actually render are allowed; titles never change because the deck joins to case studies by title.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updatedAt", "projects", "additions"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "projects": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "featured": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "description": { "type": "string", "minLength": 1, "maxLength": 400 },
+              "tags": { "$ref": "#/$defs/tags" },
+              "badge": { "type": ["string", "null"], "maxLength": 60 },
+              "link": { "$ref": "#/$defs/repoUrl" },
+              "demo": { "$ref": "#/$defs/httpsUrlOrNull" }
+            }
+          },
+          "projects": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "desc": { "type": "string", "minLength": 1, "maxLength": 400 },
+              "tags": { "$ref": "#/$defs/tags" },
+              "highlight": { "type": "string", "minLength": 1, "maxLength": 400 },
+              "gh": { "$ref": "#/$defs/repoUrl" },
+              "demo": { "$ref": "#/$defs/httpsUrlOrNull" },
+              "badge": { "type": ["string", "null"], "maxLength": 60 }
+            }
+          },
+          "caseStudy": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "badge": { "type": ["string", "null"], "maxLength": 60 },
+              "tagline": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "tags": { "$ref": "#/$defs/tags" },
+              "links": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "github": { "$ref": "#/$defs/repoUrl" },
+                  "demo": { "$ref": "#/$defs/httpsUrlOrNull" },
+                  "demo_note": { "type": ["string", "null"], "maxLength": 160 }
+                }
+              }
+            }
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "suggestionId": { "type": "string" },
+              "publishedAt": { "type": "string", "format": "date-time" },
+              "sources": { "type": "array", "items": { "type": "string", "format": "uri" }, "maxItems": 20 }
+            }
+          }
+        }
+      }
+    },
+    "additions": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slug", "name", "tagline", "desc", "tags", "repoUrl"],
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+          "tagline": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "desc": { "type": "string", "minLength": 1, "maxLength": 400 },
+          "highlight": { "type": ["string", "null"], "maxLength": 400 },
+          "tags": { "$ref": "#/$defs/tags" },
+          "repoUrl": { "$ref": "#/$defs/repoUrl" },
+          "demoUrl": { "$ref": "#/$defs/httpsUrlOrNull" },
+          "demoNote": { "type": ["string", "null"], "maxLength": 160 },
+          "badge": { "type": ["string", "null"], "maxLength": 60 },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "provenance": { "type": "object" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": { "type": "string", "minLength": 1, "maxLength": 32 }
+    },
+    "repoUrl": { "type": "string", "pattern": "^https://github\\.com/aayush2724/[\\w.-]+$" },
+    "httpsUrlOrNull": { "type": ["string", "null"], "pattern": "^https://" }
+  }
+}
