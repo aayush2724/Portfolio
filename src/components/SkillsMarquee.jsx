@@ -619,6 +619,16 @@ function ExpandedPanel({ cat, onClose, reduced }) {
   )
 }
 
+/** Grid placement that centres a short last row (2 columns on tablets, 3 on desktop). */
+function placeCard(i, n) {
+  const cls = ["lg:col-span-2"]
+  const lastRow = n % 3
+  if (lastRow === 2 && i === n - 2) cls.push("lg:col-start-2")
+  if (lastRow === 1 && i === n - 1) cls.push("lg:col-start-3")
+  if (n % 2 === 1 && i === n - 1) cls.push("md:col-span-2 md:mx-auto md:w-[calc(50%-1rem)] lg:mx-0 lg:w-auto")
+  return cls.join(" ")
+}
+
 export default function SkillsMarquee() {
   const lowPower = useLowPower()
   const reduced = usePrefersReducedMotion()
@@ -664,18 +674,21 @@ export default function SkillsMarquee() {
             <TechWave />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-start">
+          {/* Six tracks, two per card: a short last row centres itself
+              instead of leaving a hole (5 cards = 3 + 2, centred). */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 items-start">
             {STACK.map((cat, i) => (
-              <StackCard
-                key={cat.label}
-                cat={cat}
-                i={i}
-                lowPower={lowPower}
-                reduced={reduced}
-                isOpen={open?.label === cat.label}
-                onOpen={setOpen}
-                cardRef={(node) => { cardNodes.current[cat.label] = node }}
-              />
+              <div key={cat.label} className={placeCard(i, STACK.length)}>
+                <StackCard
+                  cat={cat}
+                  i={i}
+                  lowPower={lowPower}
+                  reduced={reduced}
+                  isOpen={open?.label === cat.label}
+                  onOpen={setOpen}
+                  cardRef={(node) => { cardNodes.current[cat.label] = node }}
+                />
+              </div>
             ))}
           </div>
         </div>

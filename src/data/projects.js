@@ -63,7 +63,7 @@ const PROJECTS_SOURCE = [
     tags: ["Python", "FastAPI", "AI/ML", "LangChain"],
     gh: "https://github.com/aayush2724/LeadForge",
     demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
-    badge: "🥉 3rd Place - ThinkRoot x Vortex'26",
+    badge: "3rd Place - ThinkRoot x Vortex'26",
     highlight: "Won 3rd place at NIT Trichy's hackathon with an intelligent lead scoring system.",
     updatedAt: "2026-04-28T19:22:26Z",
     updated: "Apr 28, 2026"

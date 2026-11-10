@@ -9,8 +9,11 @@ import HeroBold from "./components/HeroBold";
 import CabinMap from "./components/CabinMap";
 import ProjectsBold from "./components/ProjectsBold";
 import Shell from "./components/Shell";
+import Dock from "./components/Dock";
 import ScrollProgress from "./components/ScrollProgress";
 import { useLenis } from "./context/motion";
+import { EASE, DUR } from "./context/ease";
+import { opening, canShoot, setOpening, onOpening } from "./context/opening";
 
 // Lazy load below-the-fold components
 const AboutBold = lazy(() => import("./components/AboutBold"));
@@ -53,42 +56,63 @@ function useHashRoute() {
   return route;
 }
 
-function Loader() {
+/**
+ * The intro slate: the wordmark and a rule that draws under it, on the page
+ * colour. With the opening shot it holds until the room is ready and then
+ * fades straight into it; without one it lifts away after a beat.
+ */
+function Slate({ shot }) {
+  const word = "Aayush"
   return (
     <motion.div
       key="loader"
       role="status"
       aria-label="Loading"
-      initial={{ y: 0 }}
-      exit={{ y: "-100%" }}
-      transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: shot ? 0.9 : 0.6, ease: EASE.SHARP }}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-      style={{ background: "var(--accent)" }}
+      style={{ background: "var(--bg)" }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.5 }}
-        className="font-display font-extrabold text-6xl md:text-7xl"
-        style={{ color: "var(--accent-ink)" }}
-      >
-        Aayush
+      <motion.div exit={{ y: -14, opacity: 0 }} transition={{ duration: DUR.exit, ease: EASE.EXIT }} className="flex flex-col items-center">
+        <div className="flex overflow-hidden font-display text-6xl md:text-8xl" style={{ color: "var(--fg)" }}>
+          {word.split("").map((ch, i) => (
+            <motion.span
+              key={i}
+              initial={{ y: "105%" }}
+              animate={{ y: "0%" }}
+              transition={{ duration: DUR.enter, ease: EASE.ENTER, delay: 0.1 + i * 0.045 }}
+            >
+              {ch}
+            </motion.span>
+          ))}
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: DUR.sharp, delay: 0.5 }}
+            style={{ color: "var(--accent)" }}
+          >
+            .
+          </motion.span>
+        </div>
+        <motion.span
+          aria-hidden="true"
+          className="mt-6 block h-px w-40 origin-left md:w-56"
+          style={{ background: "var(--accent)" }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: shot ? 2.4 : 1.1, ease: EASE.WIPE, delay: 0.3 }}
+        />
+        <p className="mt-5 font-mono text-[11px] tracking-[0.2em]" style={{ color: "var(--muted)" }}>
+          ./open hq
+        </p>
       </motion.div>
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        exit={{ scaleX: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-6 h-1 w-32 origin-center"
-        style={{ background: "var(--accent-ink)" }}
-      />
     </motion.div>
-  );
+  )
 }
 
 /**
- * The intro wipe plays once per session, and never when someone lands directly
+ * The intro plays once per session, and never when someone lands directly
  * on a case-study URL — making a shared link wait behind a splash screen would
  * waste the whole point of shareable links.
  */
@@ -101,6 +125,22 @@ function shouldPlayIntro() {
     // storage unavailable (private mode) — treat as first visit
   }
   return true;
+}
+
+/**
+ * Decided once per page load and cached: shouldPlayIntro() marks the session
+ * as seen, so a second call (StrictMode runs state initialisers twice) must
+ * not get a different answer. On a desktop with the room behind the page,
+ * the intro is the opening shot.
+ */
+let intro = null;
+function introPlan() {
+  if (!intro) {
+    const play = shouldPlayIntro();
+    intro = { play, shot: play && canShoot() };
+    if (intro.shot) setOpening("pending");
+  }
+  return intro;
 }
 
 /**
@@ -126,8 +166,9 @@ function SkipLink() {
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(shouldPlayIntro);
+  const [loading, setLoading] = useState(() => introPlan().play);
   const [introDone, setIntroDone] = useState(() => !loading);
+  const [shot] = useState(() => introPlan().shot);
   const [cmdOpen, setCmdOpen] = useState(false);
   const route = useHashRoute();
 
@@ -136,9 +177,31 @@ export default function App() {
 
   useEffect(() => {
     if (!loading) return;
-    const t = setTimeout(() => setLoading(false), 1600);
+    // Opening shot: hold the slate until the room is built, but never long.
+    if (opening.state === "pending") {
+      const off = onOpening((state) => {
+        if (state !== "pending") setLoading(false);
+      });
+      const cap = setTimeout(() => {
+        if (opening.state === "pending") setOpening("cancelled");
+      }, 3000);
+      return () => {
+        off();
+        clearTimeout(cap);
+      };
+    }
+    const t = setTimeout(() => setLoading(false), 1400);
     return () => clearTimeout(t);
   }, [loading]);
+
+  // The headline comes in as the dolly lands (or is skipped).
+  useEffect(
+    () =>
+      onOpening((state) => {
+        if (state === "done") setIntroDone(true);
+      }),
+    []
+  );
 
   useEffect(() => {
     const fn = (e) => {
@@ -147,8 +210,14 @@ export default function App() {
         setCmdOpen((o) => !o);
       }
     };
+    // The hero's "Open the shell" button asks for it by event.
+    const open = () => setCmdOpen(true);
     window.addEventListener("keydown", fn);
-    return () => window.removeEventListener("keydown", fn);
+    window.addEventListener("open-shell", open);
+    return () => {
+      window.removeEventListener("keydown", fn);
+      window.removeEventListener("open-shell", open);
+    };
   }, []);
 
   // ── Case study route ──────────────────────────────────────────────
@@ -168,6 +237,7 @@ export default function App() {
           <PortfolioBot />
         </Suspense>
         <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
+        <Dock onShell={() => setCmdOpen(true)} />
       </>
     );
   }
@@ -189,6 +259,7 @@ export default function App() {
           <PortfolioBot />
         </Suspense>
         <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
+        <Dock onShell={() => setCmdOpen(true)} />
       </>
     );
   }
@@ -213,13 +284,29 @@ export default function App() {
       {/* Custom accent cursor */}
       <AccentCursor />
 
-      {/* Hero intro is gated on the loader's exit wipe finishing (onExitComplete) */}
-      <AnimatePresence mode="wait" onExitComplete={() => setIntroDone(true)}>
-        {loading && <Loader />}
+      {/* Hero intro waits for the slate to lift, or for the opening shot to land (introDone) */}
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          // During the shot the headline waits for the dolly to land.
+          if (opening.state !== "playing") setIntroDone(true);
+        }}
+      >
+        {loading && <Slate shot={shot} />}
       </AnimatePresence>
       {!loading && (
         <>
-          <Navbar onCmd={() => setCmdOpen(true)} />
+          {/* The opening shot plays without chrome (nav, launcher, scroll cue); they arrive with the headline.
+              Opacity 1 creates no stacking context, so the fixed nav layers as before. */}
+          <div
+            style={{
+              opacity: shot && !introDone ? 0 : 1,
+              pointerEvents: shot && !introDone ? "none" : undefined,
+              transition: "opacity 0.8s ease",
+            }}
+          >
+            <Navbar onCmd={() => setCmdOpen(true)} />
+          </div>
           <main id="main" tabIndex={-1} className="relative z-10 outline-none">
             <HeroBold introDone={introDone} />
             <CabinMap />
@@ -233,7 +320,10 @@ export default function App() {
               <NowSection />
               <Fretboard />
               <BeyondCodeBento />
-              <PortfolioBot />
+              {/* The launcher waits for the opening shot to land, like the nav. */}
+              <div style={{ opacity: shot && !introDone ? 0 : 1, transition: "opacity 0.8s ease" }}>
+                <PortfolioBot />
+              </div>
               {/* Achievements are the last section before Contact; the footer closes the page. */}
               <AchievementsSection />
               <ContactBold />
@@ -241,30 +331,8 @@ export default function App() {
             </Suspense>
           </main>
           <Shell isOpen={cmdOpen} onClose={() => setCmdOpen(false)} />
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.6 }}
-            onClick={() => setCmdOpen(true)}
-            title="Open the shell (Ctrl+K)"
-            /* Desktop-only hint: a phone has no ⌘K to press, and at 390px the
-               pill sits directly on top of the hero CTA. */
-            className="fixed bottom-5 left-6 z-40 hidden md:flex items-center gap-2 border rounded-full px-5 py-2 text-xs font-mono transition-all duration-300"
-            style={{
-              borderColor: "var(--line)",
-              color: "var(--muted)",
-              background: "rgba(10, 10, 11, 0.8)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            <span className="text-[var(--accent)]">➜</span> shell
-            <kbd
-              className="border rounded px-1.5 py-0.5"
-              style={{ borderColor: "var(--line)", color: "var(--muted)" }}
-            >
-              ⌘K
-            </kbd>
-          </motion.button>
+          {/* Desktop dock: shell, current scene, assistant (Dock.jsx) */}
+          <Dock onShell={() => setCmdOpen(true)} scenes />
         </>
       )}
     </>

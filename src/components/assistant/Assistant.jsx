@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react"
 import Launcher from "./Launcher"
 import Panel from "./Panel"
-import { ASSISTANT_OPEN_EVENT } from "../../lib/assistantEvents"
+import { ASSISTANT_OPEN_EVENT, ASSISTANT_CLOSE_EVENT, ASSISTANT_STATE_EVENT } from "../../lib/assistantEvents"
 import { getSessionId } from "../../lib/session"
 import { AssistantApiError, isConfigured, probeStatus, streamChat } from "../../lib/assistantClient"
 import { searchPortfolio } from "../../lib/portfolioScript"
@@ -84,13 +84,19 @@ export default function Assistant({ probeDelays = PROBE_DELAYS_MS, probeTimeoutM
   const stateRef = useRef(state)
   stateRef.current = state
 
-  // Focus goes back to the launcher when the panel closes.
+  // Focus goes back to whatever opened the panel (the desktop dock, a project
+  // card's "Ask AI"), or to the launcher when that is gone or not visible.
+  const opener = useRef(null)
   useEffect(() => {
     if (open) wasOpen.current = true
     else if (wasOpen.current) {
       wasOpen.current = false
-      toggleRef.current?.focus()
+      const back = opener.current
+      opener.current = null
+      if (back?.isConnected && back.getClientRects().length > 0) back.focus()
+      else toggleRef.current?.focus()
     }
+    window.dispatchEvent(new CustomEvent(ASSISTANT_STATE_EVENT, { detail: { open } }))
   }, [open])
 
   // First open probes the API, which also wakes a sleeping free-tier instance.
@@ -229,10 +235,16 @@ export default function Assistant({ probeDelays = PROBE_DELAYS_MS, probeTimeoutM
       const detail = e.detail || {}
       if (detail.projectSlug && PROJECT_SLUGS[detail.projectSlug]) setProjectSlug(detail.projectSlug)
       if (detail.prompt) pendingPrompt.current = String(detail.prompt).slice(0, 800)
+      opener.current = document.activeElement
       setOpen(true)
     }
+    const onClose = () => setOpen(false)
     window.addEventListener(ASSISTANT_OPEN_EVENT, onOpen)
-    return () => window.removeEventListener(ASSISTANT_OPEN_EVENT, onOpen)
+    window.addEventListener(ASSISTANT_CLOSE_EVENT, onClose)
+    return () => {
+      window.removeEventListener(ASSISTANT_OPEN_EVENT, onOpen)
+      window.removeEventListener(ASSISTANT_CLOSE_EVENT, onClose)
+    }
   }, [])
 
   // A prompt handed over with the open event is sent once the mode is known.

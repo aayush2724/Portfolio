@@ -132,7 +132,9 @@ export default function AnimatedHeading({ text, className = "", as = "h2", decod
             key={wi}
             aria-hidden="true"
             className={
-              "inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom" +
+              // nowrap: letters are inline-blocks, so without it a word wider
+              // than its line breaks between letters ("PROJEC / TS" on a phone).
+              "inline-block overflow-hidden whitespace-nowrap pb-[0.08em] -mb-[0.08em] align-bottom" +
               (wi < words.length - 1 ? " mr-[0.25em]" : "")
             }
           >

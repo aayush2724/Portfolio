@@ -67,9 +67,23 @@ export default function Panel({ open, onClose, messages, busy, waking, mode, gre
             </div>
           </div>
         </div>
-        <button aria-label="Clear conversation" onClick={() => { onClear(); setInput("") }} className="font-mono text-[10px] hover:opacity-70 transition-opacity px-2 py-1 rounded border border-white/6" style={{ color: "var(--muted)" }}>
-          clear
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button aria-label="Clear conversation" onClick={() => { onClear(); setInput("") }} className="font-mono text-[10px] hover:opacity-70 transition-opacity px-2 py-1 rounded border border-white/6" style={{ color: "var(--muted)" }}>
+            clear
+          </button>
+          {/* Close from where you are: on desktop the launcher is gone (the
+              dock opens the panel), so the panel carries its own way out. */}
+          <button
+            aria-label="Hide the assistant panel"
+            onClick={onClose}
+            className="flex h-6 w-6 items-center justify-center rounded border border-white/6 transition-colors hover:text-[var(--fg)]"
+            style={{ color: "var(--muted)" }}
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+              <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {projectName && (

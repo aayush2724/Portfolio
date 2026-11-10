@@ -129,7 +129,7 @@ export default function CaseStudyBody({ caseStudy, headingTag: Heading = "h2" })
             live from GitHub
           </span>
         </div>
-        <GithubReadme repoUrl={p.github} fallback={p.tagline} />
+        <GithubReadme repoUrl={p.github} fallback={p.tagline} article />
       </section>
     </>
   )

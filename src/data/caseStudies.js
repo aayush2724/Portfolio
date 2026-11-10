@@ -353,7 +353,7 @@ const CASE_STUDIES_SOURCE = [
     id: "leadforge",
     name: "LeadForge",
     tagline: "AI-Powered B2B Lead Generation Pipeline",
-    badge: "🥉 3rd Place - ThinkRoot x Vortex'26",
+    badge: "3rd Place - ThinkRoot x Vortex'26",
     cover: "/leadforge-hackathon-proof.svg",
     
     // Problem Statement

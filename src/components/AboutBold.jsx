@@ -1,7 +1,16 @@
 import { LEETCODE_SOLVED } from "../data/stats"
 import Reveal from "./Reveal"
-import CommandLabel from "./CommandLabel"
+import SectionHead from "./SectionHead"
 import ScrollRevealText from "./ScrollRevealText"
+
+/** Label → value, set as a ruled definition list. */
+const FACTS = [
+  ["Studying", "Computer Science, NIE Mysore"],
+  ["Based in", "India · IST"],
+  ["Open to", "Full-time roles, internships, freelance"],
+  ["Into", "Guitar, DSA, system design, open source"],
+  ["On repeat", "Stairway to Heaven — Led Zeppelin"],
+]
 
 export default function AboutBold() {
   return (
@@ -9,27 +18,22 @@ export default function AboutBold() {
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         {/* The manifesto is display copy, not a title — this names the landmark for assistive tech. */}
         <h2 className="sr-only">About</h2>
-        
-        {/* Command Label */}
-        <Reveal>
-          <CommandLabel className="mb-6">cat about.md</CommandLabel>
-        </Reveal>
+
+        <SectionHead id="about" path="~/about.md" meta="NIE Mysore · India" className="!mb-10 md:!mb-14" />
 
         {/* Manifesto — brightens word by word as it scrolls into view */}
         <ScrollRevealText
           as="div"
-          className="relative font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 text-white"
+          className="relative font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 md:mb-24 text-white"
           segments={[
-            { text: "Building digital experiences that solve" },
-            { text: "real problems,", className: "text-[var(--accent)]" },
-            { text: "one line of code at a time." },
+            { text: "I ship software" },
+            { text: "end to end", className: "text-[var(--accent)]" },
+            { text: "— from the React screen you click to the Python service and the AI behind it." },
           ]}
         />
 
-        {/* Two Column Layout */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-          
-          {/* Left: Bio */}
+        <div className="grid gap-12 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16">
+          {/* Bio */}
           <Reveal delay={0.2}>
             <div className="space-y-6">
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
@@ -54,65 +58,30 @@ export default function AboutBold() {
             </div>
           </Reveal>
 
-          {/* Right: Quick Facts */}
+          {/* At a glance */}
           <Reveal delay={0.3}>
-            <div className="space-y-6">
-              <h3 className="font-display text-2xl uppercase mb-6" style={{ color: "var(--accent)" }}>
-                Quick Facts
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-start gap-4 group">
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]" style={{ borderColor: "var(--line)" }}>
-                    <span className="text-sm transition-all duration-300 group-hover:scale-110">🎓</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: "var(--fg)" }}>Education</p>
-                    <p className="text-sm" style={{ color: "var(--muted)" }}>Computer Science Student</p>
-                  </div>
+            <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: "var(--muted)" }}>
+              At a glance
+            </p>
+            <dl className="border-t" style={{ borderColor: "var(--line)" }}>
+              {FACTS.map(([label, value]) => (
+                <div
+                  key={label}
+                  className="group grid grid-cols-[6.5rem_1fr] items-baseline gap-4 border-b py-4 md:grid-cols-[8rem_1fr]"
+                  style={{ borderColor: "var(--line)" }}
+                >
+                  <dt
+                    className="font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 group-hover:text-[var(--accent)]"
+                    style={{ color: "var(--muted)" }}
+                  >
+                    {label}
+                  </dt>
+                  <dd className="text-[15px] leading-snug" style={{ color: "var(--fg)" }}>
+                    {value}
+                  </dd>
                 </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]" style={{ borderColor: "var(--line)" }}>
-                    <span className="text-sm transition-all duration-300 group-hover:scale-110">📍</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: "var(--fg)" }}>Location</p>
-                    <p className="text-sm" style={{ color: "var(--muted)" }}>India (Asia/Calcutta)</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]" style={{ borderColor: "var(--line)" }}>
-                    <span className="text-sm transition-all duration-300 group-hover:scale-110">💼</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: "var(--fg)" }}>Available For</p>
-                    <p className="text-sm" style={{ color: "var(--muted)" }}>Full-time roles, internships, freelance projects</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]" style={{ borderColor: "var(--line)" }}>
-                    <span className="text-sm transition-all duration-300 group-hover:scale-110">⚡</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: "var(--fg)" }}>Interests</p>
-                    <p className="text-sm" style={{ color: "var(--muted)" }}>Guitar, DSA, System Design, Open Source</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 group">
-                  <div className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]" style={{ borderColor: "var(--line)" }}>
-                    <span className="text-sm transition-all duration-300 group-hover:scale-110">🎸</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ color: "var(--fg)" }}>Favorite Song</p>
-                    <p className="text-sm" style={{ color: "var(--muted)" }}>Stairway to Heaven - Led Zeppelin</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+              ))}
+            </dl>
           </Reveal>
         </div>
       </div>
