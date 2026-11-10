@@ -13,7 +13,7 @@
  *   turn  a drag turns the head instead of orbiting the look point
  */
 export const STATIONS = {
-  hero:         { pos: [1.1, 1.9, 3.0],   look: [2.8, 1.2, -2.6],   dim: 0.05 },  // at the door, looking toward the window; desk side stays out of frame behind the headline
+  hero:         { pos: [1.1, 1.9, 3.0],   look: [2.8, 1.2, -2.6],   dim: 0.12 },  // at the door, looking toward the window; desk side stays out of frame behind the headline. Bright enough to read as the landing page's set, still under the film look's hand-over (0.2)
   // The map: just outside the (single-sided) front wall, close enough that
   // the room fills the frame top to bottom on a 16:9 screen with every door
   // in view; a slightly wider lens keeps the near corners (corkboard, arcade)
@@ -28,10 +28,10 @@ export const STATIONS = {
   about:        { pos: [-1.2, 1.7, 0.2],   look: [-4.8, 1.5, -1.2],  dim: 0.12 },
   skills:       { pos: [1.0, 1.6, 0.4],    look: [4.5, 1.3, -2.5],   dim: 0.12 },
   approach:     { pos: [0.2, 1.7, 1.2],    look: [2.2, 2.3, -3.4],   dim: 0.08 },
-  stats:        { pos: [0.6, 1.8, 0.6],    look: [4.9, 2.2, -0.6],   dim: 0.12 },
-  journey:      { pos: [-0.8, 1.8, 1.0],   look: [-4.9, 2.1, 1.3],   dim: 0.12 },
+  stats:        { pos: [0.6, 1.8, 0.6],    look: [4.9, 2.2, -0.6],   dim: 0.07 },  // the neon sign and posters sit on the heading row here; kept faint
+  journey:      { pos: [-0.8, 1.8, 1.0],   look: [-4.9, 2.1, 1.3],   dim: 0.07 },  // posters and corkboard sit behind the cards; kept faint
   achievements: { pos: [-0.6, 1.9, 0.4],   look: [-1.8, 3.1, -3.3],  dim: 0.12 },
-  play:         { pos: [0.6, 1.5, 0.4],    look: [4.3, 1.3, 2.3],    dim: 0.12 },
+  play:         { pos: [0.6, 1.5, 0.4],    look: [4.3, 1.3, 2.3],    dim: 0.07 },  // band posters sit on the heading row; kept faint
   life:         { pos: [0.8, 1.9, -0.6],   look: [4.9, 2.5, 1.0],    dim: 0.12 },
   contact:      { pos: [0.6, 1.7, -0.4],   look: [-2.5, 1.4, 3.4],   dim: 0.12 },
 }

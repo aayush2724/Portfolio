@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useLowPower } from "../context/motion"
+import { WALK_MQ } from "../context/opening"
 
 /**
  * Desktop-only 3D stage behind the page.
@@ -24,9 +25,7 @@ export default function CinemaBackground() {
   // Skip the WebGL canvas entirely on touch, small screens, weak hardware and
   // reduced motion — InteractiveGrid still paints the background there.
   useEffect(() => {
-    const mq = window.matchMedia(
-      "(min-width: 768px) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
-    )
+    const mq = window.matchMedia(WALK_MQ)
     const update = () => setEnabled(mq.matches)
     update()
     mq.addEventListener("change", update)

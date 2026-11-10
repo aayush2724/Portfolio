@@ -9,15 +9,11 @@ import {
   CONTRIBUTION_CALENDAR,
   LEETCODE_CALENDAR,
 } from "../data/stats"
-import { motion } from "framer-motion"
 import Reveal from "./Reveal"
 import CountUp from "./CountUp"
-import CommandLabel from "./CommandLabel"
-import AsciiBox from "./AsciiBox"
-import AnimatedHeading from "./AnimatedHeading"
+import SectionHead from "./SectionHead"
 import ActivityHeatmap from "./ActivityHeatmap"
 import { normalizeCalendar } from "../data/contributions"
-import { useLowPower } from "../context/motion"
 
 /**
  * Live contribution calendar for the last 365 days. The synced JSON already
@@ -48,18 +44,48 @@ async function fetchGitHubContributions(username) {
   }
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-};
+const TOPICS = ["Trees", "Graphs", "DP", "Sliding window", "Backtracking", "Binary search", "Stacks", "Tries"]
+const MAPS = [
+  { key: "github", label: "GitHub" },
+  { key: "leetcode", label: "LeetCode" },
+]
+
+/** One figure in the strip: index + label rail, the number, its breakdown. */
+function Figure({ n, label, i, children }) {
+  return (
+    <Reveal delay={i * 0.08} className="h-full">
+      <div
+        className={`h-full py-10 ${i ? "border-t md:border-l md:border-t-0 md:pl-10" : ""} ${i < 2 ? "md:pr-10" : ""}`}
+        style={{ borderColor: "var(--line)" }}
+      >
+        <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>
+          <span style={{ color: "var(--accent)" }}>{n}</span>
+          {label}
+        </p>
+        {children}
+      </div>
+    </Reveal>
+  )
+}
+
+const Big = ({ children }) => (
+  <div className="mt-6 font-display leading-none tracking-tight text-[clamp(3.5rem,6.5vw,6.5rem)]" style={{ color: "var(--fg)" }}>
+    {children}
+  </div>
+)
+
+const Sub = ({ children }) => (
+  <p className="mt-4 text-sm md:text-[15px]" style={{ color: "var(--muted)" }}>
+    {children}
+  </p>
+)
 
 export default function CodingStatsBold() {
-  // Decorative pulses/spins run forever; a phone should not pay for them.
-  const lowPower = useLowPower()
   // LeetCode numbers come straight from the synced JSON. They are NOT fetched
   // from the browser: leetcode.com/graphql sends no CORS headers, so that
   // request failed on every visit and only ever fell back to the same JSON —
   // while still sending each visitor's IP to LeetCode for nothing.
+  const [map, setMap] = useState("github")
   const [stats, setStats] = useState({
     github: {
       contributions: CONTRIBUTIONS,
@@ -97,221 +123,87 @@ export default function CodingStatsBold() {
     <section id="stats" className="relative py-32 px-6 md:px-16 overflow-hidden">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         
-        {/* Header */}
-        <Reveal>
-          <div className="mb-16">
-            <CommandLabel className="mb-3">cat ~/stats.json</CommandLabel>
-            <AnimatedHeading
-              text="Coding Stats"
-              decode
-              as="h2"
-              className="font-display text-5xl md:text-7xl uppercase leading-none"
-            />
-          </div>
-        </Reveal>
+        <SectionHead id="stats" path="~/stats.json" meta="synced daily" title="Coding *stats*" />
 
-        {/* Stats Grid wrapped in AsciiBox */}
-        <AsciiBox label="metrics" className="mb-8">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-          
-          {/* LeetCode */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="border rounded-3xl p-8 group hover:border-[var(--accent)] transition-all duration-300 relative overflow-hidden" 
-            style={{ borderColor: "var(--line)" }}
-          >
-            <motion.div 
-              className="absolute -right-10 -top-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity"
-              animate={lowPower ? undefined : { rotate: 360 }}
-              transition={lowPower ? undefined : { duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 22h20L12 2z"/>
-              </svg>
-            </motion.div>
-            
-            <div className="flex items-center gap-3 mb-4 relative z-10">
-              <motion.div 
-                whileHover={{ rotate: 180 }}
-                transition={{ duration: 0.5 }}
-                className="w-10 h-10 rounded-full flex items-center justify-center" 
-                style={{ background: "rgb(var(--accent-rgb) / 0.1)" }}
-              >
-                <span className="text-xl">🧩</span>
-              </motion.div>
-              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>DSA Stats</h3>
-            </div>
-            
-            <div className="font-display text-5xl mb-6 group-hover:text-[var(--accent)] transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+        {/* Three figures on a rule — the numbers are the design */}
+        <div className="grid border-y md:grid-cols-3" style={{ borderColor: "var(--line)" }}>
+          <Figure n="01" label="Problems solved" i={0}>
+            <Big>
               <CountUp end={LEETCODE_SOLVED} suffix="+" />
-            </div>
-
-            <p className="text-sm mb-4 relative z-10" style={{ color: "var(--muted)" }}>Consistency & problem solving</p>
-
-            <p className="text-base font-semibold mb-5 relative z-10" style={{ color: "var(--fg)" }}>
-              "I don't count the days. I make the days count."
+            </Big>
+            <Sub>
+              Easy {LEETCODE_SPLIT.easy} · Medium {LEETCODE_SPLIT.medium} · Hard {LEETCODE_SPLIT.hard}
+            </Sub>
+            <p className="mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em]" style={{ color: "var(--muted)" }}>
+              {TOPICS.join(" · ")}
             </p>
-
-            {/* Topics Covered */}
-            <div className="flex flex-wrap gap-2 relative z-10">
-              {["Trees", "Graphs", "DP", "Sliding Window", "Backtracking", "Binary Search", "Stacks", "Tries"].map((topic, i) => (
-                <motion.span
-                  key={topic}
-                  whileHover={{ scale: 1.1 }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  viewport={{ once: true }}
-                  className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-accent/20 bg-accent/5 hover:bg-accent/15 transition-colors cursor-default"
-                  style={{ color: "var(--accent)" }}
-                >
-                  {topic}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* GitHub */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="border rounded-3xl p-8 group hover:border-white transition-all duration-300 relative overflow-hidden" 
-            style={{ borderColor: "var(--line)" }}
-          >
-            <div className="flex items-center gap-3 mb-4 relative z-10">
-              <motion.div 
-                whileHover={{ rotate: 180 }}
-                transition={{ duration: 0.5 }}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                </svg>
-              </motion.div>
-              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Open Source</h3>
-            </div>
-            
-            <div className="font-display text-5xl mb-2 group-hover:text-white transition-colors relative z-10" style={{ color: "var(--fg)" }}>
+          </Figure>
+          <Figure n="02" label="Contributions, last 12 months" i={1}>
+            <Big>
               <CountUp end={stats.github.contributions} suffix="+" />
-            </div>
-            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>Contributions</p>
-
-            <div className="grid grid-cols-2 gap-4 relative z-10">
-              <div className="border rounded-2xl p-4 bg-white/5 border-white/10">
-                <div className="font-display text-2xl" style={{ color: "var(--fg)" }}>
-                  <CountUp end={stats.github.repos} />
-                </div>
-                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Repositories</div>
-              </div>
-              <div className="border rounded-2xl p-4 bg-white/5 border-white/10">
-                <div className="font-display text-2xl" style={{ color: "var(--fg)" }}>
-                  <CountUp end={githubActiveDays} />
-                </div>
-                <div className="text-xs mt-1" style={{ color: "var(--muted)" }}>Active Days (last year)</div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Activity Streak */}
-          <motion.div 
-            variants={cardVariants}
-            whileHover={{ y: -8, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="border rounded-3xl p-8 group hover:border-ember transition-all duration-300 relative overflow-hidden" 
-            style={{ borderColor: "var(--line)" }}
-          >
-            <div className="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity">
-              <span className="text-[150px]">🔥</span>
-            </div>
-
-            <div className="flex items-center gap-3 mb-4 relative z-10">
-              <motion.div 
-                animate={lowPower ? undefined : { scale: [1, 1.1, 1] }}
-                transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
-                className="w-10 h-10 rounded-full flex items-center justify-center bg-ember/10"
-              >
-                <span className="text-xl">🔥</span>
-              </motion.div>
-              <h3 className="font-display text-xl uppercase" style={{ color: "var(--fg)" }}>Consistency</h3>
-            </div>
-            
-            <div className="font-display text-5xl mb-2 group-hover:text-ember transition-colors relative z-10" style={{ color: "var(--fg)" }}>
-              <CountUp end={LEETCODE_STREAK} suffix=" Days" />
-            </div>
-            <p className="text-sm font-mono tracking-widest uppercase mb-6 relative z-10" style={{ color: "var(--muted)" }}>LeetCode Streak</p>
-
-            <div className="space-y-4 relative z-10">
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
-                <span className="text-sm" style={{ color: "var(--muted)" }}>Active Days</span>
-                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>
-                  <CountUp end={LEETCODE_ACTIVE_DAYS} />
-                </span>
-              </div>
-              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: "var(--line)" }}>
-                <span className="text-sm" style={{ color: "var(--muted)" }}>Easy · Medium · Hard</span>
-                <span className="font-display text-lg" style={{ color: "var(--fg)" }}>
-                  {LEETCODE_SPLIT.easy} · {LEETCODE_SPLIT.medium} · {LEETCODE_SPLIT.hard}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm" style={{ color: "var(--muted)" }}>Commitment</span>
-                <span className="text-xs px-2 py-1 rounded border border-ember/30 text-ember bg-ember/10">Unstoppable</span>
-              </div>
-            </div>
-          </motion.div>
-
-          </motion.div>
-        </AsciiBox>
-
-        {/* Activity heatmaps */}
-        <div className="space-y-8">
-          <Reveal delay={0.4}>
-            <ActivityHeatmap
-              title="GitHub Contributions"
-              icon="🟩"
-              unit="contribution"
-              calendar={stats.github.calendar}
-              fallbackTotal={stats.github.contributions}
-            />
-          </Reveal>
-          <Reveal delay={0.4}>
-            <ActivityHeatmap
-              title="LeetCode Submissions"
-              icon="🧩"
-              unit="submission"
-              color="var(--ember-rgb)"
-              note="2 accounts combined"
-              calendar={LEETCODE_CALENDAR}
-            />
-          </Reveal>
+            </Big>
+            <Sub>
+              {stats.github.repos} public repos · {githubActiveDays} active days
+            </Sub>
+          </Figure>
+          <Figure n="03" label="Day LeetCode streak" i={2}>
+            <Big>
+              <CountUp end={LEETCODE_STREAK} />
+            </Big>
+            <Sub>{LEETCODE_ACTIVE_DAYS} active days in total</Sub>
+          </Figure>
         </div>
 
-        {/* Optional: Profile Links */}
-        <Reveal delay={0.4}>
-          <div className="flex justify-center gap-4 mt-8">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+        {/* One activity map, two sources */}
+        <Reveal delay={0.2}>
+          <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex gap-2" role="group" aria-label="Activity source">
+              {MAPS.map((m) => (
+                <button
+                  key={m.key}
+                  type="button"
+                  aria-pressed={map === m.key}
+                  onClick={() => setMap(m.key)}
+                  className="rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors"
+                  style={
+                    map === m.key
+                      ? { borderColor: "var(--accent)", color: "var(--accent)" }
+                      : { borderColor: "var(--line)", color: "var(--muted)" }
+                  }
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+            <a
               href="https://github.com/aayush2724"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border text-sm font-medium transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
-              style={{ borderColor: "var(--line)", color: "var(--muted)" }}
+              className="link-underline font-mono text-[11px] uppercase tracking-[0.16em] transition-colors hover:text-[var(--fg)]"
+              style={{ color: "var(--muted)" }}
             >
-              View GitHub Profile →
-            </motion.a>
+              github.com/aayush2724 ↗
+            </a>
+          </div>
+          <div className="mt-5">
+            {map === "github" ? (
+              <ActivityHeatmap
+                title="GitHub contributions"
+                unit="contribution"
+                calendar={stats.github.calendar}
+                fallbackTotal={stats.github.contributions}
+              />
+            ) : (
+              <ActivityHeatmap
+                title="LeetCode submissions"
+                unit="submission"
+                color="var(--ember-rgb)"
+                note="2 accounts combined"
+                calendar={LEETCODE_CALENDAR}
+              />
+            )}
           </div>
         </Reveal>
-
       </div>
     </section>
   )

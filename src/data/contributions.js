@@ -92,3 +92,20 @@ export function buildGrid(calendar) {
   }
   return { weeks, total, hasData: Object.keys(cal.days).length > 0 }
 }
+
+/**
+ * The last day with activity and the contributions in the 30 days up to it,
+ * for the hero's `git log -1` line: { lastDate: "YYYY-MM-DD", last30 } or
+ * null. Absolute on purpose — the calendar is only as fresh as the last
+ * sync, so "N days ago" measured from today could be false.
+ */
+export function recentActivity(input) {
+  const cal = normalizeCalendar(input)
+  if (!cal) return null
+  const active = Object.keys(cal.days).filter((d) => cal.days[d] > 0).sort()
+  if (!active.length) return null
+  const lastDate = active[active.length - 1]
+  const from = Date.parse(lastDate) - 29 * DAY_MS
+  const last30 = active.filter((d) => Date.parse(d) >= from).reduce((n, d) => n + cal.days[d], 0)
+  return { lastDate, last30 }
+}

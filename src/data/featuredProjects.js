@@ -73,7 +73,7 @@ const FEATURED_SOURCE = [
     link: "https://github.com/aayush2724/LeadForge",
     demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
     image: "/leadforge-hackathon-proof.svg",
-    badge: "🏆 3rd Place NIT",
+    badge: "3rd Place NIT",
     earthy: "from-[#3a3530] to-[#1f1c18]"
   },
   {

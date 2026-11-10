@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion"
 import Reveal from "./Reveal"
-import AnimatedHeading from "./AnimatedHeading"
+import SectionHead from "./SectionHead"
 import { usePrefersReducedMotion } from "../context/motion"
 
 const MILESTONES = [
@@ -9,87 +9,63 @@ const MILESTONES = [
     year: 2023,
     title: "Started Coding Journey",
     description: "Discovered the world of programming. Began learning fundamentals and fell in love with problem-solving.",
-    icon: "🎓",
   },
   {
     year: 2024,
     title: "First Projects & Learning",
     description: "Deepened my knowledge in data structures and algorithms. Started exploring web development technologies.",
-    icon: "📚",
   },
   {
     year: 2025,
     title: "First Major Projects",
     description: "Built Visitor Management System and ChatRoom app. Learned HTML, PHP, MySQL, and Socket.io. Started shipping real applications.",
-    icon: "🚀",
   },
   {
     year: 2025,
     title: "Full-Stack Breakthrough",
     description: "Mastered React, Node.js, and MongoDB. Created Citizen Resolver, Job Portal, and SkillNest platforms. Built end-to-end solutions.",
-    icon: "💻",
   },
   {
     year: 2025,
     title: "LeetCode Milestone",
     description: "Crossed 450+ problems solved. Developed strong DSA foundation and competitive programming skills through consistent practice.",
-    icon: "🧩",
   },
   {
     year: 2025,
     title: "ML & Advanced Projects",
     description: "Built Chord Detector with ML, Disaster Relief System with real-time features, and LeadForge AI tool. Exploring AI/ML applications.",
-    icon: "🤖",
   },
   {
     year: 2026,
     title: "Advanced System Design",
     description: "Built DeskGuard and AlgoVision while focusing on performance, architecture, and production-grade UI engineering.",
-    icon: "🛡️",
   },
   {
     year: 2026,
     title: "OWASP Club President",
     description: "Appointed President of the OWASP student chapter at NIE: leading a 29-member core team, running workshops and labs, and building the chapter website on Next.js, Sanity and PostgreSQL.",
-    icon: "👑",
   },
   {
     year: 2026,
     title: "Auralis — AI Sales Intelligence",
     description: "Co-built Auralis with Kaki Harshita: a LangGraph agent that classifies objections, personas and sentiment, answers with RAG-grounded citations, and ships behind a FastAPI + WebSocket backend with 220+ tests in CI.",
-    icon: "🧭",
   },
   {
     year: 2026,
     title: "Backend & AI Intern — HSH Technologies",
     description: "Building Translog, an LLM-assisted air-freight quotation desk live for two client mailboxes: a Redis + RQ job pipeline, Playwright rate automation and a hand-labelled LLM evaluation harness.",
-    icon: "💼",
   },
   {
     year: 2026,
     title: "Current Focus — AI, RAG & GenAI",
     description: "Going deep on LLMs and generative AI: retrieval-augmented pipelines, embeddings and vector search, evals, and agentic workflows — and folding them into full-stack products where they actually earn their place.",
-    icon: "🎯",
   },
 ]
 
 const YEARS = [2023, 2024, 2025, 2026]
 
 function SectionHeader() {
-  return (
-    <Reveal>
-      <div className="mb-16">
-        <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-          The Story So Far
-        </p>
-        <AnimatedHeading
-          text="Journey"
-          as="h2"
-          className="font-display text-5xl md:text-7xl uppercase leading-none"
-        />
-      </div>
-    </Reveal>
-  )
+  return <SectionHead id="journey" path="~/journey.log" meta="2023 — 2026" title="The *journey*" />
 }
 
 /**
@@ -179,7 +155,9 @@ function HorizontalTimeline() {
                   style={{ background: "rgba(255,255,255,0.02)" }}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl">{milestone.icon}</span>
+                    <span className="font-mono text-xs uppercase tracking-[0.18em]" style={{ color: "var(--muted)" }}>
+                      {String(i + 1).padStart(2, "0")} / {String(MILESTONES.length).padStart(2, "0")}
+                    </span>
                     <span
                       className="font-display text-lg"
                       style={{ color: isActive ? "var(--accent)" : "var(--muted)" }}
@@ -193,9 +171,6 @@ function HorizontalTimeline() {
                   <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
                     {milestone.description}
                   </p>
-                  <span className="mt-auto font-mono text-xs" style={{ color: "var(--muted)", opacity: 0.6 }}>
-                    {String(i + 1).padStart(2, "0")} / {String(MILESTONES.length).padStart(2, "0")}
-                  </span>
                 </motion.article>
               )
             })}
@@ -293,7 +268,12 @@ function VerticalTimeline() {
                       }}
                       whileHover={{ scale: 1.1 }}
                     >
-                      <span className="text-lg">{milestone.icon}</span>
+                      <span
+                        className="font-mono text-[10px]"
+                        style={{ color: activeYear === milestone.year ? "var(--accent-ink)" : "var(--muted)" }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                     </motion.div>
                   </div>
 

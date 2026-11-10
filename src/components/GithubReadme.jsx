@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { safeHref, safeImageSrc } from "../lib/safeUrl"
 
 /**
@@ -243,8 +243,18 @@ function renderInline(text, ctx, keyBase) {
  * strip every other tag. We never render raw HTML, so this only affects how
  * much of an HTML-heavy README survives — not safety.
  */
+/** The few entities README HTML actually uses, decoded inside <pre> blocks. */
+const ENTITIES = { "&lt;": "<", "&gt;": ">", "&amp;": "&", "&quot;": '"', "&#39;": "'", "&nbsp;": " " }
+
 function stripHtml(md) {
   return md
+    // <pre> keeps its lines: it becomes a fence (marked "pre") before the tag
+    // strip below would flatten it into wrapped prose. READMEs use it for
+    // block-letter banners, which only read with every line intact.
+    .replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, (_, body) => {
+      const text = body.replace(/<[^>]+>/g, "").replace(/&(?:lt|gt|amp|quot|#39|nbsp);/g, (e) => ENTITIES[e])
+      return "\n```pre\n" + text.replace(/^\n+|\n+$/g, "") + "\n```\n"
+    })
     .replace(/<img[^>]*src=["']([^"']+)["'][^>]*>/gi, "![]($1)")
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<details[^>]*>|<\/details>|<summary[^>]*>|<\/summary>/gi, "\n")
@@ -258,9 +268,55 @@ const H_STYLES = {
   4: "text-base font-semibold mt-4 mb-2 text-[var(--fg)]",
 }
 
+/** Heading text without markdown syntax (links, emphasis, code). */
+function plainHeading(text) {
+  return text
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[*_`~]/g, "")
+    .trim()
+}
+
+/**
+ * GitHub's anchor for a heading: lower-case, emoji and punctuation dropped,
+ * spaces to hyphens — so a README's own "[Architecture](#-architecture)"
+ * links land on the heading rendered here.
+ */
+export function readmeSlug(text) {
+  return plainHeading(text)
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s_-]/gu, "")
+    .replace(/\s/g, "-")
+}
+
+/** The README's `##` sections, for a contents list: [{ text, slug }]. */
+export function readmeHeadings(md) {
+  const out = []
+  let fenced = false
+  for (const line of stripHtml(md).split("\n")) {
+    if (/^\s*```/.test(line)) fenced = !fenced
+    const m = !fenced && /^##\s+(.*)/.exec(line)
+    if (!m) continue
+    const text = plainHeading(m[1]).replace(/^[^\p{L}\p{N}]+/u, "").trim()
+    if (text) out.push({ text, slug: readmeSlug(m[1]) })
+  }
+  return out
+}
+
+/**
+ * Status badges and deploy buttons (shields.io, CI badges, "Deploy to X"):
+ * useful on GitHub, a wall of coloured pills on a case-study page.
+ */
+const BADGE = /(shields\.io|badgen\.net|badge\.svg|badge\.fury|codecov\.io|deploy-to-render|render\.com\/images\/deploy|vercel\.com\/button|railway\.app\/button|herokucdn\.com\/deploy)/i
+function stripBadges(md) {
+  return md
+    .replace(/\[!\[[^\]]*\]\(([^)]*)\)\]\([^)]*\)/g, (all, src) => (BADGE.test(src) ? "" : all))
+    .replace(/!\[[^\]]*\]\(([^)]*)\)/g, (all, src) => (BADGE.test(src) ? "" : all))
+}
+
 /** Exported for the blog and the Now section, which render markdown the site itself authors. */
 export function renderMarkdown(md, ctx) {
-  const lines = stripHtml(md).split("\n")
+  const clean = ctx?.badges === false ? stripBadges(stripHtml(md)) : stripHtml(md)
+  const lines = clean.split("\n")
   const out = []
   let i = 0
   let k = 0
@@ -276,9 +332,23 @@ export function renderMarkdown(md, ctx) {
       i++
       while (i < lines.length && !/^\s*```/.test(lines[i])) buf.push(lines[i++])
       i++
+      // Block-letter art (box-drawing and block glyphs): set tight, in the
+      // accent, centred and unboxed, so it reads as the banner it was drawn as.
+      if (lang === "pre" && /[█▀▄░▒▓╔╗╚╝═║]/.test(buf.join(""))) {
+        // A page that already titles the project (the case study) skips it.
+        if (ctx?.banners === false) continue
+        out.push(
+          <div key={k++} className="my-6 overflow-x-auto" aria-hidden="true">
+            <pre className="mx-auto w-max font-mono text-[6px] leading-[1.2] text-[var(--accent)] sm:text-[9px] md:text-[11px]">
+              {buf.join("\n")}
+            </pre>
+          </div>
+        )
+        continue
+      }
       out.push(
         <div key={k++} className="my-4 overflow-hidden rounded-lg border border-[var(--line)] bg-black/40">
-          {lang && (
+          {lang && lang !== "pre" && (
             <div className="border-b border-[var(--line)] bg-white/[0.02] px-4 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--muted)]">
               {lang}
             </div>
@@ -299,7 +369,11 @@ export function renderMarkdown(md, ctx) {
       // blog passes headingShift: 0 so its `##` sections are real h2s.
       const Tag = `h${Math.min(h[1].length + (ctx.headingShift ?? 2), 6)}`
       out.push(
-        <Tag key={k++} className={H_STYLES[level]}>
+        <Tag
+          key={k++}
+          id={ctx?.anchors ? `readme-${readmeSlug(h[2])}` : undefined}
+          className={H_STYLES[level] + (ctx?.anchors ? " scroll-mt-28" : "")}
+        >
           {renderInline(h[2].trim(), ctx, `h${k}`)}
         </Tag>
       )
@@ -443,9 +517,21 @@ export function renderMarkdown(md, ctx) {
 
 /* ── component ──────────────────────────────────────────────────────── */
 
-export default function GithubReadme({ repoUrl, fallback }) {
+/**
+ * `article`: the case-study page's reading mode — heading anchors, badge
+ * walls dropped, and in-README fragment links ("#-architecture") scrolled to
+ * in place, since a bare "#…" would change the hash route and leave the page.
+ * `onMarkdown(md)` hands the loaded README up (the page builds its contents
+ * list from it).
+ */
+export default function GithubReadme({ repoUrl, fallback, article = false, onMarkdown }) {
   const [state, setState] = useState({ status: "loading", md: null, repoGone: false })
   const repo = parseRepo(repoUrl)
+  // Latest callback without re-running the fetch when the parent re-renders.
+  const onMd = useRef(onMarkdown)
+  useEffect(() => {
+    onMd.current = onMarkdown
+  })
 
   useEffect(() => {
     const r = parseRepo(repoUrl)
@@ -458,7 +544,10 @@ export default function GithubReadme({ repoUrl, fallback }) {
     fetchReadme(r.owner, r.repo)
       .then((res) => {
         if (cancelled) return
-        if (res.kind === "readme") setState({ status: "ok", md: res.text, repoGone: false })
+        if (res.kind === "readme") {
+          setState({ status: "ok", md: res.text, repoGone: false })
+          onMd.current?.(res.text)
+        }
         else setState({ status: "desc", md: res.text, repoGone: false })
       })
       .catch((err) => {
@@ -521,5 +610,24 @@ export default function GithubReadme({ repoUrl, fallback }) {
     )
   }
 
-  return <div className="readme-body">{renderMarkdown(state.md, repo)}</div>
+  if (!article) return <div className="readme-body">{renderMarkdown(state.md, repo)}</div>
+
+  const onClick = (e) => {
+    const a = e.target.closest?.("a[href^='#']")
+    if (!a) return
+    const id = a.getAttribute("href").slice(1)
+    if (id.startsWith("/")) return // a real route
+    e.preventDefault()
+    const el = document.getElementById(`readme-${id}`)
+    if (!el) return
+    // In the modal the dialog scrolls, not the page Lenis drives.
+    if (window.__lenis && !el.closest('[role="dialog"]')) window.__lenis.scrollTo(el, { offset: -96 })
+    else el.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+  return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- delegation only; the links themselves stay focusable and keyboard-activated
+    <div className="readme-body" onClick={onClick}>
+      {renderMarkdown(state.md, { ...repo, anchors: true, badges: false, banners: false })}
+    </div>
+  )
 }
