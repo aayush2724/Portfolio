@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
 import useFocusTrap from "../context/useFocusTrap"
 import { EASE, DUR } from "../context/ease"
+import { sceneNumber } from "./SectionHead"
 
 const SOCIALS = [
   { label: "GitHub", url: "https://github.com/aayush2724" },
@@ -85,7 +86,10 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
           </div>
 
           {/* Links */}
-          <nav className="flex-1 flex flex-col justify-center px-6 md:px-16 gap-1 md:gap-2">
+          {/* Thirteen scenes: one column on phones, a two-column spread from
+              md (filled top-to-bottom), type sized off the viewport height so
+              the whole contents fits a 768px-tall laptop without scrolling. */}
+          <nav className="flex-1 flex flex-col justify-center px-6 md:px-16 md:grid md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(7,auto)] md:content-center md:gap-x-16">
             {links.map((l, i) => (
               <div key={l.label} className="overflow-hidden">
                 <motion.a
@@ -95,7 +99,7 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
                   animate={reduced ? { opacity: 1 } : { y: 0 }}
                   exit={reduced ? { opacity: 0 } : { y: "110%", transition: { duration: DUR.exit, ease: EASE.EXIT } }}
                   transition={{ duration: 0.7, delay: 0.15 + i * 0.06, ease: EASE.ENTER }}
-                  className="group flex items-baseline gap-4 md:gap-6 font-display uppercase leading-[1.05] text-5xl md:text-7xl transition-colors duration-300"
+                  className="group flex items-baseline gap-4 md:gap-6 font-display uppercase leading-[1.08] text-[clamp(1.75rem,5.2vh,3rem)] md:text-[clamp(2.25rem,8vh,4.5rem)] transition-colors duration-300"
                   style={{
                     color: activeSection === l.href ? "var(--accent)" : "var(--fg)",
                   }}
@@ -104,7 +108,8 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
                     className="font-mono text-xs md:text-sm tracking-widest transition-colors duration-300 group-hover:text-[var(--accent)]"
                     style={{ color: "var(--muted)" }}
                   >
-                    0{i + 1}
+                    {/* The section's scene number, same as its header rail and the HUD */}
+                    {sceneNumber(l.href.slice(1)) || String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="transition-transform duration-300 group-hover:translate-x-3 group-hover:text-[var(--accent)]">
                     {l.label}

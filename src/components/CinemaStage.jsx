@@ -5,10 +5,13 @@ import Hotspots from "../three/Hotspots"
 import Facing from "../three/Facing"
 import Dust from "../three/Dust"
 import Rig, { Pulse } from "../three/Rig"
+import FilmLights, { DOOR_GLOW } from "../three/FilmLights"
 import { tokenColor } from "../three/tokens"
 import { useSectionTracker } from "../three/useSectionTracker"
-import { SCENE_LABELS, HOTSPOTS } from "../three/stations"
+import { HOTSPOTS } from "../three/stations"
 import { useOverlayOpen } from "../context/overlay"
+import { opening, setOpening } from "../context/opening"
+import { pluckNote } from "../lib/sound"
 
 /**
  * The room, in one of two modes.
@@ -25,25 +28,6 @@ import { useOverlayOpen } from "../context/overlay"
  * (a drag, a tap, the cut) — and sits idle otherwise. The section's door
  * rail drives it through the ref (`go`) and follows it through `onFacing`.
  */
-function Hud({ scene }) {
-  const label = SCENE_LABELS[scene.id] || scene.id
-  const n = String(scene.index + 1).padStart(2, "0")
-  const total = String(scene.count).padStart(2, "0")
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none fixed bottom-6 left-1/2 z-30 -translate-x-1/2 flex items-center gap-3 font-mono text-[10px] tracking-[0.3em] uppercase transition-opacity duration-500"
-      style={{ color: "var(--muted)", opacity: scene.id === "hero" ? 0 : 1 }}
-    >
-      <span style={{ color: "var(--accent)" }}>●</span>
-      <span>
-        Scene {n} / {total}
-      </span>
-      <span style={{ color: "var(--fg)" }}>{label}</span>
-    </div>
-  )
-}
-
 /** Jump to a section with no animation (the cut hides the jump). */
 function jumpTo(id) {
   const el = document.getElementById(id)
@@ -68,10 +52,38 @@ const CinemaStage = forwardRef(function CinemaStage({ mode = "walk", onFacing },
   const orbit = useRef({ active: false, yaw: 0, pitch: 0, dragging: false, moved: 0, lastX: 0, lastY: 0, snap: false, span: 0.45 })
   const [hoverId, setHoverId] = useState(null)
   const fly = useRef(null)
+  // Stage brightness, written by Rig every frame, read by the film look.
+  const film = useRef(0)
   const cutting = useRef(false)
   const [veil, setVeil] = useState(false)
   const [inCut, setInCut] = useState(false)
   const [loop, setLoop] = useState("never")
+  // The film look (walk mode only) is its own chunk: the postprocessing
+  // library would otherwise ride along to every phone that hosts the room.
+  const [Film, setFilm] = useState(null)
+  useEffect(() => {
+    if (room) return
+    let alive = true
+    import("../three/Film").then((m) => {
+      if (alive) setFilm(() => m.default)
+    })
+    return () => {
+      alive = false
+    }
+  }, [room])
+  // The opening shot rolls once the room is built and the film look has had
+  // a few frames to compile, so neither lands in the middle of the dolly.
+  useEffect(() => {
+    if (room || loop !== "always" || !Film || opening.state !== "pending") return
+    let raf = 0
+    let frames = 0
+    const tick = () => {
+      if (++frames < 4) raf = requestAnimationFrame(tick)
+      else if (opening.state === "pending") setOpening("playing")
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [room, loop, Film])
   // A modal over the page hides the room: stop rendering it until it closes.
   const covered = useOverlayOpen()
   const accent = useMemo(() => tokenColor("--accent-rgb", "#d4ff3f"), [])
@@ -171,6 +183,8 @@ const CinemaStage = forwardRef(function CinemaStage({ mode = "walk", onFacing },
   // marker, and put its name on the cursor.
   const onHover = useCallback(
     (id) => {
+      // Sound on: a newly hovered door plucks its note (lib/sound.js).
+      if (id && id !== hover.current) pluckNote(HOTSPOTS.findIndex((h) => h.id === id), 0.25)
       hover.current = id
       setHoverId(id)
       const h = id && HOTSPOTS.find((x) => x.id === id)
@@ -269,17 +283,23 @@ const CinemaStage = forwardRef(function CinemaStage({ mode = "walk", onFacing },
           camera={{ fov: 50, near: 0.1, far: 40, position: [0, 1.75, 3] }}
           frameloop={covered ? "never" : loop}
           resize={{ scroll: false, debounce: { scroll: 0, resize: 0 } }}
+          // Walk mode renders untone-mapped on both of the film look's paths
+          // (direct and composited), so their opaque surfaces match at the
+          // hand-over (see Film.jsx). Room mode keeps the default.
+          flat={!room}
           style={{ width: "100%", height: "100%" }}
         >
           <fogExp2 attach="fog" args={["#09090b", 0.045]} />
           <ambientLight intensity={0.85} />
           <hemisphereLight args={["#2a3040", "#0a0a0b", 1.1]} />
           <Pulse wakeUntil={wakeUntil} invalidateRef={invalidate} />
-          <Rig tracker={store} mouse={mouse} orbit={orbit} fly={fly} dimEl={stage} onReady={onReady} mode={mode} />
-          <Cabin hoverRef={hover} accent={accent} onHover={onHover} onOpen={onOpen} />
+          <Rig tracker={store} mouse={mouse} orbit={orbit} fly={fly} dimEl={stage} film={room ? null : film} onReady={onReady} mode={mode} />
+          <Cabin hoverRef={hover} accent={accent} onHover={onHover} onOpen={onOpen} glow={room ? undefined : DOOR_GLOW} />
           <Dust tracker={store} accent={accent} />
           <Hotspots portal={portal} active={mapActive} hoverRef={hover} hoverId={hoverId} onGo={onGo} />
           {room && <Facing onFacing={onFacing} />}
+          {!room && <FilmLights />}
+          {!room && Film && <Film level={film} />}
         </Canvas>
         {/* Room mode: markers live inside the stage box */}
         {room && <div ref={portal} className={portalClass} style={{ opacity: mapActive ? 1 : 0 }} />}
@@ -292,7 +312,6 @@ const CinemaStage = forwardRef(function CinemaStage({ mode = "walk", onFacing },
         className="pointer-events-none fixed inset-0 z-[60] transition-opacity ease-in-out"
         style={{ background: "var(--bg)", opacity: veil ? 1 : 0, transitionDuration: `${veil ? CUT.dip : CUT.rise}ms` }}
       />
-      {!room && <Hud scene={scene} />}
     </>
   )
 })

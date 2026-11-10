@@ -1,7 +1,8 @@
-import { useMemo, useRef } from "react"
+import { useLayoutEffect, useMemo, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { HOTSPOTS } from "./stations"
+import { mergeStatic } from "./mergeStatic"
 
 /**
  * The cabin interior — a low-poly ops den built entirely from primitives and
@@ -166,7 +167,7 @@ function makeTextures(accent) {
 }
 
 /** Soft radial sprite for hover glows and the moon. */
-function makeGlow() {
+export function makeGlow() {
   return canvasTexture(128, 128, (ctx) => {
     const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64)
     g.addColorStop(0, "rgba(255,255,255,1)")
@@ -556,7 +557,10 @@ function Strip({ position, size, accent, rotation = [0, 0, 0] }) {
   )
 }
 
-export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
+/** Door glow opacity [idle, hovered]; the film look passes its own (FilmLights). */
+const DOOR_GLOW = [0.07, 0.4]
+
+export default function Cabin({ hoverRef, accent, onHover, onOpen, glow = DOOR_GLOW }) {
   const tex = useMemo(() => makeTextures(accent), [accent])
   const glowMap = useMemo(makeGlow, [])
   const posters = useMemo(makePosters, [])
@@ -565,6 +569,11 @@ export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
   const glows = useRef([])
   const holo = useRef()
   const holoGlow = useRef()
+  const root = useRef()
+
+  // Static furniture shares draw calls (see mergeStatic); animated and
+  // interactive meshes are left as they are.
+  useLayoutEffect(() => mergeStatic(root.current), [])
 
   useFrame(({ clock }, dt) => {
     const t = clock.getElapsedTime()
@@ -586,7 +595,7 @@ export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
     const d = Math.min(dt, 0.05)
     glows.current.forEach((s, i) => {
       if (!s) return
-      const target = hoverRef.current === HOTSPOTS[i].id ? 0.4 : 0.07
+      const target = hoverRef.current === HOTSPOTS[i].id ? glow[1] : glow[0]
       s.material.opacity = THREE.MathUtils.damp(s.material.opacity, target, 6, d)
     })
   })
@@ -605,7 +614,7 @@ export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
   ]
 
   return (
-    <group>
+    <group ref={root}>
       {/* ── shell ─────────────────────────────────────────────────────── */}
       <mesh rotation={[-PI / 2, 0, 0]}>
         <planeGeometry args={[W, D]} />
@@ -974,7 +983,7 @@ export default function Cabin({ hoverRef, accent, onHover, onOpen }) {
       {/* ── hover glows on each door ──────────────────────────────────── */}
       {HOTSPOTS.map((h, i) => (
         <sprite key={h.id} ref={(el) => (glows.current[i] = el)} position={h.at} scale={[1.1, 1.1, 1]}>
-          <spriteMaterial map={glowMap} color={accent} transparent opacity={0.07} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <spriteMaterial map={glowMap} color={accent} transparent opacity={glow[0]} blending={THREE.AdditiveBlending} depthWrite={false} />
         </sprite>
       ))}
     </group>

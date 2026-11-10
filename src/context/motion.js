@@ -31,6 +31,9 @@ const weakHardware = () => {
   return (cores > 0 && cores <= 4) || (mem > 0 && mem <= 4)
 }
 
+/** The same answer as useLowPower(), read once, for code outside React. */
+export const lowPowerNow = () => coarsePointer() || smallScreen() || reducedMotion() || weakHardware()
+
 /**
  * Single switch for "strip the expensive candy".
  * Gates scroll-linked transforms, infinite loops, blurs and blend modes that

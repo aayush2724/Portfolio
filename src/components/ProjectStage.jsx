@@ -22,7 +22,7 @@ import { slugForFeaturedId } from "../data/projectSlugs"
  * Returns null for covers with no raster variant (the SVGs), so we don't
  * advertise an SVG as image/webp and hand the browser an undecodable source.
  */
-function webpSrcSet(src) {
+export function webpSrcSet(src) {
   if (!/-800\.(jpg|jpeg|png)$/i.test(src)) return null
   const at = (w) => src.replace(/-800\.(jpg|jpeg|png)$/i, `-${w}.webp`)
   return `${at(400)} 400w, ${at(800)} 800w`
@@ -39,20 +39,6 @@ const slide = {
   exit: (dir) => ({ opacity: 0, x: dir > 0 ? -70 : 70, scale: 0.97 }),
 }
 
-/** The faded neighbour numbers at the panel's edges. */
-function Peek({ n, side }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute top-1/2 hidden -translate-y-1/2 select-none font-display text-[52px] leading-none tracking-tighter text-white/20 lg:block ${
-        side === "left" ? "left-4" : "right-4"
-      }`}
-    >
-      {n}
-    </span>
-  )
-}
-
 export default function ProjectStage({
   project,
   index,
@@ -64,7 +50,6 @@ export default function ProjectStage({
 }) {
   const lowPower = useLowPower()
   const hasImage = project.image && project.image !== ""
-  const label = (i) => String(((i % total) + total) % total + 1).padStart(2, "0")
 
   // Arrow keys move the deck. The stage is the only horizontally-paged thing on
   // the page, so binding at window level costs nothing and saves the visitor
@@ -114,9 +99,6 @@ export default function ProjectStage({
       </AnimatePresence>
       <div className="absolute inset-0 bg-[#060608]/55" />
 
-      <Peek n={label(index - 1)} side="left" />
-      <Peek n={label(index + 1)} side="right" />
-
       {/* Drag to page on touch, where there are no arrow buttons in reach. */}
       <motion.div
         drag="x"
@@ -127,10 +109,13 @@ export default function ProjectStage({
           else if (info.offset.x > 70) onStep(-1)
         }}
         data-cursor="Drag"
-        className="relative flex h-full w-full flex-col items-center justify-center gap-4 px-4 py-4 md:gap-5 md:px-10"
+        className="relative flex h-full w-full items-center px-3 py-3 md:px-10 md:py-8"
       >
         <AnimatePresence mode="wait" custom={direction} initial={false}>
-          <motion.article
+          {/* Spec sheet + artwork, side by side: the words get their own
+              column instead of being printed over a screenshot that already
+              has a headline of its own. */}
+          <motion.div
             key={project.id}
             custom={direction}
             variants={slide}
@@ -138,118 +123,89 @@ export default function ProjectStage({
             animate="center"
             exit="exit"
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            /* Shared-element source for CaseStudyModal — it animates from this
-               exact frame, so the id has to sit on the visible artwork. */
-            layoutId={`project-card-${project.id}`}
-            onClick={() => onViewDescription(project)}
-            className="group relative w-full max-w-[720px] flex-1 cursor-pointer overflow-hidden rounded-2xl border border-white/10"
+            className="mx-auto flex h-full w-full max-w-[1100px] flex-col justify-center gap-4 md:gap-6 lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-10"
           >
-            {hasImage ? (
-              <picture>
-                {webpSrcSet(project.image) && (
-                  <source
-                    type="image/webp"
-                    srcSet={webpSrcSet(project.image)}
-                    sizes="(max-width: 768px) 92vw, 720px"
+            {/* Artwork first in the DOM order (it leads the stacked card on
+                phones and tablets); from lg it moves to the right column. On
+                tablets its height is capped so the stack fits the stage. */}
+            <motion.button
+              type="button"
+              /* Shared-element source for CaseStudyModal — it animates from this
+                 exact frame, so the id has to sit on the visible artwork. */
+              layoutId={`project-card-${project.id}`}
+              onClick={() => onViewDescription(project)}
+              aria-label={`Open the case study for ${project.title}`}
+              className="group relative aspect-[16/10] w-full shrink-0 cursor-pointer overflow-hidden rounded-xl border border-white/10 text-left md:aspect-auto md:h-[46%] lg:order-2 lg:h-auto lg:aspect-[16/10]"
+              // Morphs into the case-study page's cover (see openCaseStudy).
+              style={{ viewTransitionName: "project-cover" }}
+            >
+              {hasImage ? (
+                <picture>
+                  {webpSrcSet(project.image) && (
+                    <source type="image/webp" srcSet={webpSrcSet(project.image)} sizes="(max-width: 1024px) 92vw, 640px" />
+                  )}
+                  <img
+                    src={project.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
                   />
-                )}
-                <img
-                  src={project.image}
-                  alt={`${project.title} — project preview`}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-              </picture>
-            ) : (
-              <div
-                className="absolute inset-0"
-                style={{ background: gradientFrom(project.earthy) }}
-              />
-            )}
-
-            {/* Two scrims rather than one: the top carries the title block and
-                the bottom carries the tags, and a single full-height gradient
-                would wash out the middle of the screenshot. */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.15) 38%, rgba(8,8,8,0.12) 56%, rgba(8,8,8,0.9) 100%)",
-              }}
-            />
-
-            <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-5 md:p-7">
-              <div>
-                <h3 className="font-display text-3xl uppercase leading-none tracking-tighter text-white drop-shadow-lg md:text-5xl">
-                  {project.title}
-                </h3>
-                <p className="mt-3 max-w-sm text-[13px] font-medium leading-relaxed text-white/70 line-clamp-3 md:text-sm">
-                  {project.description}
-                </p>
-              </div>
-              <span className="shrink-0 font-mono text-[11px] tracking-widest text-white/40">
-                {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+                </picture>
+              ) : (
+                <div className="absolute inset-0" style={{ background: gradientFrom(project.earthy) }} />
+              )}
+              <span className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white/85 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                Case study ↗
               </span>
-            </div>
+            </motion.button>
 
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-7">
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-white/15 bg-white/[0.08] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white/75"
-                  >
-                    {tag}
-                  </span>
-                ))}
+            <div className="flex min-h-0 min-w-0 flex-col lg:order-1">
+              <div className="flex min-w-0 items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 md:text-[11px]">
+                <span style={{ color: "var(--accent)" }}>
+                  {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+                </span>
+                <span aria-hidden="true" className="h-px w-6 bg-white/15" />
+                <span className="truncate">{project.badge}</span>
               </div>
-              <span className="shrink-0 text-right font-display text-sm uppercase leading-none tracking-tight text-[var(--accent)] md:text-lg">
-                {project.badge}
-              </span>
+              <h3 className="mt-2 font-display text-3xl uppercase leading-[0.95] tracking-tight text-white md:mt-3 md:text-4xl lg:mt-4 xl:text-5xl 2xl:text-6xl">
+                {project.title}
+              </h3>
+              <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-white/65 md:mt-3 md:text-[15px] lg:mt-4 lg:line-clamp-5">
+                {project.description}
+              </p>
+              <p className="mt-3 hidden font-mono text-[11px] uppercase leading-relaxed tracking-[0.14em] text-white/45 lg:block">
+                {project.tags.join(" · ")}
+              </p>
+
+              {/* One primary action, two quiet ones; the row wraps rather
+                  than spilling out of a narrow column. */}
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-7">
+                <button
+                  onClick={() => onViewDemo(project)}
+                  aria-label={`Open the live demo of ${project.title}`}
+                  className="rounded-full bg-[var(--accent)] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-ink)] transition-transform duration-200 hover:-translate-y-0.5"
+                >
+                  Live demo ↗
+                </button>
+                <button
+                  onClick={() => onViewDescription(project)}
+                  aria-label={`Read the description of ${project.title}`}
+                  className="link-underline font-mono text-[11px] uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-white"
+                >
+                  Description →
+                </button>
+                <button
+                  onClick={() => openAssistant({ projectSlug: slugForFeaturedId(project.id) })}
+                  aria-label={`Ask the assistant about ${project.title}`}
+                  className="link-underline font-mono text-[11px] uppercase tracking-[0.16em] text-white/75 transition-colors hover:text-white"
+                >
+                  Ask AI
+                </button>
+              </div>
             </div>
-          </motion.article>
+          </motion.div>
         </AnimatePresence>
-
-        {/* Actions sit outside the artwork so the shared-element hop into the
-            modal isn't carrying two buttons along with it. */}
-        <div className="flex w-full max-w-[720px] shrink-0 gap-2 sm:gap-3">
-          <button
-            onClick={() => onViewDescription(project)}
-            aria-label={`Read the description of ${project.title}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
-          >
-            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
-            </svg>
-            Description
-          </button>
-          <button
-            onClick={() => onViewDemo(project)}
-            aria-label={`Open the live demo of ${project.title}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest transition-all duration-200 hover:-translate-y-0.5"
-            style={{
-              background: "linear-gradient(135deg, rgb(var(--accent-rgb) / 0.18), rgb(var(--accent-rgb) / 0.06))",
-              border: "1px solid rgb(var(--accent-rgb) / 0.4)",
-              color: "rgb(var(--accent-rgb) / 0.95)",
-            }}
-          >
-            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-            Live Demo
-          </button>
-          <button
-            onClick={() => openAssistant({ projectSlug: slugForFeaturedId(project.id) })}
-            aria-label={`Ask the assistant about ${project.title}`}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] py-2.5 text-[11px] font-bold uppercase tracking-wider sm:tracking-widest text-white/85 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.13]"
-          >
-            <svg className="hidden sm:block" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 3l1.8 4.6L18.5 9.4l-4.7 1.8L12 15.8l-1.8-4.6L5.5 9.4l4.7-1.8z" /><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z" />
-            </svg>
-            Ask AI
-          </button>
-        </div>
       </motion.div>
     </div>
   )

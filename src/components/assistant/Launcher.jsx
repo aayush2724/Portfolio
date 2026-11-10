@@ -1,7 +1,8 @@
 import { forwardRef, useEffect, useState } from "react"
 
 /**
- * The floating launcher. On phones it steps out of the way while the 3D room
+ * The floating launcher — phones and small tablets only; from md up the
+ * assistant opens from the bottom dock (Dock.jsx). On phones it steps out of the way while the 3D room
  * (#hq) fills the screen so it never sits on the room or its door rail; it
  * stays put while the panel is open.
  */
@@ -40,7 +41,7 @@ const Launcher = forwardRef(function Launcher({ open, onToggle }, ref) {
       aria-controls="portfolio-assistant"
       aria-label={open ? "Close the portfolio assistant" : "Ask the portfolio assistant"}
       tabIndex={tucked ? -1 : 0}
-      className="fixed right-5 z-50 inline-flex items-center gap-2 rounded-full border border-black/10 p-3.5 md:px-4 md:py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
+      className="fixed right-5 z-50 inline-flex items-center gap-2 md:hidden rounded-full border border-black/10 p-3.5 md:px-4 md:py-3 text-sm font-display font-semibold transition-all duration-300 hover:-translate-y-1 shadow-2xl"
       style={{
         background: "var(--accent)",
         color: "var(--accent-ink)",

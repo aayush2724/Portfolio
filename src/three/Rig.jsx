@@ -4,6 +4,7 @@ import * as THREE from "three"
 import { STATIONS, DEFAULT_STATION, HOTSPOTS } from "./stations"
 import { VESTIBULE } from "./Cabin"
 import { tokenColor } from "./tokens"
+import { opening, onOpening, setOpening } from "../context/opening"
 
 /**
  * Camera + environment.
@@ -45,6 +46,15 @@ function yawToNearestDoor(st, yaw, span) {
 }
 
 /**
+ * The opening shot (walk mode, first visit): the room is seen from far back
+ * in the vestibule, fully lit, then the camera dollies through the open
+ * front wall to the hero's station. Ease-in-out over a fixed time, not the
+ * scroll damping: a dolly should start and land softly.
+ */
+const SHOT = { from: [0, 2.7, 10.4], look: [0, 1.5, -2.2], dur: 3200, delay: 450 }
+const easeInOut = (u) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2)
+
+/**
  * On-demand frame driver. In "demand" frameloop a frame only renders when
  * something calls invalidate(); while the stage is awake each frame asks
  * for the next, so damped motion can settle, then rendering stops.
@@ -63,7 +73,7 @@ export function Pulse({ wakeUntil, invalidateRef }) {
   return null
 }
 
-export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady, mode = "walk" }) {
+export default function Rig({ tracker, mouse, orbit, fly, dimEl, film, onReady, mode = "walk" }) {
   const room = mode === "room"
   const { gl, scene, camera, size } = useThree()
   const look = useRef(new THREE.Vector3(0, 1.45, -3))
@@ -71,6 +81,40 @@ export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady, mode =
   const spin = useRef({ yaw: 0, pitch: 0 })
   const bg = useRef(tokenColor("--bg-rgb", "#09090b"))
   const clear = useRef(0)
+  const shot = useRef({ phase: !room && opening.state === "pending" ? "hold" : "idle", t0: 0 })
+
+  // The shot's first frame: stand at its start before anything renders.
+  useEffect(() => {
+    if (shot.current.phase !== "hold") return
+    camera.position.fromArray(SHOT.from)
+    look.current.fromArray(SHOT.look)
+    camera.lookAt(look.current)
+  }, [camera])
+
+  // Rolls when the slate lifts; any input during it skips to the landing.
+  useEffect(() => {
+    if (room) return
+    const off = onOpening((state) => {
+      const sh = shot.current
+      if (state === "playing" && sh.phase === "hold") {
+        sh.phase = "dolly"
+        sh.t0 = performance.now() + SHOT.delay
+      } else if (state === "done" || state === "cancelled") {
+        sh.phase = "idle"
+      }
+    })
+    const skip = () => {
+      if (shot.current.phase === "idle") return
+      shot.current.phase = "idle"
+      setOpening("done")
+    }
+    const inputs = ["wheel", "keydown", "pointerdown", "touchstart"]
+    inputs.forEach((e) => window.addEventListener(e, skip, { passive: true }))
+    return () => {
+      off()
+      inputs.forEach((e) => window.removeEventListener(e, skip))
+    }
+  }, [room])
 
   useEffect(() => {
     // Shaders compile in the GPU process (KHR_parallel_shader_compile) while
@@ -173,21 +217,39 @@ export default function Rig({ tracker, mouse, orbit, fly, dimEl, onReady, mode =
     tmpA.y = THREE.MathUtils.clamp(tmpA.y, 0.5, 3.6)
     tmpA.z = THREE.MathUtils.clamp(tmpA.z, -3.1, 3.5 + VESTIBULE - 0.6)
 
-    camera.position.x = THREE.MathUtils.damp(camera.position.x, tmpA.x, k, d)
-    camera.position.y = THREE.MathUtils.damp(camera.position.y, tmpA.y, k, d)
-    camera.position.z = THREE.MathUtils.damp(camera.position.z, tmpA.z, k, d)
-
-    // Mouse-look: a few degrees everywhere, a wider sweep on the map.
-    const sway = 0.3
+    const sh = shot.current
     const l = look.current
-    l.x = THREE.MathUtils.damp(l.x, tmpC.x + mouse.current.x * sway, k, d)
-    l.y = THREE.MathUtils.damp(l.y, tmpC.y - mouse.current.y * sway * 0.6, k, d)
-    l.z = THREE.MathUtils.damp(l.z, tmpC.z, k, d)
-    camera.lookAt(l)
+    if (sh.phase !== "idle") {
+      // The opening shot owns the camera until it lands on the station.
+      const u = sh.phase === "dolly" ? THREE.MathUtils.clamp((performance.now() - sh.t0) / SHOT.dur, 0, 1) : 0
+      const e = easeInOut(u)
+      camera.position.fromArray(SHOT.from).lerp(tmpA, e)
+      l.fromArray(SHOT.look).lerp(tmpC, e)
+      camera.lookAt(l)
+      if (u >= 1) {
+        sh.phase = "idle"
+        setOpening("done")
+      }
+    } else {
+      camera.position.x = THREE.MathUtils.damp(camera.position.x, tmpA.x, k, d)
+      camera.position.y = THREE.MathUtils.damp(camera.position.y, tmpA.y, k, d)
+      camera.position.z = THREE.MathUtils.damp(camera.position.z, tmpA.z, k, d)
 
-    const target = (flying && fly.current.lit) || room ? 1 : THREE.MathUtils.lerp(a.dim, b.dim, f)
+      // Mouse-look: a few degrees everywhere, a wider sweep on the map.
+      const sway = 0.3
+      l.x = THREE.MathUtils.damp(l.x, tmpC.x + mouse.current.x * sway, k, d)
+      l.y = THREE.MathUtils.damp(l.y, tmpC.y - mouse.current.y * sway * 0.6, k, d)
+      l.z = THREE.MathUtils.damp(l.z, tmpC.z, k, d)
+      camera.lookAt(l)
+    }
+
+    // The room stays fully lit through a lit fly and the opening shot.
+    const lit = (flying && fly.current.lit) || room || sh.phase !== "idle"
+    const target = lit ? 1 : THREE.MathUtils.lerp(a.dim, b.dim, f)
     dim.current = THREE.MathUtils.damp(dim.current, target, k, d)
     if (dimEl.current) dimEl.current.style.opacity = dim.current.toFixed(3)
+    // The film look (Film.jsx) follows the stage up to full brightness.
+    if (film) film.current = dim.current
 
     // On the map the canvas clears to the page colour, so the room floats in
     // a clean void instead of over the flat grid; under content it stays

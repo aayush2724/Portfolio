@@ -1,68 +1,55 @@
-import Reveal, { Stagger, StaggerItem } from "./Reveal"
-import TiltCard from "./TiltCard"
-import CommandLabel from "./CommandLabel"
+import Reveal from "./Reveal"
+import SectionHead from "./SectionHead"
 import { achievements } from "../data/storyData"
-import AnimatedHeading from "./AnimatedHeading"
+import { CSS_EASE } from "../context/ease"
 
+/**
+ * A ledger, not a card grid: one hairline row per result, numbered, with the
+ * proof on the right. Hovering a row draws an accent rule along its top and
+ * nudges the title — the only motion it needs.
+ */
 export default function AchievementsSection() {
   return (
     <section id="achievements" className="relative py-32 px-6 md:px-16">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
-        <Reveal>
-          <CommandLabel className="mb-6">cat achievements.md</CommandLabel>
-        </Reveal>
+        <SectionHead id="achievements" path="~/achievements.md" meta={`${achievements.length} entries`} title="Achievements" />
 
-        <Reveal>
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between mb-14">
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
-                Resume Highlights
-              </p>
-              <AnimatedHeading
-                text="Achievements"
-                as="h2"
-                className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none"
+        <ol className="border-b" style={{ borderColor: "var(--line)" }}>
+          {achievements.map((item, i) => (
+            <li key={item.id} className="group relative border-t" style={{ borderColor: "var(--line)" }}>
+              <span
+                aria-hidden="true"
+                className="absolute left-0 right-0 -top-px h-px origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
+                style={{ background: "var(--accent)", transitionTimingFunction: CSS_EASE.WIPE }}
               />
-            </div>
-            <p className="max-w-xl text-sm md:text-base leading-relaxed" style={{ color: "var(--muted)" }}>
-              A compact snapshot of the milestones I care about most: competitive results, problem-solving depth, and shipped work.
-            </p>
-          </div>
-        </Reveal>
-
-        <Stagger className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {achievements.map((item) => (
-            <StaggerItem key={item.id} className="h-full">
-              <TiltCard max={6} className="h-full">
-                <article
-                  className="h-full rounded-3xl border p-6 md:p-7 transition-colors duration-300"
-                  style={{
-                    borderColor: "var(--line)",
-                    background: "rgba(255, 255, 255, 0.02)",
-                  }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-xl"
-                      style={{ borderColor: "var(--line)", background: "rgba(255, 255, 255, 0.03)" }}
-                    >
-                      {item.icon}
-                    </div>
-
-                    <div className="min-w-0">
-                      <h3 className="font-display text-2xl leading-tight mb-2" style={{ color: "var(--fg)" }}>
-                        {item.title}
-                      </h3>
-                      <p className="text-sm md:text-base leading-relaxed" style={{ color: "var(--muted)" }}>
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              </TiltCard>
-            </StaggerItem>
+              <Reveal delay={i * 0.06} y={16}>
+                <div className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 py-7 md:grid-cols-12 md:items-baseline md:gap-x-6 md:py-9">
+                  <span
+                    className="font-mono text-xs transition-colors duration-300 group-hover:text-[var(--accent)] md:col-span-1"
+                    style={{ color: "var(--muted)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3
+                    className="font-display text-2xl uppercase leading-[1.05] transition-transform duration-500 group-hover:translate-x-2 md:col-span-5 md:text-[2rem]"
+                    style={{ color: "var(--fg)", transitionTimingFunction: CSS_EASE.ENTER }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="col-start-2 text-sm leading-relaxed md:col-span-4 md:col-start-auto md:text-[15px]" style={{ color: "var(--muted)" }}>
+                    {item.description}
+                  </p>
+                  <span
+                    className="col-start-2 font-mono text-[11px] uppercase tracking-[0.14em] md:col-span-2 md:col-start-auto md:text-right"
+                    style={{ color: "var(--fg)" }}
+                  >
+                    {item.tag}
+                  </span>
+                </div>
+              </Reveal>
+            </li>
           ))}
-        </Stagger>
+        </ol>
       </div>
     </section>
   )

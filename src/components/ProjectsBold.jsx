@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ContainerScroll } from "./ui/container-scroll-animation"
 import ProjectStage from "./ProjectStage"
 import Parallax from "./Parallax"
-import CommandLabel from "./CommandLabel"
+import { sceneNumber } from "./SectionHead"
 import CaseStudyModal from "./CaseStudyModal"
 import { getCaseStudyByName } from "../data/caseStudies"
 import { filterProjectsBySkills } from "../data/featuredProjects"
@@ -19,6 +19,53 @@ const LazyDevPage = lazy(() => import("./LazyDevPage"))
 
 
 
+const DECK_RETURN = "deck:return"
+
+/** The project id to reopen the deck on, read once per return. */
+function readDeckReturn() {
+  try {
+    return sessionStorage.getItem(DECK_RETURN)
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Into a case study with a shared-element morph: the screenshot on the deck
+ * and the cover on the page carry the same view-transition-name, so the
+ * browser grows one into the other while the rest crossfades. Where the View
+ * Transitions API is missing (or motion is reduced) it is a plain route change.
+ * The new state is captured once the page's cover exists (capped, so a slow
+ * chunk can't freeze the screen).
+ */
+function openCaseStudy(id) {
+  const go = () => {
+    window.location.hash = `#/work/${id}`
+  }
+  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  if (!document.startViewTransition || reduced) return go()
+  document.startViewTransition(() => {
+    go()
+    if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true, force: true })
+    else window.scrollTo(0, 0)
+    // Event-driven, not frame-polled: resolves the moment the cover mounts,
+    // or after 1.2 s — well inside the browser's own DOM-update timeout.
+    return new Promise((resolve) => {
+      const ready = () => document.querySelector("[data-vt='case-cover']")
+      if (ready()) return resolve()
+      let cap = 0
+      const obs = new MutationObserver(() => ready() && done())
+      const done = () => {
+        obs.disconnect()
+        clearTimeout(cap)
+        resolve()
+      }
+      obs.observe(document.body, { childList: true, subtree: true })
+      cap = setTimeout(done, 1200)
+    })
+  })
+}
+
 export default function ProjectsBold() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [modalLayoutId, setModalLayoutId] = useState(null)
@@ -32,7 +79,13 @@ export default function ProjectsBold() {
   const [filterSkills, setFilterSkills] = useState([])
   // The deck is paged rather than scrolled now, so position is an index and a
   // direction (which way the next card should enter from) instead of a scrollLeft.
-  const [[index, direction], setDeck] = useState([0, 1])
+  // Coming back from a case study (its "cd ~/projects" or the browser's Back):
+  // reopen the deck on the project the visitor left from.
+  const [[index, direction], setDeck] = useState(() => {
+    const id = readDeckReturn()
+    const at = id == null ? -1 : filterProjectsBySkills([]).findIndex((p) => String(p.id) === id)
+    return [Math.max(0, at), 1]
+  })
 
   useEffect(() => {
     const handleFilter = (e) => {
@@ -52,12 +105,48 @@ export default function ProjectsBold() {
     }
   }, [])
 
+  // ...and put the stage back in view once this section has mounted.
+  // The key is cleared inside the timer, not before it: StrictMode runs this
+  // effect twice in development, and clearing early left the second run with
+  // nothing to restore.
+  useEffect(() => {
+    if (readDeckReturn() == null) return undefined
+    const t = setTimeout(() => {
+      try {
+        sessionStorage.removeItem(DECK_RETURN)
+      } catch {
+        // nothing to clear
+      }
+      const stage = document.querySelector("#projects [data-cursor='Drag']")
+      if (!stage) return
+      const r = stage.getBoundingClientRect()
+      const y = window.scrollY + r.top - Math.max(0, (window.innerHeight - r.height) / 2)
+      if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true, force: true })
+      else window.scrollTo(0, y)
+    }, 150)
+    return () => clearTimeout(t)
+  }, [])
+
+  // Warm the case-study chunk while idle, so the first morph isn't waiting on a download.
+  useEffect(() => {
+    const ric = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500))
+    const id = ric(() => import("./CaseStudyPage"))
+    return () => (window.cancelIdleCallback || clearTimeout)(id)
+  }, [])
+
   const handleViewDescription = (project) => {
     setModalLayoutId(`project-card-${project.id}`)
     const caseStudy = getCaseStudyByName(project.title)
     if (caseStudy) {
-      setSelectedProject(caseStudy)
-      setModalOpen(true)
+      // A project with a case study has its own page (#/work/:id): the full
+      // README in a reading layout, linkable and shareable. The modal stays
+      // for projects without one.
+      try {
+        sessionStorage.setItem(DECK_RETURN, String(project.id))
+      } catch {
+        // no storage — the deck simply starts at the front on return
+      }
+      openCaseStudy(caseStudy.id)
     } else {
       // Fallback if no specific case study
       setSelectedProject(project)
@@ -111,12 +200,18 @@ export default function ProjectsBold() {
                />
              </Parallax>
 
-             <CommandLabel className="mb-6 opacity-70">ls ~/projects</CommandLabel>
+             <p className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] md:text-[11px]" style={{ color: "var(--muted)" }}>
+               <span style={{ color: "var(--accent)" }}>{sceneNumber("projects")}</span>
+               <span aria-hidden="true" className="h-px w-8" style={{ background: "var(--line)" }} />
+               <span className="normal-case tracking-[0.08em]">~/projects</span>
+               <span aria-hidden="true" className="h-px w-8" style={{ background: "var(--line)" }} />
+               <span>{total} builds</span>
+             </p>
              <AnimatedHeading
                text="Projects"
                letters
                as="h2"
-               className="font-display text-8xl md:text-[12rem] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
+               className="font-display text-[clamp(3.5rem,16vw,12rem)] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
              />
              
              <AnimatePresence>
@@ -204,7 +299,7 @@ export default function ProjectsBold() {
             animate={{ opacity: 1 }}
             className="w-full h-full flex flex-col items-center justify-center text-center text-white/50 space-y-4"
           >
-            <div className="text-4xl">🔍</div>
+            <div className="font-mono text-sm" style={{ color: "var(--muted)" }}>$ grep -l &quot;{filterSkills.join("|")}&quot; ~/projects → 0 results</div>
             <p>No projects found matching {filterSkills.map((s) => `"${s}"`).join(" or ")}</p>
             <button
               onClick={() => {

@@ -22,7 +22,7 @@ export default class ErrorBoundary extends React.Component {
           style={{ background: "var(--bg)", color: "var(--fg)" }}
         >
           <div className="text-center max-w-md">
-            <div className="text-6xl mb-6">⚠️</div>
+            <div className="font-mono text-sm mb-6" style={{ color: "var(--ember)" }}>exit code 1</div>
             <h1 className="font-display text-3xl font-bold mb-4">
               Something went wrong
             </h1>

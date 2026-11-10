@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Reveal from "./Reveal"
-import { useLowPower, usePrefersReducedMotion } from "../context/motion"
+import { usePrefersReducedMotion } from "../context/motion"
 
 /**
  * Page end: the ghost "Aayush" signature, then the footer with copyright,
@@ -44,8 +44,6 @@ function SignatureOutro() {
 }
 
 export default function Footer() {
-  // Decorative pulses run forever; a phone should not pay for them.
-  const lowPower = useLowPower()
   const [time, setTime] = useState("")
 
   useEffect(() => {
@@ -69,7 +67,9 @@ export default function Footer() {
   }
 
   return (
-    <div className="relative z-10 px-6 pb-10 md:px-16">
+    // Bottom padding clears the fixed controls (shell pill, scene HUD, Ask me),
+    // which otherwise sit on top of the footer row at the end of the page.
+    <div className="relative z-10 px-6 pb-28 md:px-16 md:pb-24">
       <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
         <SignatureOutro />
         <Reveal delay={0.1}>
@@ -87,12 +87,7 @@ export default function Footer() {
 
             {/* Center - Live Clock */}
             <div className="flex items-center gap-2 font-mono text-sm" style={{ color: "var(--muted)" }}>
-              <motion.div
-                animate={lowPower ? undefined : { scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
-                transition={lowPower ? undefined : { duration: 2, repeat: Infinity }}
-                className="h-2 w-2 rounded-full"
-                style={{ background: "var(--ok)" }}
-              />
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--ok)" }} />
               <span>India</span>
               <span style={{ color: "var(--accent)" }}>{time}</span>
             </div>
@@ -104,12 +99,7 @@ export default function Footer() {
               style={{ color: "var(--muted)" }}
             >
               Back to Top
-              <motion.span
-                animate={lowPower ? undefined : { y: [-3, 0, -3] }}
-                transition={lowPower ? undefined : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                ↑
-              </motion.span>
+              <span aria-hidden="true">↑</span>
             </button>
           </footer>
         </Reveal>

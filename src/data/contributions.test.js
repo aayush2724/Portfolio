@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { buildGrid, normalizeCalendar } from "./contributions"
+import { buildGrid, normalizeCalendar, recentActivity } from "./contributions"
 
 describe("normalizeCalendar", () => {
   it("accepts the compact synced shape untouched", () => {
@@ -46,5 +46,16 @@ describe("buildGrid", () => {
     expect(hasData).toBe(false)
     expect(total).toBe(0)
     expect(weeks.length).toBeGreaterThanOrEqual(52)
+  })
+})
+
+describe("recentActivity", () => {
+  it("reports the last active day and the 30 days up to it", () => {
+    const cal = { from: "2025-11-10", to: "2026-11-10", days: { "2026-11-08": 3, "2026-10-20": 2, "2026-09-01": 9 } }
+    expect(recentActivity(cal)).toEqual({ lastDate: "2026-11-08", last30: 5 })
+  })
+  it("returns null with no activity or no calendar", () => {
+    expect(recentActivity({ from: "a", to: "b", days: {} })).toBeNull()
+    expect(recentActivity(null)).toBeNull()
   })
 })

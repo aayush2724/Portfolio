@@ -3,16 +3,38 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import MenuOverlay from "./MenuOverlay";
 import { useLowPower } from "../context/motion";
+import SoundToggle from "./SoundToggle";
 
 const links = [
   { label: "HQ", href: "#hq" },
-  { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Stats", href: "#stats" },
   { label: "Journey", href: "#journey" },
   { label: "Now", href: "#now" },
   { label: "Play", href: "#play" },
+  { label: "Contact", href: "#contact" },
+];
+
+/**
+ * The full-screen menu is the table of contents: every scene, numbered the
+ * way its header rail and the HUD number it, so 01–13 run without gaps and
+ * the sections the top bar has no room for are one click away.
+ */
+const menuLinks = [
+  { label: "Index", href: "#hero" },
+  { label: "HQ", href: "#hq" },
+  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Approach", href: "#approach" },
+  { label: "Stats", href: "#stats" },
+  { label: "Journey", href: "#journey" },
+  { label: "Now", href: "#now" },
+  { label: "Play", href: "#play" },
+  { label: "Beyond code", href: "#life" },
+  { label: "Achievements", href: "#achievements" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -162,6 +184,8 @@ export default function Navbar({ onCmd }) {
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
+            {/* Site sound (off by default): ambient pad, UI ticks, section plucks */}
+            <SoundToggle className="h-9 w-9 justify-center rounded-lg border sm:h-10 sm:w-10" style={{ borderColor: "var(--line)" }} />
             {/* Command Palette Button */}
             <button
               onClick={onCmd}
@@ -228,7 +252,7 @@ export default function Navbar({ onCmd }) {
       <MenuOverlay
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        links={links}
+        links={menuLinks}
         activeSection={activeSection}
       />
     </>
