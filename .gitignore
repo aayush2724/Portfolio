@@ -6,8 +6,6 @@ coverage/
 # Local environment files — never commit secrets. The site reads the two
 # optional VITE_LASTFM_* vars in .env.example; the data-sync script reads
 # GITHUB_TOKEN from GitHub Actions.
-.env
-.env.*
 !.env.example
 
 # Backend (Python) — see backend/README.md
@@ -18,3 +16,4 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 backend/.env
+config.bat
