@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-11T19:05:46.564Z",
+  "lastUpdated": "2026-11-12T05:14:13.500Z",
   "leetcode": {
     "stats": {
       "totalSolved": 788,
@@ -9,12 +9,11 @@
       "totalSubmissions": 817
     },
     "streak": 55,
-    "totalActiveDays": 302,
+    "totalActiveDays": 301,
     "calendar": {
-      "from": "2025-11-12",
-      "to": "2026-11-11",
+      "from": "2025-11-13",
+      "to": "2026-11-12",
       "days": {
-        "2025-11-12": 15,
         "2025-11-16": 1,
         "2025-11-17": 5,
         "2025-11-18": 7,
@@ -321,16 +320,6 @@
   },
   "github": [
     {
-      "name": "Portfolio",
-      "description": "",
-      "url": "https://github.com/aayush2724/Portfolio",
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-11-11T05:02:56Z"
-    },
-    {
       "name": "XBot",
       "description": "",
       "url": "https://github.com/aayush2724/XBot",
@@ -338,7 +327,7 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-11-08T19:24:36Z"
+      "updatedAt": "2026-11-12T04:05:31Z"
     },
     {
       "name": "Vetra",
@@ -348,27 +337,7 @@
       "forks": 0,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-11-05T19:07:20Z"
-    },
-    {
-      "name": "UrjaSetu",
-      "description": "",
-      "url": "https://github.com/aayush2724/UrjaSetu",
-      "stars": 0,
-      "forks": 0,
-      "language": null,
-      "topics": [],
-      "updatedAt": "2026-10-28T17:17:17Z"
-    },
-    {
-      "name": "rat-maze",
-      "description": "",
-      "url": "https://github.com/aayush2724/rat-maze",
-      "stars": 0,
-      "forks": 0,
-      "language": "HTML",
-      "topics": [],
-      "updatedAt": "2026-10-28T17:16:56Z"
+      "updatedAt": "2026-11-12T04:05:28Z"
     },
     {
       "name": "Skillnest",
@@ -378,7 +347,27 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-10-28T17:16:24Z"
+      "updatedAt": "2026-11-12T04:04:05Z"
+    },
+    {
+      "name": "rat-maze",
+      "description": "",
+      "url": "https://github.com/aayush2724/rat-maze",
+      "stars": 0,
+      "forks": 0,
+      "language": "HTML",
+      "topics": [],
+      "updatedAt": "2026-11-12T04:04:00Z"
+    },
+    {
+      "name": "Portfolio",
+      "description": "",
+      "url": "https://github.com/aayush2724/Portfolio",
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-11-12T04:03:49Z"
     },
     {
       "name": "MedVerify",
@@ -388,7 +377,7 @@
       "forks": 1,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-10-28T17:16:15Z"
+      "updatedAt": "2026-11-12T04:03:16Z"
     },
     {
       "name": "LeadForge",
@@ -398,7 +387,7 @@
       "forks": 1,
       "language": "Python",
       "topics": [],
-      "updatedAt": "2026-10-28T17:16:04Z"
+      "updatedAt": "2026-11-12T04:03:12Z"
     },
     {
       "name": "Job-Portal",
@@ -408,7 +397,7 @@
       "forks": 0,
       "language": "TypeScript",
       "topics": [],
-      "updatedAt": "2026-10-28T17:16:01Z"
+      "updatedAt": "2026-11-12T04:03:07Z"
     },
     {
       "name": "Guessergame",
@@ -418,7 +407,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-10-28T17:15:54Z"
+      "updatedAt": "2026-11-12T04:02:59Z"
     },
     {
       "name": "Disaster-relief-system",
@@ -428,7 +417,7 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-10-28T17:15:46Z"
+      "updatedAt": "2026-11-12T04:02:44Z"
     },
     {
       "name": "DeskGuard",
@@ -438,14 +427,24 @@
       "forks": 0,
       "language": "JavaScript",
       "topics": [],
-      "updatedAt": "2026-10-28T17:15:43Z"
+      "updatedAt": "2026-11-12T04:02:24Z"
+    },
+    {
+      "name": "Citizen-Resolver-System",
+      "description": "",
+      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
+      "stars": 0,
+      "forks": 1,
+      "language": "JavaScript",
+      "topics": [],
+      "updatedAt": "2026-11-12T04:02:17Z"
     }
   ],
   "githubStats": {
-    "contributions": 1523,
+    "contributions": 1545,
     "calendar": {
       "from": "2025-11-09",
-      "to": "2026-11-11",
+      "to": "2026-11-12",
       "days": {
         "2025-11-12": 1,
         "2025-12-06": 4,
@@ -593,10 +592,10 @@
         "2026-09-29": 1,
         "2026-09-30": 11,
         "2026-10-01": 6,
-        "2026-10-02": 14,
+        "2026-10-02": 15,
         "2026-10-03": 6,
-        "2026-10-04": 47,
-        "2026-10-05": 6,
+        "2026-10-04": 61,
+        "2026-10-05": 8,
         "2026-10-12": 2,
         "2026-10-13": 1,
         "2026-10-14": 4,
@@ -605,12 +604,12 @@
         "2026-10-17": 23,
         "2026-10-18": 2,
         "2026-10-19": 21,
-        "2026-10-20": 3,
+        "2026-10-20": 4,
         "2026-10-21": 4,
         "2026-10-22": 1,
         "2026-10-23": 2,
         "2026-10-24": 6,
-        "2026-10-25": 5,
+        "2026-10-25": 6,
         "2026-10-26": 6,
         "2026-10-28": 2,
         "2026-10-29": 1,
@@ -618,12 +617,12 @@
         "2026-11-03": 9,
         "2026-11-04": 5,
         "2026-11-05": 4,
-        "2026-11-06": 2,
+        "2026-11-06": 3,
         "2026-11-07": 6,
         "2026-11-08": 19,
-        "2026-11-09": 5,
+        "2026-11-09": 6,
         "2026-11-10": 3,
-        "2026-11-11": 1
+        "2026-11-11": 2
       }
     }
   }
