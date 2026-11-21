@@ -305,7 +305,7 @@ export default function App() {
               transition: "opacity 0.8s ease",
             }}
           >
-            <Navbar onCmd={() => setCmdOpen(true)} />
+            <Navbar />
           </div>
           <main id="main" tabIndex={-1} className="relative z-10 outline-none">
             <HeroBold introDone={introDone} />

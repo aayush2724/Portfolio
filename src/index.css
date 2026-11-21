@@ -477,3 +477,42 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .sound-bars.is-on > span { animation: none; height: 70%; }
 }
+
+.primary-nav-links {
+  padding: 5px 10px 6px;
+  border: 1px solid color-mix(in srgb, var(--fg) 9%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--surface), var(--bg));
+  box-shadow: 0 2px 0 rgb(0 0 0 / .5), 0 6px 16px rgb(0 0 0 / .24);
+}
+.primary-nav-link {
+  padding: .45rem .9rem;
+  border-radius: 999px;
+  color: var(--fg);
+  font-size: .875rem;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .primary-nav-link {
+    transition: transform .18s ease-out;
+  }
+  .primary-nav-link:hover {
+    transform: translateY(-3px);
+  }
+}
+.primary-nav-link:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+.hero-shell-button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg);
+  transition: color .2s;
+}
+.hero-shell-button:hover {
+  color: var(--accent);
+}
+.hero-shell-button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
