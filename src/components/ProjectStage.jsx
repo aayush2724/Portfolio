@@ -21,11 +21,11 @@ function gradientFrom(earthy) {
   return `linear-gradient(135deg, ${c[0] || "#1f2937"} 0%, ${c[1] || "#000000"} 100%)`
 }
 
-const settle = { duration: 0.56, ease: [0.18, 0.85, 0.24, 1] }
+const settle = { duration: 0.9, ease: [0.3, 0.65, 0.3, 1] }
 const caption = {
   enter: dir => ({ y: dir * 16, opacity: 0 }),
   center: { y: 0, opacity: 1, transition: settle },
-  exit: { opacity: 0, pointerEvents: "none", transition: { duration: 0.1 } },
+  exit: { opacity: 0, pointerEvents: "none", transition: { duration: 0.24 } },
 }
 
 export default function ProjectStage({

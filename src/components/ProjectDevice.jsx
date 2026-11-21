@@ -37,7 +37,7 @@ export default function ProjectDevice({ project, srcSet, background, onOpen, dir
               <motion.span key={project.id} className="project-screen-frame" style={{ background }}
                 custom={direction} variants={reduced ? undefined : artwork}
                 initial="enter" animate="center" exit="exit"
-                transition={{ duration: reduced ? 0 : 0.58, ease: [0.22, 0.8, 0.22, 1] }}>
+                transition={{ duration: reduced ? 0 : 0.9, ease: [0.3, 0.65, 0.3, 1] }}>
                 {project.image && (
               <picture>
                 {srcSet && <source type="image/webp" srcSet={srcSet} sizes="(min-width: 1024px) 42vw, 80vw" />}
