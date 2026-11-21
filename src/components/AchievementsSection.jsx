@@ -31,7 +31,7 @@ export default function AchievementsSection() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3
-                    className="font-display text-2xl uppercase leading-[1.05] transition-transform duration-500 group-hover:translate-x-2 md:col-span-5 md:text-[2rem]"
+                    className="font-serif text-3xl leading-[1.05] transition-transform duration-500 group-hover:translate-x-2 md:col-span-5 md:text-[2rem]"
                     style={{ color: "var(--fg)", transitionTimingFunction: CSS_EASE.ENTER }}
                   >
                     {item.title}

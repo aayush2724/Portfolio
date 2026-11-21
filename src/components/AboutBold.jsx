@@ -24,7 +24,7 @@ export default function AboutBold() {
         {/* Manifesto — brightens word by word as it scrolls into view */}
         <ScrollRevealText
           as="div"
-          className="relative font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 md:mb-24 text-white"
+          className="relative font-display text-4xl md:text-6xl lg:text-7xl leading-tight mb-16 md:mb-24 text-[var(--fg)]"
           segments={[
             { text: "I ship software" },
             { text: "end to end", className: "text-[var(--accent)]" },

@@ -13,7 +13,7 @@ const FEATURED_SOURCE = [
   {
     id: 1,
     title: "Auralis",
-    description: "AI sales intelligence platform: a LangGraph agent reads a prospect's objection, persona and sentiment, then replies with RAG-grounded, cited answers over a JWT-secured WebSocket chat.",
+    description: "A sales chat assistant that uses prospect context to answer objections. Built with LangGraph, retrieval augmented generation, and WebSockets.",
     tags: ["Python", "FastAPI", "LangGraph", "RAG", "Redis"],
     link: "https://github.com/aayush2724/Auralis",
     demo: "https://auralis-client-five.vercel.app",
@@ -24,7 +24,7 @@ const FEATURED_SOURCE = [
   {
     id: 2,
     title: "DeskGuard",
-    description: "Library seat-booking app that kills ghost seats: a live desk map, QR check-ins, double-booking-safe PostgreSQL transactions and Redis TTLs that auto-release no-show seats.",
+    description: "A library desk booking system with a live seat map, QR check-in, and automatic release of no-show reservations.",
     tags: ["Node.js", "PostgreSQL", "Redis", "SSE"],
     link: "https://github.com/aayush2724/DeskGuard",
     demo: "https://deskguard-jade.vercel.app",
@@ -35,7 +35,7 @@ const FEATURED_SOURCE = [
   {
     id: 5,
     title: "Beatzy",
-    description: "Music intelligence engine that fingerprints any track and returns BPM, key, mood, chords and genre vectors as API-ready data in seconds.",
+    description: "Identify a track and inspect its tempo, key, chords, mood, and genre through one music analysis interface.",
     tags: ["React", "Web Audio", "ACRCloud"],
     link: "https://github.com/aayush2724/Beatzy",
     demo: "https://beatzy-zeta.vercel.app",
@@ -46,7 +46,7 @@ const FEATURED_SOURCE = [
   {
     id: 6,
     title: "Citizen Resolver",
-    description: "Public complaint resolution platform connecting citizens with government authorities.",
+    description: "A public service portal for submitting complaints and following their progress with local authorities.",
     tags: ["React", "Node.js", "MongoDB"],
     link: "https://github.com/aayush2724/Citizen-Resolver-System",
     demo: "https://civicresolve-jet.vercel.app",
@@ -57,7 +57,7 @@ const FEATURED_SOURCE = [
   {
     id: 3,
     title: "AlgoVision",
-    description: "Algorithm learning engine with 474 live tracers: a FastAPI engine steps through the student's own input, with scrubbing, operation counters, a compare mode and an in-browser Python dry run on Pyodide.",
+    description: "Explore algorithms step by step with animated traces, operation counts, side by side comparisons, and an in-browser Python runner.",
     tags: ["Python", "FastAPI", "Three.js", "Pyodide"],
     link: "https://github.com/aayush2724/AlgoVision",
     demo: "https://algo-vision-vert.vercel.app/",
@@ -68,7 +68,7 @@ const FEATURED_SOURCE = [
   {
     id: 4,
     title: "LeadForge",
-    description: "AI-powered lead generation and management tool for sales teams.",
+    description: "A lead research and tracking tool built during the NIT Trichy hackathon, where the team placed third.",
     tags: ["Python", "AI", "FastAPI"],
     link: "https://github.com/aayush2724/LeadForge",
     demo: "https://leadforge-876cf6-11q5x.thinkroot.app/",
@@ -79,7 +79,7 @@ const FEATURED_SOURCE = [
   {
     id: 14,
     title: "MindFlow",
-    description: "AI-powered student burnout detection platform with real-time wellness telemetry, counselor dashboards, and intervention alerts for educational institutions.",
+    description: "A student wellness dashboard that tracks burnout signals and helps counselors review cases and follow up.",
     tags: ["React", "Node.js", "Firebase"],
     link: "https://github.com/aayush2724/MindFlow",
     demo: "https://mind-flow-psi.vercel.app",
@@ -90,7 +90,7 @@ const FEATURED_SOURCE = [
   {
     id: 9,
     title: "Job Portal",
-    description: "Full-stack job board with application tracking and employer-candidate matching.",
+    description: "A job board for browsing roles, managing applications, and connecting candidates with employers.",
     tags: ["TypeScript", "Next.js", "Prisma"],
     link: "https://github.com/aayush2724/Job-Portal",
     image: "/job-portal-cover.svg",
@@ -100,7 +100,7 @@ const FEATURED_SOURCE = [
   {
     id: 10,
     title: "Chord Detector",
-    description: "ML-powered music analysis tool that identifies guitar chords from audio input.",
+    description: "Analyze an audio clip and identify the guitar chords with a machine learning model.",
     tags: ["Python", "ML", "Audio"],
     link: "https://github.com/aayush2724/Chord-Detector",
     image: "/chord-detector-cover.svg",
@@ -110,7 +110,7 @@ const FEATURED_SOURCE = [
   {
     id: 11,
     title: "Visitor Management",
-    description: "Biometric-secured check-in system for tracking and managing building visitors with QR codes and real-time dashboards.",
+    description: "A visitor check-in system with QR passes, biometric verification, and a live dashboard.",
     tags: ["HTML", "PHP", "MySQL"],
     link: "https://github.com/aayush2724/CheckMate",
     image: "/vms-800.jpg",

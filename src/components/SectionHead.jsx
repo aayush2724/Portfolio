@@ -107,7 +107,7 @@ export default function SectionHead({ id, path, meta, metaOnPhones = false, titl
                   text={title}
                   as="h2"
                   cinematic
-                  className={`font-display uppercase leading-[0.92] text-[clamp(2.5rem,8vw,6.5rem)] ${titleClassName}`}
+                  className={`chapter-title ${titleClassName}`}
                 />
               </Swing>
             </div>

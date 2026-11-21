@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { usePrefersReducedMotion } from "../context/motion"
+import SoundToggle from "./SoundToggle"
 import useFocusTrap from "../context/useFocusTrap"
 import { EASE, DUR } from "../context/ease"
 import { sceneNumber } from "./SectionHead"
@@ -53,7 +54,7 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
           animate={reduced ? { opacity: 1 } : { y: 0 }}
           exit={reduced ? { opacity: 0 } : { y: "-100%" }}
           transition={{ duration: DUR.wipe, ease: EASE.WIPE }}
-          className="fixed inset-0 z-[70] flex flex-col outline-none"
+          className="fixed inset-0 z-[70] flex flex-col overflow-y-auto outline-none"
           style={{ background: "var(--bg)" }}
           role="dialog"
           aria-modal="true"
@@ -74,6 +75,7 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
             <span className="font-display font-bold text-xl" style={{ color: "var(--fg)" }}>
               Aayush
             </span>
+            <div className="ml-auto mr-4"><SoundToggle labelled /></div>
             <button
               onClick={onClose}
               aria-label="Close menu"
@@ -89,7 +91,7 @@ export default function MenuOverlay({ open, onClose, links, activeSection }) {
           {/* Thirteen scenes: one column on phones, a two-column spread from
               md (filled top-to-bottom), type sized off the viewport height so
               the whole contents fits a 768px-tall laptop without scrolling. */}
-          <nav className="flex-1 flex flex-col justify-center px-6 md:px-16 md:grid md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(7,auto)] md:content-center md:gap-x-16">
+          <nav className="flex-1 shrink-0 flex flex-col justify-center px-6 md:px-16 md:grid md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(7,auto)] md:content-center md:gap-x-16">
             {links.map((l, i) => (
               <div key={l.label} className="overflow-hidden">
                 <motion.a

@@ -44,7 +44,6 @@ const STACK = [
       "Three.js", "GSAP", "Vite", "Pyodide / WebAssembly", "Responsive Design",
     ],
     rot: -2.5,
-    lift: "",
   },
   {
     label: "backend",
@@ -55,7 +54,6 @@ const STACK = [
       "PostgreSQL", "Redis", "MongoDB", "RQ", "Drizzle", "Prisma", "JWT", "OAuth 2.0", "Nginx",
     ],
     rot: 1.8,
-    lift: "lg:translate-y-10",
   },
   {
     label: "languages",
@@ -66,7 +64,6 @@ const STACK = [
       "DSA", "System Design", "OOP", "Linux",
     ],
     rot: -1.6,
-    lift: "lg:translate-y-3",
   },
   {
     label: "ai / ml",
@@ -79,7 +76,6 @@ const STACK = [
       "PyTorch", "OpenCV",
     ],
     rot: 2.2,
-    lift: "lg:translate-y-6 lg:translate-x-6",
   },
   {
     label: "tooling",
@@ -90,7 +86,6 @@ const STACK = [
       "Railway", "Render", "Vercel", "Firebase", "Sanity CMS", "Postman",
     ],
     rot: -2,
-    lift: "lg:-translate-y-4",
   },
 ]
 
@@ -356,7 +351,6 @@ function StackCard({ cat, i, lowPower, reduced, isOpen, onOpen, cardRef }) {
 
   return (
     <motion.div
-      className={cat.lift}
       initial={{ opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -652,8 +646,8 @@ export default function SkillsMarquee() {
   return (
     <section id="skills" className="relative py-32 px-6 md:px-16 overflow-hidden">
       <LayoutGroup>
-        <div className="mx-auto max-w-6xl 2xl:max-w-[88vw]">
-          <div className="mb-16">
+        <div className="mx-auto max-w-[84rem]">
+          <div className="mb-12 text-center">
             <p className="text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>
               Tech Stack
             </p>
@@ -661,22 +655,20 @@ export default function SkillsMarquee() {
               text="The *stack*"
               as="h2"
               cinematic
-              className="font-display text-5xl md:text-7xl uppercase leading-none"
+              className="chapter-title"
             />
             <p className="mt-4 font-mono text-sm" style={{ color: "var(--muted)" }}>
               <span style={{ color: "var(--accent)" }}>{"//"}</span> open a discipline to see every tool and what it built
             </p>
           </div>
 
-          {/* Full-bleed: the wave should run edge to edge, but the section pads
-              its content, so it cancels that padding with negative margins. */}
-          <div className="-mx-6 mb-16 md:-mx-16">
+          <div className="mb-12 overflow-hidden">
             <TechWave />
           </div>
 
           {/* Six tracks, two per card: a short last row centres itself
               instead of leaving a hole (5 cards = 3 + 2, centred). */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 items-start">
             {STACK.map((cat, i) => (
               <div key={cat.label} className={placeCard(i, STACK.length)}>
                 <StackCard
