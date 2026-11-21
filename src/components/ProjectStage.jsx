@@ -106,8 +106,8 @@ export default function ProjectStage({
               />
 
             <div className="relative grid min-w-0 lg:order-1">
-              <AnimatePresence initial={false} mode="popLayout" custom={direction}>
-              <motion.div key={project.id} custom={direction} variants={reduced ? undefined : caption} initial="enter" animate="center" exit="exit" className="project-copy flex min-w-0 flex-col justify-center lg:order-1">
+              <AnimatePresence initial={false} custom={direction}>
+              <motion.div key={project.id} custom={direction} variants={reduced ? undefined : caption} initial="enter" animate="center" exit="exit" className="project-copy col-start-1 row-start-1 flex min-w-0 flex-col justify-center">
                 <span className="project-edition">{String(projectIndex + 1).padStart(2, "0")} <span aria-hidden="true">/</span> {project.badge}</span>
                 <h3 className="project-title">
                   {project.title}
