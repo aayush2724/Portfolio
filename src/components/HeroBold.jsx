@@ -468,8 +468,7 @@ export default function HeroBold({ introDone = true }) {
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new CustomEvent("open-shell"))}
-                className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] transition-colors hover:text-[var(--fg)]"
-                style={{ color: "var(--muted)" }}
+                className="hero-shell-button group inline-flex items-center gap-3 rounded-full px-5 py-3 font-mono text-xs uppercase tracking-[0.12em]"
               >
                 Open the shell
                 <kbd className="hidden rounded border px-1.5 py-0.5 normal-case tracking-normal transition-colors group-hover:border-[var(--accent)] md:inline" style={{ borderColor: "var(--line)" }}>

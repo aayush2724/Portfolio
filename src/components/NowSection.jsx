@@ -11,7 +11,7 @@ import { formatDate } from "../data/content"
  * made two sections do one job.
  */
 
-const CARD_STYLE = { borderColor: "var(--line)", background: "rgba(255,255,255,0.02)" }
+const CARD_STYLE = { borderColor: "var(--line)", background: "var(--journal-paper)" }
 export const SITE = "https://aayush-2724.vercel.app/"
 export const MD_CTX = { base: SITE, headingShift: 0 }
 

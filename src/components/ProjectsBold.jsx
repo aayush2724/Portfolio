@@ -1,13 +1,10 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ContainerScroll } from "./ui/container-scroll-animation"
 import ProjectStage from "./ProjectStage"
-import Parallax from "./Parallax"
 import { sceneNumber } from "./SectionHead"
 import CaseStudyModal from "./CaseStudyModal"
 import { getCaseStudyByName } from "../data/caseStudies"
 import { filterProjectsBySkills } from "../data/featuredProjects"
-import AnimatedHeading from "./AnimatedHeading"
 
 /**
  * The "lazy dev" easter-egg modal pulls in three.js + drei (~260KB gzip).
@@ -169,8 +166,7 @@ export default function ProjectsBold() {
   const filteredProjects = filterProjectsBySkills(filterSkills)
   const total = filteredProjects.length
 
-  /* Wraps at both ends so the deck never dead-ends on an inert arrow.
-     useCallback because ProjectStage binds it to a window keydown listener. */
+  // Swipe and arrow navigation wrap at both ends.
   const step = useCallback(
     (delta) => {
       setDeck(([i]) => {
@@ -186,34 +182,15 @@ export default function ProjectsBold() {
   const safeIndex = total ? Math.min(index, total - 1) : 0
 
   return (
-    <section id="projects" className="relative bg-[#060608]/80 py-24 overflow-hidden">
-      <ContainerScroll
-        titleComponent={
-          <div className="flex flex-col items-center mb-20 relative">
-             <Parallax speed={0.15} className="absolute -top-16 pointer-events-none">
-               {/* Watermark drawn from a pseudo-element: at 1% opacity it is
-                   decoration, not text, and must not be read or contrast-checked. */}
-               <div
-                 aria-hidden="true"
-                 data-text="STUDIO"
-                 className="font-display text-[12rem] md:text-[20rem] text-white/[0.01] select-none uppercase tracking-tighter before:content-[attr(data-text)]"
-               />
-             </Parallax>
-
-             <p className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] md:text-[11px]" style={{ color: "var(--muted)" }}>
-               <span style={{ color: "var(--accent)" }}>{sceneNumber("projects")}</span>
-               <span aria-hidden="true" className="h-px w-8" style={{ background: "var(--line)" }} />
-               <span className="normal-case tracking-[0.08em]">~/projects</span>
-               <span aria-hidden="true" className="h-px w-8" style={{ background: "var(--line)" }} />
-               <span>{total} builds</span>
-             </p>
-             <AnimatedHeading
-               text="Projects"
-               letters
-               as="h2"
-               className="font-display text-[clamp(3.5rem,16vw,12rem)] uppercase leading-none text-center mb-12 tracking-tighter text-white/90"
-             />
-             
+    <section id="projects" className="relative min-h-screen bg-[#060608]/80 py-24 overflow-hidden">
+      <div className="mx-auto max-w-[96rem] px-5 sm:px-8 lg:px-12">
+        <header className="projects-heading">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
+            {sceneNumber("projects")} <span aria-hidden="true">/</span> ~/projects
+          </p>
+          <h2 className="projects-title">Projects</h2>
+          <p className="projects-intro">A selection of things I’ve built, from real-time systems to AI tools.</p>
+        </header>
              <AnimatePresence>
                 {filterSkills.length > 0 && (
                   <motion.div 
@@ -248,45 +225,10 @@ export default function ProjectsBold() {
                 )}
              </AnimatePresence>
 
-             <div className="flex items-center gap-10">
-                <button
-                  onClick={() => step(-1)}
-                  aria-label="Previous project"
-                  className="group h-12 w-12 rounded-full border border-white/5 flex items-center justify-center hover:border-white/20 transition-all bg-white/[0.02]"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/60 group-hover:text-white transition-colors"><path d="m15 18-6-6 6-6"/></svg>
-                </button>
-
-                {/* Discrete segments rather than a continuous bar: the deck now
-                    pages, so a smooth fill would imply a precision it no longer has. */}
-                <div className="flex items-center gap-1.5" aria-hidden="true">
-                   {filteredProjects.map((p, i) => (
-                     <span
-                       key={p.id}
-                       className="h-[2px] rounded-full transition-all duration-500"
-                       style={{
-                         width: i === safeIndex ? 26 : 12,
-                         background: i === safeIndex ? "var(--accent)" : "rgba(255,255,255,0.18)",
-                       }}
-                     />
-                   ))}
-                </div>
-
-                <button
-                  onClick={() => step(1)}
-                  aria-label="Next project"
-                  className="group h-12 w-12 rounded-full border border-white/5 flex items-center justify-center hover:border-white/20 transition-all bg-white/[0.02]"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/60 group-hover:text-white transition-colors"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
-             </div>
-          </div>
-        }
-      >
         {total > 0 ? (
           <ProjectStage
+            projectIndex={safeIndex}
             project={filteredProjects[safeIndex]}
-            index={safeIndex}
             total={total}
             direction={direction}
             onStep={step}
@@ -312,7 +254,18 @@ export default function ProjectsBold() {
             </button>
           </motion.div>
         )}
-      </ContainerScroll>
+
+        {total > 1 && (
+          <nav className="projects-pagination" aria-label="Project navigation">
+            <button type="button" onClick={() => step(-1)} aria-label="Previous project" className="project-step">←</button>
+            <span aria-live="polite" aria-atomic="true">
+              {String(safeIndex + 1).padStart(2, "0")} <i aria-hidden="true" /> {String(total).padStart(2, "0")}
+              <span className="sr-only"> — {filteredProjects[safeIndex].title}</span>
+            </span>
+            <button type="button" onClick={() => step(1)} aria-label="Next project" className="project-step">→</button>
+          </nav>
+        )}
+      </div>
       
       <CaseStudyModal
         caseStudy={selectedProject}

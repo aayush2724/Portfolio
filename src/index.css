@@ -31,9 +31,9 @@
   --bg: #09090b;
   --bg-rgb: 9 9 11;
   --surface: #131316;
-  --fg: #f3f3f5;
-  --fg-rgb: 243 243 245;
-  --muted: #92929c;
+  --fg: #f4f2e9;
+  --fg-rgb: 244 242 233;
+  --muted: #acaeaa;
   --line: rgb(243 243 245 / 0.10);
   --accent: #d4ff3f;           /* acid lime */
   --accent-rgb: 212 255 63;
@@ -477,3 +477,66 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .sound-bars.is-on > span { animation: none; height: 70%; }
 }
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/BricolageGrotesque.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-display: swap;
+}
+
+:root { --poster-face: 'Bricolage Grotesque', 'Clash Display', sans-serif; }
+
+
+.chapter-title {
+  font: 800 clamp(2.3rem, 6.2vw, 6rem)/1.04 var(--poster-face);
+  font-stretch: 88%;
+  letter-spacing: -.055em;
+}
+.chapter-title .serif-accent { color: var(--accent); }
+.primary-nav-links {
+  padding: 5px 10px 6px;
+  border: 1px solid color-mix(in srgb, var(--fg) 9%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--surface), var(--bg));
+  box-shadow: 0 2px 0 rgb(0 0 0 / .5), 0 6px 16px rgb(0 0 0 / .24);
+}
+.primary-nav-link {
+  padding: .45rem .9rem;
+  border-radius: 999px;
+  color: var(--fg);
+  font-size: .875rem;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .primary-nav-link {
+    transition: transform .18s ease-out;
+  }
+  .primary-nav-link:hover {
+    transform: translateY(-3px);
+  }
+}
+.primary-nav-link:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+.hero-shell-button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg);
+  transition: color .2s;
+}
+.hero-shell-button:hover {
+  color: var(--accent);
+}
+.hero-shell-button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+.project-scrubber { width: clamp(4rem, 25vw, 18rem); height: 44px; accent-color: var(--accent); }
+#about, #contact, #life, #now { background: #0e1511; }
+#stats { background-color: #111c20; --accent: #9de9ff; }
+#stats .chapter-title { letter-spacing: -.065em; }
+#now { --journal-paper: #19221b; }
+#contact .glow-pill { animation: none; }

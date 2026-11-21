@@ -3,7 +3,7 @@
  * The API origin comes from VITE_API_URL at build time; when it is unset the
  * assistant runs in its scripted offline mode and this module is never hit.
  */
-export const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "")
+export const API_URL = (import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "/" : "")).replace(/\/+$/, "")
 
 export const isConfigured = () => API_URL.length > 0
 

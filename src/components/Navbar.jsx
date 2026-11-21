@@ -1,21 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import MenuOverlay from "./MenuOverlay";
-import { useLowPower } from "../context/motion";
-import SoundToggle from "./SoundToggle";
-
-const links = [
-  { label: "HQ", href: "#hq" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Stats", href: "#stats" },
-  { label: "Journey", href: "#journey" },
-  { label: "Now", href: "#now" },
-  { label: "Play", href: "#play" },
-  { label: "Contact", href: "#contact" },
-];
 
 /**
  * The full-screen menu is the table of contents: every scene, numbered the
@@ -38,65 +24,15 @@ const menuLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-function MagneticNavLink({ children, href, active, onClick }) {
-  const ref = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+const primaryLinks = menuLinks.filter(link => ["#projects", "#about", "#stats", "#journey", "#contact"].includes(link.href));
 
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * 0.2); 
-    y.set((clientY - centerY) * 0.2);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.a
-      ref={ref}
-      href={href}
-      onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-      className="relative text-sm transition-colors hover:text-[var(--fg)] px-2 py-1"
-      animate={{
-        color: active ? "var(--fg)" : "var(--muted)",
-      }}
-    >
-      {children}
-      {active && (
-        <motion.div
-          layoutId="nav-indicator"
-          className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full"
-          style={{ background: "var(--accent)" }}
-          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-        />
-      )}
-    </motion.a>
-  );
-}
-
-export default function Navbar({ onCmd }) {
-  const [scrolled, setScrolled] = useState(false);
+export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastY = useRef(0);
-  const lowPower = useLowPower();
 
-  // Scroll detection: blur background + direction-aware hide/show.
+  // Direction-aware hide/show.
   // Coalesced into one rAF so a fast flick can't queue a state update per
   // scroll event and re-render the nav dozens of times a frame.
   useEffect(() => {
@@ -106,7 +42,6 @@ export default function Navbar({ onCmd }) {
       ticking = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        setScrolled(y > 80);
         // Hide when scrolling down past the hero fold, reveal on any scroll up
         setHidden(y > lastY.current && y > 160);
         lastY.current = y;
@@ -119,7 +54,7 @@ export default function Navbar({ onCmd }) {
 
   // Scroll spy for active section
   useEffect(() => {
-    const sections = links.map(l => document.querySelector(l.href)).filter(Boolean);
+    const sections = menuLinks.map(l => document.querySelector(l.href)).filter(Boolean);
     
     const observer = new IntersectionObserver(
       (entries) => {
@@ -143,64 +78,34 @@ export default function Navbar({ onCmd }) {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: hidden && !mobileOpen ? "-110%" : 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-colors duration-300"
-        style={{
-          // backdrop-filter on a fixed full-width bar makes the phone re-blur
-          // the page behind it on every scroll frame; use an opaque fill there.
-          background: scrolled
-            ? lowPower
-              ? "var(--bg)"
-              : "rgb(var(--bg-rgb) / 0.7)"
-            : "transparent",
-          backdropFilter: scrolled && !lowPower ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
-        }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6"
       >
-        <div className="mx-auto max-w-7xl 2xl:max-w-[88vw] flex items-center justify-between">
+        <div className="mx-auto flex min-h-14 max-w-7xl items-center justify-between px-3 py-2 sm:px-5 lg:grid lg:grid-cols-[1fr_auto_1fr] 2xl:max-w-[88vw]">
           {/* Logo — Clash Display wordmark matching the section headings;
               the accent period carries the signature instead of a script font. */}
           <a
             href="#hero"
             aria-label="Aayush Kumar — back to top"
-            className="font-display font-bold text-2xl leading-none tracking-tight transition-colors duration-300 hover:text-[var(--accent)]"
+            className="pointer-events-auto justify-self-start font-display font-bold text-2xl leading-none tracking-tight transition-colors duration-300 hover:text-[var(--accent)]"
             style={{ color: "var(--fg)" }}
           >
             Aayush<span style={{ color: "var(--accent)" }}>.</span>
           </a>
 
-          {/* Desktop Nav — eight inline links fit from 1024px with the tighter
-              gap; below that the hamburger overlay is the menu. */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {links.map((l) => (
-              <MagneticNavLink
-                key={l.label}
-                href={l.href}
-                active={activeSection === l.href}
+          <div className="primary-nav-links pointer-events-auto hidden items-center gap-3 lg:flex xl:gap-4">
+            {primaryLinks.map(({ label, href }) => (
+              <a
+                key={href}
+                href={href}
+                aria-current={activeSection === href ? "location" : undefined}
+                className="primary-nav-link"
               >
-                {l.label}
-              </MagneticNavLink>
+                {label}
+              </a>
             ))}
           </div>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-3">
-            {/* Site sound (off by default): ambient pad, UI ticks, section plucks */}
-            <SoundToggle className="h-9 w-9 justify-center rounded-lg border sm:h-10 sm:w-10" style={{ borderColor: "var(--line)" }} />
-            {/* Command Palette Button */}
-            <button
-              onClick={onCmd}
-              className="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg border transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
-              style={{
-                borderColor: "var(--line)",
-                color: "var(--muted)",
-              }}
-              aria-label="Open the shell (Ctrl+K)"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
-              </svg>
-            </button>
-
+          <div className="pointer-events-auto flex items-center gap-3 justify-self-end">
             {/* Resume Button — shown on every breakpoint so a phone keeps a
                 primary action above the fold; the hero CTA sits below the
                 terminal there. */}
@@ -210,11 +115,7 @@ export default function Navbar({ onCmd }) {
               target="_blank"
               rel="noopener noreferrer"
               strength={0.35}
-              className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:gap-3"
-              style={{
-                background: "var(--accent)",
-                color: "var(--accent-ink)",
-              }}
+              className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--fg)] transition-colors hover:text-[var(--accent)] sm:px-4 sm:py-2"
             >
               Resume
             </MagneticButton>
@@ -223,7 +124,7 @@ export default function Navbar({ onCmd }) {
                 breakpoint, so the hamburger stays visible on desktop too */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="flex flex-col gap-1.5 w-9 h-9 items-center justify-center"
+              className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="site-menu"
