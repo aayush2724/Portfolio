@@ -22,6 +22,11 @@ const previewHeaders = Object.fromEntries(
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api/v1/assistant': 'http://127.0.0.1:8000',
+    },
+  },
   preview: { headers: previewHeaders },
   build: {
     // Three HTML entries: the app, the custom 404 Vercel serves for unknown
