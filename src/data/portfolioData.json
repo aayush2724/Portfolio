@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-22T04:29:24.130Z",
+  "lastUpdated": "2026-11-22T11:21:05.019Z",
   "leetcode": {
     "stats": {
       "totalSolved": 796,
@@ -321,6 +321,16 @@
   },
   "github": [
     {
+      "name": "Argus",
+      "description": "",
+      "url": "https://github.com/aayush2724/Argus",
+      "stars": 0,
+      "forks": 0,
+      "language": null,
+      "topics": [],
+      "updatedAt": "2026-11-22T10:37:20Z"
+    },
+    {
       "name": "Portfolio",
       "description": "",
       "url": "https://github.com/aayush2724/Portfolio",
@@ -429,20 +439,10 @@
       "language": "JavaScript",
       "topics": [],
       "updatedAt": "2026-11-12T04:02:24Z"
-    },
-    {
-      "name": "Citizen-Resolver-System",
-      "description": "",
-      "url": "https://github.com/aayush2724/Citizen-Resolver-System",
-      "stars": 0,
-      "forks": 1,
-      "language": "JavaScript",
-      "topics": [],
-      "updatedAt": "2026-11-12T04:02:17Z"
     }
   ],
   "githubStats": {
-    "contributions": 1727,
+    "contributions": 1731,
     "calendar": {
       "from": "2025-11-23",
       "to": "2026-11-22",
@@ -629,7 +629,7 @@
         "2026-11-19": 4,
         "2026-11-20": 5,
         "2026-11-21": 10,
-        "2026-11-22": 8
+        "2026-11-22": 12
       }
     }
   }
