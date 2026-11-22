@@ -34,7 +34,6 @@ const SECTIONS = [
 const SOCIALS = {
   github: "https://github.com/aayush2724",
   linkedin: "https://linkedin.com/in/aayush2724",
-  resume: "/resume.pdf",
 }
 
 function scrollToSection(id) {
@@ -90,7 +89,7 @@ function makeCommands({ close }) {
       "  open <project>     open a case study (try: open " + caseStudies[0].id + ")",
       "  whoami             who is this guy",
       "  stats              live LeetCode / GitHub numbers",
-      "  socials            github · linkedin · resume",
+      "  socials            github · linkedin",
       "  blog               open the blog (cat now.md for what I'm up to)",
       "  ask <question>     ask the portfolio assistant (try: ask how does auralis work)",
       "  sudo hire-me       the important one",

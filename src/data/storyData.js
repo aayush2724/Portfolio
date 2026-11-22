@@ -180,14 +180,44 @@ export const achievements = [
   {
     id: "hackathonPodium",
     title: "Hackathon Podium",
-    description: "Secured 3rd place at ThinkRoot × Vortex'26 (NIT Trichy) by building LeadForge in 24 hours.",
+    description: "Secured 3rd place at ThinkRoot × Vortex'26 (NIT Trichy) with LeadForge (P95.AI Lead Engine), an AI B2B lead pipeline built in 24 hours.",
     tag: "3rd · NIT Trichy",
   },
   {
     id: "hackathonFinalist",
-    title: "National Hackathon Finalist",
-    description: "Qualified for the final round as a top 200 team among 8,700 teams in a national-level hackathon.",
-    tag: "Top 200 of 8,700",
+    title: "Auralis",
+    description: "Reached the Innovac hackathon grand finale with Auralis, an AI sales bot.",
+    tag: "Top 200 of 8,700+",
+  },
+  {
+    id: "factorySense",
+    title: "FactorySense AI",
+    description: "Built for HACKFINIX 2026.",
+    tag: "HACKFINIX 2026",
+  },
+  {
+    id: "roadSos",
+    title: "RoadSoS",
+    description: "Built for the National Road Safety Hackathon 2026.",
+    tag: "Road safety",
+  },
+  {
+    id: "phantomMemory",
+    title: "Phantom Memory",
+    description: "Built an adaptive memory pipeline for mobile AI agents at the Samsung ennovateX AX Hackathon.",
+    tag: "Samsung ennovateX",
+  },
+  {
+    id: "provenanceChain",
+    title: "ProvenanceChain",
+    description: "Built for a blockchain hackathon.",
+    tag: "Blockchain",
+  },
+  {
+    id: "dsuDevhack",
+    title: "Government Scheme Discovery",
+    description: "Worked on an agentic AI system for finding government schemes at DSU DEVHACK 3.0 in September 2026.",
+    tag: "DSU DEVHACK 3.0",
   },
   {
     id: "dsa",

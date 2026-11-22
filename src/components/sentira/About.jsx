@@ -1,5 +1,5 @@
 import Reveal from "../Reveal"
-import { Card, Pill, SectionHead } from "./ui"
+import { Card, SectionHead } from "./ui"
 import data from "../../data/portfolioData.json"
 import { projects } from "../../data/projects"
 
@@ -37,11 +37,6 @@ export default function About() {
             />
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <Pill as="a" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-              Download résumé
-            </Pill>
-          </Reveal>
         </div>
 
         <div className="grid gap-4 md:grid-cols-[1.6fr_1fr]">

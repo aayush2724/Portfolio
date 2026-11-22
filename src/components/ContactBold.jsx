@@ -1,6 +1,5 @@
 import { motion } from "framer-motion"
 import Reveal from "./Reveal"
-import DownloadResumeButton from "./DownloadResumeButton"
 import SectionHead from "./SectionHead"
 import { useIstClock } from "../context/useIstClock"
 
@@ -35,7 +34,7 @@ export default function ContactBold() {
         <SectionHead id="contact" path="~/contact" meta="say hello" className="!mb-10" />
 
         {/* Framed closing card — the page's single "reach out" moment:
-            heading, email, resume and socials on one yaros-style stage. */}
+            heading, email and socials on one yaros-style stage. */}
         <Reveal>
           <div
             className="relative overflow-hidden rounded-[2rem] border px-8 py-14 md:px-16 md:py-20 mb-20"
@@ -84,9 +83,10 @@ export default function ContactBold() {
                   />
                 </motion.a>
 
-                {/* Download Resume Button */}
                 <div className="mt-8">
-                  <DownloadResumeButton />
+                  <a href="/resume.pdf" download="Aayush_Kumar_Resume.pdf" className="inline-flex rounded-full border px-5 py-3 text-sm font-semibold transition-colors hover:text-[var(--accent)]" style={{ borderColor: "var(--line)", color: "var(--fg)" }}>
+                    Download résumé
+                  </a>
                 </div>
               </div>
 

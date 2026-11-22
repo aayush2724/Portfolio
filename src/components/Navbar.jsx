@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import MagneticButton from "./MagneticButton";
 import MenuOverlay from "./MenuOverlay";
 
 /**
@@ -106,20 +105,9 @@ export default function Navbar() {
           </div>
 
           <div className="pointer-events-auto flex items-center gap-3 justify-self-end">
-            {/* Resume Button — shown on every breakpoint so a phone keeps a
-                primary action above the fold; the hero CTA sits below the
-                terminal there. */}
-            <MagneticButton
-              as={motion.a}
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              strength={0.35}
-              className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--fg)] transition-colors hover:text-[var(--accent)] sm:px-4 sm:py-2"
-            >
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--fg)] transition-colors hover:text-[var(--accent)]">
               Resume
-            </MagneticButton>
-
+            </a>
             {/* Menu Toggle — the full-screen overlay is the menu on every
                 breakpoint, so the hamburger stays visible on desktop too */}
             <button

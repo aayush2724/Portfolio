@@ -52,6 +52,11 @@ const MILESTONES = [
   },
   {
     year: 2026,
+    title: "Freelance AI Model Evaluator — Outlier AI",
+    description: "Spent two months testing AI model performance and evaluating responses for quality and accuracy.",
+  },
+  {
+    year: 2026,
     title: "Backend & AI Intern — HSH Technologies",
     description: "Building Translog, an LLM-assisted air-freight quotation desk live for two client mailboxes: a Redis + RQ job pipeline, Playwright rate automation and a hand-labelled LLM evaluation harness.",
   },

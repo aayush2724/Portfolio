@@ -5,9 +5,9 @@ import ScrollRevealText from "./ScrollRevealText"
 
 /** Label → value, set as a ruled definition list. */
 const FACTS = [
-  ["Studying", "Computer Science, NIE Mysore"],
+  ["Studying", "3rd-year B.E. CSE (AI & ML) · NIE Mysore · 9.3/10 CGPA"],
   ["Based in", "India · IST"],
-  ["Open to", "Full-time roles, internships, freelance"],
+  ["Open to", "Remote internships, freelance work, and collaborations"],
   ["Into", "Guitar, DSA, system design, open source"],
   ["On repeat", "Stairway to Heaven — Led Zeppelin"],
 ]
@@ -37,16 +37,14 @@ export default function AboutBold() {
           <Reveal delay={0.2}>
             <div className="space-y-6">
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-                Hey! I'm Aayush, a Computer Science student at NIE Mysore, passionate about full-stack development, AI integration, and systems that matter. I ship end-to-end — from React UIs to Python backends to real-time infrastructure.
+                I'm Aayush, President of the OWASP NIE Student Chapter and a backend and AI builder.
+                My experience includes two months of freelance work with Outlier AI, testing model performance and evaluating response quality.
               </p>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-                I've built{" "}
-                <span style={{ color: "var(--fg)" }}>AI-powered platforms</span>{" "}
-                like Auralis and MindFlow, won{" "}
-                <span style={{ color: "var(--fg)" }}>3rd place at NIT Trichy's hackathon</span>{" "}
-                with LeadForge, and competed in Goldman Sachs and Samsung's national-level hackathons. I also serve as{" "}
-                <span style={{ color: "var(--fg)" }}>President of the OWASP student chapter</span>{" "}
-                at my college, leading cybersecurity initiatives and building the chapter's website.
+                I'm currently building <span style={{ color: "var(--fg)" }}>Beatzy</span>, a music intelligence SaaS
+                with real-time audio fingerprinting. I recently shipped Auralis, an AI sales bot that reached the
+                Innovac grand finale, and built LeadForge, an AI B2B lead pipeline that placed third at NIT Trichy.
+                I like exploring unfamiliar codebases, testing new ideas with AI-native tools, and shipping quickly.
               </p>
               <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
                 Beyond code, you'll find me playing{" "}

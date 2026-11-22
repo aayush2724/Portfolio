@@ -39,6 +39,10 @@ export function searchPortfolio(query, rng = Math.random) {
     return greetings[Math.floor(rng() * greetings.length)];
   }
 
+  if (/\boutlier\b/.test(q)) {
+    return "I worked with **Outlier AI** as a freelancer for **two months**, testing AI model performance and evaluating responses for quality and accuracy.";
+  }
+
   // 2. Specific Projects
   for (const p of projects) {
     const keywords = projectKeywords[p.name] || [p.name.toLowerCase()];
@@ -66,11 +70,11 @@ export function searchPortfolio(query, rng = Math.random) {
   }
 
   // 4. Hackathons
-  if (/hackathon|win|won|competition|thinkroot|vortex|goldman|samsung|ennovatex|panic|deadline|trophy|prize|final round|finalist|top 200|8700/.test(q)) {
+  if (/hackathon|win|won|competition|innovac|thinkroot|vortex|goldman|samsung|ennovatex|panic|deadline|trophy|prize|final round|finalist|top 200|8700/.test(q)) {
     return "I compete in hackathons with my teammate **Kaki Harshita** under our team **Panic-At-The-Deadline** 🏆\n\n" +
       "**Highlights:**\n" +
       "• 🥉 **3rd Place** at ThinkRoot x Vortex'26 (NIT Trichy) — built [LeadForge](https://github.com/aayush2724/LeadForge), an AI B2B lead generation pipeline\n" +
-      "• 🚀 **Final-round qualifier** in a national-level hackathon — ranked among the **top 200 teams out of 8,700**\n" +
+      "• 🚀 **Auralis** reached the Innovac grand finale — **top 200 of 8,700+ teams**\n" +
       "• 🚀 **Goldman Sachs India Hackathon 2026** — multi-agent drone routing optimization in C++\n" +
       "• 📱 **Samsung ennovateX AX Hackathon** — *Phantom Memory*, a 3-tier adaptive memory pipeline for mobile agents\n\n" +
       "We work well under pressure — hence the team name 😄";
@@ -95,13 +99,13 @@ export function searchPortfolio(query, rng = Math.random) {
       "• 💼 **LinkedIn:** [linkedin.com/in/aayush2724](https://linkedin.com/in/aayush2724)\n" +
       `• 💻 **GitHub:** [github.com/aayush2724](https://github.com/aayush2724) (${REPO_COUNT} repos)\n` +
       "• 📸 **Instagram:** [@aayussh.27](https://instagram.com/aayussh.27)\n\n" +
-      "Currently **open to remote internships and freelance projects**. Drop me an email!";
+      "Currently **open to remote internships, freelance projects, and collaborations**. Drop me an email!";
   }
 
   // 7. Guitar / Music / Hobbies
   if (/guitar|music|stairway|hobb|free\s*time|weekend|play|song|band/.test(q)) {
     return "Outside of code, I'm a **guitarist** 🎸 — been trying to master **Stairway to Heaven** for over a year now. It's humbling.\n\n" +
-      "Music also shows up in my work: I built **Chord Detector** (ML-powered guitar chord recognition) and **Beatzy** (a music collaboration platform). " +
+      "Music also shows up in my work: I built **Chord Detector** (ML-powered guitar chord recognition) and **Beatzy** (a music intelligence SaaS with real-time audio fingerprinting). " +
       "It's basically where my two worlds collide.";
   }
 
@@ -121,17 +125,18 @@ export function searchPortfolio(query, rng = Math.random) {
   // 9. Learning / Current
   if (/learn|study|current|focus|building|working on|right now|next/.test(q)) {
     return "Currently I'm:\n\n" +
+      "• 🎵 Building **Beatzy**, a music intelligence SaaS with real-time audio fingerprinting\n" +
       "• 🧠 Going deep on **LLMs, RAG and GenAI** — retrieval pipelines, embeddings, evals and agentic workflows\n" +
       "• 🔨 Building **Translog** at HSH Technologies — an LLM-assisted air-freight quotation desk on FastAPI, Redis + RQ and Playwright\n" +
       `• ⚔️ Grinding **DSA in C++** on LeetCode (${LEETCODE_SOLVED}+ solved)\n` +
       "• 🎸 Still trying to nail **Stairway to Heaven** on guitar\n" +
-      "• 🔍 Looking for **remote internships and freelance projects**\n\n" +
-      "I'm a 2nd year CS student at **NIE, Mysore** — always shipping something.";
+      "• 🔍 Looking for **remote internships, freelance projects, and collaborations**\n\n" +
+      "I'm a third-year B.E. CSE (AI & ML) student at **NIE, Mysore** — always shipping something.";
   }
 
   // 10. About / Bio / College
   if (/about|who|yourself|bio|profile|college|nie|mysore|bengaluru|bangalore|student|age|year|where|owasp|president|club/.test(q)) {
-    return "I'm **Aayush Kumar** — a 2nd year B.E. CS student at **The National Institute of Engineering (NIE), Mysore**, based in **Bengaluru**.\n\n" +
+    return "I'm **Aayush Kumar** — a third-year B.E. CSE (AI & ML) student at **The National Institute of Engineering (NIE), Mysore**, with a **9.3/10 CGPA**.\n\n" +
       "I'm also the **President of the OWASP student chapter** at my college, where I lead a 29-member core team, run security workshops and built the chapter website.\n\n" +
       "I build things end-to-end: REST APIs, React UIs, AI integrations, async job queues — the full stack. " +
       `I've got **${REPO_COUNT} GitHub repos**, **${LEETCODE_SOLVED}+ LeetCode problems**, and **GitHub Pro** with the YOLO and Pull Shark badges 🦈\n\n` +
@@ -140,10 +145,10 @@ export function searchPortfolio(query, rng = Math.random) {
 
   // 11. Music Intelligence Engine (specific project focus)
   if (/music intelligence|intelligence engine|audio fingerprint|acrcloud|saas/.test(q)) {
-    return "**Music Intelligence Engine** — a side project 🎵\n\n" +
+    return "**Beatzy** — music intelligence SaaS 🎵\n\n" +
       "It's an audio fingerprinting + full-stack SaaS platform. Think Shazam-like capability but built as a developer tool.\n\n" +
       "**Tech:** Python, ACRCloud API, React, Node.js\n\n" +
-      "This project sits at the intersection of my two biggest interests: **music** and **engineering**. It's on the back burner while Translog and Auralis get my time.";
+      "I'm currently building Beatzy.";
   }
 
   // 12. Goldman Sachs / Samsung specifics

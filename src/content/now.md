@@ -5,6 +5,7 @@ updated: 2026-11-21
 What I'm actually doing at the moment, in the spirit of nownownow.com. A bio says who I am; this says what I'm up to.
 
 ## Building
+- I’m building Beatzy, a music intelligence SaaS that uses real-time audio fingerprinting to identify tracks.
 - I’m building Translog at HSH Technologies, an LLM-assisted air-freight quote desk. Lately I’ve been improving the dashboard across mailboxes and routing first-time booking requests to operators for review.
 - I added an assistant to this portfolio that answers questions about my projects using a PostgreSQL knowledge base of project facts and sources.
 

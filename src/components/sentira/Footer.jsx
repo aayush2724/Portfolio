@@ -23,7 +23,6 @@ const COLUMNS = [
       { label: "Selected work", href: "#work" },
       { label: "Journey", href: "#journey" },
       { label: "FAQ", href: "#faq" },
-      { label: "Résumé", href: "/resume.pdf", external: true },
     ],
   },
   {

@@ -131,13 +131,6 @@ const cmds = [
     },
   },
   {
-    id: "resume",
-    label: "Open Resume PDF",
-    icon: "📄",
-    cat: "Action",
-    fn: () => window.open("/resume.pdf", "_blank"),
-  },
-  {
     id: "owasp",
     label: "Open OWASP NIE Chapter Website",
     icon: "🛡️",
